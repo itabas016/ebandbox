@@ -109,7 +109,7 @@ _ReSharper.*/
 .tmp*~
 WinProgram/
 *.csproj.user
-*.cache
+#*.cache
 build/
 *.orig
 Thumbs.db
