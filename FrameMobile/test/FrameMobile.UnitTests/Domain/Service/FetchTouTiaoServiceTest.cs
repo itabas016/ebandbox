@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 using FrameMobile.Domain.Service;
 using FrameMobile.Model.ThirdPart;
 using Xunit;
@@ -41,22 +42,11 @@ namespace FrameMobile.UnitTests.Domain
         [Fact]
         public void AnlynazeTest()
         {
-            /*
-            {"msg": "OK", "data": {"cursor": 1376933340, "data": [{"app_open_url": "snssdk143://detail?groupid=2385553034",
-             "publish_time": 1377039960.0, "toutiao_url": "http://www.toutiao.com/i/group/article/2385553034/",
-             "toutiao_wap_url": "http://m.toutiao.com/group/article/2385553034/", "bury_count": 2,
-             "title": "4\u540d\u5fd7", "tip": 0, "site": "\u8fbd\u5b81\u9891\u9053",
-             "site_url": "http://liaoning.nen.com.cn/system/2013/08/21/010723716.shtml",
-             "comment_count": 3, "images": [{"width": 410, "urls": ["http://p0.pstatp.com/origin/252/5327833163",
-             "http://p.pstatp.com/origin/252/5327833163"], "height": 283}], "digg_count": 2, "group_id": 2385553034,
-             "id": 2385553034, "favorite_count": 1},{"app_open_url": "snssdk143://detail?groupid=2348076531",
-             "publish_time": 1376928000.0, "toutiao_url": "http://www.toutiao.com/i/group/article/2348076531/",
-             "toutiao_wap_url": "http://m.toutiao.com/group/article/2348076531/", "bury_count": 1,
-             "title": "\u5f20\u7d20", "tip": 0, "site": "\u5609\u5174\u65e5\u62a5",
-             "site_url": "http://jxrb.cnjxol.com/html/2013-08/20/content_658845.htm", "comment_count": 6,
-             "images": [], "digg_count": 33, "group_id": 2348076531, "id": 2348076531, "favorite_count": 19}]}, "ret": 0}
-             */
-            var response = "{\"msg\": \"OK\", \"data\": {\"cursor\": 1376933340, \"data\": [{\"app_open_url\": \"snssdk143://detail?groupid=2385553034\", \"publish_time\": 1377039960.0, \"toutiao_url\": \"http://www.toutiao.com/i/group/article/2385553034/\", \"toutiao_wap_url\": \"http://m.toutiao.com/group/article/2385553034/\", \"bury_count\": 2, \"title\": \"4\u540d\u5fd7\", \"tip\": 0, \"site\": \"\u8fbd\u5b81\u9891\u9053\", \"site_url\": \"http://liaoning.nen.com.cn/system/2013/08/21/010723716.shtml\", \"comment_count\": 3, \"images\": [{\"width\": 410, \"urls\": [\"http://p0.pstatp.com/origin/252/5327833163\", \"http://p.pstatp.com/origin/252/5327833163\"], \"height\": 283}], \"digg_count\": 2, \"group_id\": 2385553034, \"id\": 2385553034, \"favorite_count\": 1},{\"app_open_url\": \"snssdk143://detail?groupid=2348076531\", \"publish_time\": 1376928000.0, \"toutiao_url\": \"http://www.toutiao.com/i/group/article/2348076531/\", \"toutiao_wap_url\": \"http://m.toutiao.com/group/article/2348076531/\", \"bury_count\": 1, \"title\": \"\u5f20\u7d20\", \"tip\": 0, \"site\": \"\u5609\u5174\u65e5\u62a5\", \"site_url\": \"http://jxrb.cnjxol.com/html/2013-08/20/content_658845.htm\", \"comment_count\": 6, \"images\": [], \"digg_count\": 33, \"group_id\": 2348076531, \"id\": 2348076531, \"favorite_count\": 19}]}, \"ret\": 0}";
+            var response = string.Empty;
+            using (var sr = new StreamReader("Files\\TouTiaoResponse.txt"))
+            {
+                response = sr.ReadToEnd();
+            }
 
             var result = service.Anlynaze(response);
 
@@ -77,7 +67,7 @@ namespace FrameMobile.UnitTests.Domain
             var content1 = new TouTiaoContent()
             {
                 AppOpeURL = "snssdk143://detail?groupid=2385553034",
-                PublishTime = (int)1377039960.0,
+                PublishTime = (float)1377039960.0,
                 Id = 2385553034,
                 Title = "4\u540d\u5fd7",
                 ImageList = new List<TouTiaoImageInfo>() { image1, image2 },
@@ -105,6 +95,7 @@ namespace FrameMobile.UnitTests.Domain
             #endregion
 
             Assert.Equal(result.Count, 2);
+            Assert.Equal(true, expect_cur.ContentList.Any(x => x.Id == result[0].Id));
         }
     }
 }
