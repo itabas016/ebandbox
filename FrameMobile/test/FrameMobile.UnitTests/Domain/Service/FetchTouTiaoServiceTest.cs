@@ -34,21 +34,37 @@ namespace FrameMobile.UnitTests.Domain
 
         public void RequestTest()
         {
-            var category = "news_hot";
+            var category = "positive";
             var response = service.Request(category);
             Console.WriteLine(response);
         }
 
         [Fact]
+        public void DeserializeTouTiaoTest()
+        {
+            var response = GetMockResponse();
+            var result = service.DeserializeTouTiao(response);
+
+            var expect_ret = new TouTiaoResult()
+            {
+                ret = 0,
+                Msg = "OK",
+                DataByCursor = null
+            };
+
+            Assert.Equal(expect_ret.Msg,result.Msg);
+            Assert.Equal(expect_ret.ret, result.ret);
+            Assert.Equal(result.DataByCursor.ContentList.Count, 2);
+
+        }
+
+        [Fact]
         public void AnlynazeTest()
         {
-            var response = string.Empty;
-            using (var sr = new StreamReader("Files\\TouTiaoResponse.txt"))
-            {
-                response = sr.ReadToEnd();
-            }
+            var resonse = GetMockResponse();
+            var toutiaoResult = service.DeserializeTouTiao(resonse);
 
-            var result = service.Anlynaze(response);
+            var instance = service.Anlynaze(toutiaoResult);
 
             #region Expect value
 
@@ -94,8 +110,28 @@ namespace FrameMobile.UnitTests.Domain
 
             #endregion
 
-            Assert.Equal(result.Count, 2);
-            Assert.Equal(true, expect_cur.ContentList.Any(x => x.Id == result[0].Id));
+            Assert.Equal(instance.Count, 2);
+            Assert.Equal(true, expect_cur.ContentList.Any(x => x.Id == instance[0].Id));
         }
+
+        [Fact]
+        public void Anlynaze_Error_Msg_Test()
+        {
+            var response = "\"msg\":REGDRET,\"ret\":1";
+        }
+
+        #region Helper
+
+        private string GetMockResponse()
+        {
+            var response = string.Empty;
+            using (var sr = new StreamReader("Files\\TouTiaoResponse.txt"))
+            {
+                response = sr.ReadToEnd();
+            }
+            return response;
+        }
+
+        #endregion
     }
 }

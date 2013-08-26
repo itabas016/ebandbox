@@ -33,16 +33,25 @@ namespace FrameMobile.Domain.Service
             return response;
         }
 
-        public List<TouTiaoContent> Anlynaze(string response)
+        public TouTiaoResult DeserializeTouTiao(string response)
         {
             if (string.IsNullOrEmpty(response))
             {
                 return null;
             }
             var instance = JsonConvert.DeserializeObject<TouTiaoResult>(response);
-            if (instance.ret == 0 && instance.DataByCursor!= null)
+            return instance;
+        }
+
+        public List<TouTiaoContent> Anlynaze(TouTiaoResult toutiaoResult)
+        {
+            if (toutiaoResult == null)
             {
-                var result = instance.DataByCursor.ContentList;
+                return null;
+            }
+            if (toutiaoResult.ret == 0 && toutiaoResult.DataByCursor != null)
+            {
+                var result = toutiaoResult.DataByCursor.ContentList;
                 return result;
             }
             return null;
@@ -54,7 +63,7 @@ namespace FrameMobile.Domain.Service
             foreach (var item in categoryList)
             {
                 var response = Request(item);
-                var instanceList = Anlynaze(response);
+                var instance = DeserializeTouTiao(response);
             }
         }
     }
