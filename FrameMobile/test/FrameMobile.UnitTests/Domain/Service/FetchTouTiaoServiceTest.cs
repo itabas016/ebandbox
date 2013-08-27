@@ -34,9 +34,22 @@ namespace FrameMobile.UnitTests.Domain
 
         public void RequestTest()
         {
-            var category = "positive";
-            var response = service.Request(category);
-            Console.WriteLine(response);
+            var categoryList = Enum.GetNames(typeof(TouTiaoCategory));
+
+            foreach (var item in categoryList)
+            {
+                var response = service.Request(item);
+                var instance = service.DeserializeTouTiao(response);
+
+                Assert.Equal(0, instance.ret);
+                Assert.NotEqual(null, instance.DataByCursor);
+                var contentList = instance.DataByCursor.ContentList;
+                if (contentList.Count > 0)
+                {
+                    Console.WriteLine(string.Format("{0}:{1} 游标{2}", item, contentList.Count, instance.DataByCursor.Cursor));
+                }
+            }
+
         }
 
         [Fact]
@@ -52,7 +65,7 @@ namespace FrameMobile.UnitTests.Domain
                 DataByCursor = null
             };
 
-            Assert.Equal(expect_ret.Msg,result.Msg);
+            Assert.Equal(expect_ret.Msg, result.Msg);
             Assert.Equal(expect_ret.ret, result.ret);
             Assert.Equal(result.DataByCursor.ContentList.Count, 2);
 

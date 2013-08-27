@@ -75,7 +75,7 @@ namespace FrameMobile.Model.ThirdPart
         [JsonProperty(PropertyName = "comment_count")]
         public int CommentCount { get; set; }
 
-        //评论的数量
+        //图片集合
         [JsonProperty(PropertyName = "images")]
         public List<TouTiaoImageInfo> ImageList { get; set; }
     }

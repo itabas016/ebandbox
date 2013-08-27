@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace FrameMobile.Model.ThirdPart.TouTiao
+namespace FrameMobile.Domain.Service
 {
-    public class TouTiaoModel
+    public class SaveInstance : ISaveInstance
     {
 
     }
