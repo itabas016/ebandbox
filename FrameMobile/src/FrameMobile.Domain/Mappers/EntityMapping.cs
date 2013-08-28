@@ -10,7 +10,7 @@ namespace FrameMobile.Domain
     {
         public static void Config()
         {
-            TYDNewsMapping.CreateMap();
+            NewsMapping.CreateMap();
 
             Mapper.AssertConfigurationIsValid();
         }

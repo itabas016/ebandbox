@@ -36,6 +36,13 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\..\lib\Newtonsoft.Json.4.5.8\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="RedisMapper, Version=2.0.0.0, Culture=neutral, PublicKeyToken=86f0aa1179a5132d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\RedisMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="SubSonic.Core">
+      <HintPath>..\..\..\lib\SubSonic\SubSonic.Core.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -46,13 +53,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Support\IMySQLModel.cs" />
+    <Compile Include="Support\MySQLModelBase.cs" />
+    <Compile Include="Support\RedisModelBase.cs" />
     <Compile Include="ThirdPart\TouTiao\TouTiaoCategory.cs" />
     <Compile Include="ThirdPart\TouTiao\TouTiaoContent.cs" />
     <Compile Include="ThirdPart\TouTiao\TouTiaoCursor.cs" />
     <Compile Include="ThirdPart\TouTiao\TouTiaoImageInfo.cs" />
-    <Compile Include="ThirdPart\TouTiao\TouTiaoModel.cs" />
+    <Compile Include="News\NewsImageInfo.cs" />
+    <Compile Include="News\TouTiaoCategory.cs" />
+    <Compile Include="News\TouTiaoModel.cs" />
     <Compile Include="ThirdPart\TouTiao\TouTiaoParameter.cs" />
     <Compile Include="ThirdPart\TouTiao\TouTiaoResult.cs" />
+    <Compile Include="News\NewsCategory.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FrameMobile.Common\FrameMobile.Common.csproj">

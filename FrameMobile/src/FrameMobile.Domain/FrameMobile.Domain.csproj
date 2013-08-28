@@ -58,6 +58,9 @@
     <Reference Include="StructureMap">
       <HintPath>..\..\..\lib\structuremap.2.6.3\lib\StructureMap.dll</HintPath>
     </Reference>
+    <Reference Include="SubSonic.Core">
+      <HintPath>..\..\..\lib\SubSonic\SubSonic.Core.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
@@ -75,11 +78,14 @@
     <Compile Include="Interceptor\CacheDecoratorBase.cs" />
     <Compile Include="Interceptor\ServiceCacheInterceptor.cs" />
     <Compile Include="Mappers\EntityMapping.cs" />
-    <Compile Include="Mappers\TYDNewsMapping.cs" />
+    <Compile Include="Mappers\NewsMapping.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\Fake\NewsFakeService.cs" />
     <Compile Include="Service\FetchTouTiaoService.cs" />
-    <Compile Include="Service\Interface\ITYDNewsService.cs" />
-    <Compile Include="Service\TYDNewsService.cs" />
+    <Compile Include="Service\Interface\IDataBaseService.cs" />
+    <Compile Include="Service\Interface\INewsService.cs" />
+    <Compile Include="Service\DataBaseService.cs" />
+    <Compile Include="Service\NewsService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FrameMobile.Cache\FrameMobile.Cache.csproj">

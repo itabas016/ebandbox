@@ -11,7 +11,8 @@ namespace FrameMobile.Domain
     {
         public ControllerRegistry()
         {
-            For<ITYDNewsService>().Use<TYDNewsService>();
+            For<INewsService>().Use<NewsService>();
+            For<IDataBaseService>().Use<DataBaseService>();
         }
     }
 }
