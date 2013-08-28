@@ -5,16 +5,21 @@ using System.Text;
 using FrameMobile.Domain;
 using FrameMobile.Domain.Service;
 using FrameMobile.Model.News;
+using Moq;
 
 namespace FrameMobile.UnitTests.Domain.Service
 {
     public class DataBaseServiceTest
     {
-        public IDataBaseService DataBaseService { get; set; }
+        Mock<IDataBaseService> _dataBaseServiceMock;
+        IDataBaseService DataBaseService;
 
         public DataBaseServiceTest()
         {
-            Bootstrapper.ConfigueInjection();
+            _dataBaseServiceMock = new Mock<IDataBaseService>();
+            DataBaseService = _dataBaseServiceMock.Object;
+            EntityMapping.Config();
+            Bootstrapper.Start();
         }
 
         public void AddTest()

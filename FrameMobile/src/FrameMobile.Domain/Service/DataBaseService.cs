@@ -18,28 +18,23 @@ namespace FrameMobile.Domain.Service
             this.Repository = new SimpleRepository(ConnectionStrings.NEWS_MYSQL_CONNECTSTRING, SimpleRepositoryOptions.None);
         }
 
-        public void add(FrameMobile.Model.News.TouTiaoModel model)
+        public void Add<T>(T model) where T : class, IMySQLModel, new()
         {
-            this.Repository.Add<FrameMobile.Model.News.TouTiaoModel>(model);
+            this.Repository.Add<T>(model);
         }
 
-        public void Add<T>(T model) where T : IMySQLModel
+        public void Delete<T>(T model) where T : class, IMySQLModel, new()
         {
-
-        }
-
-        public void Delete<T>(T model) where T : IMySQLModel
-        {
-
+            this.Repository.Delete<T>(model.Id);
         }
 
 
-        public void Update<T>(T model) where T : IMySQLModel
+        public void Update<T>(T model) where T : class, IMySQLModel, new()
         {
-
+            this.Repository.Update<T>(model);
         }
 
-        public IList<T> Find<T>(Expression<Func<T, bool>> expression) where T : IMySQLModel
+        public IList<T> Find<T>(Expression<Func<T, bool>> expression) where T : class, IMySQLModel, new()
         {
             throw new NotImplementedException();
         }

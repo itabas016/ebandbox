@@ -74,6 +74,8 @@
     <Compile Include="Attribute\ServiceCacheAttribute.cs" />
     <Compile Include="DI\Bootstrapper.cs" />
     <Compile Include="DI\ControllerRegistry.cs" />
+    <Compile Include="Extensions\MappingExtensions.cs" />
+    <Compile Include="Extensions\NewsExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Interceptor\CacheDecoratorBase.cs" />
     <Compile Include="Interceptor\ServiceCacheInterceptor.cs" />

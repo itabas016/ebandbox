@@ -10,9 +10,9 @@ namespace FrameMobile.Domain.Service
 {
     public interface IDataBaseService
     {
-        void Add<T>(T model) where T : IMySQLModel;
-        void Delete<T>(T model) where T : IMySQLModel;
-        void Update<T>(T model) where T : IMySQLModel;
-        IList<T> Find<T>(Expression<Func<T, bool>> expression) where T : IMySQLModel;
+        void Add<T>(T model) where T : class, IMySQLModel, new();
+        void Delete<T>(T model) where T : class, IMySQLModel, new();
+        void Update<T>(T model) where T : class, IMySQLModel, new();
+        IList<T> Find<T>(Expression<Func<T, bool>> expression) where T : class, IMySQLModel, new();
     }
 }
