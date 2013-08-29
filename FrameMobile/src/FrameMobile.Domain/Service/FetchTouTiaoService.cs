@@ -7,11 +7,19 @@ using FrameMobile.Core;
 using FrameMobile.Model.ThirdPart;
 using NCore;
 using Newtonsoft.Json;
+using FrameMobile.Model.News;
 
 namespace FrameMobile.Domain.Service
 {
     public class FetchTouTiaoService
     {
+        public IDataBaseService _dataBaseService { get; set; }
+
+        public FetchTouTiaoService(IDataBaseService dataBaseService)
+        {
+            this._dataBaseService = dataBaseService;
+        }
+
         public TouTiaoParameter GenerateParam()
         {
             var param = new TouTiaoParameter();
@@ -57,13 +65,24 @@ namespace FrameMobile.Domain.Service
             return null;
         }
 
-        public void StorageInstance()
+        public void Save()
         {
-            var categoryList = Enum.GetNames(typeof(TouTiaoCategory));
+            var categoryList = Enum.GetNames(typeof(FrameMobile.Model.ThirdPart.TouTiaoCategory));
+            //Category
             foreach (var item in categoryList)
             {
                 var response = Request(item);
                 var instance = DeserializeTouTiao(response);
+                var contentList = Anlynaze(instance);
+
+                foreach (var item_content in contentList)
+                {
+                    var touTiaoModel = item_content.To<TouTiaoModel>();
+                    touTiaoModel.CategoryId = 1;
+                    _dataBaseService.Add<TouTiaoModel>(touTiaoModel);
+                    //Image
+                    //
+                }
             }
         }
     }
