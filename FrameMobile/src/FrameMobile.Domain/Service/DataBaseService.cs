@@ -15,7 +15,7 @@ namespace FrameMobile.Domain.Service
 
         public DataBaseService()
         {
-            this.Repository = new SimpleRepository(ConnectionStrings.NEWS_MYSQL_CONNECTSTRING, SimpleRepositoryOptions.None);
+            this.Repository = new SimpleRepository(ConnectionStrings.NEWS_MYSQL_CONNECTSTRING, SimpleRepositoryOptions.RunMigrations);
         }
 
         public void Add<T>(T model) where T : class, IMySQLModel, new()
