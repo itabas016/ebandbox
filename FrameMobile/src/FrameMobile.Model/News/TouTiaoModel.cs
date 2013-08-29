@@ -34,6 +34,6 @@ namespace FrameMobile.Model.News
         [SubSonicNullString]
         public string AppOpenURL { get; set; }
 
-        public DateTime PublishTime { get; set; }
+        public long PublishTime { get; set; }
     }
 }

@@ -96,7 +96,7 @@ namespace FrameMobile.UnitTests.Domain
             var content1 = new TouTiaoContent()
             {
                 AppOpeURL = "snssdk143://detail?groupid=2385553034",
-                PublishTime = (float)1377039960.0,
+                PublishTime = (long)1377039960.0,
                 Id = 2385553034,
                 Title = "4\u540d\u5fd7",
                 ImageList = new List<TouTiaoImageInfo>() { image1, image2 },

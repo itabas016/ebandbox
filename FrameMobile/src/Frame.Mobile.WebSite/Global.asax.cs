@@ -6,6 +6,8 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using FrameMobile.Domain;
+using StructureMap;
 
 namespace Frame.Mobile.WebSite
 {
@@ -16,6 +18,7 @@ namespace Frame.Mobile.WebSite
     {
         protected void Application_Start()
         {
+            GlobalConfiguration.Configuration.DependencyResolver = new StructureMapDependencyResolver(ObjectFactory.Container);
             AreaRegistration.RegisterAllAreas();
 
             WebApiConfig.Register(GlobalConfiguration.Configuration);

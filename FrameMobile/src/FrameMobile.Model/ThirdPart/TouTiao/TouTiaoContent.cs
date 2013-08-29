@@ -29,11 +29,11 @@ namespace FrameMobile.Model.ThirdPart
 
         //新闻发表时间 时间戳
         [JsonProperty(PropertyName = "publish_time")]
-        public float PublishTime { get; set; }
+        public long PublishTime { get; set; }
 
         //更新时间
         [JsonProperty(PropertyName = "modify_time")]
-        public float ModifyTime { get; set; }
+        public long ModifyTime { get; set; }
 
         //简介
         [JsonProperty(PropertyName = "abstract")]
