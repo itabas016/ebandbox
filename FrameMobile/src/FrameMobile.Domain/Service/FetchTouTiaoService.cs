@@ -14,6 +14,8 @@ namespace FrameMobile.Domain.Service
 {
     public class FetchTouTiaoService
     {
+        #region Prop
+
         public IDataBaseService DataBaseService { get; set; }
 
         public static string NEWS_RESOURCES_DIR_ROOT = ConfigKeys.TYD_NEWS_RESOURCES_DIR_ROOT.ConfigValue();
@@ -24,6 +26,9 @@ namespace FrameMobile.Domain.Service
 
         public const string NEWS_SOURCES = "TouTiao";
 
+        #endregion
+
+        #region Ctor
         public FetchTouTiaoService()
         {
 
@@ -33,6 +38,7 @@ namespace FrameMobile.Domain.Service
         {
             this.DataBaseService = dataBaseService;
         }
+        #endregion
 
         public TouTiaoParameter GenerateParam()
         {
@@ -40,15 +46,15 @@ namespace FrameMobile.Domain.Service
             return param;
         }
 
-        public string Request(string category)
+        public string Request(string category, long cursor = 0, int count = 20)
         {
             var param = GenerateParam();
             var request_url = ConfigKeys.TYD_NEWS_TOUTIAO_REQUEST_URL.ConfigValue();
 
             param.Category = category;
 
-            var query_url = string.Format("nonce={0}&category={1}&timestamp={2}&signature={3}&partner={4}",
-            param.Nonce, param.Category, param.Timestamp, param.Signature, param.Partner);
+            var query_url = string.Format("nonce={0}&category={1}&timestamp={2}&signature={3}&partner={4}&cursor={5}&count={6}",
+            param.Nonce, param.Category, param.Timestamp, param.Signature, param.Partner, cursor, count);
 
             var response = HttpHelper.HttpGet(request_url, query_url);
 
@@ -65,18 +71,37 @@ namespace FrameMobile.Domain.Service
             return instance;
         }
 
-        public List<TouTiaoContent> Anlynaze(TouTiaoResult toutiaoResult)
+        public List<TouTiaoContent> Anlynaze(TouTiaoResult toutiaoResult, out long cursor)
         {
+            cursor = 0;
             if (toutiaoResult == null)
             {
                 return null;
             }
             if (toutiaoResult.ret == 0 && toutiaoResult.DataByCursor != null)
             {
+                cursor = toutiaoResult.DataByCursor.Cursor;
                 var result = toutiaoResult.DataByCursor.ContentList;
                 return result;
             }
             return null;
+        }
+
+        public long GetCurrentCursor(string category)
+        {
+            var cursor = GetCategoryCursor(category);
+            var response = Request(category);
+            var instance = DeserializeTouTiao(response);
+            var contentList = Anlynaze(instance, out cursor);
+
+            foreach (var item_content in contentList)
+            {
+                var touTiaoModel = item_content.To<TouTiaoModel>();
+                touTiaoModel.CategoryId = GetSubCategoryId(category);
+                DataBaseService.Add<TouTiaoModel>(touTiaoModel);
+                ImageListSave(item_content);
+            }
+            return cursor;
         }
 
         public void Save()
@@ -84,20 +109,10 @@ namespace FrameMobile.Domain.Service
             try
             {
                 var categoryList = Enum.GetNames(typeof(TouTiaoCategory));
-
                 foreach (var item_category in categoryList)
                 {
-                    var response = Request(item_category);
-                    var instance = DeserializeTouTiao(response);
-                    var contentList = Anlynaze(instance);
-
-                    foreach (var item_content in contentList)
-                    {
-                        var touTiaoModel = item_content.To<TouTiaoModel>();
-                        touTiaoModel.CategoryId = GetSubCategoryId(item_category);
-                        DataBaseService.Add<TouTiaoModel>(touTiaoModel);
-                        ImageListSave(item_content);
-                    }
+                    var cursor = GetCurrentCursor(item_category);
+                    UpdateCategoryCursor(item_category, cursor);
                 }
             }
             catch (Exception ex)
@@ -108,6 +123,27 @@ namespace FrameMobile.Domain.Service
         }
 
         #region Helper
+
+        public void UpdateCategoryCursor(string categoryName, long cursor)
+        {
+            var subcategory = DataBaseService.Single<NewsSubCategory>(x => x.Name == categoryName);
+            if (cursor != subcategory.Cursor)
+            {
+                subcategory.Cursor = cursor;
+                DataBaseService.Update<NewsSubCategory>(subcategory);
+            }
+        }
+
+        public long GetCategoryCursor(string categoryName)
+        {
+            var subcategory = DataBaseService.Single<NewsSubCategory>(x=>x.Name == categoryName);
+
+            if (subcategory!= null)
+            {
+                return subcategory.Cursor;
+            }
+            return 0;
+        }
 
         public int GetSubCategoryId(string categoryName)
         {

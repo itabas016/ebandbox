@@ -19,5 +19,7 @@ namespace FrameMobile.Model.News
         public int SourceId { get; set; }
 
         public int CategoryId { get; set; }
+
+        public long Cursor { get; set; }
     }
 }

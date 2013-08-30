@@ -92,7 +92,8 @@ namespace FrameMobile.UnitTests.Domain
             var resonse = GetMockResponse();
             var toutiaoResult = service.DeserializeTouTiao(resonse);
 
-            var instance = service.Anlynaze(toutiaoResult);
+            long cursor = 0;
+            var instance = service.Anlynaze(toutiaoResult,out cursor);
 
             #region Expect value
 
@@ -138,6 +139,7 @@ namespace FrameMobile.UnitTests.Domain
 
             #endregion
 
+            Assert.Equal(cursor, 1376933340);
             Assert.Equal(instance.Count, 2);
             Assert.Equal(true, expect_cur.ContentList.Any(x => x.Id == instance[0].Id));
         }
