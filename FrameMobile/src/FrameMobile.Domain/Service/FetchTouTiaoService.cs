@@ -9,6 +9,7 @@ using NCore;
 using Newtonsoft.Json;
 using FrameMobile.Model.News;
 using System.IO;
+using StructureMap;
 
 namespace FrameMobile.Domain.Service
 {
@@ -16,7 +17,22 @@ namespace FrameMobile.Domain.Service
     {
         #region Prop
 
-        public IDataBaseService DataBaseService { get; set; }
+        private IDataBaseService _dataBaseService;
+        public IDataBaseService DataBaseService
+        {
+            get
+            {
+                if (_dataBaseService == null)
+                {
+                    _dataBaseService = ObjectFactory.GetInstance<IDataBaseService>();
+                }
+                return _dataBaseService;
+            }
+            set
+            {
+                _dataBaseService = value;
+            }
+        }
 
         public static string NEWS_RESOURCES_DIR_ROOT = ConfigKeys.TYD_NEWS_RESOURCES_DIR_ROOT.ConfigValue();
 
@@ -104,7 +120,7 @@ namespace FrameMobile.Domain.Service
             return cursor;
         }
 
-        public void Save()
+        public void Capture()
         {
             try
             {

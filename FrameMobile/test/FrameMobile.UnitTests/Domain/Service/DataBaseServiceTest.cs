@@ -14,14 +14,11 @@ namespace FrameMobile.UnitTests.Domain.Service
         Mock<IDataBaseService> _dataBaseServiceMock;
         IDataBaseService DataBaseService;
 
-        DataBaseService dataBasesvr;
-
         public DataBaseServiceTest()
         {
             _dataBaseServiceMock = new Mock<IDataBaseService>();
             DataBaseService = _dataBaseServiceMock.Object;
 
-            this.dataBasesvr = new DataBaseService();
             EntityMapping.ResetMapper();
             EntityMapping.Config();
             Bootstrapper.ConfigueInjection();
@@ -39,7 +36,7 @@ namespace FrameMobile.UnitTests.Domain.Service
                 Status=1,
                 CreateDateTime=DateTime.Now
             };
-            dataBasesvr.Add<NewsImageInfo>(imagemodel);
+            DataBaseService.Add<NewsImageInfo>(imagemodel);
 
         }
     }
