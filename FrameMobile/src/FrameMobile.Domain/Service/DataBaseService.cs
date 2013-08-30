@@ -28,7 +28,6 @@ namespace FrameMobile.Domain.Service
             this.Repository.Delete<T>(model.Id);
         }
 
-
         public void Update<T>(T model) where T : class, IMySQLModel, new()
         {
             this.Repository.Update<T>(model);
@@ -36,7 +35,26 @@ namespace FrameMobile.Domain.Service
 
         public IList<T> Find<T>(Expression<Func<T, bool>> expression) where T : class, IMySQLModel, new()
         {
-            throw new NotImplementedException();
+            var result = this.Repository.Find<T>(expression);
+            return result;
+        }
+
+        public bool Exists<T>(Expression<Func<T, bool>> expression) where T : class, IMySQLModel, new()
+        {
+            var result = this.Repository.Exists<T>(expression);
+            return result;
+        }
+
+        public T Single<T>(object key) where T : class, IMySQLModel, new()
+        {
+            var result = this.Repository.Single<T>(key);
+            return result;
+        }
+
+        public T Single<T>(Expression<Func<T, bool>> expression) where T : class, IMySQLModel, new()
+        {
+            var result = this.Repository.Single<T>(expression);
+            return result;
         }
     }
 }

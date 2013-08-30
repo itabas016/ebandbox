@@ -7,12 +7,17 @@ using SubSonic.SqlGeneration.Schema;
 namespace FrameMobile.Model.News
 {
     [Serializable]
-    [SubSonicTableNameOverride("TouTiaoCategory")]
-    public class TouTiaoCategory : MySQLModelBase
+    [SubSonicTableNameOverride("NewsSubCategory")]
+    public class NewsSubCategory : MySQLModelBase
     {
-        public int ParentId { get; set; }
-
         [SubSonicStringLength(64)]
         public string Name { get; set; }
+
+        [SubSonicStringLength(64)]
+        public string DisplayName { get; set; }
+
+        public int SourceId { get; set; }
+
+        public int CategoryId { get; set; }
     }
 }

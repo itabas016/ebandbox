@@ -9,8 +9,7 @@ namespace FrameMobile.Model
     [Serializable]
     public class MySQLModelBase : IMySQLModel
     {
-        [SubSonicPrimaryKey]
-        public int Id { get; set; }
+        public int Status { get; set; }
 
         public DateTime CreateDateTime
         {
@@ -18,6 +17,8 @@ namespace FrameMobile.Model
             set { createTime = value; }
         } private DateTime createTime = DateTime.Now;
 
-        public int Status { get; set; }
+        [SubSonicPrimaryKey]
+        public int Id { get; set; }
+
     }
 }

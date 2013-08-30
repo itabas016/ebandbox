@@ -6,17 +6,32 @@ using System.IO;
 using FrameMobile.Domain.Service;
 using FrameMobile.Model.ThirdPart;
 using Xunit;
+using FrameMobile.Domain;
 
 namespace FrameMobile.UnitTests.Domain
 {
     public class FetchTouTiaoServiceTest
     {
+        public IDataBaseService _dataBaseService { get; set; }
+
         FetchTouTiaoService service;
+        FetchTouTiaoService dataService;
+
+        #region Ctor
 
         public FetchTouTiaoServiceTest()
         {
             service = new FetchTouTiaoService();
         }
+
+        public FetchTouTiaoServiceTest(IDataBaseService dataBaseService)
+        {
+            EntityMapping.Config();
+            Bootstrapper.Start();
+            dataService = new FetchTouTiaoService(dataBaseService);
+        }
+
+        #endregion
 
         [Fact]
         public void GenerateParameterTest()
@@ -131,6 +146,12 @@ namespace FrameMobile.UnitTests.Domain
         public void Anlynaze_Error_Msg_Test()
         {
             var response = "\"msg\":REGDRET,\"ret\":1";
+        }
+
+        [Fact]
+        public void GetCategoryIdTest()
+        {
+
         }
 
         #region Helper

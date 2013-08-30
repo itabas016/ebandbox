@@ -10,7 +10,7 @@ namespace FrameMobile.Model.News
     [SubSonicTableNameOverride("NewsImageInfo")]
     public class NewsImageInfo : MySQLModelBase
     {
-        public int NewsId { get; set; }
+        public long NewsId { get; set; }
 
         public int Width { get; set; }
 

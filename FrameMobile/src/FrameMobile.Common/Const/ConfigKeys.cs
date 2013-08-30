@@ -12,6 +12,11 @@ namespace FrameMobile.Common
         public const string SERVICE_CACHE_TIMEOUT_SECONDS = "ServiceCacheTimeOutSeconds";
 
         //TouTiao
+
+        public const string TYD_NEWS_RESOURCES_DIR_ROOT = "TYD_News_Resources_Dir_Root";
+
+        public const string TYD_NEWS_IMAGE_FILE_URL = "TYD_News_Image_File_URL";
+
         public const string TYD_NEWS_TOUTIAO_PARTNER = "TYD_News_TouTiao_Partner";
 
         public const string TYD_NEWS_TOUTIAO_SECURE_KEY = "TYD_News_TouTiao_Secure_Key";
