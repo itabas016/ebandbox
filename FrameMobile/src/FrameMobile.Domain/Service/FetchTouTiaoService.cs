@@ -14,7 +14,7 @@ namespace FrameMobile.Domain.Service
 {
     public class FetchTouTiaoService
     {
-        public IDataBaseService _dataBaseService { get; set; }
+        public IDataBaseService DataBaseService { get; set; }
 
         public static string NEWS_RESOURCES_DIR_ROOT = ConfigKeys.TYD_NEWS_RESOURCES_DIR_ROOT.ConfigValue();
 
@@ -31,7 +31,7 @@ namespace FrameMobile.Domain.Service
 
         public FetchTouTiaoService(IDataBaseService dataBaseService)
         {
-            this._dataBaseService = dataBaseService;
+            this.DataBaseService = dataBaseService;
         }
 
         public TouTiaoParameter GenerateParam()
@@ -95,7 +95,7 @@ namespace FrameMobile.Domain.Service
                     {
                         var touTiaoModel = item_content.To<TouTiaoModel>();
                         touTiaoModel.CategoryId = GetSubCategoryId(item_category);
-                        _dataBaseService.Add<TouTiaoModel>(touTiaoModel);
+                        DataBaseService.Add<TouTiaoModel>(touTiaoModel);
                         ImageListSave(item_content);
                     }
                 }
@@ -111,7 +111,7 @@ namespace FrameMobile.Domain.Service
 
         public int GetSubCategoryId(string categoryName)
         {
-            var subCategory = _dataBaseService.Single<NewsSubCategory>(x => x.Name == categoryName);
+            var subCategory = DataBaseService.Single<NewsSubCategory>(x => x.Name == categoryName);
             if (subCategory == null)
             {
                 var newsSubCategory = new NewsSubCategory();
@@ -120,7 +120,7 @@ namespace FrameMobile.Domain.Service
 
                 newsSubCategory = MatchCategory(newsSubCategory, categoryName);
 
-                _dataBaseService.Add<NewsSubCategory>(newsSubCategory);
+                DataBaseService.Add<NewsSubCategory>(newsSubCategory);
 
                 return newsSubCategory.Id;
             }
@@ -129,10 +129,10 @@ namespace FrameMobile.Domain.Service
 
         public int GetSourceId()
         {
-            var source = _dataBaseService.Single<NewsSource>(x => x.Name == NEWS_SOURCES);
+            var source = DataBaseService.Single<NewsSource>(x => x.Name == NEWS_SOURCES);
             if (source == null)
             {
-                _dataBaseService.Add<NewsSource>(new NewsSource { Name = NEWS_SOURCES });
+                DataBaseService.Add<NewsSource>(new NewsSource { Name = NEWS_SOURCES });
                 return source.Id;
             }
             return source.Id;
@@ -214,7 +214,7 @@ namespace FrameMobile.Domain.Service
                 {
                     HttpHelper.DownloadFile(item, Path.Combine(NEWS_IMAGE_DIR_BASE, GetFileNameFromURL(item)));
                     destImage.URL = string.Format("{0}/{1}", NEWS_IMAGE_FILE_URL, GetFileNameFromURL(item));
-                    _dataBaseService.Add<NewsImageInfo>(destImage);
+                    DataBaseService.Add<NewsImageInfo>(destImage);
                 }
             }
         }
