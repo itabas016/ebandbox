@@ -9,35 +9,36 @@ using Moq;
 
 namespace FrameMobile.UnitTests.Domain.Service
 {
-    public class DataBaseServiceTest
+    public class DataBaseServiceTest : DataBaseServiceTestBase
     {
-        Mock<IDataBaseService> _dataBaseServiceMock;
-        IDataBaseService DataBaseService;
-
-        public DataBaseServiceTest()
-        {
-            _dataBaseServiceMock = new Mock<IDataBaseService>();
-            DataBaseService = _dataBaseServiceMock.Object;
-
-            EntityMapping.ResetMapper();
-            EntityMapping.Config();
-            Bootstrapper.ConfigueInjection();
-        }
-
         public void AddTest()
         {
             var imagemodel = new NewsImageInfo()
             {
-                Id=1,
-                NewsId=1,
-                Height=100,
-                Width=200,
-                URL="test.com",
-                Status=1,
-                CreateDateTime=DateTime.Now
+                Id = 1,
+                NewsId = 1,
+                Height = 100,
+                Width = 200,
+                URL = "test.com",
+                Status = 1,
+                CreateDateTime = DateTime.Now
             };
-            DataBaseService.Add<NewsImageInfo>(imagemodel);
+            dataBaseService.Add<NewsImageInfo>(imagemodel);
+        }
+    }
 
+    public class DataBaseServiceTestBase : TestBase
+    {
+
+        Mock<IDataBaseService> _dataBaseServiceMock;
+        IDataBaseService DataBaseService;
+        public DataBaseService dataBaseService;
+
+        public DataBaseServiceTestBase()
+        {
+            _dataBaseServiceMock = new Mock<IDataBaseService>();
+            DataBaseService = _dataBaseServiceMock.Object;
+            dataBaseService = new DataBaseService();
         }
     }
 }

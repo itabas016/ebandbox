@@ -3,29 +3,24 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using AutoMapper;
 
 namespace FrameMobile.Domain
 {
     public static class NewsExtensions
     {
-        public static TDest To<TDest>(this TouTiaoContent source)
+        public static TOutput To<TOutput>(this object source)
         {
-            return EntityMapping.Auto<TouTiaoContent, TDest>(source);
+            if (source == null ) return default(TOutput);
+
+            return (TOutput)Mapper.Map(source, source.GetType(), typeof(TOutput));
         }
 
-        public static IList<TDest> To<TDest>(this IList<TouTiaoContent> source)
+        public static IList<TOutput> To<TOutput>(this IList<object> source)
         {
-            return EntityMapping.Auto<IList<TouTiaoContent>, IList<TDest>>(source);
-        }
+            if (source == null) return default(IList<TOutput>);
 
-        public static TDest To<TDest>(this TouTiaoImageInfo source)
-        {
-            return EntityMapping.Auto<TouTiaoImageInfo, TDest>(source);
-        }
-
-        public static IList<TDest> To<TDest>(this IList<TouTiaoImageInfo> source)
-        {
-            return EntityMapping.Auto<IList<TouTiaoImageInfo>, IList<TDest>>(source);
+            return (IList<TOutput>)Mapper.Map(source, source.GetType(), typeof(TOutput));
         }
     }
 }

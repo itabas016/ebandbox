@@ -21,6 +21,7 @@ namespace FrameMobile.Domain
                 .ForMember(dest => dest.WAPURL, opt => opt.MapFrom(ori => ori.TouTiaoWAPURL))
                 .ForMember(dest => dest.PublishTime, opt => opt.MapFrom(ori => ori.PublishTime.UTCStamp()))
                 .IgnoreAllNonExisting();
+
             Mapper.CreateMap<TouTiaoImageInfo, NewsImageInfo>()
                 .ForMember(dest => dest.Height, opt => opt.MapFrom(ori => ori.Height))
                 .ForMember(dest => dest.Width, opt => opt.MapFrom(ori => ori.Width))

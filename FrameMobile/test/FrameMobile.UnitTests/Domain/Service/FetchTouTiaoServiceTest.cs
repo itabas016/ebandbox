@@ -7,36 +7,16 @@ using FrameMobile.Domain.Service;
 using FrameMobile.Model.ThirdPart;
 using Xunit;
 using FrameMobile.Domain;
+using Moq;
 
 namespace FrameMobile.UnitTests.Domain
 {
-    public class FetchTouTiaoServiceTest
+    public class FetchTouTiaoServiceTest : FetchTouTiaoServiceTestBase
     {
-        public IDataBaseService _dataBaseService { get; set; }
-
-        FetchTouTiaoService service;
-        FetchTouTiaoService dataService;
-
-        #region Ctor
-
-        public FetchTouTiaoServiceTest()
-        {
-            service = new FetchTouTiaoService();
-        }
-
-        public FetchTouTiaoServiceTest(IDataBaseService dataBaseService)
-        {
-            EntityMapping.Config();
-            Bootstrapper.Start();
-            dataService = new FetchTouTiaoService(dataBaseService);
-        }
-
-        #endregion
-
         [Fact]
         public void GenerateParameterTest()
         {
-            var result = service.GenerateParam();
+            var result = dataService.GenerateParam();
             var secureKey = "5a74f9188e0e413e28fe3c490b009ce7";
             var partner = "tydtech";
             Assert.Equal(partner, result.Partner);
@@ -53,8 +33,8 @@ namespace FrameMobile.UnitTests.Domain
 
             foreach (var item in categoryList)
             {
-                var response = service.Request(item);
-                var instance = service.DeserializeTouTiao(response);
+                var response = dataService.Request(item);
+                var instance = dataService.DeserializeTouTiao(response);
 
                 Assert.Equal(0, instance.ret);
                 Assert.NotEqual(null, instance.DataByCursor);
@@ -71,7 +51,7 @@ namespace FrameMobile.UnitTests.Domain
         public void DeserializeTouTiaoTest()
         {
             var response = GetMockResponse();
-            var result = service.DeserializeTouTiao(response);
+            var result = dataService.DeserializeTouTiao(response);
 
             var expect_ret = new TouTiaoResult()
             {
@@ -90,10 +70,10 @@ namespace FrameMobile.UnitTests.Domain
         public void AnlynazeTest()
         {
             var resonse = GetMockResponse();
-            var toutiaoResult = service.DeserializeTouTiao(resonse);
+            var toutiaoResult = dataService.DeserializeTouTiao(resonse);
 
             long cursor = 0;
-            var instance = service.Anlynaze(toutiaoResult,out cursor);
+            var instance = dataService.Anlynaze(toutiaoResult, out cursor);
 
             #region Expect value
 
@@ -156,6 +136,13 @@ namespace FrameMobile.UnitTests.Domain
 
         }
 
+        public void SingleCaptureTest()
+        {
+            var categoryName = "news_hot";
+
+            dataService.SingleCapture(categoryName);
+        }
+
         #region Helper
 
         private string GetMockResponse()
@@ -169,5 +156,22 @@ namespace FrameMobile.UnitTests.Domain
         }
 
         #endregion
+    }
+
+    public class FetchTouTiaoServiceTestBase : TestBase
+    {
+        Mock<IDataBaseService> _dataBaseServiceMock;
+        IDataBaseService DataBaseService;
+
+        public FetchTouTiaoService dataService;
+
+        public FetchTouTiaoServiceTestBase()
+        {
+            _dataBaseServiceMock = new Mock<IDataBaseService>();
+            DataBaseService = _dataBaseServiceMock.Object;
+
+            dataService = new FetchTouTiaoService(DataBaseService);
+
+        }
     }
 }

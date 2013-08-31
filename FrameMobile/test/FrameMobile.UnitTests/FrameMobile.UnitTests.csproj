@@ -55,14 +55,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Domain\Mappers\ContentMapperTest.cs" />
     <Compile Include="Domain\Service\DataBaseServiceTest.cs" />
     <Compile Include="Domain\Service\FetchTouTiaoServiceTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="NLog.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\FrameMobile.Domain\FrameMobile.Domain.csproj">

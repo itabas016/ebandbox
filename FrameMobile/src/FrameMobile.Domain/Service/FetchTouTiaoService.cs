@@ -45,16 +45,13 @@ namespace FrameMobile.Domain.Service
         #endregion
 
         #region Ctor
-        public FetchTouTiaoService()
-        {
-
-        }
-
         public FetchTouTiaoService(IDataBaseService dataBaseService)
         {
             this.DataBaseService = dataBaseService;
         }
         #endregion
+
+        #region Method
 
         public TouTiaoParameter GenerateParam()
         {
@@ -120,6 +117,12 @@ namespace FrameMobile.Domain.Service
             return cursor;
         }
 
+        public void SingleCapture(string categoryName)
+        {
+            var cursor = GetCurrentCursor(categoryName);
+            UpdateCategoryCursor(categoryName,cursor);
+        }
+
         public void Capture()
         {
             try
@@ -127,8 +130,7 @@ namespace FrameMobile.Domain.Service
                 var categoryList = Enum.GetNames(typeof(TouTiaoCategory));
                 foreach (var item_category in categoryList)
                 {
-                    var cursor = GetCurrentCursor(item_category);
-                    UpdateCategoryCursor(item_category, cursor);
+                    SingleCapture(item_category);
                 }
             }
             catch (Exception ex)
@@ -152,9 +154,9 @@ namespace FrameMobile.Domain.Service
 
         public long GetCategoryCursor(string categoryName)
         {
-            var subcategory = DataBaseService.Single<NewsSubCategory>(x=>x.Name == categoryName);
+            var subcategory = DataBaseService.Single<NewsSubCategory>(x => x.Name == categoryName);
 
-            if (subcategory!= null)
+            if (subcategory != null)
             {
                 return subcategory.Cursor;
             }
@@ -277,6 +279,8 @@ namespace FrameMobile.Domain.Service
             Uri uri = new Uri(uriPath);
             return uri.AbsolutePath.Replace("/", "_");
         }
+
+        #endregion
 
         #endregion
     }
