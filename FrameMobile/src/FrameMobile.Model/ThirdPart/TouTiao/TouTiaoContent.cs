@@ -10,7 +10,7 @@ namespace FrameMobile.Model.ThirdPart
     public class TouTiaoContent
     {
         [JsonProperty(PropertyName = "id")]
-        public long Id { get; set; }
+        public long NewsId { get; set; }
 
         //同Id
         [JsonProperty(PropertyName = "group_id")]

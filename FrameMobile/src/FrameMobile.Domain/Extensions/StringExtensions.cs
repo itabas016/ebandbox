@@ -30,5 +30,12 @@ namespace FrameMobile.Domain
             intResult = (time - startTime).TotalSeconds;
             return intResult;
         }
+
+        public static string DefaultValue(this string str)
+        {
+            var value = str.IsNullOrEmpty() ? string.Empty : str;
+
+            return value;
+        }
     }
 }

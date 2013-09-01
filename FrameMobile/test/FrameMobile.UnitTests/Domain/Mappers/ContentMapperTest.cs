@@ -12,16 +12,19 @@ namespace FrameMobile.UnitTests.Domain.Mappers
     public class ContentMapperTest : TestBase
     {
         [Fact]
-        public void test()
+        public void TouTiaoContentTest()
         {
             var m = new TouTiaoContent();
 
             m.DiggCount = 1;
-            m.Id = 3;
+            m.NewsId = 2730766760;
 
-            var x = m.To<TouTiaoModel>();
+            m.PublishTime = 1378033125;
 
-            Console.WriteLine(x.NewsId);
+            var x = m.To<TouTiaoContentModel>();
+
+            Assert.Equal(2730766760, x.NewsId);
+            Console.WriteLine(x.PublishTime);
         }
     }
 }

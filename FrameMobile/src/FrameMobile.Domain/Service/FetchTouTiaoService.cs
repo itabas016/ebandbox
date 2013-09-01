@@ -107,12 +107,15 @@ namespace FrameMobile.Domain.Service
             var instance = DeserializeTouTiao(response);
             var contentList = Anlynaze(instance, out cursor);
 
-            foreach (var item_content in contentList)
+            if (contentList != null && contentList.Count > 0)
             {
-                var touTiaoModel = item_content.To<TouTiaoModel>();
-                touTiaoModel.CategoryId = GetSubCategoryId(category);
-                DataBaseService.Add<TouTiaoModel>(touTiaoModel);
-                ImageListSave(item_content);
+                foreach (var item_content in contentList)
+                {
+                    var touTiaoModel = item_content.To<TouTiaoContentModel>();
+                    touTiaoModel.CategoryId = GetSubCategoryId(category);
+                    DataBaseService.Add<TouTiaoContentModel>(touTiaoModel);
+                    ImageListSave(item_content);
+                }
             }
             return cursor;
         }
@@ -145,7 +148,7 @@ namespace FrameMobile.Domain.Service
         public void UpdateCategoryCursor(string categoryName, long cursor)
         {
             var subcategory = DataBaseService.Single<NewsSubCategory>(x => x.Name == categoryName);
-            if (cursor != subcategory.Cursor)
+            if (subcategory != null && cursor != subcategory.Cursor)
             {
                 subcategory.Cursor = cursor;
                 DataBaseService.Update<NewsSubCategory>(subcategory);
@@ -248,9 +251,9 @@ namespace FrameMobile.Domain.Service
         public void ImageListSave(TouTiaoContent content)
         {
             var imageList = content.ImageList;
-            if (imageList == null && imageList.Count > 0)
+            if (imageList != null && imageList.Count > 0)
             {
-                var newsId = content.Id;
+                var newsId = content.NewsId;
                 foreach (var item in imageList)
                 {
                     SingleImageSave(item, newsId);

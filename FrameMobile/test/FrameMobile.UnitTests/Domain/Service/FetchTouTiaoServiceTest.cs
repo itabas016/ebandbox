@@ -93,14 +93,14 @@ namespace FrameMobile.UnitTests.Domain
             {
                 AppOpeURL = "snssdk143://detail?groupid=2385553034",
                 PublishTime = (long)1377039960.0,
-                Id = 2385553034,
+                NewsId = 2385553034,
                 Title = "4\u540d\u5fd7",
                 ImageList = new List<TouTiaoImageInfo>() { image1, image2 },
             };
 
             var content2 = new TouTiaoContent()
             {
-                Id = 2348076531,
+                NewsId = 2348076531,
                 FavoriteCount = 19,
                 GroupId = 2348076531
             };
@@ -121,7 +121,7 @@ namespace FrameMobile.UnitTests.Domain
 
             Assert.Equal(cursor, 1376933340);
             Assert.Equal(instance.Count, 2);
-            Assert.Equal(true, expect_cur.ContentList.Any(x => x.Id == instance[0].Id));
+            Assert.Equal(true, expect_cur.ContentList.Any(x => x.NewsId == instance[0].NewsId));
         }
 
         [Fact]
@@ -160,18 +160,14 @@ namespace FrameMobile.UnitTests.Domain
 
     public class FetchTouTiaoServiceTestBase : TestBase
     {
-        Mock<IDataBaseService> _dataBaseServiceMock;
-        IDataBaseService DataBaseService;
+        protected Mock<IDataBaseService> _dataBaseServiceMock;
 
-        public FetchTouTiaoService dataService;
+        protected FetchTouTiaoService dataService;
 
         public FetchTouTiaoServiceTestBase()
         {
             _dataBaseServiceMock = new Mock<IDataBaseService>();
-            DataBaseService = _dataBaseServiceMock.Object;
-
-            dataService = new FetchTouTiaoService(DataBaseService);
-
+            dataService = new FetchTouTiaoService(_dataBaseServiceMock.Object);
         }
     }
 }

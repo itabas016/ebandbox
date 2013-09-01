@@ -67,7 +67,7 @@
     <Compile Include="ThirdPart\TouTiao\TouTiaoImageInfo.cs" />
     <Compile Include="News\NewsImageInfo.cs" />
     <Compile Include="News\NewsSubCategory.cs" />
-    <Compile Include="News\TouTiaoModel.cs" />
+    <Compile Include="News\TouTiaoContentModel.cs" />
     <Compile Include="ThirdPart\TouTiao\TouTiaoParameter.cs" />
     <Compile Include="ThirdPart\TouTiao\TouTiaoResult.cs" />
     <Compile Include="News\NewsCategory.cs" />

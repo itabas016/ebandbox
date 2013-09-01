@@ -29,15 +29,12 @@ namespace FrameMobile.UnitTests.Domain.Service
 
     public class DataBaseServiceTestBase : TestBase
     {
-
-        Mock<IDataBaseService> _dataBaseServiceMock;
-        IDataBaseService DataBaseService;
-        public DataBaseService dataBaseService;
+        protected Mock<IDataBaseService> _dataBaseServiceMock;
+        protected DataBaseService dataBaseService;
 
         public DataBaseServiceTestBase()
         {
             _dataBaseServiceMock = new Mock<IDataBaseService>();
-            DataBaseService = _dataBaseServiceMock.Object;
             dataBaseService = new DataBaseService();
         }
     }

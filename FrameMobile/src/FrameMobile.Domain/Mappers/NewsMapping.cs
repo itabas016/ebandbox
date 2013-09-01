@@ -12,12 +12,12 @@ namespace FrameMobile.Domain
     {
         internal static void CreateMap()
         {
-            Mapper.CreateMap<TouTiaoContent, TouTiaoModel>()
+            Mapper.CreateMap<TouTiaoContent, TouTiaoContentModel>()
                 .ForMember(dest => dest.AppOpenURL, opt => opt.MapFrom(ori => ori.AppOpeURL))
-                .ForMember(dest => dest.NewsId, opt => opt.MapFrom(ori => ori.Id))
-                .ForMember(dest => dest.Site, opt => opt.MapFrom(ori => ori.Site))
-                .ForMember(dest => dest.Title, opt => opt.MapFrom(ori => ori.Title))
-                .ForMember(dest => dest.Summary, opt => opt.MapFrom(ori => ori.Abstract))
+                .ForMember(dest => dest.NewsId, opt => opt.MapFrom(ori => ori.NewsId))
+                .ForMember(dest => dest.Site, opt => opt.MapFrom(ori => ori.Site.DefaultValue()))
+                .ForMember(dest => dest.Title, opt => opt.MapFrom(ori => ori.Title.DefaultValue()))
+                .ForMember(dest => dest.Summary, opt => opt.MapFrom(ori => ori.Abstract.DefaultValue()))
                 .ForMember(dest => dest.WAPURL, opt => opt.MapFrom(ori => ori.TouTiaoWAPURL))
                 .ForMember(dest => dest.PublishTime, opt => opt.MapFrom(ori => ori.PublishTime.UTCStamp()))
                 .IgnoreAllNonExisting();
