@@ -14,13 +14,23 @@ namespace FrameMobile.UnitTests.Domain
 {
     public class FetchTouTiaoServiceTest : TestBase
     {
-        public IDataBaseService _dataBaseService { get; set; }
+        public IDataBaseService dataBaseService
+        {
+            get
+            {
+                if (_dataBaseService == null)
+                {
+                    _dataBaseService = ObjectFactory.GetInstance<IDataBaseService>();
+                }
+                return _dataBaseService;
+            }
+        }
+        private IDataBaseService _dataBaseService;
 
         protected FetchTouTiaoService dataService;
 
         public FetchTouTiaoServiceTest()
         {
-            _dataBaseService = ObjectFactory.GetInstance<IDataBaseService>();
             dataService = new FetchTouTiaoService(_dataBaseService);
         }
 
@@ -38,6 +48,7 @@ namespace FrameMobile.UnitTests.Domain
             Console.WriteLine(result.Signature);
         }
 
+        [Fact]
         public void RequestTest()
         {
             var categoryList = Enum.GetNames(typeof(TouTiaoCategory));
@@ -141,6 +152,7 @@ namespace FrameMobile.UnitTests.Domain
             var response = "\"msg\":REGDRET,\"ret\":1";
         }
 
+        [Fact]
         public void SingleCaptureTest()
         {
             var categoryName = "news_hot";

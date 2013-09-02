@@ -13,11 +13,21 @@ namespace FrameMobile.UnitTests.Domain.Service
 {
     public class DataBaseServiceTest : TestBase
     {
-        public IDataBaseService _dataBaseService { get; set; }
+        public IDataBaseService dataBaseService
+        {
+            get
+            {
+                if (_databaseService == null)
+                {
+                    _databaseService = ObjectFactory.GetInstance<IDataBaseService>();
+                }
+
+                return _databaseService;
+            }
+        } private IDataBaseService _databaseService;
 
         public DataBaseServiceTest()
         {
-            _dataBaseService = ObjectFactory.GetInstance<IDataBaseService>();
         }
 
         [Fact]
@@ -34,7 +44,7 @@ namespace FrameMobile.UnitTests.Domain.Service
                 CreateDateTime = DateTime.Now
             };
 
-            _dataBaseService.Add<NewsImageInfo>(imagemodel);
+            dataBaseService.Add<NewsImageInfo>(imagemodel);
         }
     }
 }
