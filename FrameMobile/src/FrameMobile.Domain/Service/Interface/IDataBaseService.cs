@@ -5,6 +5,7 @@ using System.Text;
 using FrameMobile.Model;
 using System.Runtime.InteropServices;
 using System.Linq.Expressions;
+using StructureMap;
 
 namespace FrameMobile.Domain.Service
 {

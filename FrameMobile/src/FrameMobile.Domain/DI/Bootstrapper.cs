@@ -32,18 +32,10 @@ namespace FrameMobile.Domain
             DependencyResolver.SetResolver(
                 t =>
                 {
-                    try
-                    {
-                        return ObjectFactory.GetInstance(t);
-                    }
-                    catch
-                    {
-                        return null;
-                    }
-
+                    try { return ObjectFactory.GetInstance(t); }
+                    catch { return null; }
                 },
                 t => ObjectFactory.GetAllInstances<object>().Where(s => s.GetType() == t));
-
 
             if (ConfigKeys.ENABLE_SNAP.ConfigValue().ToBoolean())
             {

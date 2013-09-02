@@ -6,11 +6,21 @@ using FrameMobile.Domain;
 using FrameMobile.Domain.Service;
 using FrameMobile.Model.News;
 using Moq;
+using StructureMap;
+using Xunit;
 
 namespace FrameMobile.UnitTests.Domain.Service
 {
-    public class DataBaseServiceTest : DataBaseServiceTestBase
+    public class DataBaseServiceTest : TestBase
     {
+        public IDataBaseService _dataBaseService { get; set; }
+
+        public DataBaseServiceTest()
+        {
+            _dataBaseService = ObjectFactory.GetInstance<IDataBaseService>();
+        }
+
+        [Fact]
         public void AddTest()
         {
             var imagemodel = new NewsImageInfo()
@@ -23,19 +33,8 @@ namespace FrameMobile.UnitTests.Domain.Service
                 Status = 1,
                 CreateDateTime = DateTime.Now
             };
-            dataBaseService.Add<NewsImageInfo>(imagemodel);
-        }
-    }
 
-    public class DataBaseServiceTestBase : TestBase
-    {
-        protected Mock<IDataBaseService> _dataBaseServiceMock;
-        protected DataBaseService dataBaseService;
-
-        public DataBaseServiceTestBase()
-        {
-            _dataBaseServiceMock = new Mock<IDataBaseService>();
-            dataBaseService = new DataBaseService();
+            _dataBaseService.Add<NewsImageInfo>(imagemodel);
         }
     }
 }

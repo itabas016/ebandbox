@@ -8,11 +8,22 @@ using FrameMobile.Model.ThirdPart;
 using Xunit;
 using FrameMobile.Domain;
 using Moq;
+using StructureMap;
 
 namespace FrameMobile.UnitTests.Domain
 {
-    public class FetchTouTiaoServiceTest : FetchTouTiaoServiceTestBase
+    public class FetchTouTiaoServiceTest : TestBase
     {
+        public IDataBaseService _dataBaseService { get; set; }
+
+        protected FetchTouTiaoService dataService;
+
+        public FetchTouTiaoServiceTest()
+        {
+            _dataBaseService = ObjectFactory.GetInstance<IDataBaseService>();
+            dataService = new FetchTouTiaoService(_dataBaseService);
+        }
+
         [Fact]
         public void GenerateParameterTest()
         {
@@ -130,12 +141,6 @@ namespace FrameMobile.UnitTests.Domain
             var response = "\"msg\":REGDRET,\"ret\":1";
         }
 
-        [Fact]
-        public void GetCategoryIdTest()
-        {
-
-        }
-
         public void SingleCaptureTest()
         {
             var categoryName = "news_hot";
@@ -156,18 +161,5 @@ namespace FrameMobile.UnitTests.Domain
         }
 
         #endregion
-    }
-
-    public class FetchTouTiaoServiceTestBase : TestBase
-    {
-        protected Mock<IDataBaseService> _dataBaseServiceMock;
-
-        protected FetchTouTiaoService dataService;
-
-        public FetchTouTiaoServiceTestBase()
-        {
-            _dataBaseServiceMock = new Mock<IDataBaseService>();
-            dataService = new FetchTouTiaoService(_dataBaseServiceMock.Object);
-        }
     }
 }
