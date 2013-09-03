@@ -16,9 +16,9 @@ namespace FrameMobile.Model.News
         [SubSonicStringLength(64)]
         public string DisplayName { get; set; }
 
-        public int SourceId { get; set; }
+        public int? SourceId { get; set; }
 
-        public int CategoryId { get; set; }
+        public int? CategoryId { get; set; }
 
         public long Cursor { get; set; }
     }

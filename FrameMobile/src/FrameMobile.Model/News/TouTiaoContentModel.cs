@@ -13,7 +13,7 @@ namespace FrameMobile.Model.News
 
         public long NewsId { get; set; }
 
-        public int CategoryId { get; set; }
+        public int? CategoryId { get; set; }
 
         [SubSonicStringLength(512)]
         [SubSonicNullString]
