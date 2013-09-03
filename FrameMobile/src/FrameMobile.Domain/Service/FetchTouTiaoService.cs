@@ -195,7 +195,7 @@ namespace FrameMobile.Domain.Service
             if (source == null)
             {
                 var sourceId = DataBaseService.Add<NewsSource>(new NewsSource
-                { 
+                {
                     Name = NEWS_SOURCES_NAME,
                     NameLowCase = NEWS_SOURCES_NAME_LOW_CASE,
                     PackageName = NEWS_SOURCES_PKG_NAME
@@ -277,14 +277,13 @@ namespace FrameMobile.Domain.Service
             destImage.NewsId = newsId;
             if (imageInfo.UrlList != null && imageInfo.UrlList.Count > 0)
             {
-                foreach (var item in imageInfo.UrlList)
-                {
-                    MakeSureDIRExist(NEWS_IMAGE_DIR_BASE);
-                    var fileNamePath = HttpHelper.DownloadFile(item, Path.Combine(NEWS_IMAGE_DIR_BASE, GetFileNameFromURL(item)));
-                    var fileName = GetDirFileName(fileNamePath);
-                    destImage.URL = string.Format("{0}/{1}", NEWS_IMAGE_FILE_URL, fileName);
-                    DataBaseService.Add<NewsImageInfo>(destImage);
-                }
+                //download single one from any one url
+                var single_img_url = imageInfo.UrlList[0];
+                MakeSureDIRExist(NEWS_IMAGE_DIR_BASE);
+                var fileNamePath = HttpHelper.DownloadFile(single_img_url, Path.Combine(NEWS_IMAGE_DIR_BASE, GetFileNameFromURL(single_img_url)));
+                var fileName = GetDirFileName(fileNamePath);
+                destImage.URL = string.Format("{0}/{1}", NEWS_IMAGE_FILE_URL, fileName);
+                DataBaseService.Add<NewsImageInfo>(destImage);
             }
         }
 
