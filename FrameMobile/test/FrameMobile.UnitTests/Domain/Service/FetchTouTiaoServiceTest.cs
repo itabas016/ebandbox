@@ -9,6 +9,7 @@ using Xunit;
 using FrameMobile.Domain;
 using Moq;
 using StructureMap;
+using FrameMobile.Model.News;
 
 namespace FrameMobile.UnitTests.Domain
 {
@@ -158,6 +159,20 @@ namespace FrameMobile.UnitTests.Domain
             var categoryName = "news_hot";
 
             dataService.SingleCapture(categoryName);
+        }
+
+        [Fact]
+        public void SingleImageSave()
+        {
+            long newsId = 32434321;
+            var image = new TouTiaoImageInfo()
+            {
+                Height = 200,
+                Width = 150,
+                UrlList = new List<string>() { "http://p0.pstatp.com/origin/252/6926772543" }
+            };
+
+            dataService.SingleImageSave(image,newsId);
         }
 
         #region Helper

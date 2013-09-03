@@ -63,7 +63,7 @@ namespace FrameMobile.Core
             return retString;
         }
 
-        public static void DownloadFile(string fileUrl, string path, bool force = false)
+        public static void DownloadFile(string fileUrl, string path, bool force)
         {
             int retryTimes = 0;
         Label_0002:
@@ -76,10 +76,6 @@ namespace FrameMobile.Core
                     return;
                 }
 
-                if (retryTimes > 0)
-                {
-                    //LogHelper.WriteInfo("Retry to download path: " + fileUrl, ConsoleColor.Magenta);
-                }
                 using (WebClient webClient = new WebClient())
                 {
                     Console.WriteLine(fileUrl);
@@ -91,7 +87,6 @@ namespace FrameMobile.Core
             catch (Exception ex)
             {
                 Thread.Sleep(500);
-                //LogHelper.WriteInfo("Download file Failed: " + fileUrl, ConsoleColor.Red);
                 LogHelper.WriteInfo(ex.Message, ConsoleColor.Red);
                 retryTimes++;
                 if (retryTimes <= 3)
@@ -99,6 +94,78 @@ namespace FrameMobile.Core
                     goto Label_0002;
                 }
             }
+        }
+
+        public static string DownloadFile(string fileUrl, string path)
+        {
+            int retryTimes = 0;
+        Label_0002:
+            try
+            {
+                if (File.Exists(path) && (new FileInfo(path)).Length > 0)
+                {
+                    return Path.GetDirectoryName(path);
+                }
+
+                WebRequest request = WebRequest.Create(fileUrl);
+                var fileName = string.Empty;
+                using (WebResponse response = request.GetResponse())
+                using (WebClient webClient = new WebClient())
+                {
+                    string contentType = response.ContentType;
+                    fileName = string.Format("{0}{1}", path, GetExtensionType(contentType));
+                    webClient.DownloadFile(fileUrl, fileName);
+                }
+                retryTimes = 0;
+                return fileName;
+            }
+            catch (Exception)
+            {
+                Thread.Sleep(500);
+                retryTimes++;
+                if (retryTimes <= 3)
+                {
+                    goto Label_0002;
+                }
+            }
+        return string.Empty;
+        }
+
+        private static string GetExtensionType(string contentType)
+        {
+            var type = string.Empty;
+            switch (contentType)
+            {
+                case "image/jpeg":
+                case "image/pjpeg":
+                    type = ".jpg";
+                    break;
+                case "image/gif":
+                    type = ".gif";
+                    break;
+                case "image/png":
+                case "image/x-png":
+                    type = ".png";
+                    break;
+                case "image/x-ms-bmp":
+                    type = ".bmp";
+                    break;
+                case "text/plain":
+                case "text/richtext":
+                case "text/html":
+                    type = ".txt";
+                    break;
+                case "application/zip":
+                case "application/x-zip-compressed":
+                    type = ".zip";
+                    break;
+                case "application/x-rar-compressed":
+                    type = ".rar";
+                    break;
+                default:
+                    break;
+            }
+            return type;
         }
     }
 }

@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using FrameMobile.Model.News;
 using System.IO;
 using StructureMap;
+using System.Web;
 
 namespace FrameMobile.Domain.Service
 {
@@ -40,7 +41,11 @@ namespace FrameMobile.Domain.Service
 
         public string NEWS_IMAGE_FILE_URL = ConfigKeys.TYD_NEWS_IMAGE_FILE_URL.ConfigValue();
 
-        public const string NEWS_SOURCES = "TouTiao";
+        public const string NEWS_SOURCES_NAME = "今日头条";
+
+        public const string NEWS_SOURCES_NAME_LOW_CASE = "toutiao";
+
+        public const string NEWS_SOURCES_PKG_NAME = "com.ss.android.article.news";
 
         #endregion
 
@@ -123,7 +128,7 @@ namespace FrameMobile.Domain.Service
         public void SingleCapture(string categoryName)
         {
             var cursor = GetCurrentCursor(categoryName);
-            UpdateCategoryCursor(categoryName,cursor);
+            UpdateCategoryCursor(categoryName, cursor);
         }
 
         public void Capture()
@@ -177,20 +182,25 @@ namespace FrameMobile.Domain.Service
 
                 newsSubCategory = MatchCategory(newsSubCategory, categoryName);
 
-                DataBaseService.Add<NewsSubCategory>(newsSubCategory);
+                var subCategoryId = DataBaseService.Add<NewsSubCategory>(newsSubCategory);
 
-                return newsSubCategory.Id;
+                return (int)subCategoryId;
             }
             return subCategory.Id;
         }
 
         public int GetSourceId()
         {
-            var source = DataBaseService.Single<NewsSource>(x => x.Name == NEWS_SOURCES);
+            var source = DataBaseService.Single<NewsSource>(x => x.NameLowCase == NEWS_SOURCES_NAME_LOW_CASE);
             if (source == null)
             {
-                DataBaseService.Add<NewsSource>(new NewsSource { Name = NEWS_SOURCES });
-                return source.Id;
+                var sourceId = DataBaseService.Add<NewsSource>(new NewsSource
+                { 
+                    Name = NEWS_SOURCES_NAME,
+                    NameLowCase = NEWS_SOURCES_NAME_LOW_CASE,
+                    PackageName = NEWS_SOURCES_PKG_NAME
+                });
+                return (int)sourceId;
             }
             return source.Id;
         }
@@ -269,8 +279,10 @@ namespace FrameMobile.Domain.Service
             {
                 foreach (var item in imageInfo.UrlList)
                 {
-                    HttpHelper.DownloadFile(item, Path.Combine(NEWS_IMAGE_DIR_BASE, GetFileNameFromURL(item)));
-                    destImage.URL = string.Format("{0}/{1}", NEWS_IMAGE_FILE_URL, GetFileNameFromURL(item));
+                    MakeSureDIRExist(NEWS_IMAGE_DIR_BASE);
+                    var fileNamePath = HttpHelper.DownloadFile(item, Path.Combine(NEWS_IMAGE_DIR_BASE, GetFileNameFromURL(item)));
+                    var fileName = GetDirFileName(fileNamePath);
+                    destImage.URL = string.Format("{0}/{1}", NEWS_IMAGE_FILE_URL, fileName);
                     DataBaseService.Add<NewsImageInfo>(destImage);
                 }
             }
@@ -278,9 +290,26 @@ namespace FrameMobile.Domain.Service
 
         private string GetFileNameFromURL(string uriPath)
         {
-            //http://p0.pstatp.com/origin/252/6926772543
             Uri uri = new Uri(uriPath);
             return uri.AbsolutePath.Replace("/", "_");
+        }
+
+        private void MakeSureDIRExist(string dir)
+        {
+            if (!Directory.Exists(dir))
+            {
+                Directory.CreateDirectory(dir);
+            }
+        }
+
+        private string GetDirFileName(string filePath)
+        {
+            var _fileInfo = new FileInfo(filePath);
+            if (_fileInfo != null)
+            {
+                return _fileInfo.Name;
+            }
+            return string.Empty;
         }
 
         #endregion

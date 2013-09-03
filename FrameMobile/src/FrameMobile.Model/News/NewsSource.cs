@@ -12,5 +12,11 @@ namespace FrameMobile.Model.News
     {
         [SubSonicStringLength(64)]
         public string Name { get; set; }
+
+        [SubSonicStringLength(64)]
+        public string NameLowCase { get; set; }
+
+        [SubSonicStringLength(128)]
+        public string PackageName { get; set; }
     }
 }

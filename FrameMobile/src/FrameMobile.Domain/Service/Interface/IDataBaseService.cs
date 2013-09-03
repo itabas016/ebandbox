@@ -11,9 +11,9 @@ namespace FrameMobile.Domain.Service
 {
     public interface IDataBaseService
     {
-        void Add<T>(T model) where T : class, IMySQLModel, new();
-        void Delete<T>(T model) where T : class, IMySQLModel, new();
-        void Update<T>(T model) where T : class, IMySQLModel, new();
+        object Add<T>(T model) where T : class, IMySQLModel, new();
+        int Delete<T>(T model) where T : class, IMySQLModel, new();
+        int Update<T>(T model) where T : class, IMySQLModel, new();
         bool Exists<T>(Expression<Func<T, bool>> expression) where T : class, IMySQLModel, new();
         IList<T> Find<T>(Expression<Func<T, bool>> expression) where T : class, IMySQLModel, new();
         T Single<T>(object key) where T : class, IMySQLModel, new();

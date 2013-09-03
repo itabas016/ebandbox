@@ -9,7 +9,11 @@ namespace FrameMobile.Model
     [Serializable]
     public class MySQLModelBase : IMySQLModel
     {
-        public int Status { get; set; }
+        public int Status
+        {
+            get { return _status; }
+            set { _status = value; }
+        }private int _status = 1;
 
         public DateTime CreateDateTime
         {

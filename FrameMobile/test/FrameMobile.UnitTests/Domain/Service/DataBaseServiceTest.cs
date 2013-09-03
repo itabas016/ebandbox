@@ -31,7 +31,7 @@ namespace FrameMobile.UnitTests.Domain.Service
         }
 
         [Fact]
-        public void AddTest()
+        public void AllMethodTest()
         {
             var imagemodel = new NewsImageInfo()
             {
@@ -44,7 +44,28 @@ namespace FrameMobile.UnitTests.Domain.Service
                 CreateDateTime = DateTime.Now
             };
 
-            dataBaseService.Add<NewsImageInfo>(imagemodel);
+            var add_value = dataBaseService.Add<NewsImageInfo>(imagemodel);
+            Console.WriteLine(add_value);
+
+            imagemodel.Status = 0;
+            
+            var update_value = dataBaseService.Update<NewsImageInfo>(imagemodel);
+            Assert.Equal(0, imagemodel.Status);
+            Console.WriteLine(imagemodel.Status);
+
+            var find_model = dataBaseService.Find<NewsImageInfo>(x => x.Id == 1);
+            Assert.Equal(1, find_model.Count);
+            Console.WriteLine(find_model.Count);
+
+            var single_model = dataBaseService.Single<NewsImageInfo>(1);
+            Assert.Equal(1, single_model.Id);
+
+            var exsit = dataBaseService.Exists<NewsImageInfo>(x=>x.Id == 1);
+            Assert.Equal(true, exsit);
+
+            var del_value = dataBaseService.Delete<NewsImageInfo>(imagemodel);
+            Console.WriteLine(del_value);
+
         }
     }
 }

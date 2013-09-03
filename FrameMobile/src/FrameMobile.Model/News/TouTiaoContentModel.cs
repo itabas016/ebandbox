@@ -10,6 +10,7 @@ namespace FrameMobile.Model.News
     [SubSonicTableNameOverride("TouTiaoContent")]
     public class TouTiaoContentModel : MySQLModelBase
     {
+
         public long NewsId { get; set; }
 
         public int CategoryId { get; set; }
