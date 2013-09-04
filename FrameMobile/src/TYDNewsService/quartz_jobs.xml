@@ -6,10 +6,10 @@
 
   <job>
     <job-detail>
-      <name>Capture News</name>
-      <group>Charge</group>
+      <name>TouTiaoJob</name>
+      <group>TouTiao</group>
       <description></description>
-      <job-type>Youle.Watch.WinService.WatchJob,Youle.Watch.WinService</job-type>
+      <job-type>TYDNewsService.TouTiaoJob,TYDNewsService</job-type>
       <volatile>false</volatile>
       <durable>true</durable>
       <recover>false</recover>
@@ -18,9 +18,9 @@
     <trigger>
       <cron>
         <name>every10min</name>
-        <group>Charge Trigger</group>
-        <job-name>WatchJob</job-name>
-        <job-group>Charge</job-group>
+        <group>TouTiao</group>
+        <job-name>TouTiaoJob</job-name>
+        <job-group>TouTiao</job-group>
         <start-time>1900-01-01T00:00:00.0Z</start-time>
         <cron-expression>0 0/10 * * * ?</cron-expression>
       </cron>

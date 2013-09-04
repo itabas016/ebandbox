@@ -37,11 +37,16 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\lib\MySQL\MySql.Data.dll</HintPath>
     </Reference>
+    <Reference Include="NCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=86f0aa1179a5132d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\NCore\NCore.dll</HintPath>
+    </Reference>
     <Reference Include="Quartz">
       <HintPath>..\..\..\lib\quartz.net\Quartz.dll</HintPath>
     </Reference>
-    <Reference Include="Quartz.Server.Core">
-      <HintPath>..\..\..\lib\quartz.net\Quartz.Server.Core.dll</HintPath>
+    <Reference Include="StructureMap, Version=2.6.3.0, Culture=neutral, PublicKeyToken=e60ad81abae3c223, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\structuremap.2.6.3\lib\StructureMap.dll</HintPath>
     </Reference>
     <Reference Include="SubSonic.Core">
       <HintPath>..\..\..\lib\SubSonic\SubSonic.Core.dll</HintPath>
@@ -84,6 +89,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\InitilizeTouTiaoTable.sql">
+      <Link>InitilizeTouTiaoTable.sql</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="quartz_jobs.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -96,6 +105,10 @@
     <ProjectReference Include="..\FrameMobile.Domain\FrameMobile.Domain.csproj">
       <Project>{4ccf9865-e731-4065-9638-114bdd12c2bf}</Project>
       <Name>FrameMobile.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FrameMobile.Model\FrameMobile.Model.csproj">
+      <Project>{451fc1b1-e472-46a9-bb21-6d619f162f75}</Project>
+      <Name>FrameMobile.Model</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
