@@ -196,9 +196,9 @@ namespace FrameMobile.Domain.Service
             {
                 var sourceId = DataBaseService.Add<NewsSource>(new NewsSource
                 {
-                    Name = NEWS_SOURCES_NAME,
-                    NameLowCase = NEWS_SOURCES_NAME_LOW_CASE,
-                    PackageName = NEWS_SOURCES_PKG_NAME
+                    Name = Const.NEWS_SOURCES_NAME_TouTiao,
+                    NameLowCase = Const.NEWS_SOURCES_NAME_LOW_CASE_TouTiao,
+                    PackageName = Const.NEWS_SOURCES_PKG_NAME_TouTiao
                 });
                 return (int)sourceId;
             }

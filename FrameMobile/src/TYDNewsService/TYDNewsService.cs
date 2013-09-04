@@ -14,25 +14,47 @@ using Quartz.Impl;
 using SubSonic.DataProviders;
 using SubSonic.Query;
 using SubSonic.Repository;
+using NCore;
 
 namespace TYDNewsService
 {
     public partial class TYDNewsService : ServiceBase
     {
-        ISchedulerFactory sf = new StdSchedulerFactory();
         IScheduler sched = null;
+        ISchedulerFactory sfactory = new StdSchedulerFactory();
         IDataProvider provider = ProviderFactory.GetProvider(ConnectionStrings.NEWS_MYSQL_CONNECTSTRING);
-        SimpleRepository repo = new SimpleRepository(ConnectionStrings.NEWS_MYSQL_CONNECTSTRING);
 
         public TYDNewsService()
         {
             InitializeComponent();
+
+            sched = sfactory.GetScheduler();
         }
 
         public void JobStart()
         {
+            //Initialize DB and Create Tables and Index
             NewsDBInitialize();
 
+            //Fetch and Save
+
+            //var trigger = (ISimpleTrigger)TriggerBuilder.Create()
+            //                               .WithIdentity("toutiao")
+            //                               .StartAt(DateTime.Now)
+            //                               .WithSimpleSchedule(x => x.WithIntervalInSeconds("TimeIntervalToLoadData".ConfigValue().ToInt32()).RepeatForever())
+            //                               .Build();
+
+            var toutiaoTrigger = (ICronTrigger)TriggerBuilder.Create()
+                                           .WithIdentity("toutiaoTrigger")
+                                           .WithCronSchedule("0 0/10 * * * ?")
+                                           .Build();
+
+            var toutiaoJob = JobBuilder.Create<TouTiaoJob>()
+               .WithIdentity("toutiaoJob")
+               .Build();
+
+            sched.ScheduleJob(toutiaoJob, toutiaoTrigger);
+            sched.Start();
         }
 
         protected override void OnStart(string[] args)
@@ -42,8 +64,6 @@ namespace TYDNewsService
 
         private void NewsDBInitialize()
         {
-            //Console.WriteLine("Database Initialize...");
-
             #region Create tables
             BatchQuery query = new BatchQuery(provider);
             Assembly assembly = Assembly.Load("FrameMobile.Model");

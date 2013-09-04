@@ -10,6 +10,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{261EAFE7-C374-4A3F-86FE-B95404EED20C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Script", "Script", "{B7575015-CFCC-47EF-8B38-DE4D61557466}"
+	ProjectSection(SolutionItems) = preProject
+		InitilizeTouTiaoTable.sql = InitilizeTouTiaoTable.sql
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Demo", "Demo", "{5F2982B3-B3D6-4D39-B3C9-5C74EDCEFDE4}"
 EndProject
