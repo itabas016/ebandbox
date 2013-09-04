@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="Const\ConfigKeys.cs" />
     <Compile Include="Const\ConnectionStrings.cs" />
+    <Compile Include="Const\Const.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

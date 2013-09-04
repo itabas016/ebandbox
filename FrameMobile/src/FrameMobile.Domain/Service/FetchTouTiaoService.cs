@@ -41,12 +41,6 @@ namespace FrameMobile.Domain.Service
 
         public string NEWS_IMAGE_FILE_URL = ConfigKeys.TYD_NEWS_IMAGE_FILE_URL.ConfigValue();
 
-        public const string NEWS_SOURCES_NAME = "今日头条";
-
-        public const string NEWS_SOURCES_NAME_LOW_CASE = "toutiao";
-
-        public const string NEWS_SOURCES_PKG_NAME = "com.ss.android.article.news";
-
         #endregion
 
         #region Ctor
@@ -191,14 +185,14 @@ namespace FrameMobile.Domain.Service
 
         public int GetSourceId()
         {
-            var source = DataBaseService.Single<NewsSource>(x => x.NameLowCase == NEWS_SOURCES_NAME_LOW_CASE);
+            var source = DataBaseService.Single<NewsSource>(x => x.NameLowCase == Const.NEWS_SOURCES_NAME_LOW_CASE_TouTiao);
             if (source == null)
             {
                 var sourceId = DataBaseService.Add<NewsSource>(new NewsSource
-                { 
-                    Name = NEWS_SOURCES_NAME,
-                    NameLowCase = NEWS_SOURCES_NAME_LOW_CASE,
-                    PackageName = NEWS_SOURCES_PKG_NAME
+                {
+                    Name = Const.NEWS_SOURCES_NAME_TouTiao,
+                    NameLowCase = Const.NEWS_SOURCES_NAME_LOW_CASE_TouTiao,
+                    PackageName = Const.NEWS_SOURCES_PKG_NAME_TouTiao
                 });
                 return (int)sourceId;
             }
