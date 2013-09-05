@@ -30,9 +30,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Cronus.Framework.Utilities">
-      <HintPath>..\..\..\lib\Cronus.Framework.Utilities.dll</HintPath>
-    </Reference>
     <Reference Include="NLog">
       <HintPath>..\..\..\lib\NLog.2.0.0.2000\lib\net40\NLog.dll</HintPath>
     </Reference>

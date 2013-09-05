@@ -5,7 +5,6 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading;
-using Cronus.Framework.Utilities;
 
 namespace FrameMobile.Core
 {
@@ -29,7 +28,7 @@ namespace FrameMobile.Core
             }
             catch (Exception ex)
             {
-                Cronus.Framework.Utilities.LogHelper.Error(ex.Message);
+                LogHelper.WriteError(ex.Message);
             }
             return retString;
         }
@@ -58,7 +57,7 @@ namespace FrameMobile.Core
             }
             catch (Exception ex)
             {
-                Cronus.Framework.Utilities.LogHelper.Error(ex.Message);
+                LogHelper.WriteError(ex.Message);
             }
             return retString;
         }

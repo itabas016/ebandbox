@@ -156,9 +156,15 @@ namespace FrameMobile.UnitTests.Domain
         [Fact]
         public void SingleCaptureTest()
         {
-            var categoryName = "news_hot";
+            var categoryName = "news_tech";
 
             dataService.SingleCapture(categoryName);
+        }
+
+        [Fact]
+        public void CaptureTest()
+        {
+            dataService.Capture();
         }
 
         [Fact]

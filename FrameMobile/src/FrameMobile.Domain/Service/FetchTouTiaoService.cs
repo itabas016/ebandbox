@@ -75,7 +75,6 @@ namespace FrameMobile.Domain.Service
             param.Nonce, param.Category, param.Timestamp, param.Signature, param.Partner, cursor, count);
 
             var response = HttpHelper.HttpGet(request_url, query_url);
-
             return response;
         }
 
@@ -114,12 +113,17 @@ namespace FrameMobile.Domain.Service
 
             if (contentList != null && contentList.Count > 0)
             {
+                LogHelper.WriteInfo(string.Format("{0} content count is {1}", category, contentList.Count));
                 foreach (var item_content in contentList)
                 {
                     var touTiaoModel = item_content.To<TouTiaoContentModel>();
                     touTiaoModel.CategoryId = GetSubCategoryId(category);
-                    DataBaseService.Add<TouTiaoContentModel>(touTiaoModel);
-                    ImageListSave(item_content);
+                    var exist = DataBaseService.Exists<TouTiaoContentModel>(x => x.NewsId == item_content.NewsId);
+                    if (!exist)
+                    {
+                        DataBaseService.Add<TouTiaoContentModel>(touTiaoModel);
+                        ImageListSave(item_content);
+                    }
                 }
             }
             return cursor;
@@ -129,6 +133,7 @@ namespace FrameMobile.Domain.Service
         {
             var cursor = GetCurrentCursor(categoryName);
             UpdateCategoryCursor(categoryName, cursor);
+            LogHelper.WriteInfo(string.Format("{0} cursor is {1}", categoryName, cursor));
         }
 
         public void Capture()
@@ -164,17 +169,27 @@ namespace FrameMobile.Domain.Service
         {
             var subcategory = DataBaseService.Single<NewsSubCategory>(x => x.Name == categoryName);
 
-            if (subcategory != null)
+            if (subcategory == null)
             {
-                return subcategory.Cursor;
+                var subCategoryId = GetSubCategoryId(categoryName, true);
+                return 0;
             }
-            return 0;
+            return subcategory.Cursor;
         }
 
         public int GetSubCategoryId(string categoryName)
         {
             var subCategory = DataBaseService.Single<NewsSubCategory>(x => x.Name == categoryName);
             if (subCategory == null)
+            {
+                return GetSubCategoryId(categoryName, true);
+            }
+            return subCategory.Id;
+        }
+
+        public int GetSubCategoryId(string categoryName, bool emptyObj)
+        {
+            if (emptyObj)
             {
                 var newsSubCategory = new NewsSubCategory();
 
@@ -186,7 +201,7 @@ namespace FrameMobile.Domain.Service
 
                 return (int)subCategoryId;
             }
-            return subCategory.Id;
+            return 0;
         }
 
         public int GetSourceId()
@@ -263,6 +278,7 @@ namespace FrameMobile.Domain.Service
             var imageList = content.ImageList;
             if (imageList != null && imageList.Count > 0)
             {
+                LogHelper.WriteInfo(string.Format("images count is {0}", imageList.Count));
                 var newsId = content.NewsId;
                 foreach (var item in imageList)
                 {
