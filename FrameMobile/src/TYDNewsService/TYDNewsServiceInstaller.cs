@@ -8,7 +8,7 @@ using System.Linq;
 namespace TYDNewsService
 {
     [RunInstaller(true)]
-    public partial class TYDNewsServiceInstaller : System.Configuration.Install.Installer
+    public partial class TYDNewsServiceInstaller : Installer
     {
         public TYDNewsServiceInstaller()
         {

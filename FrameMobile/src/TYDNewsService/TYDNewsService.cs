@@ -14,52 +14,41 @@ using Quartz.Impl;
 using SubSonic.DataProviders;
 using SubSonic.Query;
 using SubSonic.Repository;
-using NCore;
+using Quartz.Server.Core;
+using FrameMobile.Core;
 
 namespace TYDNewsService
 {
     public partial class TYDNewsService : ServiceBase
     {
-        IScheduler sched = null;
-        ISchedulerFactory sfactory = new StdSchedulerFactory();
+        private readonly IQuartzServer server;
         IDataProvider provider = ProviderFactory.GetProvider(ConnectionStrings.NEWS_MYSQL_CONNECTSTRING);
 
         public TYDNewsService()
         {
             InitializeComponent();
 
-            sched = sfactory.GetScheduler();
+            server = QuartzServerFactory.CreateServer();
+
+            server.Initialize();
+        }
+
+        protected override void OnStart(string[] args)
+        {
+            JobStart();
+        }
+
+        protected override void OnStop()
+        {
+            server.Stop();
         }
 
         public void JobStart()
         {
             //Initialize DB and Create Tables and Index
             NewsDBInitialize();
-
-            //Fetch and Save
-
-            //var trigger = (ISimpleTrigger)TriggerBuilder.Create()
-            //                               .WithIdentity("toutiao")
-            //                               .StartAt(DateTime.Now)
-            //                               .WithSimpleSchedule(x => x.WithIntervalInSeconds("TimeIntervalToLoadData".ConfigValue().ToInt32()).RepeatForever())
-            //                               .Build();
-
-            var toutiaoTrigger = (ICronTrigger)TriggerBuilder.Create()
-                                           .WithIdentity("toutiaoTrigger")
-                                           .WithCronSchedule("0 0/10 * * * ?")
-                                           .Build();
-
-            var toutiaoJob = JobBuilder.Create<TouTiaoJob>()
-               .WithIdentity("toutiaoJob")
-               .Build();
-
-            sched.ScheduleJob(toutiaoJob, toutiaoTrigger);
-            sched.Start();
-        }
-
-        protected override void OnStart(string[] args)
-        {
-            JobStart();
+            LogHelper.WriteInfo("Initialize DB is done!");
+            server.Start();
         }
 
         private void NewsDBInitialize()

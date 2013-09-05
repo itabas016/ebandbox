@@ -24,15 +24,11 @@ namespace TYDNewsService
         }
         private IDataBaseService _dataBaseService;
 
-        public TouTiaoJob()
-        {
-            Bootstrapper.Start();
-        }
-        public void Execute(IJobExecutionContext context)
+        public void Execute(JobExecutionContext context)
         {
             FetchTouTiaoService service = new FetchTouTiaoService(dataBaseService);
 
-            //service.Capture();
+            service.Capture();
         }
     }
 }

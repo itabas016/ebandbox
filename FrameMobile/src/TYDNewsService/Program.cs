@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration.Install;
 using System.Linq;
 using System.ServiceProcess;
 using System.Text;
 using System.Threading.Tasks;
+using FrameMobile.Domain;
 
 namespace TYDNewsService
 {
@@ -14,6 +16,7 @@ namespace TYDNewsService
         /// </summary>
         static void Main(string[] args)
         {
+            Bootstrapper.Start();
             if (Environment.UserInteractive)
             {
                 ProcessCommandLine(args);
@@ -90,14 +93,14 @@ Usage: TYDNewsService [-i | -install | -u | -uninstall | -h | -help]
 
         private static void UninstallService()
         {
-            var installer = new System.Configuration.Install.AssemblyInstaller(typeof(TYDNewsServiceInstaller).Assembly, null);
+            var installer = new AssemblyInstaller(typeof(TYDNewsServiceInstaller).Assembly, null);
             installer.UseNewContext = true;
             installer.Uninstall(null);
         }
 
         private static void InstallService()
         {
-            var installer = new System.Configuration.Install.AssemblyInstaller(typeof(TYDNewsServiceInstaller).Assembly, null);
+            var installer = new AssemblyInstaller(typeof(TYDNewsServiceInstaller).Assembly, null);
             installer.UseNewContext = true;
             installer.Install(null);
         }

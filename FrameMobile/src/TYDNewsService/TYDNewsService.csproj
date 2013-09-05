@@ -37,12 +37,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\lib\MySQL\MySql.Data.dll</HintPath>
     </Reference>
-    <Reference Include="NCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=86f0aa1179a5132d, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\lib\NCore\NCore.dll</HintPath>
-    </Reference>
     <Reference Include="Quartz">
       <HintPath>..\..\..\lib\quartz.net\Quartz.dll</HintPath>
+    </Reference>
+    <Reference Include="Quartz.Server.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\quartz.net\Quartz.Server.Core.dll</HintPath>
     </Reference>
     <Reference Include="StructureMap, Version=2.6.3.0, Culture=neutral, PublicKeyToken=e60ad81abae3c223, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -80,7 +80,12 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="quartz.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -101,6 +106,10 @@
     <ProjectReference Include="..\FrameMobile.Common\FrameMobile.Common.csproj">
       <Project>{4eab6159-e307-4c31-8241-0cb556778111}</Project>
       <Name>FrameMobile.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FrameMobile.Core\FrameMobile.Core.csproj">
+      <Project>{2bc5b332-1afc-4921-ac20-f9fa54352293}</Project>
+      <Name>FrameMobile.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\FrameMobile.Domain\FrameMobile.Domain.csproj">
       <Project>{4ccf9865-e731-4065-9638-114bdd12c2bf}</Project>
