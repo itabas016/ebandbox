@@ -7,7 +7,7 @@ using SubSonic.SqlGeneration.Schema;
 namespace FrameMobile.Model.News
 {
     [Serializable]
-    [SubSonicTableNameOverride("NewsSource")]
+    [SubSonicTableNameOverride("newssource")]
     public class NewsSource : MySQLModelBase
     {
         [SubSonicStringLength(64)]

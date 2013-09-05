@@ -7,10 +7,9 @@ using SubSonic.SqlGeneration.Schema;
 namespace FrameMobile.Model.News
 {
     [Serializable]
-    [SubSonicTableNameOverride("TouTiaoContent")]
+    [SubSonicTableNameOverride("toutiaocontent")]
     public class TouTiaoContentModel : MySQLModelBase
     {
-
         public long NewsId { get; set; }
 
         public int? CategoryId { get; set; }
