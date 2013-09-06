@@ -1,30 +1,63 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using NLog;
+using System.IO;
+using log4net.Config;
 
 namespace FrameMobile.Core
 {
-    public class LogHelper
+    public sealed class LogHelper
     {
-        public static void WriteInfo(string content, ConsoleColor color = ConsoleColor.Gray)
+        private static log4net.ILog log = null;
+
+        public static log4net.ILog Log
         {
+            get
+            {
+                if (log == null)
+                {
+                    log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+                    //FileInfo fi = new FileInfo("Utilities.Log4Net.config");
+                    XmlConfigurator.Configure(new FileInfo(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Utilities.Log4Net.config")));
+                }
 
-            Console.ForegroundColor = color;
-            Console.WriteLine(content);
-
-            LogManager.GetLogger("InfoLogger").Info(content);
-
+                return log;
+            }
         }
 
-        public static void WriteError(string content)
+        private static bool initialized = false;
+
+        public static void WindowsServiceInitialize()
         {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine(content);
+            if (!initialized)
+            {
+                log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-            LogManager.GetLogger("ErrorLogger").Error(content);
+                XmlConfigurator.Configure(new FileInfo(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Utilities.Log4Net.config")));
+                initialized = true;
+            }
+        }
 
+        public static void Debug(string message)
+        {
+            if (Log.IsDebugEnabled)
+            {
+                Log.Debug(message);
+            }
+        }
+
+        public static void Info(string message)
+        {
+            if (Log.IsInfoEnabled)
+            {
+                Log.Info(message);
+            }
+        }
+
+        public static void Error(string message)
+        {
+            if (Log.IsErrorEnabled)
+            {
+                Log.Error(message);
+            }
         }
     }
 }

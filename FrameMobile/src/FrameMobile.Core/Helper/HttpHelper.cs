@@ -28,7 +28,7 @@ namespace FrameMobile.Core
             }
             catch (Exception ex)
             {
-                LogHelper.WriteError(ex.Message);
+                NLogHelper.WriteError(ex.Message);
             }
             return retString;
         }
@@ -57,7 +57,7 @@ namespace FrameMobile.Core
             }
             catch (Exception ex)
             {
-                LogHelper.WriteError(ex.Message);
+                NLogHelper.WriteError(ex.Message);
             }
             return retString;
         }
@@ -70,7 +70,7 @@ namespace FrameMobile.Core
             {
                 if (File.Exists(path) && (new FileInfo(path)).Length > 0 && !force)
                 {
-                    LogHelper.WriteInfo("Downloaded already: " + path, ConsoleColor.DarkMagenta);
+                    NLogHelper.WriteInfo("Downloaded already: " + path, ConsoleColor.DarkMagenta);
 
                     return;
                 }
@@ -80,13 +80,13 @@ namespace FrameMobile.Core
                     Console.WriteLine(fileUrl);
                     webClient.DownloadFile(fileUrl, path);
                 }
-                LogHelper.WriteInfo("Downloaded file: " + path, ConsoleColor.DarkGreen);
+                NLogHelper.WriteInfo("Downloaded file: " + path, ConsoleColor.DarkGreen);
                 retryTimes = 0;
             }
             catch (Exception ex)
             {
                 Thread.Sleep(500);
-                LogHelper.WriteInfo(ex.Message, ConsoleColor.Red);
+                NLogHelper.WriteInfo(ex.Message, ConsoleColor.Red);
                 retryTimes++;
                 if (retryTimes <= 3)
                 {

@@ -113,7 +113,7 @@ namespace FrameMobile.Domain.Service
 
             if (contentList != null && contentList.Count > 0)
             {
-                LogHelper.WriteInfo(string.Format("{0} content count is {1}", category, contentList.Count));
+                NLogHelper.WriteInfo(string.Format("{0} content count is {1}", category, contentList.Count));
                 foreach (var item_content in contentList)
                 {
                     var touTiaoModel = item_content.To<TouTiaoContentModel>();
@@ -133,7 +133,7 @@ namespace FrameMobile.Domain.Service
         {
             var cursor = GetCurrentCursor(categoryName);
             UpdateCategoryCursor(categoryName, cursor);
-            LogHelper.WriteInfo(string.Format("{0} cursor is {1}", categoryName, cursor));
+            NLogHelper.WriteInfo(string.Format("{0} cursor is {1}", categoryName, cursor));
         }
 
         public void Capture()
@@ -148,8 +148,8 @@ namespace FrameMobile.Domain.Service
             }
             catch (Exception ex)
             {
-                LogHelper.WriteError(ex.Message);
-                LogHelper.WriteError(ex.StackTrace);
+                NLogHelper.WriteError(ex.Message);
+                NLogHelper.WriteError(ex.StackTrace);
             }
         }
 
@@ -278,7 +278,7 @@ namespace FrameMobile.Domain.Service
             var imageList = content.ImageList;
             if (imageList != null && imageList.Count > 0)
             {
-                LogHelper.WriteInfo(string.Format("images count is {0}", imageList.Count));
+                NLogHelper.WriteInfo(string.Format("images count is {0}", imageList.Count));
                 var newsId = content.NewsId;
                 foreach (var item in imageList)
                 {

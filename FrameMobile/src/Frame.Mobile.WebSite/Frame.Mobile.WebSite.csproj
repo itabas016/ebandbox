@@ -235,6 +235,9 @@
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />
@@ -289,6 +292,9 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
+    <Content Include="Utilities.Log4Net.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -297,9 +303,25 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\FrameMobile.Common\FrameMobile.Common.csproj">
+      <Project>{4eab6159-e307-4c31-8241-0cb556778111}</Project>
+      <Name>FrameMobile.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FrameMobile.Core\FrameMobile.Core.csproj">
+      <Project>{2bc5b332-1afc-4921-ac20-f9fa54352293}</Project>
+      <Name>FrameMobile.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FrameMobile.Domain\FrameMobile.Domain.csproj">
       <Project>{4ccf9865-e731-4065-9638-114bdd12c2bf}</Project>
       <Name>FrameMobile.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FrameMobile.Model\FrameMobile.Model.csproj">
+      <Project>{451fc1b1-e472-46a9-bb21-6d619f162f75}</Project>
+      <Name>FrameMobile.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FrameMobile.Web\FrameMobile.Web.csproj">
+      <Project>{048333fb-7f0c-4e8b-90fe-b333129c52be}</Project>
+      <Name>FrameMobile.Web</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

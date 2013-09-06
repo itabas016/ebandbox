@@ -56,6 +56,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\MobileParam.cs" />
     <Compile Include="News\NewsSource.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Support\IMySQLModel.cs" />
@@ -71,6 +72,8 @@
     <Compile Include="ThirdPart\TouTiao\TouTiaoParameter.cs" />
     <Compile Include="ThirdPart\TouTiao\TouTiaoResult.cs" />
     <Compile Include="News\NewsCategory.cs" />
+    <Compile Include="ViewModels\ResultBuilder.cs" />
+    <Compile Include="ViewModels\ViewModelBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FrameMobile.Common\FrameMobile.Common.csproj">

@@ -47,7 +47,7 @@ namespace TYDNewsService
         {
             //Initialize DB and Create Tables and Index
             NewsDBInitialize();
-            LogHelper.WriteInfo("Initialize DB is done!");
+            NLogHelper.WriteInfo("Initialize DB is done!");
             server.Start();
         }
 
