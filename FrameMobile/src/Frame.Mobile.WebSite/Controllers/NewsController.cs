@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using FrameMobile.Domain.Service;
+using FrameMobile.Model;
 using FrameMobile.Web;
 using StructureMap;
 
@@ -11,7 +12,7 @@ namespace Frame.Mobile.WebSite.Controllers
 {
     public class NewsController : MvcControllerBase
     {
-        public INewsService NewsService 
+        public INewsService NewsService
         {
             get
             {
@@ -27,19 +28,39 @@ namespace Frame.Mobile.WebSite.Controllers
         }
         private INewsService _newsService;
 
-        public ActionResult Category(string imsi)
+        public ActionResult CategoryList(string imsi)
         {
-            return Content("");
+            var mobileParams = GetMobileParam();
+
+            Func<IList<NewsCategoryView>> getcategorylist = () => NewsService.GetCategoryList(mobileParams);
+
+            var actionResult = BuildResult(this.CheckRequiredParams(imsi), getcategorylist);
+
+            return Content(actionResult.ToString());
         }
 
-        public ActionResult SubCategory(string imsi)
+        public ActionResult SubCategoryList(string imsi)
         {
-            return Content("");
+            var mobileParams = GetMobileParam();
+
+            Func<IList<NewsSubCategoryView>> getsubcategorylist = () => NewsService.GetSubCategoryList(mobileParams);
+
+            var actionResult = BuildResult(this.CheckRequiredParams(imsi), getsubcategorylist);
+
+            return Content(actionResult.ToString());
         }
 
-        public ActionResult NewsList(string imsi, string category)
+        public ActionResult NewsList(string imsi, int categoryId, int startnum = 1, int num = 10)
         {
-            return Content("");
+            var mobileParams = GetMobileParam();
+            int totalCount = 0;
+
+            Func<IList<TouTiaoContentView>> gettoutiaocontentlist = () => NewsService.GetTouTiaoContentList(mobileParams, categoryId, startnum, num, out totalCount);
+
+            var actionResult = BuildResult(this.CheckRequiredParams(imsi), gettoutiaocontentlist);
+
+            actionResult.Total = totalCount;
+            return Content(actionResult.ToString());
         }
     }
 }
