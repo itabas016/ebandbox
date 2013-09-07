@@ -166,5 +166,21 @@ namespace FrameMobile.Core
             }
             return type;
         }
+
+        public static string GetPostData(Stream stream)
+        {
+            var postData = string.Empty;
+            try
+            {
+                StreamReader sr = new StreamReader(stream, Encoding.GetEncoding("gb2312"));
+                postData = sr.ReadToEnd();
+                sr.Close();
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Error("GetPostData" + ex.Message);
+            }
+            return postData;
+        }
     }
 }

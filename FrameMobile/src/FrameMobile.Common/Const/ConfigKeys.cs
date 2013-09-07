@@ -23,5 +23,7 @@ namespace FrameMobile.Common
 
         public const string TYD_NEWS_TOUTIAO_REQUEST_URL = "TYD_News_TouTiao_Request_URL";
 
+        public const string DEMO_TOUTIAO_FILE_PATH_ROOT = "Demo_TouTiao_File_Path_Root";
+
     }
 }

@@ -110,6 +110,10 @@
       <Project>{451fc1b1-e472-46a9-bb21-6d619f162f75}</Project>
       <Name>FrameMobile.Model</Name>
     </ProjectReference>
+    <ProjectReference Include="..\FrameMobile.Web\FrameMobile.Web.csproj">
+      <Project>{048333fb-7f0c-4e8b-90fe-b333129c52be}</Project>
+      <Name>FrameMobile.Web</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

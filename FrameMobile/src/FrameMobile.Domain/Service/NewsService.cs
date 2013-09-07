@@ -2,22 +2,23 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using FrameMobile.Model;
 
 namespace FrameMobile.Domain.Service
 {
     public class NewsService : INewsService
     {
-        public IList<Model.NewsCategoryView> GetCategoryList(Model.MobileParam mobileParams)
+        public IList<NewsCategoryView> GetCategoryList(MobileParam mobileParams)
         {
             throw new NotImplementedException();
         }
 
-        public IList<Model.NewsSubCategoryView> GetSubCategoryList(Model.MobileParam mobileParams)
+        public IList<NewsSubCategoryView> GetSubCategoryList(MobileParam mobileParams)
         {
             throw new NotImplementedException();
         }
 
-        public IList<Model.TouTiaoContentView> GetTouTiaoContentList(Model.MobileParam mobileParams, int categoryId, int startnum, int num, out int totalCount)
+        public IList<TouTiaoContentView> GetTouTiaoContentList(MobileParam mobileParams, int categoryId, int startnum, int num, out int totalCount)
         {
             throw new NotImplementedException();
         }

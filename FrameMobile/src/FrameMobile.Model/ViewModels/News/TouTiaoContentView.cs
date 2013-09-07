@@ -37,8 +37,11 @@ namespace FrameMobile.Model
         [JsonProperty("appopenurl")]
         public string AppOpenURL { get; set; }
 
-        [ViewField(IsDisplay = false)]
         [JsonProperty("publishtime")]
         public DateTime PublishTime { get; set; }
+
+        [JsonProperty("imageurl")]
+        public string ImageURL { get; set; }
+
     }
 }
