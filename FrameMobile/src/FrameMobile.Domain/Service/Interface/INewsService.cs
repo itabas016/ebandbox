@@ -8,6 +8,8 @@ namespace FrameMobile.Domain.Service
 {
     public interface INewsService
     {
+        IList<NewsSourceView> GetSourceList(MobileParam mobileParams);
+
         IList<NewsCategoryView> GetCategoryList(MobileParam mobileParams);
 
         IList<NewsSubCategoryView> GetSubCategoryList(MobileParam mobileParams);

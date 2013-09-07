@@ -39,6 +39,37 @@ namespace FrameMobile.Domain.Service
             service = new FetchTouTiaoService(DataBaseService);
         }
 
+        public IList<NewsSourceView> GetSourceList(MobileParam mobileParams)
+        {
+            #region instance
+            var source = new NewsSource()
+            {
+                Id = 1,
+                Name = "今日头条",
+                NameLowCase = "toutiao",
+                PackageName = "com.ss.android.article.news",
+                Status = 1,
+                CreateDateTime = DateTime.Now
+            };
+
+            var source2 = new NewsSource()
+            {
+                Id = 2,
+                Name = "腾讯新闻",
+                NameLowCase = "tentcent",
+                PackageName = "com.tencent.news",
+                Status = 1,
+                CreateDateTime = DateTime.Now
+            };
+            #endregion
+
+            var sourcelist = new List<NewsSource>() { source, source2 };
+
+            var result = sourcelist.To <IList<NewsSourceView>>();
+
+            return result;
+        }
+
         public IList<NewsCategoryView> GetCategoryList(MobileParam mobileParams)
         {
             #region instance
@@ -160,7 +191,7 @@ namespace FrameMobile.Domain.Service
         private List<TouTiaoContentView> GetTouTiaoContentViewList(int categoryId, int startnum, int num, out int totalCont)
         {
 
-            
+
             var response1 = string.Empty;
             var response2 = string.Empty;
             var response3 = string.Empty;

@@ -28,6 +28,17 @@ namespace Frame.Mobile.WebSite.Controllers
         }
         private INewsService _newsService;
 
+        public ActionResult SourceList(string imsi)
+        {
+            var mobileParams = GetMobileParam();
+
+            Func<IList<NewsSourceView>> getsourcelist = () => NewsService.GetSourceList(mobileParams);
+
+            var actionResult = BuildResult(this.CheckRequiredParams(imsi), getsourcelist);
+
+            return Content(actionResult.ToString());
+        }
+
         public ActionResult CategoryList(string imsi)
         {
             var mobileParams = GetMobileParam();

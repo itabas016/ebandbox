@@ -28,6 +28,13 @@ namespace FrameMobile.Domain
                 .ForMember(dest => dest.Width, opt => opt.MapFrom(ori => ori.Width))
                 .IgnoreAllNonExisting();
 
+            Mapper.CreateMap<NewsSource, NewsSourceView>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(ori => ori.Id))
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(ori => ori.Name))
+                .ForMember(dest => dest.NameLowCase, opt => opt.MapFrom(ori => ori.NameLowCase))
+                .ForMember(dest => dest.PackageName, opt => opt.MapFrom(ori => ori.PackageName));
+
+
             Mapper.CreateMap<NewsCategory, NewsCategoryView>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(ori => ori.Id))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(ori => ori.Name));

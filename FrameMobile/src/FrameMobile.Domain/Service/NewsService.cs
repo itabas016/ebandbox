@@ -8,6 +8,11 @@ namespace FrameMobile.Domain.Service
 {
     public class NewsService : INewsService
     {
+        public IList<NewsSourceView> GetSourceList(MobileParam mobileParams)
+        {
+            throw new NotImplementedException();
+        }
+
         public IList<NewsCategoryView> GetCategoryList(MobileParam mobileParams)
         {
             throw new NotImplementedException();
