@@ -23,9 +23,22 @@ namespace FrameMobile.Core
         public const int SMALL_IMAGE_WIDTH = 358;
         public const int SMALL_IMAGE_HEIGHT = 305;
 
+        public const int HD_IMAGE_WIDTH = 720;
+        public const int NORMAL_IMAGE_WIDTH = 480;
+
         #endregion
 
         #region Resized By Diff Size
+
+        public static string ResizedNormal(string oriFileName, string destFilePath)
+        {
+            return ResizedByWidth(oriFileName, destFilePath, NORMAL_IMAGE_WIDTH);
+        }
+
+        public static string ResizedHD(string oriFileName, string destFilePath)
+        {
+            return ResizedByWidth(oriFileName, destFilePath, HD_IMAGE_WIDTH);
+        }
 
         public static string ResizedToBig(string oriFileName, string destFilePath)
         {
@@ -45,6 +58,36 @@ namespace FrameMobile.Core
         #endregion
 
         #region Helper
+
+        private static string ResizedByWidth(string oriFileNamePath, string destFilePath, int width)
+        {
+            FileInfo fileInfo = new FileInfo(oriFileNamePath);
+            var bitmap = new Bitmap(oriFileNamePath);
+            if (bitmap.Width > width)
+            {
+                var height = (width * bitmap.Height) / bitmap.Width;
+                var size = new Size(width, height);
+
+                if (bitmap != null)
+                {
+                    var destBitMap = ResizeImage(bitmap, size);
+                    if (destBitMap != null)
+                    {
+                        var destFileName = string.Format("{0}{1}x{2}{3}", destFilePath, width, height, fileInfo.Name);
+                        destBitMap.Save(destFileName);
+                        return destFileName;
+                    }
+                }
+            }
+            else
+            {
+                var destFileName = string.Format("{0}{1}x{2}{3}", destFilePath, bitmap.Width, bitmap.Height, fileInfo.Name);
+                fileInfo.CopyTo(destFileName, true);
+                return destFileName;
+            }
+
+            return string.Empty;
+        }
 
         private static string ResizedBySize(string oriFileNamePath, string destFilePath, int width, int height)
         {
@@ -89,15 +132,16 @@ namespace FrameMobile.Core
             x = (newSize.Width - thumbSize.Width) / 2;
             y = (newSize.Height - thumbSize.Height);
             System.Drawing.Graphics g = Graphics.FromImage(bp);
-            g.SmoothingMode = SmoothingMode.Default;
-            g.InterpolationMode = InterpolationMode.Default;
-            g.PixelOffsetMode = PixelOffsetMode.Default;
+            g.SmoothingMode = SmoothingMode.HighSpeed;
+            g.InterpolationMode = InterpolationMode.Low;
+            g.PixelOffsetMode = PixelOffsetMode.HighSpeed;
             Rectangle rect = new Rectangle(x, y, thumbSize.Width, thumbSize.Height);
             g.DrawImage(mg, rect, 0, 0, mg.Width, mg.Height, GraphicsUnit.Pixel);
 
             return bp;
 
         }
+
 
         #endregion
     }

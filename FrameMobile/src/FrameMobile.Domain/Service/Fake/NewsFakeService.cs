@@ -39,6 +39,7 @@ namespace FrameMobile.Domain.Service
             service = new FetchTouTiaoService(DataBaseService);
         }
 
+        [ServiceCache]
         public IList<NewsSourceView> GetSourceList(MobileParam mobileParams)
         {
             #region instance
@@ -70,6 +71,7 @@ namespace FrameMobile.Domain.Service
             return result;
         }
 
+        [ServiceCache]
         public IList<NewsCategoryView> GetCategoryList(MobileParam mobileParams)
         {
             #region instance
@@ -96,6 +98,7 @@ namespace FrameMobile.Domain.Service
             return result;
         }
 
+        [ServiceCache]
         public IList<NewsSubCategoryView> GetSubCategoryList(MobileParam mobileParams)
         {
             #region instance
@@ -155,6 +158,7 @@ namespace FrameMobile.Domain.Service
             return restult;
         }
 
+        [ServiceCache]
         public IList<TouTiaoContentView> GetTouTiaoContentList(MobileParam mobileParams, int categoryId, int startnum, int num, out int totalCount)
         {
             return GetTouTiaoContentViewList(categoryId, startnum, num, out totalCount);

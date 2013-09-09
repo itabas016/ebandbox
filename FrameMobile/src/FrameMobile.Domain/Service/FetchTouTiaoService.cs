@@ -301,28 +301,16 @@ namespace FrameMobile.Domain.Service
                 MakeSureDIRExist(NEWS_DEST_IMAGE_DIR_BASE);
                 var fileNamePath = HttpHelper.DownloadFile(single_img_url, Path.Combine(NEWS_IMAGE_DIR_BASE, GetFileNameFromURL(single_img_url)));
 
-                var destFileNameBig = ImageHelper.ResizedToBig(fileNamePath,NEWS_DEST_IMAGE_DIR_BASE);
-                var destFileNameMedium = ImageHelper.ResizedToMedium(fileNamePath, NEWS_DEST_IMAGE_DIR_BASE);
-                var destFileNameSmall = ImageHelper.ResizedToSmall(fileNamePath, NEWS_DEST_IMAGE_DIR_BASE);
+                var destFileNameHD = ImageHelper.ResizedHD(fileNamePath, NEWS_DEST_IMAGE_DIR_BASE);
+                var destFileNameNormal = ImageHelper.ResizedNormal(fileNamePath, NEWS_DEST_IMAGE_DIR_BASE);
 
-                if (destFileNameBig != string.Empty)
-                {
-                    destImage.Type = 1;
-                    destImage.URL = string.Format("{0}/{1}", NEWS_IMAGE_FILE_URL, destFileNameBig);
-                    DataBaseService.Add<NewsImageInfo>(destImage);
-                }
-                if (destFileNameMedium != string.Empty)
-                {
-                    destImage.Type = 2;
-                    destImage.URL = string.Format("{0}/{1}", NEWS_IMAGE_FILE_URL, destFileNameBig);
-                    DataBaseService.Add<NewsImageInfo>(destImage);
-                }
-                if (destFileNameSmall != string.Empty)
-                {
-                    destImage.Type = 3;
-                    destImage.URL = string.Format("{0}/{1}", NEWS_IMAGE_FILE_URL, destFileNameBig);
-                    DataBaseService.Add<NewsImageInfo>(destImage);
-                }
+                destImage.Type = 1;
+                destImage.URL = string.Format("{0}/{1}", NEWS_IMAGE_FILE_URL, destFileNameHD);
+                DataBaseService.Add<NewsImageInfo>(destImage);
+
+                destImage.Type = 2;
+                destImage.URL = string.Format("{0}/{1}", NEWS_IMAGE_FILE_URL, destFileNameNormal);
+                DataBaseService.Add<NewsImageInfo>(destImage);
             }
         }
 

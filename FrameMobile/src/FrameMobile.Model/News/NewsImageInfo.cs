@@ -12,7 +12,7 @@ namespace FrameMobile.Model.News
     {
         public long NewsId { get; set; }
 
-        //1 为大图，2为中图，3为小图
+        //1 HD，2 Normal
         public int Type { get; set; }
 
         public int Width { get; set; }
