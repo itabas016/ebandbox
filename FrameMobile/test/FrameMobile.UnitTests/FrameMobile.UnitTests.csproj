@@ -60,6 +60,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\ImageHelperTest.cs" />
     <Compile Include="Domain\Mappers\ContentMapperTest.cs" />
     <Compile Include="Domain\Service\DataBaseServiceTest.cs" />
     <Compile Include="Domain\Service\FetchTouTiaoServiceTest.cs" />
@@ -75,6 +76,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\src\FrameMobile.Core\FrameMobile.Core.csproj">
+      <Project>{2bc5b332-1afc-4921-ac20-f9fa54352293}</Project>
+      <Name>FrameMobile.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\src\FrameMobile.Domain\FrameMobile.Domain.csproj">
       <Project>{4ccf9865-e731-4065-9638-114bdd12c2bf}</Project>
       <Name>FrameMobile.Domain</Name>
