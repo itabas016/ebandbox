@@ -30,14 +30,14 @@ namespace FrameMobile.Core
 
         #region Resized By Diff Size
 
-        public static string ResizedNormal(string oriFileName, string destFilePath)
+        public static string ResizedNormal(string oriFileName, string destFilePath, long newsId)
         {
-            return ResizedByWidth(oriFileName, destFilePath, NORMAL_IMAGE_WIDTH);
+            return ResizedByWidth(oriFileName, destFilePath, NORMAL_IMAGE_WIDTH, newsId);
         }
 
-        public static string ResizedHD(string oriFileName, string destFilePath)
+        public static string ResizedHD(string oriFileName, string destFilePath, long newsId)
         {
-            return ResizedByWidth(oriFileName, destFilePath, HD_IMAGE_WIDTH);
+            return ResizedByWidth(oriFileName, destFilePath, HD_IMAGE_WIDTH, newsId);
         }
 
         public static string ResizedToBig(string oriFileName, string destFilePath)
@@ -59,7 +59,7 @@ namespace FrameMobile.Core
 
         #region Helper
 
-        private static string ResizedByWidth(string oriFileNamePath, string destFilePath, int width)
+        private static string ResizedByWidth(string oriFileNamePath, string destFilePath, int width, long newsId)
         {
             FileInfo fileInfo = new FileInfo(oriFileNamePath);
             var bitmap = new Bitmap(oriFileNamePath);
@@ -73,7 +73,7 @@ namespace FrameMobile.Core
                     var destBitMap = ResizeImage(bitmap, size);
                     if (destBitMap != null)
                     {
-                        var destFileName = string.Format("{0}{1}x{2}{3}", destFilePath, width, height, fileInfo.Name);
+                        var destFileName = string.Format("{0}{1}{2}", destFilePath, newsId, fileInfo.Name);
                         destBitMap.Save(destFileName);
                         return destFileName;
                     }
@@ -81,7 +81,7 @@ namespace FrameMobile.Core
             }
             else
             {
-                var destFileName = string.Format("{0}{1}x{2}{3}", destFilePath, bitmap.Width, bitmap.Height, fileInfo.Name);
+                var destFileName = string.Format("{0}{1}{2}", destFilePath, newsId, fileInfo.Name);
                 fileInfo.CopyTo(destFileName, true);
                 return destFileName;
             }

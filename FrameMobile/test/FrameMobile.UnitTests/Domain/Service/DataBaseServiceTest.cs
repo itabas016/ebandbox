@@ -37,9 +37,8 @@ namespace FrameMobile.UnitTests.Domain.Service
             {
                 Id = 1,
                 NewsId = 1,
-                Height = 100,
-                Width = 200,
-                URL = "test.com",
+                NormalURL="",
+                HDURL="",
                 Status = 1,
                 CreateDateTime = DateTime.Now
             };

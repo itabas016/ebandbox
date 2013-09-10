@@ -12,14 +12,10 @@ namespace FrameMobile.Model.News
     {
         public long NewsId { get; set; }
 
-        //1 HD，2 Normal
-        public int Type { get; set; }
-
-        public int Width { get; set; }
-
-        public int Height { get; set; }
+        [SubSonicStringLength(512)]
+        public string NormalURL { get; set; }
 
         [SubSonicStringLength(512)]
-        public string URL { get; set; }
+        public string HDURL { get; set; }
     }
 }
