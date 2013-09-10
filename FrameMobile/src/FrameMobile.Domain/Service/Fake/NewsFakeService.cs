@@ -72,6 +72,38 @@ namespace FrameMobile.Domain.Service
         }
 
         [ServiceCache]
+        public IList<NewsLoadModeView> GetLoadModeList(MobileParam mobileParams)
+        {
+            #region instance
+            var mode1 = new NewsLoadMode()
+            {
+                Id = 1,
+                Name = "今日头条",
+                NameLowCase = "toutiao",
+                PackageName = "com.ss.android.article.news",
+                Status = 1,
+                CreateDateTime = DateTime.Now
+            };
+
+            var mode2 = new NewsLoadMode()
+            {
+                Id = 2,
+                Name = "腾讯新闻",
+                NameLowCase = "tentcent",
+                PackageName = "com.tencent.news",
+                Status = 1,
+                CreateDateTime = DateTime.Now
+            };
+            #endregion
+
+            var modelist = new List<NewsLoadMode>() { mode1, mode2 };
+
+            var result = modelist.To<IList<NewsLoadModeView>>();
+
+            return result;
+        }
+
+        [ServiceCache]
         public IList<NewsCategoryView> GetCategoryList(MobileParam mobileParams)
         {
             #region instance

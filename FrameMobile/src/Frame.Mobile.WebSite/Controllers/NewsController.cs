@@ -39,6 +39,17 @@ namespace Frame.Mobile.WebSite.Controllers
             return Content(actionResult.ToString());
         }
 
+        public ActionResult LoadModeList(string imsi)
+        {
+            var mobileParams = GetMobileParam();
+
+            Func<IList<NewsLoadModeView>> getloadmodelist = () => NewsService.GetLoadModeList(mobileParams);
+
+            var actionResult = BuildResult(this.CheckRequiredParams(imsi), getloadmodelist);
+
+            return Content(actionResult.ToString());
+        }
+
         public ActionResult CategoryList(string imsi)
         {
             var mobileParams = GetMobileParam();

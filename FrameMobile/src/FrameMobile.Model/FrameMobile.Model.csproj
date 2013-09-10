@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="Common\MobileParam.cs" />
     <Compile Include="News\NewsAdvert.cs" />
+    <Compile Include="News\NewsLoadMode.cs" />
     <Compile Include="News\NewsSource.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Support\IMySQLModel.cs" />
@@ -74,6 +75,7 @@
     <Compile Include="ThirdPart\TouTiao\TouTiaoResult.cs" />
     <Compile Include="News\NewsCategory.cs" />
     <Compile Include="ViewModels\News\NewsCategoryView.cs" />
+    <Compile Include="ViewModels\News\NewsLoadModeView.cs" />
     <Compile Include="ViewModels\News\NewsSourceView.cs" />
     <Compile Include="ViewModels\News\NewsSubCategoryView.cs" />
     <Compile Include="ViewModels\News\TouTiaoContentView.cs" />

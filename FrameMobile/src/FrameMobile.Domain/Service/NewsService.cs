@@ -15,6 +15,12 @@ namespace FrameMobile.Domain.Service
         }
 
         [ServiceCache]
+        public IList<NewsLoadModeView> GetLoadModeList(MobileParam mobileParams)
+        {
+            throw new NotImplementedException();
+        }
+
+        [ServiceCache]
         public IList<NewsCategoryView> GetCategoryList(MobileParam mobileParams)
         {
             throw new NotImplementedException();

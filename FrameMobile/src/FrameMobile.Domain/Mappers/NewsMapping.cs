@@ -32,6 +32,11 @@ namespace FrameMobile.Domain
                 .ForMember(dest => dest.NameLowCase, opt => opt.MapFrom(ori => ori.NameLowCase))
                 .ForMember(dest => dest.PackageName, opt => opt.MapFrom(ori => ori.PackageName));
 
+            Mapper.CreateMap<NewsLoadMode, NewsLoadModeView>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(ori => ori.Id))
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(ori => ori.Name))
+                .ForMember(dest => dest.NameLowCase, opt => opt.MapFrom(ori => ori.NameLowCase))
+                .ForMember(dest => dest.PackageName, opt => opt.MapFrom(ori => ori.PackageName));
 
             Mapper.CreateMap<NewsCategory, NewsCategoryView>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(ori => ori.Id))
@@ -57,6 +62,5 @@ namespace FrameMobile.Domain
                 .ForMember(dest => dest.PublishTime, opt => opt.MapFrom(ori => ori.PublishTime))
                 .IgnoreAllNonExisting();
         }
-
     }
 }
