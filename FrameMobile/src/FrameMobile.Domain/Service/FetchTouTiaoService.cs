@@ -282,7 +282,7 @@ namespace FrameMobile.Domain.Service
             var imageList = content.ImageList;
             if (imageList != null && imageList.Count > 0)
             {
-                NLogHelper.WriteInfo(string.Format("images count is {0}", imageList.Count));
+                //NLogHelper.WriteInfo(string.Format("images count is {0}", imageList.Count));
                 var newsId = content.NewsId;
                 foreach (var item in imageList)
                 {

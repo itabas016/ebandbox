@@ -16,6 +16,7 @@ using SubSonic.Query;
 using SubSonic.Repository;
 using Quartz.Server.Core;
 using FrameMobile.Core;
+using FrameMobile.Domain;
 
 namespace TYDNewsService
 {
@@ -45,6 +46,7 @@ namespace TYDNewsService
 
         public void JobStart()
         {
+            Bootstrapper.Start();
             //Initialize DB and Create Tables and Index
             NewsDBInitialize();
             NLogHelper.WriteInfo("Initialize DB is done!");

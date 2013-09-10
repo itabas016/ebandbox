@@ -5,7 +5,6 @@ using System.Linq;
 using System.ServiceProcess;
 using System.Text;
 using System.Threading.Tasks;
-using FrameMobile.Domain;
 
 namespace TYDNewsService
 {
@@ -16,7 +15,6 @@ namespace TYDNewsService
         /// </summary>
         static void Main(string[] args)
         {
-            Bootstrapper.Start();
             if (Environment.UserInteractive)
             {
                 ProcessCommandLine(args);
