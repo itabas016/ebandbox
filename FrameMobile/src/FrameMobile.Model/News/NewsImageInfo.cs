@@ -13,9 +13,11 @@ namespace FrameMobile.Model.News
         public long NewsId { get; set; }
 
         [SubSonicStringLength(512)]
+        [SubSonicNullString]
         public string NormalURL { get; set; }
 
         [SubSonicStringLength(512)]
+        [SubSonicNullString]
         public string HDURL { get; set; }
     }
 }

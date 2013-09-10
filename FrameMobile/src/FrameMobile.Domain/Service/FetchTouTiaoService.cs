@@ -284,10 +284,8 @@ namespace FrameMobile.Domain.Service
             {
                 //NLogHelper.WriteInfo(string.Format("images count is {0}", imageList.Count));
                 var newsId = content.NewsId;
-                foreach (var item in imageList)
-                {
-                    SingleImageSave(item, newsId);
-                }
+                //Save first image
+                SingleImageSave(imageList[0], newsId);
             }
         }
 
