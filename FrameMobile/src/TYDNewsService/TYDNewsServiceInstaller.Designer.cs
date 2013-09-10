@@ -40,8 +40,9 @@ namespace TYDNewsService
             serviceInstaller.StartType = ServiceStartMode.Automatic;
 
             serviceInstaller.ServiceName = "TYDNewsService";
-            this.Installers.Add(processInstaller);
-            this.Installers.Add(serviceInstaller);
+
+            serviceInstaller.Installers.AddRange(new Installer[] { processInstaller });
+            this.Installers.AddRange(new Installer[] { processInstaller, serviceInstaller });
         }
         #endregion
     }
