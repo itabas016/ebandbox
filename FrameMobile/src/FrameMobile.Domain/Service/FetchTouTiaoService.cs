@@ -119,7 +119,7 @@ namespace FrameMobile.Domain.Service
 
             if (contentList != null && contentList.Count > 0)
             {
-                NLogHelper.WriteInfo(string.Format("{0} content count is {1}", category, contentList.Count));
+                var no_repeat = 0;
                 foreach (var item_content in contentList)
                 {
                     var touTiaoModel = item_content.To<TouTiaoContentModel>();
@@ -127,10 +127,12 @@ namespace FrameMobile.Domain.Service
                     var exist = DataBaseService.Exists<TouTiaoContentModel>(x => x.NewsId == item_content.NewsId);
                     if (!exist)
                     {
+                        no_repeat++;
                         DataBaseService.Add<TouTiaoContentModel>(touTiaoModel);
                         ImageListSave(item_content);
                     }
                 }
+                NLogHelper.WriteInfo(string.Format("{0} content count is {1}. Not repeat content count is {2} ", category, contentList.Count, no_repeat));
             }
             return cursor;
         }
