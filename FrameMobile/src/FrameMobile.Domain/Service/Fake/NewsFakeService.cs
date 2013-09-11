@@ -66,7 +66,7 @@ namespace FrameMobile.Domain.Service
 
             var sourcelist = new List<NewsSource>() { source, source2 };
 
-            var result = sourcelist.To <IList<NewsSourceView>>();
+            var result = sourcelist.To<IList<NewsSourceView>>();
 
             return result;
         }
@@ -191,9 +191,9 @@ namespace FrameMobile.Domain.Service
         }
 
         [ServiceCache]
-        public IList<TouTiaoContentView> GetTouTiaoContentList(MobileParam mobileParams, int categoryId, int startnum, int num, out int totalCount)
+        public IList<TouTiaoContentView> GetTouTiaoContentList(MobileParam mobileParams, int newsId, bool action, int categoryId, int startnum, int num, out int totalCount)
         {
-            return GetTouTiaoContentViewList(categoryId, startnum, num, out totalCount);
+            return GetTouTiaoContentViewList(categoryId, newsId, action, startnum, num, out totalCount);
         }
 
         #region Helper
@@ -224,10 +224,8 @@ namespace FrameMobile.Domain.Service
             return result;
         }
 
-        private List<TouTiaoContentView> GetTouTiaoContentViewList(int categoryId, int startnum, int num, out int totalCont)
+        private List<TouTiaoContentView> GetTouTiaoContentViewList(int categoryId, int newsId, bool action, int startnum, int num, out int totalCont)
         {
-
-
             var response1 = string.Empty;
             var response2 = string.Empty;
             var response3 = string.Empty;

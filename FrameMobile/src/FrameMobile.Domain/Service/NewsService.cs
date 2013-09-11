@@ -1,41 +1,84 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using FrameMobile.Model;
+using FrameMobile.Model.News;
+using StructureMap;
 
 namespace FrameMobile.Domain.Service
 {
     public class NewsService : INewsService
     {
+        private IDataBaseService _dataBaseService;
+        public IDataBaseService DataBaseService
+        {
+            get
+            {
+                if (_dataBaseService == null)
+                {
+                    _dataBaseService = ObjectFactory.GetInstance<IDataBaseService>();
+                }
+                return _dataBaseService;
+            }
+            set
+            {
+                _dataBaseService = value;
+            }
+        }
+
         [ServiceCache]
         public IList<NewsSourceView> GetSourceList(MobileParam mobileParams)
         {
-            throw new NotImplementedException();
+            var sourcelist = DataBaseService.Find<NewsSource>(x => x.Status == 1);
+            return sourcelist.To<IList<NewsSourceView>>();
         }
 
         [ServiceCache]
         public IList<NewsLoadModeView> GetLoadModeList(MobileParam mobileParams)
         {
-            throw new NotImplementedException();
+            var loadmodelist = DataBaseService.Find<NewsLoadMode>(x => x.Status == 1);
+            return loadmodelist.To<IList<NewsLoadModeView>>();
         }
 
         [ServiceCache]
         public IList<NewsCategoryView> GetCategoryList(MobileParam mobileParams)
         {
-            throw new NotImplementedException();
+            var categorylist = DataBaseService.Find<NewsCategory>(x => x.Status == 1);
+            return categorylist.To<IList<NewsCategoryView>>();
         }
 
         [ServiceCache]
         public IList<NewsSubCategoryView> GetSubCategoryList(MobileParam mobileParams)
         {
-            throw new NotImplementedException();
+            var subcategorylist = DataBaseService.Find<NewsSubCategory>(x => x.Status == 1);
+            return subcategorylist.To<IList<NewsSubCategoryView>>();
         }
 
         [ServiceCache]
-        public IList<TouTiaoContentView> GetTouTiaoContentList(MobileParam mobileParams, int categoryId, int startnum, int num, out int totalCount)
+        public IList<TouTiaoContentView> GetTouTiaoContentList(MobileParam mobileParams, int newsId, bool action, int categoryId, int startnum, int num, out int totalCount)
         {
-            throw new NotImplementedException();
+            var contentlist = new List<TouTiaoContentModel>();
+
+            var subcategorylist = DataBaseService.Find<NewsSubCategory>(x=>x.CategoryId == categoryId && x.Status == 1);
+
+            foreach (var item in subcategorylist)
+            {
+                if (action)
+                {
+                    var subcategorycontentlist = DataBaseService.Find<TouTiaoContentModel>(x => x.CategoryId == categoryId && x.Id > newsId && x.Status == 1);
+                    contentlist.Union(subcategorycontentlist);
+                }
+                else
+                {
+                    var subcategorycontentlist = DataBaseService.Find<TouTiaoContentModel>(x => x.CategoryId == categoryId && x.Id < newsId && x.Status == 1);
+                    contentlist.Union(subcategorycontentlist);
+                }
+            }
+            totalCount = contentlist.Count;
+            var result = contentlist.To<IList<TouTiaoContentView>>();
+            return result.Skip(startnum - 1).Take(num).ToList();
         }
     }
 }
