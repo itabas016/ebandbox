@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Cronus.Framework.Utilities;
 using FrameMobile.Cache;
 using RedisMapper;
 using NCore;
+using FrameMobile.Core;
 
 namespace FrameMobile.Domain.Interceptor
 {
@@ -65,7 +65,7 @@ namespace FrameMobile.Domain.Interceptor
         {
             if (string.IsNullOrWhiteSpace(AppConfigKeys.CACHE_REDIS_READ_WRITE_SERVERS.ConfigValue()))
             {
-                CacheHelper.Add(key, value, Cronus.Framework.Utilities.CachePriority.Normal, DateTime.Now.AddMinutes(expiredMinutes), null);
+                CacheHelper.Add(key, value, CachePriority.Normal, DateTime.Now.AddMinutes(expiredMinutes), null);
             }
             else
             {

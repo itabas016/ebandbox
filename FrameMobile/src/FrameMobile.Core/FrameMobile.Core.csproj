@@ -33,6 +33,15 @@
     <Reference Include="log4net">
       <HintPath>..\..\..\lib\log4net\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Caching">
+      <HintPath>..\..\..\lib\EnterpriseLibrary\Microsoft.Practices.EnterpriseLibrary.Caching.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Caching.Cryptography">
+      <HintPath>..\..\..\lib\EnterpriseLibrary\Microsoft.Practices.EnterpriseLibrary.Caching.Cryptography.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ObjectBuilder2">
+      <HintPath>..\..\..\lib\EnterpriseLibrary\Microsoft.Practices.ObjectBuilder2.dll</HintPath>
+    </Reference>
     <Reference Include="NCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=86f0aa1179a5132d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\lib\NCore\NCore.dll</HintPath>
@@ -57,6 +66,7 @@
     <Compile Include="Algorithm\DicSortALG.cs" />
     <Compile Include="Algorithm\Encrypt.cs" />
     <Compile Include="Attribute\ViewFieldAttribute.cs" />
+    <Compile Include="Helper\CacheHelper.cs" />
     <Compile Include="Helper\HttpHelper.cs" />
     <Compile Include="Helper\ImageHelper.cs" />
     <Compile Include="Helper\LogHelper.cs" />
