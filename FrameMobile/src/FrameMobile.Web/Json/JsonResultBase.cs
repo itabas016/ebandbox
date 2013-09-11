@@ -31,6 +31,7 @@ namespace FrameMobile.Web
         public string Description { get; set; }
 
         [JsonProperty(PropertyName = "host", Order = 20)]
+        [JsonIgnore]
         public string Host { get; set; }
 
         [JsonIgnore]

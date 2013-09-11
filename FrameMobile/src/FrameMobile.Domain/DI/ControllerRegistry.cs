@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using FrameMobile.Cache;
 using FrameMobile.Core;
 using FrameMobile.Domain.Service;
 using FrameMobile.Web;
@@ -13,12 +14,25 @@ namespace FrameMobile.Domain
     {
         public ControllerRegistry()
         {
+            RegistyCommonService();
+
+            RegistyNewsService();
+        }
+
+        private void RegistyCommonService()
+        {
             For<IRequestRepository>().Use<RequestRepository>();
             For<IDataBaseService>().Use<DataBaseService>();
+            For<ICacheManagerHelper>().Use<RedisCacheHelper>();
+        }
 
-            //For<INewsService>().Use<NewsService>();
+        private void RegistyNewsService()
+        {
+#if DEBUG
             For<INewsService>().Use<NewsFakeService>();
-
+#else
+            For<INewsService>().Use<NewsService>();
+#endif
         }
     }
 }
