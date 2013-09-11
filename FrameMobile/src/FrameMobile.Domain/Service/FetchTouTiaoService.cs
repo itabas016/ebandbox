@@ -37,6 +37,8 @@ namespace FrameMobile.Domain.Service
 
         public static string NEWS_RESOURCES_DIR_ROOT = ConfigKeys.TYD_NEWS_RESOURCES_DIR_ROOT.ConfigValue();
 
+        public int NEWS_CATEGORY_REQUEST_COUNT = ConfigKeys.TYD_NEWS_TOUTIAO_REQUEST_COUNT.ConfigValue().ToInt32();
+
         public string NEWS_IMAGE_DIR_BASE = string.Format("{0}\\Original\\", NEWS_RESOURCES_DIR_ROOT);
 
         public string NEWS_DEST_HD_IMAGE_DIR_BASE = string.Format("{0}\\Image\\720\\", NEWS_RESOURCES_DIR_ROOT);
@@ -68,11 +70,11 @@ namespace FrameMobile.Domain.Service
             return param;
         }
 
-        public string Request(string category, long cursor = 0, int count = 20)
+        public string Request(string category, long cursor = 0, int count = 50)
         {
             var param = GenerateParam();
             var request_url = ConfigKeys.TYD_NEWS_TOUTIAO_REQUEST_URL.ConfigValue();
-
+            count = NEWS_CATEGORY_REQUEST_COUNT;
             param.Category = category;
 
             var query_url = string.Format("nonce={0}&category={1}&timestamp={2}&signature={3}&partner={4}&cursor={5}&count={6}",
