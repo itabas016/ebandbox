@@ -61,19 +61,19 @@ namespace FrameMobile.Domain.Service
         {
             var contentlist = new List<TouTiaoContentModel>();
 
-            var subcategorylist = DataBaseService.Find<NewsSubCategory>(x=>x.CategoryId == categoryId && x.Status == 1);
+            var subcategorylist = DataBaseService.Find<NewsSubCategory>(x => x.CategoryId == categoryId && x.Status == 1);
 
             foreach (var item in subcategorylist)
             {
                 if (action)
                 {
                     var subcategorycontentlist = DataBaseService.Find<TouTiaoContentModel>(x => x.CategoryId == item.Id && x.Id > newsId && x.Status == 1);
-                    contentlist.Union(subcategorycontentlist);
+                    contentlist = contentlist.Union(subcategorycontentlist).ToList();
                 }
                 else
                 {
                     var subcategorycontentlist = DataBaseService.Find<TouTiaoContentModel>(x => x.CategoryId == item.Id && x.Id < newsId && x.Status == 1);
-                    contentlist.Union(subcategorycontentlist);
+                    contentlist = contentlist.Union(subcategorycontentlist).ToList();
                 }
             }
             totalCount = contentlist.Count;
