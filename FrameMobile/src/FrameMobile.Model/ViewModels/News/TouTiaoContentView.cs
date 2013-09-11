@@ -19,6 +19,9 @@ namespace FrameMobile.Model
         [JsonProperty("sourceid")]
         public int SourceId { get; set; }
 
+        [JsonProperty("loadmodeid")]
+        public int LoadModeId { get; set; }
+
         [JsonProperty("categoryid")]
         public int? CategoryId { get; set; }
 

@@ -177,6 +177,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CacheController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
@@ -258,6 +259,7 @@
     <Content Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Properties\PublishProfiles\Profile1.pubxml" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />
@@ -323,6 +325,10 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\FrameMobile.Cache\FrameMobile.Cache.csproj">
+      <Project>{f304baa0-b2f6-415f-b7a2-6af1bde76e83}</Project>
+      <Name>FrameMobile.Cache</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FrameMobile.Common\FrameMobile.Common.csproj">
       <Project>{4eab6159-e307-4c31-8241-0cb556778111}</Project>
       <Name>FrameMobile.Common</Name>

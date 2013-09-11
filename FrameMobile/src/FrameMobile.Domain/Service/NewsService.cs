@@ -67,12 +67,12 @@ namespace FrameMobile.Domain.Service
             {
                 if (action)
                 {
-                    var subcategorycontentlist = DataBaseService.Find<TouTiaoContentModel>(x => x.CategoryId == categoryId && x.Id > newsId && x.Status == 1);
+                    var subcategorycontentlist = DataBaseService.Find<TouTiaoContentModel>(x => x.CategoryId == item.Id && x.Id > newsId && x.Status == 1);
                     contentlist.Union(subcategorycontentlist);
                 }
                 else
                 {
-                    var subcategorycontentlist = DataBaseService.Find<TouTiaoContentModel>(x => x.CategoryId == categoryId && x.Id < newsId && x.Status == 1);
+                    var subcategorycontentlist = DataBaseService.Find<TouTiaoContentModel>(x => x.CategoryId == item.Id && x.Id < newsId && x.Status == 1);
                     contentlist.Union(subcategorycontentlist);
                 }
             }
