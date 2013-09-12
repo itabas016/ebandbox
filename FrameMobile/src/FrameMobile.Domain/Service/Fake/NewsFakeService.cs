@@ -13,20 +13,20 @@ namespace FrameMobile.Domain.Service
 {
     public class NewsFakeService : INewsService
     {
-        private IDataBaseService _dataBaseService;
-        public IDataBaseService DataBaseService
+        private IDbContextService _dbContextService;
+        public IDbContextService dbContextService
         {
             get
             {
-                if (_dataBaseService == null)
+                if (_dbContextService == null)
                 {
-                    _dataBaseService = ObjectFactory.GetInstance<IDataBaseService>();
+                    _dbContextService = ObjectFactory.GetInstance<IDbContextService>();
                 }
-                return _dataBaseService;
+                return _dbContextService;
             }
             set
             {
-                _dataBaseService = value;
+                _dbContextService = value;
             }
         }
 
@@ -36,7 +36,7 @@ namespace FrameMobile.Domain.Service
 
         public NewsFakeService()
         {
-            service = new FetchTouTiaoService(DataBaseService);
+            service = new FetchTouTiaoService(dbContextService);
         }
 
         [ServiceCache]

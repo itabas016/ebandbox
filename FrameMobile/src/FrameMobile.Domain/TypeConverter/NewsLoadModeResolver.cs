@@ -13,9 +13,9 @@ namespace FrameMobile.Domain
     {
         protected override int ResolveCore(TouTiaoContentModel source)
         {
-            var dataBaseService = ObjectFactory.GetInstance<IDataBaseService>();
+            var dbContextService = ObjectFactory.GetInstance<IDbContextService>();
 
-            var loadmodelist = dataBaseService.Find<NewsLoadMode>(x => x.Status == 1);
+            var loadmodelist = dbContextService.Find<NewsLoadMode>(x => x.Status == 1);
 
             return loadmodelist.RandomInt();
         }

@@ -11,22 +11,22 @@ namespace TYDNewsService
 {
     public class TouTiaoJob : IJob
     {
-        public IDataBaseService dataBaseService
+        public IDbContextService dbContextService
         {
             get
             {
-                if (_dataBaseService == null)
+                if (_dbContextService == null)
                 {
-                    _dataBaseService = ObjectFactory.GetInstance<IDataBaseService>();
+                    _dbContextService = ObjectFactory.GetInstance<IDbContextService>();
                 }
-                return _dataBaseService;
+                return _dbContextService;
             }
         }
-        private IDataBaseService _dataBaseService;
+        private IDbContextService _dbContextService;
 
         public void Execute(JobExecutionContext context)
         {
-            FetchTouTiaoService service = new FetchTouTiaoService(dataBaseService);
+            FetchTouTiaoService service = new FetchTouTiaoService(dbContextService);
 
             service.Capture();
         }

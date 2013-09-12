@@ -18,14 +18,14 @@ namespace FrameMobile.Domain
 
             if (context.SourceValue == null) return null;
 
-            var dataBaseService = ObjectFactory.GetInstance<IDataBaseService>();
+            var dbContextService = ObjectFactory.GetInstance<IDbContextService>();
 
-            var dest = this.Convert(source, dataBaseService);
+            var dest = this.Convert(source, dbContextService);
 
             return dest;
         }
 
-        public TouTiaoContentView Convert(TouTiaoContentModel model, IDataBaseService service)
+        public TouTiaoContentView Convert(TouTiaoContentModel model, IDbContextService service)
         {
 
             var loadmodelist = service.Find<NewsLoadMode>(x => x.Status == 1);
