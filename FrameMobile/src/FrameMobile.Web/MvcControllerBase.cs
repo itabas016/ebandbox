@@ -228,6 +228,17 @@ namespace FrameMobile.Web
             };
         }
 
+        protected virtual Func<bool> CheckRequiredParams(string imsi,string lcd)
+        {
+            return () =>
+            {
+                var ret = true;
+                if (string.IsNullOrEmpty(imsi) || string.IsNullOrEmpty(lcd)) ret = false;
+
+                return ret;
+            };
+        }
+
         #endregion
     }
 }

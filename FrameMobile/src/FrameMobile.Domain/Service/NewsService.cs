@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using FrameMobile.Common;
 using FrameMobile.Model;
 using FrameMobile.Model.News;
 using StructureMap;
+using NCore;
 
 namespace FrameMobile.Domain.Service
 {
@@ -79,6 +81,27 @@ namespace FrameMobile.Domain.Service
             totalCount = contentlist.Count;
             var result = contentlist.To<IList<TouTiaoContentView>>();
             return result.Skip(startnum - 1).Take(num).ToList();
+        }
+
+
+        private string GetImageURLByResloution(MobileParam mobileParams, long newsId)
+        {
+            if (string.IsNullOrEmpty(mobileParams.Resolution))
+            {
+                return string.Empty;
+            }
+            var lcdArray = mobileParams.Resolution.ToLower().Split('x');
+            var width = lcdArray[0].ToInt32();
+            var height = lcdArray[1].ToInt32();
+
+            var newsImageInfo = DataBaseService.Single<NewsImageInfo>(x => x.NewsId == newsId);
+            if (newsImageInfo != null)
+            {
+                if (width > Const.NEWS_HD_RESOLUTION_WIDTH)
+                    return newsImageInfo.HDURL;
+                return newsImageInfo.NormalURL;
+            }
+            return string.Empty;
         }
     }
 }

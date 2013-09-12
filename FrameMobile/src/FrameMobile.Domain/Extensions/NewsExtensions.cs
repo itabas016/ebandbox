@@ -21,5 +21,12 @@ namespace FrameMobile.Domain
 
             return (IList<TOutput>)Mapper.Map(source, source.GetType(), typeof(TOutput));
         }
+
+        public static int RandomInt<T>(this IList<T> source)
+        {
+            if (source == null) return default(int);
+            var random = new Random();
+            return random.Next(0, source.Count);
+        }
     }
 }

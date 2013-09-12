@@ -102,6 +102,10 @@
     <Compile Include="Service\Interface\INewsService.cs" />
     <Compile Include="Service\DataBaseService.cs" />
     <Compile Include="Service\NewsService.cs" />
+    <Compile Include="TypeConverter\NewsAdvertResolver.cs" />
+    <Compile Include="TypeConverter\NewsLoadModeResolver.cs" />
+    <Compile Include="TypeConverter\NewsImageURLResolver.cs" />
+    <Compile Include="TypeConverter\TouTIaoContentTypeConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FrameMobile.Cache\FrameMobile.Cache.csproj">
