@@ -62,7 +62,6 @@ namespace FrameMobile.Domain
                 .ForMember(dest => dest.AppOpenURL, opt => opt.MapFrom(ori => ori.AppOpenURL))
                 .ForMember(dest => dest.PublishTime, opt => opt.MapFrom(ori => ori.PublishTime))
                 .ForMember(dest => dest.AdvertPkgName, opt => opt.ResolveUsing<NewsAdvertResolver>())
-                .ForMember(dest => dest.ImageURL, opt => opt.ResolveUsing<NewsImageURLResolver>())
                 .IgnoreAllNonExisting();
 
             //Mapper.CreateMap<TouTiaoContentModel, TouTiaoContentView>().ConvertUsing<TouTIaoContentTypeConverter>();
