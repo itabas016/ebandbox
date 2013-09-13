@@ -9,15 +9,15 @@ using StructureMap;
 
 namespace FrameMobile.Domain
 {
-    public class NewsLoadModeResolver : ValueResolver<TouTiaoContentModel, int>
+    public class NewsExtraAppResolver : ValueResolver<TouTiaoContentModel, int>
     {
         protected override int ResolveCore(TouTiaoContentModel source)
         {
             var dbContextService = ObjectFactory.GetInstance<IDbContextService>();
 
-            var loadmodelist = dbContextService.Find<NewsLoadMode>(x => x.Status == 1);
+            var extraAppList = dbContextService.Find<NewsExtraApp>(x => x.Status == 1);
 
-            return loadmodelist.RandomInt();
+            return extraAppList.RandomInt();
         }
     }
 }

@@ -10,12 +10,12 @@ namespace FrameMobile.Domain.Service
     {
         IList<NewsSourceView> GetSourceList(MobileParam mobileParams);
 
-        IList<NewsLoadModeView> GetLoadModeList(MobileParam mobileParams);
+        IList<NewsExtraAppView> GetExtraAppList(MobileParam mobileParams);
 
         IList<NewsCategoryView> GetCategoryList(MobileParam mobileParams);
 
         IList<NewsSubCategoryView> GetSubCategoryList(MobileParam mobileParams);
 
-        IList<TouTiaoContentView> GetTouTiaoContentList(MobileParam mobileParams, int newsId, bool action, int categoryId, int startnum, int num, out int totalCount);
+        IList<TouTiaoContentView> GetTouTiaoContentList(MobileParam mobileParams, int newsId, bool action, string categoryIds, int startnum, int num, out int totalCount);
     }
 }

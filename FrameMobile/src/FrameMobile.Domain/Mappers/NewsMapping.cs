@@ -32,11 +32,13 @@ namespace FrameMobile.Domain
                 .ForMember(dest => dest.NameLowCase, opt => opt.MapFrom(ori => ori.NameLowCase))
                 .ForMember(dest => dest.PackageName, opt => opt.MapFrom(ori => ori.PackageName));
 
-            Mapper.CreateMap<NewsLoadMode, NewsLoadModeView>()
+            Mapper.CreateMap<NewsExtraApp, NewsExtraAppView>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(ori => ori.Id))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(ori => ori.Name))
                 .ForMember(dest => dest.NameLowCase, opt => opt.MapFrom(ori => ori.NameLowCase))
-                .ForMember(dest => dest.PackageName, opt => opt.MapFrom(ori => ori.PackageName));
+                .ForMember(dest => dest.IsBrower, opt => opt.MapFrom(ori => ori.IsBrower))
+                .ForMember(dest => dest.PackageName, opt => opt.MapFrom(ori => ori.PackageName))
+                .ForMember(dest => dest.DownloadURL, opt => opt.MapFrom(ori => ori.DownloadURL));
 
             Mapper.CreateMap<NewsCategory, NewsCategoryView>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(ori => ori.Id))
@@ -54,14 +56,13 @@ namespace FrameMobile.Domain
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(ori => ori.Id))
                 .ForMember(dest => dest.NewsId, opt => opt.MapFrom(ori => ori.NewsId))
                 .ForMember(dest => dest.CategoryId, opt => opt.MapFrom(ori => ori.CategoryId))
-                .ForMember(dest => dest.LoadModeId, opt => opt.ResolveUsing<NewsLoadModeResolver>())
+                .ForMember(dest => dest.ExtraAppId, opt => opt.ResolveUsing<NewsExtraAppResolver>())
                 .ForMember(dest => dest.Site, opt => opt.MapFrom(ori => ori.Site))
                 .ForMember(dest => dest.Title, opt => opt.MapFrom(ori => ori.Title))
                 .ForMember(dest => dest.Summary, opt => opt.MapFrom(ori => ori.Summary))
                 .ForMember(dest => dest.Content, opt => opt.MapFrom(ori => ori.Content))
                 .ForMember(dest => dest.AppOpenURL, opt => opt.MapFrom(ori => ori.AppOpenURL))
                 .ForMember(dest => dest.PublishTime, opt => opt.MapFrom(ori => ori.PublishTime))
-                .ForMember(dest => dest.AdvertPkgName, opt => opt.ResolveUsing<NewsAdvertResolver>())
                 .IgnoreAllNonExisting();
 
             //Mapper.CreateMap<TouTiaoContentModel, TouTiaoContentView>().ConvertUsing<TouTIaoContentTypeConverter>();

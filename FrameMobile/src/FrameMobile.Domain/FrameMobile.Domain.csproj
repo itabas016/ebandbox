@@ -105,7 +105,7 @@
     <Compile Include="Service\DbContextService.cs" />
     <Compile Include="Service\NewsService.cs" />
     <Compile Include="TypeConverter\NewsAdvertResolver.cs" />
-    <Compile Include="TypeConverter\NewsLoadModeResolver.cs" />
+    <Compile Include="TypeConverter\NewsExtraAppResolver.cs" />
     <Compile Include="TypeConverter\NewsImageURLResolver.cs" />
     <Compile Include="TypeConverter\TouTIaoContentTypeConverter.cs" />
   </ItemGroup>

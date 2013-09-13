@@ -72,10 +72,10 @@ namespace FrameMobile.Domain.Service
         }
 
         [ServiceCache]
-        public IList<NewsLoadModeView> GetLoadModeList(MobileParam mobileParams)
+        public IList<NewsExtraAppView> GetExtraAppList(MobileParam mobileParams)
         {
             #region instance
-            var mode1 = new NewsLoadMode()
+            var mode1 = new NewsExtraApp()
             {
                 Id = 1,
                 Name = "今日头条",
@@ -85,7 +85,7 @@ namespace FrameMobile.Domain.Service
                 CreateDateTime = DateTime.Now
             };
 
-            var mode2 = new NewsLoadMode()
+            var mode2 = new NewsExtraApp()
             {
                 Id = 2,
                 Name = "腾讯新闻",
@@ -96,9 +96,9 @@ namespace FrameMobile.Domain.Service
             };
             #endregion
 
-            var modelist = new List<NewsLoadMode>() { mode1, mode2 };
+            var modelist = new List<NewsExtraApp>() { mode1, mode2 };
 
-            var result = modelist.To<IList<NewsLoadModeView>>();
+            var result = modelist.To<IList<NewsExtraAppView>>();
 
             return result;
         }
@@ -191,9 +191,9 @@ namespace FrameMobile.Domain.Service
         }
 
         [ServiceCache]
-        public IList<TouTiaoContentView> GetTouTiaoContentList(MobileParam mobileParams, int newsId, bool action, int categoryId, int startnum, int num, out int totalCount)
+        public IList<TouTiaoContentView> GetTouTiaoContentList(MobileParam mobileParams, int newsId, bool action, string categoryIds, int startnum, int num, out int totalCount)
         {
-            return GetTouTiaoContentViewList(categoryId, newsId, action, startnum, num, out totalCount);
+            return GetTouTiaoContentViewList(categoryIds, newsId, action, startnum, num, out totalCount);
         }
 
         #region Helper
@@ -224,7 +224,7 @@ namespace FrameMobile.Domain.Service
             return result;
         }
 
-        private List<TouTiaoContentView> GetTouTiaoContentViewList(int categoryId, int newsId, bool action, int startnum, int num, out int totalCont)
+        private List<TouTiaoContentView> GetTouTiaoContentViewList(string categoryIds, int newsId, bool action, int startnum, int num, out int totalCont)
         {
             var response1 = string.Empty;
             var response2 = string.Empty;
@@ -244,20 +244,25 @@ namespace FrameMobile.Domain.Service
             var toutiaoresult3 = GetTouTiaoContentViewList(GetTouTiaoContentList(response3, 3));
             var toutiaoresult4 = GetTouTiaoContentViewList(GetTouTiaoContentList(response4, 4));
             totalCont = 0;
-            switch (categoryId)
-            {
-                case 1:
-                    var result1 = toutiaoresult1.Union(toutiaoresult2).ToList();
-                    totalCont = result1.Count;
-                    return result1.Skip(startnum - 1).Take(num).ToList();
-                case 2:
-                    var result2 = toutiaoresult3.Union(toutiaoresult4).ToList();
-                    totalCont = result2.Count;
-                    return result2.Skip(startnum - 1).Take(num).ToList();
 
-                default:
-                    return null;
+            var categoryList = categoryIds.Split(';', '；').ToList();
+            var result = new List<TouTiaoContentView>();
+            foreach (var categoryId in categoryList)
+            {
+                switch (categoryId.ToInt32())
+                {
+                    case 1:
+                        result = toutiaoresult1.Union(toutiaoresult2).ToList();
+                        break;
+                    case 2:
+                        var result2 = toutiaoresult3.Union(toutiaoresult4).ToList();
+                        break;
+                    default: break;
+                }
+                result = result.Union(result).ToList();
+                totalCont = totalCont + result.Count;
             }
+            return result.Skip(startnum - 1).Take(num).ToList();
         }
 
         #endregion

@@ -38,10 +38,10 @@ namespace FrameMobile.Domain.Service
         }
 
         [ServiceCache]
-        public IList<NewsLoadModeView> GetLoadModeList(MobileParam mobileParams)
+        public IList<NewsExtraAppView> GetExtraAppList(MobileParam mobileParams)
         {
-            var loadmodelist = dbContextService.Find<NewsLoadMode>(x => x.Status == 1);
-            return loadmodelist.To<IList<NewsLoadModeView>>();
+            var extraAppList = dbContextService.Find<NewsExtraApp>(x => x.Status == 1);
+            return extraAppList.To<IList<NewsExtraAppView>>();
         }
 
         [ServiceCache]
@@ -59,27 +59,27 @@ namespace FrameMobile.Domain.Service
         }
 
         [ServiceCache]
-        public IList<TouTiaoContentView> GetTouTiaoContentList(MobileParam mobileParams, int newsId, bool action, int categoryId, int startnum, int num, out int totalCount)
+        public IList<TouTiaoContentView> GetTouTiaoContentList(MobileParam mobileParams, int newsId, bool action, string categoryIds, int startnum, int num, out int totalCount)
         {
             var contentlist = new List<TouTiaoContentModel>();
 
-            var subcategorylist = dbContextService.Find<NewsSubCategory>(x => x.CategoryId == categoryId && x.Status == 1);
+            totalCount = 0;
+            var categoryIdList = categoryIds.Split(';', '；').ToList();
 
-            foreach (var item in subcategorylist)
+            foreach (var item_category in categoryIdList)
             {
-                if (action)
+                var categoryId = item_category.ToInt32();
+                var subcategorylist = dbContextService.Find<NewsSubCategory>(x => x.CategoryId == categoryId && x.Status == 1);
+
+                foreach (var item_subcategory in subcategorylist)
                 {
-                    var subcategorycontentlist = dbContextService.Find<TouTiaoContentModel>(x => x.CategoryId == item.Id && x.Id > newsId && x.Status == 1 && x.PublishTime > DateTime.Now.AddDays(-10));
-                    contentlist = contentlist.Union(subcategorycontentlist).ToList();
+                    contentlist = GetContentListByAction(item_subcategory.Id, newsId, action);
+                    contentlist = contentlist.Union(contentlist).ToList();
                 }
-                else
-                {
-                    var subcategorycontentlist = dbContextService.Find<TouTiaoContentModel>(x => x.CategoryId == item.Id && x.Id < newsId && x.Status == 1 && x.PublishTime > DateTime.Now.AddDays(-10));
-                    contentlist = contentlist.Union(subcategorycontentlist).ToList();
-                }
+                contentlist = contentlist.Union(contentlist).ToList();
             }
-            totalCount = contentlist.Count;
-            var result = contentlist.To<IList<TouTiaoContentView>>();
+            totalCount = totalCount + contentlist.Count;
+            var result = GetContentViewListByResolution(mobileParams, contentlist);
             return result.Skip(startnum - 1).Take(num).ToList();
         }
 
@@ -101,6 +101,40 @@ namespace FrameMobile.Domain.Service
                 return newsImageInfo.NormalURL;
             }
             return string.Empty;
+        }
+
+        private List<TouTiaoContentModel> GetContentListByAction(int subcategoryId, int newsId, bool action)
+        {
+            var contentlist = new List<TouTiaoContentModel>();
+
+            if (action)
+            {
+                var subcategorycontentlist = dbContextService.Find<TouTiaoContentModel>(x => x.CategoryId == subcategoryId && x.Id > newsId && x.Status == 1 && x.PublishTime > DateTime.Now.AddDays(-10)).OrderByDescending(x => x
+                    .PublishTime);
+                contentlist = contentlist.Union(subcategorycontentlist).ToList();
+            }
+            else
+            {
+                var subcategorycontentlist = dbContextService.Find<TouTiaoContentModel>(x => x.CategoryId == subcategoryId && x.Id < newsId && x.Status == 1 && x.PublishTime > DateTime.Now.AddDays(-10)).OrderByDescending(x => x
+                    .PublishTime);
+                contentlist = contentlist.Union(subcategorycontentlist).ToList();
+            }
+            return contentlist;
+        }
+
+        private IList<TouTiaoContentView> GetContentViewListByResolution(MobileParam mobileParams, List<TouTiaoContentModel> contentList)
+        {
+            var result = contentList.To<IList<TouTiaoContentView>>();
+
+            if (result == null)
+            {
+                return null;
+            }
+            foreach (var item in result)
+            {
+                item.ImageURL = GetImageURLByResloution(mobileParams, item.NewsId);
+            }
+            return result;
         }
     }
 }

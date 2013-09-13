@@ -28,7 +28,7 @@ namespace FrameMobile.Domain
         public TouTiaoContentView Convert(TouTiaoContentModel model, IDbContextService service)
         {
 
-            var loadmodelist = service.Find<NewsLoadMode>(x => x.Status == 1);
+            var loadmodelist = service.Find<NewsExtraApp>(x => x.Status == 1);
             var advertlist = service.Find<NewsAdvert>(x => x.Status == 1);
 
             return null;

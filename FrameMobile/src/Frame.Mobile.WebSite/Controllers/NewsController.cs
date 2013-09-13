@@ -39,13 +39,13 @@ namespace Frame.Mobile.WebSite.Controllers
             return Content(actionResult.ToString());
         }
 
-        public ActionResult LoadModeList(string imsi)
+        public ActionResult ExtraAppList(string imsi)
         {
             var mobileParams = GetMobileParam();
 
-            Func<IList<NewsLoadModeView>> getloadmodelist = () => NewsService.GetLoadModeList(mobileParams);
+            Func<IList<NewsExtraAppView>> getextraapplist = () => NewsService.GetExtraAppList(mobileParams);
 
-            var actionResult = BuildResult(this.CheckRequiredParams(imsi), getloadmodelist);
+            var actionResult = BuildResult(this.CheckRequiredParams(imsi), getextraapplist);
 
             return Content(actionResult.ToString());
         }
@@ -72,12 +72,12 @@ namespace Frame.Mobile.WebSite.Controllers
             return Content(actionResult.ToString());
         }
 
-        public ActionResult NewsList(string imsi, string lcd, int categoryId, int newsId, bool action = true, int startnum = 1, int num = 10)
+        public ActionResult NewsList(string imsi, string lcd, string categoryIds, int newsId, bool action = true, int startnum = 1, int num = 10)
         {
             var mobileParams = GetMobileParam();
             int totalCount = 0;
 
-            Func<IList<TouTiaoContentView>> gettoutiaocontentlist = () => NewsService.GetTouTiaoContentList(mobileParams, newsId, action, categoryId, startnum, num, out totalCount);
+            Func<IList<TouTiaoContentView>> gettoutiaocontentlist = () => NewsService.GetTouTiaoContentList(mobileParams, newsId, action, categoryIds, startnum, num, out totalCount);
 
             var actionResult = BuildResult(this.CheckRequiredParams(imsi, lcd), gettoutiaocontentlist);
 
