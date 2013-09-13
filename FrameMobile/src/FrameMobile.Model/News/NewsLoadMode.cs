@@ -7,6 +7,7 @@ using SubSonic.SqlGeneration.Schema;
 namespace FrameMobile.Model.News
 {
     [Serializable]
+    [SubSonicTableNameOverride("newsloadmode")]
     public class NewsLoadMode : NewsSource
     {
     }
