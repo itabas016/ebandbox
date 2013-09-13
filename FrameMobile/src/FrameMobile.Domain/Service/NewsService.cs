@@ -69,12 +69,12 @@ namespace FrameMobile.Domain.Service
             {
                 if (action)
                 {
-                    var subcategorycontentlist = dbContextService.Find<TouTiaoContentModel>(x => x.CategoryId == item.Id && x.Id > newsId && x.Status == 1);
+                    var subcategorycontentlist = dbContextService.Find<TouTiaoContentModel>(x => x.CategoryId == item.Id && x.Id > newsId && x.Status == 1 && x.PublishTime > DateTime.Now.AddDays(-10));
                     contentlist = contentlist.Union(subcategorycontentlist).ToList();
                 }
                 else
                 {
-                    var subcategorycontentlist = dbContextService.Find<TouTiaoContentModel>(x => x.CategoryId == item.Id && x.Id < newsId && x.Status == 1);
+                    var subcategorycontentlist = dbContextService.Find<TouTiaoContentModel>(x => x.CategoryId == item.Id && x.Id < newsId && x.Status == 1 && x.PublishTime > DateTime.Now.AddDays(-10));
                     contentlist = contentlist.Union(subcategorycontentlist).ToList();
                 }
             }
@@ -82,7 +82,6 @@ namespace FrameMobile.Domain.Service
             var result = contentlist.To<IList<TouTiaoContentView>>();
             return result.Skip(startnum - 1).Take(num).ToList();
         }
-
 
         private string GetImageURLByResloution(MobileParam mobileParams, long newsId)
         {
