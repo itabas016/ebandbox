@@ -13,10 +13,10 @@ namespace FrameMobile.Domain
     {
         protected override string ResolveCore(TouTiaoContentModel source)
         {
-            var dataBaseService = ObjectFactory.GetInstance<IDataBaseService>();
+            var dbContextService = ObjectFactory.GetInstance<IDbContextService>();
 
-            var advertlist = dataBaseService.Find<NewsAdvert>(x => x.Status == 1);
-            var advert = dataBaseService.Single<NewsAdvert>(x => x.Id == advertlist.RandomInt());
+            var advertlist = dbContextService.Find<NewsAdvert>(x => x.Status == 1);
+            var advert = dbContextService.Single<NewsAdvert>(x => x.Id == advertlist.RandomInt());
             return advert.PackageName;
         }
     }

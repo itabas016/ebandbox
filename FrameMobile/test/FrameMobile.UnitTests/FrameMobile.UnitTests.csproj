@@ -62,7 +62,7 @@
   <ItemGroup>
     <Compile Include="Core\ImageHelperTest.cs" />
     <Compile Include="Domain\Mappers\ContentMapperTest.cs" />
-    <Compile Include="Domain\Service\DataBaseServiceTest.cs" />
+    <Compile Include="Domain\Service\DbContextServiceTest.cs" />
     <Compile Include="Domain\Service\FetchTouTiaoServiceTest.cs" />
     <Compile Include="Domain\Service\NewsServiceTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

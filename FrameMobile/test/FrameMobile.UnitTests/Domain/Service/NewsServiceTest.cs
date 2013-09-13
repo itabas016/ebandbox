@@ -47,10 +47,10 @@ namespace FrameMobile.UnitTests.Domain.Service
             var newsId = 1;
             //获取最新
             var action = true;
-            var categoryId = 1;
+            var categoryIds = "1;2";
             var totalCount = 0;
 
-            var result = newsService.GetTouTiaoContentList(mobileParam, newsId, action, categoryId, 1, 5, out totalCount);
+            var result = newsService.GetTouTiaoContentList(mobileParam, newsId, action, categoryIds, 1, 5, out totalCount);
             foreach (var item in result)
             {
                 Console.WriteLine(item.NewsId);

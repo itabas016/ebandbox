@@ -18,20 +18,20 @@ namespace FrameMobile.Domain.Service
     {
         #region Prop
 
-        private IDataBaseService _dataBaseService;
-        public IDataBaseService DataBaseService
+        private IDbContextService _dbContextService;
+        public IDbContextService dbContextService
         {
             get
             {
-                if (_dataBaseService == null)
+                if (_dbContextService == null)
                 {
-                    _dataBaseService = ObjectFactory.GetInstance<IDataBaseService>();
+                    _dbContextService = ObjectFactory.GetInstance<IDbContextService>();
                 }
-                return _dataBaseService;
+                return _dbContextService;
             }
             set
             {
-                _dataBaseService = value;
+                _dbContextService = value;
             }
         }
 
@@ -56,9 +56,9 @@ namespace FrameMobile.Domain.Service
         #endregion
 
         #region Ctor
-        public FetchTouTiaoService(IDataBaseService dataBaseService)
+        public FetchTouTiaoService(IDbContextService dbContextService)
         {
-            this.DataBaseService = dataBaseService;
+            this.dbContextService = dbContextService;
         }
         #endregion
 
@@ -124,11 +124,11 @@ namespace FrameMobile.Domain.Service
                 {
                     var touTiaoModel = item_content.To<TouTiaoContentModel>();
                     touTiaoModel.CategoryId = GetSubCategoryId(category);
-                    var exist = DataBaseService.Exists<TouTiaoContentModel>(x => x.NewsId == item_content.NewsId);
+                    var exist = dbContextService.Exists<TouTiaoContentModel>(x => x.NewsId == item_content.NewsId);
                     if (!exist)
                     {
                         no_repeat++;
-                        DataBaseService.Add<TouTiaoContentModel>(touTiaoModel);
+                        dbContextService.Add<TouTiaoContentModel>(touTiaoModel);
                         ImageListSave(item_content);
                     }
                 }
@@ -165,17 +165,17 @@ namespace FrameMobile.Domain.Service
 
         public void UpdateCategoryCursor(string categoryName, long cursor)
         {
-            var subcategory = DataBaseService.Single<NewsSubCategory>(x => x.Name == categoryName);
+            var subcategory = dbContextService.Single<NewsSubCategory>(x => x.Name == categoryName);
             if (subcategory != null && cursor != subcategory.Cursor)
             {
                 subcategory.Cursor = cursor;
-                DataBaseService.Update<NewsSubCategory>(subcategory);
+                dbContextService.Update<NewsSubCategory>(subcategory);
             }
         }
 
         public long GetCategoryCursor(string categoryName)
         {
-            var subcategory = DataBaseService.Single<NewsSubCategory>(x => x.Name == categoryName);
+            var subcategory = dbContextService.Single<NewsSubCategory>(x => x.Name == categoryName);
 
             if (subcategory == null)
             {
@@ -187,7 +187,7 @@ namespace FrameMobile.Domain.Service
 
         public int GetSubCategoryId(string categoryName)
         {
-            var subCategory = DataBaseService.Single<NewsSubCategory>(x => x.Name == categoryName);
+            var subCategory = dbContextService.Single<NewsSubCategory>(x => x.Name == categoryName);
             if (subCategory == null)
             {
                 return GetSubCategoryId(categoryName, true);
@@ -205,7 +205,7 @@ namespace FrameMobile.Domain.Service
 
                 newsSubCategory = MatchCategory(newsSubCategory, categoryName);
 
-                var subCategoryId = DataBaseService.Add<NewsSubCategory>(newsSubCategory);
+                var subCategoryId = dbContextService.Add<NewsSubCategory>(newsSubCategory);
 
                 return (int)subCategoryId;
             }
@@ -214,10 +214,10 @@ namespace FrameMobile.Domain.Service
 
         public int GetSourceId()
         {
-            var source = DataBaseService.Single<NewsSource>(x => x.NameLowCase == NEWS_SOURCES_NAME_LOW_CASE);
+            var source = dbContextService.Single<NewsSource>(x => x.NameLowCase == NEWS_SOURCES_NAME_LOW_CASE);
             if (source == null)
             {
-                var sourceId = DataBaseService.Add<NewsSource>(new NewsSource
+                var sourceId = dbContextService.Add<NewsSource>(new NewsSource
                 {
                     Name = Const.NEWS_SOURCES_NAME_TouTiao,
                     NameLowCase = Const.NEWS_SOURCES_NAME_LOW_CASE_TouTiao,
@@ -311,7 +311,7 @@ namespace FrameMobile.Domain.Service
                 destImage.HDURL = destFileNameHD;
                 destImage.NormalURL = destFileNameNormal;
 
-                DataBaseService.Add<NewsImageInfo>(destImage);
+                dbContextService.Add<NewsImageInfo>(destImage);
             }
         }
 

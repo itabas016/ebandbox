@@ -88,6 +88,8 @@
     <Compile Include="DI\ControllerRegistry.cs" />
     <Compile Include="DI\StructureMapDependencyResolver.cs" />
     <Compile Include="DI\StructureMapScope.cs" />
+    <Compile Include="Extensions\DbContextExtension.cs" />
+    <Compile Include="Extensions\IDbContext.cs" />
     <Compile Include="Extensions\MappingExtensions.cs" />
     <Compile Include="Extensions\NewsExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
@@ -98,12 +100,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\Fake\NewsFakeService.cs" />
     <Compile Include="Service\FetchTouTiaoService.cs" />
-    <Compile Include="Service\Interface\IDataBaseService.cs" />
+    <Compile Include="Service\Interface\IDbContextService.cs" />
     <Compile Include="Service\Interface\INewsService.cs" />
-    <Compile Include="Service\DataBaseService.cs" />
+    <Compile Include="Service\DbContextService.cs" />
     <Compile Include="Service\NewsService.cs" />
     <Compile Include="TypeConverter\NewsAdvertResolver.cs" />
-    <Compile Include="TypeConverter\NewsLoadModeResolver.cs" />
+    <Compile Include="TypeConverter\NewsExtraAppResolver.cs" />
     <Compile Include="TypeConverter\NewsImageURLResolver.cs" />
     <Compile Include="TypeConverter\TouTIaoContentTypeConverter.cs" />
   </ItemGroup>

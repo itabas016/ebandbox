@@ -15,24 +15,24 @@ namespace FrameMobile.UnitTests.Domain
 {
     public class FetchTouTiaoServiceTest : TestBase
     {
-        public IDataBaseService dataBaseService
+        public IDbContextService dbContextService
         {
             get
             {
-                if (_dataBaseService == null)
+                if (_dbContextService == null)
                 {
-                    _dataBaseService = ObjectFactory.GetInstance<IDataBaseService>();
+                    _dbContextService = ObjectFactory.GetInstance<IDbContextService>();
                 }
-                return _dataBaseService;
+                return _dbContextService;
             }
         }
-        private IDataBaseService _dataBaseService;
+        private IDbContextService _dbContextService;
 
         protected FetchTouTiaoService dataService;
 
         public FetchTouTiaoServiceTest()
         {
-            dataService = new FetchTouTiaoService(_dataBaseService);
+            dataService = new FetchTouTiaoService(_dbContextService);
         }
 
         [Fact]
