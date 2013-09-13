@@ -17,6 +17,7 @@ namespace FrameMobile.Model
         public long NewsId { get; set; }
 
         [JsonProperty("sourceid")]
+        [JsonIgnore]
         public int SourceId { get; set; }
 
         [JsonProperty("extraappid")]
@@ -50,6 +51,7 @@ namespace FrameMobile.Model
         public string ImageURL { get; set; }
 
         [JsonProperty("advertpkg")]
+        [JsonIgnore]
         public string AdvertPkgName { get; set; }
     }
 }

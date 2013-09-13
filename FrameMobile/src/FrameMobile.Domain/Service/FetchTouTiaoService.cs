@@ -41,9 +41,9 @@ namespace FrameMobile.Domain.Service
 
         public string NEWS_IMAGE_DIR_BASE = string.Format("{0}\\Original\\", NEWS_RESOURCES_DIR_ROOT);
 
-        public string NEWS_DEST_HD_IMAGE_DIR_BASE = string.Format("{0}\\Image\\720\\", NEWS_RESOURCES_DIR_ROOT);
+        public string NEWS_DEST_HD_IMAGE_DIR_BASE = string.Format("{0}\\Images\\720\\", NEWS_RESOURCES_DIR_ROOT);
 
-        public string NEWS_DEST_NORMAL_IMAGE_DIR_BASE = string.Format("{0}\\Image\\480\\", NEWS_RESOURCES_DIR_ROOT);
+        public string NEWS_DEST_NORMAL_IMAGE_DIR_BASE = string.Format("{0}\\Images\\480\\", NEWS_RESOURCES_DIR_ROOT);
 
         public string NEWS_IMAGE_FILE_URL = ConfigKeys.TYD_NEWS_IMAGE_FILE_URL.ConfigValue();
 

@@ -27,6 +27,7 @@ namespace FrameMobile.Model
 
         [ViewField(IsDisplay = false)]
         [JsonProperty("cursor")]
+        [JsonIgnore]
         public long Cursor { get; set; }
     }
 }
