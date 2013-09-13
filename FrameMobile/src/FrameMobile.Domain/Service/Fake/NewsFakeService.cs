@@ -34,6 +34,8 @@ namespace FrameMobile.Domain.Service
 
         public string DIR_PREFIX = ConfigKeys.DEMO_TOUTIAO_FILE_PATH_ROOT.ConfigValue();
 
+        public string APK_DOWNLOAD_PREFIX_URL = ConfigKeys.TYD_NEWS_APP_DOWNLOAD_PREFIX_URL.ConfigValue();
+
         public NewsFakeService()
         {
             service = new FetchTouTiaoService(dbContextService);
@@ -75,12 +77,17 @@ namespace FrameMobile.Domain.Service
         public IList<NewsExtraAppView> GetExtraAppList(MobileParam mobileParams)
         {
             #region instance
+
+            var pkgName_TouTiao = "com.ss.android.article.news";
+            var pkgName_QQBrower = " com.tencent.mtt";
             var mode1 = new NewsExtraApp()
             {
                 Id = 1,
                 Name = "今日头条",
                 NameLowCase = "toutiao",
-                PackageName = "com.ss.android.article.news",
+                PackageName = pkgName_TouTiao,
+                DownloadURL = string.Format(APK_DOWNLOAD_PREFIX_URL, pkgName_TouTiao),
+                IsBrower=0,
                 Status = 1,
                 CreateDateTime = DateTime.Now
             };
@@ -88,9 +95,11 @@ namespace FrameMobile.Domain.Service
             var mode2 = new NewsExtraApp()
             {
                 Id = 2,
-                Name = "腾讯新闻",
+                Name = "QQ浏览器",
                 NameLowCase = "tentcent",
-                PackageName = "com.tencent.news",
+                PackageName = pkgName_QQBrower,
+                DownloadURL = string.Format(APK_DOWNLOAD_PREFIX_URL, pkgName_QQBrower),
+                IsBrower =1,
                 Status = 1,
                 CreateDateTime = DateTime.Now
             };
