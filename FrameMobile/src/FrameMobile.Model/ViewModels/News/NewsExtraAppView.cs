@@ -18,17 +18,6 @@ namespace FrameMobile.Model
         public int IsBrower { get; set; }
 
         [JsonProperty("downloadurl")]
-        public string DownloadURL
-        {
-            get
-            {
-                if (!string.IsNullOrEmpty(PackageName))
-                {
-                    this.DownloadURL = string.Format(ConfigKeys.TYD_NEWS_APP_DOWNLOAD_PREFIX_URL.ConfigValue(), PackageName);
-                }
-                return this.DownloadURL;
-            }
-            set { value = this.DownloadURL; }
-        }
+        public string DownloadURL { get; set; }
     }
 }

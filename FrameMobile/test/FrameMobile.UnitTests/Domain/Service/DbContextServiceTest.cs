@@ -66,5 +66,6 @@ namespace FrameMobile.UnitTests.Domain.Service
             Console.WriteLine(del_value);
 
         }
+
     }
 }

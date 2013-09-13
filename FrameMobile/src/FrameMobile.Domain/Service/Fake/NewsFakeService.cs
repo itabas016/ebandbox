@@ -202,7 +202,7 @@ namespace FrameMobile.Domain.Service
         [ServiceCache]
         public IList<TouTiaoContentView> GetTouTiaoContentList(MobileParam mobileParams, int newsId, bool action, string categoryIds, int startnum, int num, out int totalCount)
         {
-            return GetTouTiaoContentViewList(categoryIds, newsId, action, startnum, num, out totalCount);
+            return GetTouTiaoContentViewList(mobileParams, categoryIds, newsId, action, startnum, num, out totalCount);
         }
 
         #region Helper
@@ -233,7 +233,7 @@ namespace FrameMobile.Domain.Service
             return result;
         }
 
-        private List<TouTiaoContentView> GetTouTiaoContentViewList(string categoryIds, int newsId, bool action, int startnum, int num, out int totalCont)
+        private List<TouTiaoContentView> GetTouTiaoContentViewList(MobileParam mobileParams, string categoryIds, int newsId, bool action, int startnum, int num, out int totalCont)
         {
             var response1 = string.Empty;
             var response2 = string.Empty;
@@ -252,6 +252,7 @@ namespace FrameMobile.Domain.Service
             var toutiaoresult2 = GetTouTiaoContentViewList(GetTouTiaoContentList(response2, 2));
             var toutiaoresult3 = GetTouTiaoContentViewList(GetTouTiaoContentList(response3, 3));
             var toutiaoresult4 = GetTouTiaoContentViewList(GetTouTiaoContentList(response4, 4));
+
             totalCont = 0;
 
             var categoryList = categoryIds.Split(';', '；').ToList();
@@ -264,14 +265,35 @@ namespace FrameMobile.Domain.Service
                         result = toutiaoresult1.Union(toutiaoresult2).ToList();
                         break;
                     case 2:
-                        var result2 = toutiaoresult3.Union(toutiaoresult4).ToList();
+                        result = toutiaoresult3.Union(toutiaoresult4).ToList();
                         break;
                     default: break;
                 }
                 result = result.Union(result).ToList();
                 totalCont = totalCont + result.Count;
             }
+
+            foreach (var item in result)
+            {
+                var r = new Random();
+                item.ImageURL = GetFakeImageURLByResolution(mobileParams);
+                item.ExtraAppId = r.Next(1, 3);
+            }
             return result.Skip(startnum - 1).Take(num).ToList();
+        }
+
+        private string GetFakeImageURLByResolution(MobileParam mobileParams)
+        {
+            var HD_ImageURL = string.Format("{0}/720/2750762044_origin_283_6383591116.jpg", ConfigKeys.TYD_NEWS_IMAGE_FILE_URL.ConfigValue());
+            var Normal_ImageURL = string.Format("{0}/480/2748447810_origin_281_8233220044.jpg", ConfigKeys.TYD_NEWS_IMAGE_FILE_URL.ConfigValue());
+            var resolutionArray = mobileParams.Resolution.ToLower().Split('x');
+            var width = resolutionArray[0].ToInt32();
+            var height = resolutionArray[1].ToInt32();
+            if (width > 720)
+            {
+                return HD_ImageURL;
+            }
+            return Normal_ImageURL;
         }
 
         #endregion
