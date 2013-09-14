@@ -14,10 +14,13 @@ namespace FrameMobile.Domain
         protected override int ResolveCore(TouTiaoContentModel source)
         {
             var dbContextService = ObjectFactory.GetInstance<IDbContextService>();
-
+#if DEBUG
+            return 1;
+#else
             var extraAppList = dbContextService.Find<NewsExtraApp>(x => x.Status == 1);
 
             return extraAppList.RandomInt();
+#endif
         }
     }
 }
