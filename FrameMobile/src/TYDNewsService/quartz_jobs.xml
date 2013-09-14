@@ -22,7 +22,7 @@
         <job-name>TouTiaoJob</job-name>
         <job-group>TouTiao</job-group>
         <start-time>1900-01-01T00:00:00.0Z</start-time>
-        <cron-expression>0 0/10 * * * ?</cron-expression>
+        <cron-expression>0 0/15 * * * ?</cron-expression>
       </cron>
     </trigger>
   </job>

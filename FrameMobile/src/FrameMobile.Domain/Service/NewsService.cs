@@ -107,15 +107,16 @@ namespace FrameMobile.Domain.Service
         {
             var contentlist = new List<TouTiaoContentModel>();
 
+            var endDateTime = DateTime.Now.AddDays(-10);
             if (action)
             {
-                var subcategorycontentlist = dbContextService.Find<TouTiaoContentModel>(x => x.CategoryId == subcategoryId && x.Id > newsId && x.Status == 1 && x.PublishTime > DateTime.Now.AddDays(-10)).OrderByDescending(x => x
+                var subcategorycontentlist = dbContextService.Find<TouTiaoContentModel>(x => x.CategoryId == subcategoryId && x.Id > newsId && x.Status == 1 && x.PublishTime > endDateTime).OrderByDescending(x => x
                     .PublishTime);
                 contentlist = contentlist.Union(subcategorycontentlist).ToList();
             }
             else
             {
-                var subcategorycontentlist = dbContextService.Find<TouTiaoContentModel>(x => x.CategoryId == subcategoryId && x.Id < newsId && x.Status == 1 && x.PublishTime > DateTime.Now.AddDays(-10)).OrderByDescending(x => x
+                var subcategorycontentlist = dbContextService.Find<TouTiaoContentModel>(x => x.CategoryId == subcategoryId && x.Id < newsId && x.Status == 1 && x.PublishTime > endDateTime).OrderByDescending(x => x
                     .PublishTime);
                 contentlist = contentlist.Union(subcategorycontentlist).ToList();
             }

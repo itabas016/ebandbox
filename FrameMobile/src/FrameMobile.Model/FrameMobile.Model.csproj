@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="Common\MobileParam.cs" />
     <Compile Include="News\NewsAdvert.cs" />
+    <Compile Include="News\NewsConfig.cs" />
     <Compile Include="News\NewsExtraApp.cs" />
     <Compile Include="News\NewsSource.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

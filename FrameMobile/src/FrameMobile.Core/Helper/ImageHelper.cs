@@ -26,6 +26,8 @@ namespace FrameMobile.Core
         public const int HD_IMAGE_WIDTH = 720;
         public const int NORMAL_IMAGE_WIDTH = 480;
 
+        public static string NEWS_IMAGE_FILE_URL = ConfigKeys.TYD_NEWS_IMAGE_FILE_URL.ConfigValue();
+
         #endregion
 
         #region Resized By Diff Size
@@ -75,7 +77,8 @@ namespace FrameMobile.Core
                     {
                         var destFileName = string.Format("{0}{1}{2}", destFilePath, newsId, fileInfo.Name);
                         destBitMap.Save(destFileName);
-                        return destFileName;
+                        var cdnFileURL = string.Format("{0}/{1}/{2}", NEWS_IMAGE_FILE_URL, width, fileInfo.Name);
+                        return cdnFileURL;
                     }
                 }
             }
@@ -83,7 +86,8 @@ namespace FrameMobile.Core
             {
                 var destFileName = string.Format("{0}{1}{2}", destFilePath, newsId, fileInfo.Name);
                 fileInfo.CopyTo(destFileName, true);
-                return destFileName;
+                var cdnFileURL = string.Format("{0}/{1}/{2}", NEWS_IMAGE_FILE_URL, width, fileInfo.Name);
+                return cdnFileURL;
             }
 
             return string.Empty;
