@@ -75,7 +75,7 @@ namespace FrameMobile.Domain.Service
                 contentlist = contentlist.Union(contentlist).ToList();
             }
             totalCount = totalCount + contentlist.Count;
-            var result = GetContentViewListByResolution(mobileParams, contentlist);
+            var result = GetCompleteContentViewList(mobileParams, contentlist);
             return result.Skip(startnum - 1).Take(num).ToList();
         }
 
@@ -97,6 +97,13 @@ namespace FrameMobile.Domain.Service
                 return newsImageInfo.NormalURL;
             }
             return string.Empty;
+        }
+
+        private List<NewsExtraApp> GetNewsExtraAppList()
+        {
+            var extraAppList = dbContextService.Find<NewsExtraApp>(x => x.Status == 1);
+
+            return extraAppList.ToList();
         }
 
         private List<TouTiaoContentModel> GetCategoryContentListByAction(int categoryId, int newsId, bool action)
@@ -139,16 +146,17 @@ namespace FrameMobile.Domain.Service
             return contentlist;
         }
 
-        private IList<TouTiaoContentView> GetContentViewListByResolution(MobileParam mobileParams, List<TouTiaoContentModel> contentList)
+        private IList<TouTiaoContentView> GetCompleteContentViewList(MobileParam mobileParams, List<TouTiaoContentModel> contentList)
         {
             var result = contentList.To<IList<TouTiaoContentView>>();
-
+            var extraAppList = GetNewsExtraAppList();
             if (result == null)
             {
                 return null;
             }
             foreach (var item in result)
             {
+                item.ExtraAppId = extraAppList.RandomInt();
                 item.ImageURL = GetImageURLByResloution(mobileParams, item.NewsId);
             }
             return result;
