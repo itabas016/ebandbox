@@ -117,6 +117,12 @@ namespace FrameMobile.Domain.Service
             var instance = DeserializeTouTiao(response);
             var contentList = Anlynaze(instance, out cursor);
 
+            SaveContentList(category, contentList);
+            return cursor;
+        }
+
+        public void SaveContentList(string category, List<TouTiaoContent> contentList)
+        {
             if (contentList != null && contentList.Count > 0)
             {
                 var no_repeat = 0;
@@ -129,13 +135,12 @@ namespace FrameMobile.Domain.Service
                     if (!exist)
                     {
                         no_repeat++;
+                        touTiaoModel.ImageIds = ImageListSave(item_content);
                         dbContextService.Add<TouTiaoContentModel>(touTiaoModel);
-                        ImageListSave(item_content);
                     }
                 }
                 NLogHelper.WriteInfo(string.Format("{0} content count is {1}. Not repeat content count is {2} ", category, contentList.Count, no_repeat));
             }
-            return cursor;
         }
 
         public void SingleCapture(string categoryName)
@@ -309,19 +314,26 @@ namespace FrameMobile.Domain.Service
             return newsSubCategory;
         }
 
-        public void ImageListSave(TouTiaoContent content)
+        public string ImageListSave(TouTiaoContent content)
         {
             var imageList = content.ImageList;
             if (imageList != null && imageList.Count > 0)
             {
                 //NLogHelper.WriteInfo(string.Format("images count is {0}", imageList.Count));
                 var newsId = content.NewsId;
+
+                var sb = new StringBuilder();
                 //Save first image
-                SingleImageSave(imageList[0], newsId);
+                var imageId = SingleImageSave(imageList[0], newsId);
+                //多个图片Id用;隔开
+
+                sb.Append(imageId + ASCII.SEMICOLON);
+                return sb.ToString().TrimEnd(ASCII.SEMICOLON_CHAR);
             }
+            return string.Empty;
         }
 
-        public void SingleImageSave(TouTiaoImageInfo imageInfo, long newsId)
+        public int SingleImageSave(TouTiaoImageInfo imageInfo, long newsId)
         {
             var destImage = imageInfo.To<NewsImageInfo>();
             destImage.NewsId = newsId;
@@ -339,8 +351,10 @@ namespace FrameMobile.Domain.Service
                 destImage.HDURL = destFileNameHD;
                 destImage.NormalURL = destFileNameNormal;
 
-                dbContextService.Add<NewsImageInfo>(destImage);
+                var imageId = dbContextService.Add<NewsImageInfo>(destImage);
+                return (int)imageId;
             }
+            return 0;
         }
 
         private string GetFileNameFromURL(string uriPath)

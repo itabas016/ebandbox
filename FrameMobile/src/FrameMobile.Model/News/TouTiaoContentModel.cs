@@ -43,6 +43,10 @@ namespace FrameMobile.Model.News
 
         public DateTime PublishTime { get; set; }
 
+        [SubSonicStringLength(256)]
+        [SubSonicNullString]
+        public string ImageIds { get; set; }
+
         //预留字段
         [SubSonicStringLength(256)]
         [SubSonicNullString]
