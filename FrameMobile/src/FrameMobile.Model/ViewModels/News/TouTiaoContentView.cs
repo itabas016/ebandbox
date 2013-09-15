@@ -26,6 +26,9 @@ namespace FrameMobile.Model
         [JsonProperty("categoryid")]
         public int? CategoryId { get; set; }
 
+        [JsonProperty("subcategoryid")]
+        public int? SubCategoryId { get; set; }
+
         [JsonProperty("title")]
         public string Title { get; set; }
 

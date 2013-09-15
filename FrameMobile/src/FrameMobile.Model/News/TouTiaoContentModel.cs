@@ -14,6 +14,8 @@ namespace FrameMobile.Model.News
 
         public int? CategoryId { get; set; }
 
+        public int? SubCategoryId { get; set; }
+
         [SubSonicStringLength(512)]
         [SubSonicNullString]
         public string Title { get; set; }

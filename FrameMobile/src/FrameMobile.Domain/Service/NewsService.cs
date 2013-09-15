@@ -69,13 +69,9 @@ namespace FrameMobile.Domain.Service
             foreach (var item_category in categoryIdList)
             {
                 var categoryId = item_category.ToInt32();
-                var subcategorylist = dbContextService.Find<NewsSubCategory>(x => x.CategoryId == categoryId && x.Status == 1);
 
-                foreach (var item_subcategory in subcategorylist)
-                {
-                    contentlist = GetContentListByAction(item_subcategory.Id, newsId, action);
-                    contentlist = contentlist.Union(contentlist).ToList();
-                }
+                contentlist = GetCategoryContentListByAction(categoryId, newsId, action);
+
                 contentlist = contentlist.Union(contentlist).ToList();
             }
             totalCount = totalCount + contentlist.Count;
@@ -103,20 +99,40 @@ namespace FrameMobile.Domain.Service
             return string.Empty;
         }
 
-        private List<TouTiaoContentModel> GetContentListByAction(int subcategoryId, int newsId, bool action)
+        private List<TouTiaoContentModel> GetCategoryContentListByAction(int categoryId, int newsId, bool action)
         {
             var contentlist = new List<TouTiaoContentModel>();
 
             var endDateTime = DateTime.Now.AddDays(-10);
             if (action)
             {
-                var subcategorycontentlist = dbContextService.Find<TouTiaoContentModel>(x => x.CategoryId == subcategoryId && x.Id > newsId && x.Status == 1 && x.PublishTime > endDateTime).OrderByDescending(x => x
+                var subcategorycontentlist = dbContextService.Find<TouTiaoContentModel>(x => x.CategoryId == categoryId && x.Id > newsId && x.Status == 1 && x.PublishTime > endDateTime).OrderByDescending(x => x
                     .PublishTime);
                 contentlist = contentlist.Union(subcategorycontentlist).ToList();
             }
             else
             {
-                var subcategorycontentlist = dbContextService.Find<TouTiaoContentModel>(x => x.CategoryId == subcategoryId && x.Id < newsId && x.Status == 1 && x.PublishTime > endDateTime).OrderByDescending(x => x
+                var subcategorycontentlist = dbContextService.Find<TouTiaoContentModel>(x => x.CategoryId == categoryId && x.Id < newsId && x.Status == 1 && x.PublishTime > endDateTime).OrderByDescending(x => x
+                    .PublishTime);
+                contentlist = contentlist.Union(subcategorycontentlist).ToList();
+            }
+            return contentlist;
+        }
+
+        private List<TouTiaoContentModel> GetSubCategoryContentListByAction(int subcategoryId, int newsId, bool action)
+        {
+            var contentlist = new List<TouTiaoContentModel>();
+
+            var endDateTime = DateTime.Now.AddDays(-10);
+            if (action)
+            {
+                var subcategorycontentlist = dbContextService.Find<TouTiaoContentModel>(x => x.SubCategoryId == subcategoryId && x.Id > newsId && x.Status == 1 && x.PublishTime > endDateTime).OrderByDescending(x => x
+                    .PublishTime);
+                contentlist = contentlist.Union(subcategorycontentlist).ToList();
+            }
+            else
+            {
+                var subcategorycontentlist = dbContextService.Find<TouTiaoContentModel>(x => x.SubCategoryId == subcategoryId && x.Id < newsId && x.Status == 1 && x.PublishTime > endDateTime).OrderByDescending(x => x
                     .PublishTime);
                 contentlist = contentlist.Union(subcategorycontentlist).ToList();
             }

@@ -123,7 +123,8 @@ namespace FrameMobile.Domain.Service
                 foreach (var item_content in contentList)
                 {
                     var touTiaoModel = item_content.To<TouTiaoContentModel>();
-                    touTiaoModel.CategoryId = GetSubCategoryId(category);
+                    touTiaoModel.CategoryId = GetCategoryId(category);
+                    touTiaoModel.SubCategoryId = GetSubCategoryId(category);
                     var exist = dbContextService.Exists<TouTiaoContentModel>(x => x.NewsId == item_content.NewsId);
                     if (!exist)
                     {
@@ -185,6 +186,16 @@ namespace FrameMobile.Domain.Service
             return subcategory.Cursor;
         }
 
+        public int GetCategoryId(string categoryName)
+        {
+            var subCategory = dbContextService.Single<NewsSubCategory>(x => x.Name == categoryName);
+            if (subCategory == null)
+            {
+                return GetCategoryId(categoryName, true);
+            }
+            return subCategory.CategoryId.Value;
+        }
+
         public int GetSubCategoryId(string categoryName)
         {
             var subCategory = dbContextService.Single<NewsSubCategory>(x => x.Name == categoryName);
@@ -193,6 +204,23 @@ namespace FrameMobile.Domain.Service
                 return GetSubCategoryId(categoryName, true);
             }
             return subCategory.Id;
+        }
+
+        public int GetCategoryId(string categoryName, bool emptyObj)
+        {
+            if (emptyObj)
+            {
+                var newsSubCategory = new NewsSubCategory();
+
+                newsSubCategory.SourceId = GetSourceId();
+
+                newsSubCategory = MatchCategory(newsSubCategory, categoryName);
+
+                var subCategoryId = dbContextService.Add<NewsSubCategory>(newsSubCategory);
+
+                return newsSubCategory.CategoryId.Value;
+            }
+            return 0;
         }
 
         public int GetSubCategoryId(string categoryName, bool emptyObj)
