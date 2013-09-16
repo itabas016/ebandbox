@@ -37,8 +37,8 @@ namespace FrameMobile.UnitTests.Domain.Service
             {
                 Id = 1,
                 NewsId = 1,
-                NormalURL="",
-                HDURL="",
+                NormalURL = "",
+                HDURL = "",
                 Status = 1,
                 CreateDateTime = DateTime.Now
             };
@@ -47,7 +47,7 @@ namespace FrameMobile.UnitTests.Domain.Service
             Console.WriteLine(add_value);
 
             imagemodel.Status = 0;
-            
+
             var update_value = dbContextService.Update<NewsImageInfo>(imagemodel);
             Assert.Equal(0, imagemodel.Status);
             Console.WriteLine(imagemodel.Status);
@@ -59,12 +59,69 @@ namespace FrameMobile.UnitTests.Domain.Service
             var single_model = dbContextService.Single<NewsImageInfo>(1);
             Assert.Equal(1, single_model.Id);
 
-            var exsit = dbContextService.Exists<NewsImageInfo>(x=>x.Id == 1);
+            var exsit = dbContextService.Exists<NewsImageInfo>(x => x.Id == 1);
             Assert.Equal(true, exsit);
 
             var del_value = dbContextService.Delete<NewsImageInfo>(imagemodel);
             Console.WriteLine(del_value);
 
+        }
+
+        [Fact]
+        public void TouTiaoContentUpdate()
+        {
+            var contentList = dbContextService.Find<TouTiaoContentModel>(x => x.SubCategoryId == 0);
+            foreach (var item in contentList)
+            {
+                #region Case SubCategory
+                switch (item.CategoryId)
+                {
+                    case 1:
+                        item.SubCategoryId = 1;
+                        item.CategoryId = 1;
+                        break;
+                    case 2:
+                        item.SubCategoryId = 2;
+                        item.CategoryId = 5;
+                        break;
+                    case 3:
+                        item.SubCategoryId = 3;
+                        item.CategoryId = 3;
+                        break;
+                    case 4:
+                        item.SubCategoryId = 4;
+                        item.CategoryId = 2;
+                        break;
+                    case 5:
+                        item.SubCategoryId = 5;
+                        item.CategoryId = 6;
+                        break;
+                    case 6:
+                        item.SubCategoryId = 6;
+                        item.CategoryId = 6;
+                        break;
+                    case 7:
+                        item.SubCategoryId = 7;
+                        item.CategoryId = 6;
+                        break;
+                    case 8:
+                        item.SubCategoryId = 8;
+                        item.CategoryId = 6;
+                        break;
+                    case 9:
+                        item.SubCategoryId = 9;
+                        item.CategoryId = 6;
+                        break;
+
+                    default:
+                        item.SubCategoryId = 0;
+                        item.CategoryId = 0;
+                        break;
+                }
+                #endregion
+
+                dbContextService.Update<TouTiaoContentModel>(item);
+            }
         }
 
     }

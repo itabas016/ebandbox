@@ -198,7 +198,7 @@ namespace FrameMobile.Domain.Service
             {
                 return GetCategoryId(categoryName, true);
             }
-            return subCategory.CategoryId.Value;
+            return subCategory.CategoryId;
         }
 
         public int GetSubCategoryId(string categoryName)
@@ -223,7 +223,7 @@ namespace FrameMobile.Domain.Service
 
                 var subCategoryId = dbContextService.Add<NewsSubCategory>(newsSubCategory);
 
-                return newsSubCategory.CategoryId.Value;
+                return newsSubCategory.CategoryId;
             }
             return 0;
         }

@@ -10,6 +10,8 @@ ALTER TABLE toutiaocontent ADD CONSTRAINT uc_content_newsid UNIQUE (NewsId);
 
 CREATE INDEX ix_toutiaocontent_categoryid ON toutiaocontent (CategoryId);
 
+CREATE INDEX ix_toutiaocontent_subcategoryid ON toutiaocontent (SubCategoryId);
+
 CREATE INDEX ix_toutiaocontent_status ON toutiaocontent (Status);
 
 CREATE INDEX ix_toutiaocontent_publish_time ON toutiaocontent (PublishTime);

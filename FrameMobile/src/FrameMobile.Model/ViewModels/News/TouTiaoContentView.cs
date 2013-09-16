@@ -24,10 +24,10 @@ namespace FrameMobile.Model
         public int ExtraAppId { get; set; }
 
         [JsonProperty("categoryid")]
-        public int? CategoryId { get; set; }
+        public int CategoryId { get; set; }
 
         [JsonProperty("subcategoryid")]
-        public int? SubCategoryId { get; set; }
+        public int SubCategoryId { get; set; }
 
         [JsonProperty("title")]
         public string Title { get; set; }
