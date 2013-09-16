@@ -76,6 +76,7 @@
     <Compile Include="ThirdPart\TouTiao\TouTiaoResult.cs" />
     <Compile Include="News\NewsCategory.cs" />
     <Compile Include="ViewModels\News\NewsCategoryView.cs" />
+    <Compile Include="ViewModels\News\NewsConfigView.cs" />
     <Compile Include="ViewModels\News\NewsExtraAppView.cs" />
     <Compile Include="ViewModels\News\NewsSourceView.cs" />
     <Compile Include="ViewModels\News\NewsSubCategoryView.cs" />

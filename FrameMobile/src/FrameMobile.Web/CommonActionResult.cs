@@ -35,6 +35,8 @@ namespace FrameMobile.Web
 
         public string Host { get; set; }
 
+        public int? ServerVerison { get; set; }
+
         public int Count { get; set; }
 
         public int? Total { get; set; }

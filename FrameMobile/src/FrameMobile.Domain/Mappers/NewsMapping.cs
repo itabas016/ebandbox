@@ -26,6 +26,11 @@ namespace FrameMobile.Domain
             Mapper.CreateMap<TouTiaoImageInfo, NewsImageInfo>()
                 .IgnoreAllNonExisting();
 
+            Mapper.CreateMap<NewsConfig, NewsConfigView>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(ori => ori.Id))
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(ori => ori.Name))
+                .ForMember(dest => dest.Version, opt => opt.MapFrom(ori => ori.Version));
+
             Mapper.CreateMap<NewsSource, NewsSourceView>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(ori => ori.Id))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(ori => ori.Name))

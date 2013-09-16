@@ -31,23 +31,30 @@ namespace FrameMobile.Domain.Service
         }
 
         [ServiceCache]
-        public IList<NewsSourceView> GetSourceList(MobileParam mobileParams)
+        public IList<NewsConfigView> GetConfigList(MobileParam mobileParams)
         {
-            var sourcelist = dbContextService.Find<NewsSource>(x => x.Status == 1);
+            var configlist = dbContextService.Find<NewsConfig>(x => x.Status == 1);
+            return configlist.To<IList<NewsConfigView>>();
+        }
+
+        [ServiceCache]
+        public IList<NewsSourceView> GetSourceList(MobileParam mobileParams, int cver, out int sver)
+        {
+            var sourcelist = new NewsSource().GetResultByVer<NewsSource>(cver, out sver);
             return sourcelist.To<IList<NewsSourceView>>();
         }
 
         [ServiceCache]
-        public IList<NewsExtraAppView> GetExtraAppList(MobileParam mobileParams)
+        public IList<NewsExtraAppView> GetExtraAppList(MobileParam mobileParams, int cver, out int sver)
         {
-            var extraAppList = dbContextService.Find<NewsExtraApp>(x => x.Status == 1);
+            var extraAppList = new NewsExtraApp().GetResultByVer<NewsExtraApp>(cver, out sver);
             return extraAppList.To<IList<NewsExtraAppView>>();
         }
 
         [ServiceCache]
-        public IList<NewsCategoryView> GetCategoryList(MobileParam mobileParams)
+        public IList<NewsCategoryView> GetCategoryList(MobileParam mobileParams, int cver, out int sver)
         {
-            var categorylist = dbContextService.Find<NewsCategory>(x => x.Status == 1);
+            var categorylist = new NewsCategory().GetResultByVer<NewsCategory>(cver, out sver);
             return categorylist.To<IList<NewsCategoryView>>();
         }
 
@@ -81,6 +88,10 @@ namespace FrameMobile.Domain.Service
         }
 
         #region Helper
+
+
+
+
 
         //1 为Normal 2为HD
         private int GetImageURLTypeByResolution(MobileParam mobileParams)

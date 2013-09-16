@@ -28,36 +28,42 @@ namespace Frame.Mobile.WebSite.Controllers
         }
         private INewsService _newsService;
 
-        public ActionResult SourceList(string imsi)
+        public ActionResult SourceList(string imsi, int cver)
         {
             var mobileParams = GetMobileParam();
+            int sver = 0;
 
-            Func<IList<NewsSourceView>> getsourcelist = () => NewsService.GetSourceList(mobileParams);
+            Func<IList<NewsSourceView>> getsourcelist = () => NewsService.GetSourceList(mobileParams, cver, out sver);
 
             var actionResult = BuildResult(this.CheckRequiredParams(imsi), getsourcelist);
 
+            actionResult.ServerVerison = sver;
             return Content(actionResult.ToString());
         }
 
-        public ActionResult ExtraAppList(string imsi)
+        public ActionResult ExtraAppList(string imsi, int cver)
         {
             var mobileParams = GetMobileParam();
+            int sver = 0;
 
-            Func<IList<NewsExtraAppView>> getextraapplist = () => NewsService.GetExtraAppList(mobileParams);
+            Func<IList<NewsExtraAppView>> getextraapplist = () => NewsService.GetExtraAppList(mobileParams, cver, out sver);
 
             var actionResult = BuildResult(this.CheckRequiredParams(imsi), getextraapplist);
 
+            actionResult.ServerVerison = sver;
             return Content(actionResult.ToString());
         }
 
-        public ActionResult CategoryList(string imsi)
+        public ActionResult CategoryList(string imsi, int cver)
         {
             var mobileParams = GetMobileParam();
+            int sver = 0;
 
-            Func<IList<NewsCategoryView>> getcategorylist = () => NewsService.GetCategoryList(mobileParams);
+            Func<IList<NewsCategoryView>> getcategorylist = () => NewsService.GetCategoryList(mobileParams, cver, out sver);
 
             var actionResult = BuildResult(this.CheckRequiredParams(imsi), getcategorylist);
 
+            actionResult.ServerVerison = sver;
             return Content(actionResult.ToString());
         }
 

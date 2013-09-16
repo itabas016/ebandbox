@@ -17,12 +17,19 @@ namespace FrameMobile.Web
             if (this.Data != null) { this.Count = commonActionResult.ViewModels.Count; }
 
             this.Total = commonActionResult.Total;
+            if (this.ServerVerison.HasValue)
+            {
+                this.CustomResultHeaders.Add(new CustomHeaderItem { Key = "sver", Value = this.ServerVerison.ToString(), IsValueType = true });
+            }
 
             if (this.Total.HasValue)
             {
                 this.CustomResultHeaders.Add(new CustomHeaderItem { Key = "total", Value = this.Total.ToString(), IsValueType = true });
             }
         }
+
+        [JsonProperty(PropertyName = "sver", Order = 10)]
+        public int? ServerVerison { get; set; }
 
         [JsonProperty(PropertyName = "count", Order = 20)]
         public int Count { get; set; }

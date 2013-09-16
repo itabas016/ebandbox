@@ -42,7 +42,46 @@ namespace FrameMobile.Domain.Service
         }
 
         [ServiceCache]
-        public IList<NewsSourceView> GetSourceList(MobileParam mobileParams)
+        public IList<NewsConfigView> GetConfigList(MobileParam mobileParams)
+        {
+            #region instance
+            var config = new NewsConfig()
+                {
+                    Id = 1,
+                    Name = "newssource",
+                    Version = 1,
+                    Status = 1,
+                    CreateDateTime = DateTime.Now
+                };
+
+            var config2 = new NewsConfig()
+            {
+                Id = 2,
+                Name = "newscategory",
+                Version = 2,
+                Status = 1,
+                CreateDateTime = DateTime.Now
+            };
+
+            var config3 = new NewsConfig()
+            {
+                Id = 3,
+                Name = "newsextraapp",
+                Version = 1,
+                Status = 1,
+                CreateDateTime = DateTime.Now
+            };
+            #endregion
+
+            var configlist = new List<NewsConfig>() { config, config2, config3 };
+
+            var result = configlist.To<IList<NewsConfigView>>();
+
+            return result;
+        }
+
+        [ServiceCache]
+        public IList<NewsSourceView> GetSourceList(MobileParam mobileParams, int cver, out int sver)
         {
             #region instance
             var source = new NewsSource()
@@ -67,14 +106,14 @@ namespace FrameMobile.Domain.Service
             #endregion
 
             var sourcelist = new List<NewsSource>() { source, source2 };
-
+            sver = 1;
             var result = sourcelist.To<IList<NewsSourceView>>();
 
             return result;
         }
 
         [ServiceCache]
-        public IList<NewsExtraAppView> GetExtraAppList(MobileParam mobileParams)
+        public IList<NewsExtraAppView> GetExtraAppList(MobileParam mobileParams, int cver, out int sver)
         {
             #region instance
 
@@ -87,7 +126,7 @@ namespace FrameMobile.Domain.Service
                 NameLowCase = "toutiao",
                 PackageName = pkgName_TouTiao,
                 DownloadURL = string.Format(APK_DOWNLOAD_PREFIX_URL, pkgName_TouTiao),
-                IsBrower=0,
+                IsBrower = 0,
                 Status = 1,
                 CreateDateTime = DateTime.Now
             };
@@ -99,21 +138,21 @@ namespace FrameMobile.Domain.Service
                 NameLowCase = "tentcent",
                 PackageName = pkgName_QQBrower,
                 DownloadURL = string.Format(APK_DOWNLOAD_PREFIX_URL, pkgName_QQBrower),
-                IsBrower =1,
+                IsBrower = 1,
                 Status = 1,
                 CreateDateTime = DateTime.Now
             };
             #endregion
 
             var modelist = new List<NewsExtraApp>() { mode1, mode2 };
-
+            sver = 1;
             var result = modelist.To<IList<NewsExtraAppView>>();
 
             return result;
         }
 
         [ServiceCache]
-        public IList<NewsCategoryView> GetCategoryList(MobileParam mobileParams)
+        public IList<NewsCategoryView> GetCategoryList(MobileParam mobileParams, int cver, out int sver)
         {
             #region instance
             var category = new NewsCategory()
@@ -133,7 +172,7 @@ namespace FrameMobile.Domain.Service
             #endregion
 
             var categorylist = new List<NewsCategory>() { category, category2 };
-
+            sver = 1;
             var result = categorylist.To<IList<NewsCategoryView>>();
 
             return result;
