@@ -135,6 +135,8 @@ namespace FrameMobile.Domain.Service
                                               join m in
                                                   dbContextService.Find<NewsImageInfo>(y => y.Status == 1)
                                               on l.NewsId equals (m.NewsId)
+                                              into d
+                                              from s in d.DefaultIfEmpty()
                                               orderby l.PublishTime descending
                                               select new TouTiaoContentView
                                               {
@@ -150,7 +152,7 @@ namespace FrameMobile.Domain.Service
                                                   WAPURL = l.WAPURL,
                                                   PublishTime = l.PublishTime,
                                                   ExtraAppId = extraAppList.RandomInt(),
-                                                  ImageURL = GetImageURLByType(m, imageType)
+                                                  ImageURL = s == null ? string.Empty : GetImageURLByType(s, imageType)
                                               });
                 contentViewList = contentViewList.Union(subcategorycontentlist).ToList();
             }
@@ -162,6 +164,8 @@ namespace FrameMobile.Domain.Service
                                               join m in
                                                   dbContextService.Find<NewsImageInfo>(y => y.Status == 1)
                                               on l.NewsId equals m.NewsId
+                                              into d
+                                              from s in d.DefaultIfEmpty()
                                               orderby l.PublishTime descending
                                               select new TouTiaoContentView
                                               {
@@ -177,7 +181,7 @@ namespace FrameMobile.Domain.Service
                                                   WAPURL = l.WAPURL,
                                                   PublishTime = l.PublishTime,
                                                   ExtraAppId = extraAppList.RandomInt(),
-                                                  ImageURL = GetImageURLByType(m, imageType)
+                                                  ImageURL = s == null ? string.Empty : GetImageURLByType(s, imageType)
                                               });
                 contentViewList = contentViewList.Union(subcategorycontentlist).ToList();
             }
