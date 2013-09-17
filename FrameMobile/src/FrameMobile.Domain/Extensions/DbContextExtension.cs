@@ -15,9 +15,24 @@ namespace FrameMobile.Domain
             return context.Repository.Add<T>(model);
         }
 
+        public static void Add<T>(this IDbContext context, IEnumerable<T> items) where T : class, IMySQLModel, new()
+        {
+            context.Repository.AddMany<T>(items);
+        }
+
         public static int Delete<T>(this IDbContext context, T model) where T : class, IMySQLModel, new()
         {
             return context.Repository.Delete<T>(model);
+        }
+
+        public static int Delete<T>(this IDbContext context, IEnumerable<T> items) where T : class, IMySQLModel, new()
+        {
+            return context.Repository.Delete<T>(items);
+        }
+
+        public static int Delete<T>(this IDbContext context, Expression<Func<T, bool>> expression) where T : class, IMySQLModel, new()
+        {
+            return context.Repository.Delete<T>(expression);
         }
 
         public static int Update<T>(this IDbContext context, T model) where T : class, IMySQLModel, new()
