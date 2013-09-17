@@ -28,6 +28,8 @@ namespace FrameMobile.Domain
 
         private void RegistyNewsService()
         {
+            For<INewsUIService>().Use<NewsUIService>();
+
 #if DEBUG
             For<INewsService>().Use<NewsFakeService>();
 #else

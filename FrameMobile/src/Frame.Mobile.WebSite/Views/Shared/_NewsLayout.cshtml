@@ -1,0 +1,45 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>@ViewBag.title</title>
+
+    <link href="@Url.Content("~/Content/news/css/main.css")" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <div class="top">
+        <div style="float: right; line-height: 25px;">
+            <span style="float: left; display: block; padding: 15px 15px 0 0"><u>userName</u>
+            </span><a href="/Account/LogOff" class="logout" title="退出登录"></a>
+        </div>
+    </div>
+    <div class="main">
+        <div class="left">
+            <ul id="navOp">
+                <li><span class="ico icon-layers"></span>@Html.ActionLink("新闻列表管理", "NewsManage", "NewsUI", null, new { highlight = "true" })</li>
+                <li><span class="ico icon-compass"></span>@Html.ActionLink("属性配置", "AndroidAppManage", "NewsUI", null, new { highlight = "true" })</li>
+                <li><span class="ico icon-list"></span>@Html.ActionLink("用户中心", "UserList", "Account", null, new { highlight = "true" })</li>
+            </ul>
+        </div>
+        <div class="right">
+            <div id="errorInfo" class="error">
+                @if (TempData["errorMsg"] != null)
+                {
+                    @Html.Raw(TempData["errorMsg"].ToString())
+                }
+            </div>
+            <div id="__progressbar__">
+                <img src="@Url.Content("~/Content/news/images/loading.gif")" />
+                <br />
+                Loading...
+            </div>
+            @RenderBody()
+        </div>
+    </div>
+    <div class="bottom">
+    </div>
+</body>
+</html>
