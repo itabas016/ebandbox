@@ -30,11 +30,11 @@ namespace FrameMobile.Web
             }
         }
 
-        [JsonProperty(PropertyName = "sver", Order = 10)]
-        public int? ServerVerison { get; set; }
-
         [JsonProperty(PropertyName = "count", Order = 20)]
         public int Count { get; set; }
+
+        [JsonIgnore]
+        public int? ServerVerison { get; set; }
 
         [JsonIgnore]
         public int? Total { get; set; }

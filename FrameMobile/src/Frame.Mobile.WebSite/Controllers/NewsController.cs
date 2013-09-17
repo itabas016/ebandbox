@@ -28,7 +28,7 @@ namespace Frame.Mobile.WebSite.Controllers
         }
         private INewsService _newsService;
 
-        public ActionResult SourceList(string imsi, int cver)
+        public ActionResult SourceList(string imsi, int cver = 0)
         {
             var mobileParams = GetMobileParam();
             int sver = 0;
@@ -41,7 +41,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return Content(actionResult.ToString());
         }
 
-        public ActionResult ExtraAppList(string imsi, int cver)
+        public ActionResult ExtraAppList(string imsi, int cver = 0)
         {
             var mobileParams = GetMobileParam();
             int sver = 0;
@@ -54,7 +54,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return Content(actionResult.ToString());
         }
 
-        public ActionResult CategoryList(string imsi, int cver)
+        public ActionResult CategoryList(string imsi, int cver = 0)
         {
             var mobileParams = GetMobileParam();
             int sver = 0;
