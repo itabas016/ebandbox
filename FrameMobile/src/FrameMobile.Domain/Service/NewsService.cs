@@ -89,10 +89,6 @@ namespace FrameMobile.Domain.Service
 
         #region Helper
 
-
-
-
-
         //1 为Normal 2为HD
         private int GetImageURLTypeByResolution(MobileParam mobileParams)
         {

@@ -16,7 +16,9 @@ namespace FrameMobile.Web
 
             if (this.Data != null) { this.Count = commonActionResult.ViewModels.Count; }
 
+            this.ServerVerison = commonActionResult.ServerVerison;
             this.Total = commonActionResult.Total;
+
             if (this.ServerVerison.HasValue)
             {
                 this.CustomResultHeaders.Add(new CustomHeaderItem { Key = "sver", Value = this.ServerVerison.ToString(), IsValueType = true });

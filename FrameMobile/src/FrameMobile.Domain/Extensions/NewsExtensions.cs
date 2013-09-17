@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using AutoMapper;
+using FrameMobile.Domain.Service;
 using FrameMobile.Model;
 using FrameMobile.Model.News;
 using StructureMap;
@@ -36,8 +37,8 @@ namespace FrameMobile.Domain
         {
             if (source == null) return 0;
 
-            var dbcontext = ObjectFactory.GetInstance<IDbContext>();
-            var result = dbcontext.Single<NewsConfig>(x => x.Name == source.GetType().Name && x.Status == 1);
+            var dbContextService = ObjectFactory.GetInstance<IDbContextService>();
+            var result = dbContextService.Single<NewsConfig>(x => x.Name == source.GetType().Name.ToLower() && x.Status == 1);
             return result != null ? result.Version : 0;
         }
 
@@ -48,7 +49,7 @@ namespace FrameMobile.Domain
             var version = CheckVersion(source);
             if (version != cver)
             {
-                var dbContextService = ObjectFactory.GetInstance<IDbContext>();
+                var dbContextService = ObjectFactory.GetInstance<IDbContextService>();
                 sver = version;
                 result = dbContextService.Find<T>(x => x.Status == 1).ToList();
                 return result;

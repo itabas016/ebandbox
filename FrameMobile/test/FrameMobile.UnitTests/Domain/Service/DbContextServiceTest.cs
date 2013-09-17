@@ -124,5 +124,37 @@ namespace FrameMobile.UnitTests.Domain.Service
             }
         }
 
+        [Fact]
+        public void IntinaizedNewsConfigTable()
+        {
+            var config = new NewsConfig()
+            {
+                Id = 1,
+                Name = "newssource",
+                Version = 0,
+                Status = 1,
+                CreateDateTime = DateTime.Now
+            };
+            var config2 = new NewsConfig()
+            {
+                Id = 2,
+                Name = "newscategory",
+                Version = 0,
+                Status = 1,
+                CreateDateTime = DateTime.Now
+            };
+            var config3 = new NewsConfig()
+            {
+                Id = 3,
+                Name = "newsextraapp",
+                Version = 0,
+                Status = 1,
+                CreateDateTime = DateTime.Now
+            };
+            var configlist = new List<NewsConfig>() { config, config2, config3 };
+
+            dbContextService.Add<NewsConfig>(configlist);
+        }
+
     }
 }
