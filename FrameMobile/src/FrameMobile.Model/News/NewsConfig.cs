@@ -14,6 +14,9 @@ namespace FrameMobile.Model.News
         public string Name { get; set; }
 
         [SubSonicStringLength(64)]
+        public string DisplayName { get; set; }
+
+        [SubSonicStringLength(64)]
         public int Version { get; set; }
     }
 }

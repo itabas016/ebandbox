@@ -1,0 +1,93 @@
+﻿@using FrameMobile.Model.News;
+@model NewsExtraApp
+@{
+    bool isUpdateMode = ViewData["IsUpdate"] != null;
+    ViewBag.Title = isUpdateMode ? "修改外推应用" : "添加外推应用";
+    Layout = "~/Views/Shared/_NewsLayout.cshtml";
+}
+
+<div class="contentHeader">
+    <div class="contentHeaderInfo">
+        <button class="btn btn-quaternary btn-large addapp" onclick="history.back();">
+            返 回</button>
+    </div>
+    <div class="apphead">
+        <div class="title">
+            <b>@ViewBag.Title </b>
+        </div>
+    </div>
+</div>
+<div class="content">
+    <div class="windows">
+        @using (Html.BeginForm())
+        {
+
+            <p>
+                <div class="title">
+                    <h1>
+                        @ViewBag.Title</h1>
+                </div>
+            </p>
+
+            <div style="clear: both">
+                <table>
+                    @Html.ValidationSummary(true)
+                    <tr>
+                        <td><strong>名称: </strong></td>
+                        <td>@Html.TextBoxFor(m => m.Name)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>简称: </strong></td>
+                        <td>
+                            @if (isUpdateMode)
+                            {
+                                @Html.TextBoxFor(m => m.NameLowCase, new { @readonly = true, Class = "txt-readonly" })}
+                            else
+                            {
+                                @Html.TextBoxFor(m => m.NameLowCase)
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>包名: </strong></td>
+                        <td>
+                            @if (isUpdateMode)
+                            {
+                                @Html.TextBoxFor(m => m.PackageName, new { @readonly = true, Class = "txt-readonly" })}
+                            else
+                            {
+                                @Html.TextBoxFor(m => m.PackageName)
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>是否是浏览器应用: </strong></td>
+                        <td>@Html.RadioButtonFor(m => m.IsBrower, 1) 是 @Html.RadioButtonFor(m => m.IsBrower, 0) 否</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>应用下载地址: </strong></td>
+                        <td>
+                            @if (isUpdateMode)
+                            {
+                                @Html.TextAreaFor(m => m.DownloadURL, new { @readonly = true, Class = "txt-readonly" })}
+                            else
+                            {
+                                @Html.TextAreaFor(m => m.DownloadURL)
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>状态: </strong></td>
+                        <td>@Html.RadioButtonFor(m => m.Status, 1) 有效 @Html.RadioButtonFor(m => m.Status, 0) 无效</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <button class="btn btn-large btn-blue addapp" style="margin-left: 50px">@ViewBag.Title</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        }
+    </div>
+</div>

@@ -324,8 +324,14 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Views\NewsUI\NewsManage.cshtml" />
-    <Content Include="Views\NewsUI\ConfigManage.cshtml" />
-    <Content Include="Views\NewsUI\AddConfig.cshtml" />
+    <Content Include="Views\NewsUI\ConfigList.cshtml" />
+    <Content Include="Views\NewsUI\ConfigAdd.cshtml" />
+    <Content Include="Views\NewsUI\SourceList.cshtml" />
+    <Content Include="Views\NewsUI\SourceAdd.cshtml" />
+    <Content Include="Views\NewsUI\CategoryAdd.cshtml" />
+    <Content Include="Views\NewsUI\CategoryList.cshtml" />
+    <Content Include="Views\NewsUI\ExtraAppList.cshtml" />
+    <Content Include="Views\NewsUI\ExtraAppAdd.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

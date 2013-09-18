@@ -1,0 +1,55 @@
+﻿@model List<NewsConfig>
+@using FrameMobile.Model.News;
+@{
+    ViewBag.Title = "新闻配置表管理";
+    Layout = "~/Views/Shared/_NewsLayout.cshtml";
+
+    List<NewsConfig> configlist = ViewData["configlist"] as List<NewsConfig>;
+}
+
+<div class="contentHeader">
+    <div class="contentHeaderInfo">
+        <button class="btn btn-large btn-blue addapp" onclick="window.open('ConfigAdd','_self');">
+            配置表添加</button>
+    </div>
+    <div class="apphead">
+        <div class="title">
+            <b>@ViewBag.Title</b>
+        </div>
+        <div>
+            <button class="btn btn-quaternary btn-large" onclick="history.back();">
+                返 回</button>
+        </div>
+    </div>
+</div>
+<div class="content">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>名称</th>
+                <th>配置表名</th>
+                <th>当前版本号</th>
+                <th>配置表状态</th>
+                <th>&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody class="prolist">
+            @foreach (var item in configlist)
+            {
+                <tr class="odd gradeX">
+                    <td><strong>@item.DisplayName</strong></td>
+                    <td>@item.Name</td>
+                    <td>@item.Version</td>
+                    <td>@item.Status</td>
+                    <td class="center">
+                        <button type="button" class="btn btn-large btn-gray"  onclick="window.open('ConfigEdit?configId=@item.Id','_self');">修 改</button>
+                    </td>
+                    <td class="center">
+                        <button type="button" class="btn btn-large btn-gray"  onclick="var c=confirm('确定要删除?'); if(c==true){window.open('ConfigDelete?configId=@item.Id','_self');}">
+                            删 除</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
