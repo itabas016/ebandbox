@@ -158,7 +158,7 @@ namespace FrameMobile.Domain.Service
                                                   AppOpenURL = l.AppOpenURL,
                                                   WAPURL = l.WAPURL,
                                                   PublishTime = l.PublishTime,
-                                                  ExtraAppId = extraAppList.RandomInt(),
+                                                  ExtraAppId = l.ExtraAppId != 0 ? l.ExtraAppId : extraAppList.RandomInt(),
                                                   ImageURL = s == null ? string.Empty : GetImageURLByType(s, imageType)
                                               });
                 contentViewList = contentViewList.Union(subcategorycontentlist).ToList();
@@ -187,7 +187,7 @@ namespace FrameMobile.Domain.Service
                                                   AppOpenURL = l.AppOpenURL,
                                                   WAPURL = l.WAPURL,
                                                   PublishTime = l.PublishTime,
-                                                  ExtraAppId = extraAppList.RandomInt(),
+                                                  ExtraAppId = l.ExtraAppId != 0 ? l.ExtraAppId : extraAppList.RandomInt(),
                                                   ImageURL = s == null ? string.Empty : GetImageURLByType(s, imageType)
                                               });
                 contentViewList = contentViewList.Union(subcategorycontentlist).ToList();

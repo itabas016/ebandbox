@@ -16,6 +16,8 @@ namespace FrameMobile.Model.News
 
         public int SubCategoryId { get; set; }
 
+        public int ExtraAppId { get; set; }
+
         [SubSonicStringLength(512)]
         [SubSonicNullString]
         public string Title { get; set; }
