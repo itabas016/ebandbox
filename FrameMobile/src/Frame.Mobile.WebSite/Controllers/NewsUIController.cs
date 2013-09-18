@@ -8,6 +8,7 @@ using FrameMobile.Domain.Service;
 using FrameMobile.Model.News;
 using FrameMobile.Web;
 using StructureMap;
+using SubSonic.Schema;
 
 namespace Frame.Mobile.WebSite.Controllers
 {
@@ -64,9 +65,67 @@ namespace Frame.Mobile.WebSite.Controllers
 
         #region News
 
-        public ActionResult NewsManage()
+        public ActionResult NewsManage(int? page)
+        {
+            int pageSize = 20;
+            int pageNum = page.HasValue ? page.Value : 1;
+            PagedList<TouTiaoContentModel> newslist = dbContextService.GetPaged<TouTiaoContentModel>("PublishTime", pageNum, pageSize);
+            ViewData["newslist"] = newslist;
+            ViewData["pageNum"] = pageNum;
+            return View(newslist);
+        }
+
+        [HttpGet]
+        public ActionResult NewsAdd()
         {
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult NewsAdd(TouTiaoContentModel model)
+        {
+            var ret = dbContextService.Add<TouTiaoContentModel>(model);
+            return RedirectToAction("NewsManage");
+        }
+
+        [HttpGet]
+        public ActionResult NewsEdit(int newsId)
+        {
+            var news = dbContextService.Single<TouTiaoContentModel>(newsId);
+            ViewData["IsUpdate"] = true;
+            return View("NewsAdd", news);
+        }
+
+        [HttpPost]
+        public ActionResult NewsEdit(TouTiaoContentModel model)
+        {
+            /*
+            ViewData["Categorylist"] = dbContextService.All<NewsCategory>().ToList();
+            ViewData["SubCategorylist"] = dbContextService.All<NewsSubCategory>().ToList();
+            ViewData["ExtraApplist"] = dbContextService.All<NewsExtraApp>().ToList();
+            */
+
+            var news = dbContextService.Single<TouTiaoContentModel>(model.Id);
+
+            news.Title = model.Title;
+            news.CategoryId = model.CategoryId;
+            news.SubCategoryId = model.SubCategoryId;
+            news.WAPURL = model.WAPURL;
+            news.Site = model.Site;
+            news.Summary = model.Summary;
+            news.Content = model.Content;
+            news.Status = model.Status;
+            news.CreateDateTime = DateTime.Now;
+
+            dbContextService.Update<TouTiaoContentModel>(news);
+
+            return RedirectToAction("NewsManage");
+        }
+
+        public ActionResult NewsDelete(int newsId)
+        {
+            var ret = dbContextService.Delete<TouTiaoContentModel>(x=>x.Id == newsId);
+            return RedirectToAction("NewsManage");
         }
 
         #endregion
@@ -89,7 +148,7 @@ namespace Frame.Mobile.WebSite.Controllers
         [HttpPost]
         public ActionResult ConfigAdd(NewsConfig model)
         {
-            var exist = dbContextService.Exists<NewsConfig>(x=>x.Name == model.Name);
+            var exist = dbContextService.Exists<NewsConfig>(x => x.Name == model.Name);
             if (exist)
             {
                 TempData["errorMsg"] = "该配置项已存在！";
@@ -101,8 +160,8 @@ namespace Frame.Mobile.WebSite.Controllers
 
         public ActionResult ConfigDelete(int configId)
         {
-            var ret = dbContextService.Delete<NewsConfig>(x=>x.Id == configId);
-            return View();
+            var ret = dbContextService.Delete<NewsConfig>(x => x.Id == configId);
+            return RedirectToAction("ConfigList");
         }
 
         [HttpGet]
@@ -150,7 +209,7 @@ namespace Frame.Mobile.WebSite.Controllers
         [HttpPost]
         public ActionResult SourceAdd(NewsSource model)
         {
-            var exist = dbContextService.Exists<NewsSource>(x => x.Name == model.NameLowCase ||x.PackageName == model.PackageName);
+            var exist = dbContextService.Exists<NewsSource>(x => x.Name == model.NameLowCase || x.PackageName == model.PackageName);
             if (exist)
             {
                 TempData["errorMsg"] = "该提供商已存在！";
@@ -163,7 +222,7 @@ namespace Frame.Mobile.WebSite.Controllers
         public ActionResult SourceDelete(int sourceId)
         {
             var ret = dbContextService.Delete<NewsSource>(x => x.Id == sourceId);
-            return View();
+            return RedirectToAction("SourceList");
         }
 
         [HttpGet]
@@ -224,7 +283,7 @@ namespace Frame.Mobile.WebSite.Controllers
         public ActionResult CategoryDelete(int categoryId)
         {
             var ret = dbContextService.Delete<NewsCategory>(x => x.Id == categoryId);
-            return View();
+            return RedirectToAction("CategoryList");
         }
 
         [HttpGet]
@@ -284,7 +343,7 @@ namespace Frame.Mobile.WebSite.Controllers
         public ActionResult SubCategoryDelete(int subcategoryId)
         {
             var ret = dbContextService.Delete<NewsSubCategory>(x => x.Id == subcategoryId);
-            return View();
+            return RedirectToAction("SubCategoryList");
         }
 
         [HttpGet]
@@ -344,7 +403,7 @@ namespace Frame.Mobile.WebSite.Controllers
         public ActionResult ExtraAppDelete(int extraAppId)
         {
             var ret = dbContextService.Delete<NewsExtraApp>(x => x.Id == extraAppId);
-            return View();
+            return RedirectToAction("ExtraAppList");
         }
 
         [HttpGet]

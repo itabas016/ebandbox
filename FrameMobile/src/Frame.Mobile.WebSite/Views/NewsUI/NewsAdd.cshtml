@@ -1,0 +1,101 @@
+﻿@using FrameMobile.Model.News;
+@model TouTiaoContentModel
+@{
+    bool isUpdateMode = ViewData["IsUpdate"] != null;
+    ViewBag.Title = isUpdateMode ? "修改新闻" : "添加新闻";
+    Layout = "~/Views/Shared/_NewsLayout.cshtml";
+    
+}
+
+<div class="contentHeader">
+    <div class="contentHeaderInfo">
+        <button class="btn btn-quaternary btn-large addapp" onclick="history.back();">
+            返 回</button>
+    </div>
+    <div class="apphead">
+        <div class="title">
+            <b>@ViewBag.Title </b>
+        </div>
+    </div>
+</div>
+<div class="content">
+    <div class="windows">
+        @using (Html.BeginForm())
+        {
+
+            <p>
+                <div class="title">
+                    <h1>
+                        @ViewBag.Title</h1>
+                </div>
+            </p>
+
+            <div class="content_left">
+                <table>
+                    @Html.ValidationSummary(true)
+                    <tr>
+                        <td><strong>分类: </strong></td>
+                        @*<td>@Html.DropDownListFor(m => m.CategoryId, (SelectList)ViewData["Categorylist"])</td>*@
+                        <td>@Html.TextBoxFor(m => m.CategoryId)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>子分类: </strong></td>
+                        <td>@Html.TextBoxFor(m => m.SubCategoryId)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>外推应用: </strong></td>
+                        <td>@Html.TextBoxFor(m => m.ExtraAppId)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>状态: </strong></td>
+                        <td>@Html.RadioButtonFor(m => m.Status, 1) 有效 @Html.RadioButtonFor(m => m.Status, 0) 无效</td>
+                    </tr>
+
+                </table>
+            </div>
+            
+            <div class="content_right">
+                <table>
+                    <tr>
+                        <td><strong>标题: </strong></td>
+                        <td>@Html.TextBoxFor(m => m.Title)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>来源: </strong></td>
+                        <td>@Html.TextAreaFor(m => m.Site)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Wap地址: </strong></td>
+                        <td>@Html.TextAreaFor(m => m.WAPURL)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>发布时间: </strong></td>
+                        <td>@Html.TextAreaFor(m => m.PublishTime)</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <div>
+                <table>
+                    <tr>
+                        <td><strong>图片地址: </strong></td>
+                        <td>@Html.TextAreaFor(m => m.ImageIds)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>摘要: </strong></td>
+                        <td>@Html.TextBoxFor(m => m.Summary)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>内容: </strong></td>
+                        <td>@Html.TextAreaFor(m => m.Content)</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <button class="btn btn-large btn-blue addapp" style="margin-left: 50px">@ViewBag.Title</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        }
+    </div>
+</div>
