@@ -62,6 +62,7 @@ namespace FrameMobile.Domain
                 .ForMember(dest => dest.NewsId, opt => opt.MapFrom(ori => ori.NewsId))
                 .ForMember(dest => dest.CategoryId, opt => opt.MapFrom(ori => ori.CategoryId))
                 .ForMember(dest => dest.SubCategoryId, opt => opt.MapFrom(ori => ori.SubCategoryId))
+                .ForMember(dest => dest.ExtraAppId, opt => opt.MapFrom(ori => ori.ExtraAppId))
                 .ForMember(dest => dest.Site, opt => opt.MapFrom(ori => ori.Site))
                 .ForMember(dest => dest.Title, opt => opt.MapFrom(ori => ori.Title))
                 .ForMember(dest => dest.Summary, opt => opt.MapFrom(ori => ori.Summary))
