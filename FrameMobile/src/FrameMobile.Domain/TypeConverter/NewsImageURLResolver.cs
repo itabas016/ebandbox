@@ -7,9 +7,9 @@ using FrameMobile.Model.News;
 
 namespace FrameMobile.Domain
 {
-    public class NewsImageURLResolver : ValueResolver<TouTiaoContentModel, string>
+    public class NewsImageURLResolver : ValueResolver<NewsContent, string>
     {
-        protected override string ResolveCore(TouTiaoContentModel source)
+        protected override string ResolveCore(NewsContent source)
         {
             throw new NotImplementedException();
         }

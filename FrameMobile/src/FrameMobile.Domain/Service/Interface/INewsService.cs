@@ -18,6 +18,6 @@ namespace FrameMobile.Domain.Service
 
         IList<NewsSubCategoryView> GetSubCategoryList(MobileParam mobileParams);
 
-        IList<TouTiaoContentView> GetTouTiaoContentList(MobileParam mobileParams, int newsId, bool action, string categoryIds, int startnum, int num, out int totalCount);
+        IList<NewsContentView> GetTouTiaoContentList(MobileParam mobileParams, int newsId, bool action, string categoryIds, int startnum, int num, out int totalCount);
     }
 }

@@ -128,15 +128,15 @@ namespace FrameMobile.Domain.Service
                 var no_repeat = 0;
                 foreach (var item_content in contentList)
                 {
-                    var touTiaoModel = item_content.To<TouTiaoContentModel>();
+                    var touTiaoModel = item_content.To<NewsContent>();
                     touTiaoModel.CategoryId = GetCategoryId(category);
                     touTiaoModel.SubCategoryId = GetSubCategoryId(category);
-                    var exist = dbContextService.Exists<TouTiaoContentModel>(x => x.NewsId == item_content.NewsId);
+                    var exist = dbContextService.Exists<NewsContent>(x => x.NewsId == item_content.NewsId);
                     if (!exist)
                     {
                         no_repeat++;
                         touTiaoModel.ImageIds = ImageListSave(item_content);
-                        dbContextService.Add<TouTiaoContentModel>(touTiaoModel);
+                        dbContextService.Add<NewsContent>(touTiaoModel);
                     }
                 }
                 NLogHelper.WriteInfo(string.Format("{0} content count is {1}. Not repeat content count is {2} ", category, contentList.Count, no_repeat));

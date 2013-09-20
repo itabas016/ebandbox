@@ -1,4 +1,4 @@
-﻿@model PagedList<TouTiaoContentModel>
+﻿@model PagedList<NewsContent>
 @using System.Web.UI;
 @using SubSonic.Schema;
 @using FrameMobile.Model.News;
@@ -7,8 +7,8 @@
     ViewBag.Title = "新闻列表管理";
     Layout = "~/Views/Shared/_NewsLayout.cshtml";
     int? pageNum = ViewData["pageNum"] as int?;
-    PagedList<TouTiaoContentModel> newslist = ViewData["newslist"] as PagedList<TouTiaoContentModel>;
-    newslist = newslist != null ? newslist : new List<TouTiaoContentModel>() as PagedList<TouTiaoContentModel>;
+    PagedList<NewsContent> newslist = ViewData["newslist"] as PagedList<NewsContent>;
+    newslist = newslist != null ? newslist : new List<NewsContent>() as PagedList<NewsContent>;
 }
 <div class="contentHeader">
     <div class="contentHeaderInfo">

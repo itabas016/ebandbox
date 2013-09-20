@@ -21,7 +21,7 @@ namespace FrameMobile.UnitTests.Domain.Mappers
 
             m.PublishTime = 1378033125;
 
-            var x = m.To<TouTiaoContentModel>();
+            var x = m.To<NewsContent>();
 
             Assert.Equal(2730766760, x.NewsId);
             Console.WriteLine(x.PublishTime);

@@ -10,11 +10,11 @@ using StructureMap;
 
 namespace FrameMobile.Domain
 {
-    public class TouTIaoContentTypeConverter : ITypeConverter<TouTiaoContentModel, TouTiaoContentView>
+    public class TouTIaoContentTypeConverter : ITypeConverter<NewsContent, NewsContentView>
     {
-        public TouTiaoContentView Convert(ResolutionContext context)
+        public NewsContentView Convert(ResolutionContext context)
         {
-            var source = context.SourceValue as TouTiaoContentModel;
+            var source = context.SourceValue as NewsContent;
 
             if (context.SourceValue == null) return null;
 
@@ -25,7 +25,7 @@ namespace FrameMobile.Domain
             return dest;
         }
 
-        public TouTiaoContentView Convert(TouTiaoContentModel model, IDbContextService service)
+        public NewsContentView Convert(NewsContent model, IDbContextService service)
         {
 
             var loadmodelist = service.Find<NewsExtraApp>(x => x.Status == 1);

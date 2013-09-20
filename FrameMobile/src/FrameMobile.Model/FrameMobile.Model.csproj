@@ -71,7 +71,7 @@
     <Compile Include="ThirdPart\TouTiao\TouTiaoImageInfo.cs" />
     <Compile Include="News\NewsImageInfo.cs" />
     <Compile Include="News\NewsSubCategory.cs" />
-    <Compile Include="News\TouTiaoContentModel.cs" />
+    <Compile Include="News\NewsContent.cs" />
     <Compile Include="ThirdPart\TouTiao\TouTiaoParameter.cs" />
     <Compile Include="ThirdPart\TouTiao\TouTiaoResult.cs" />
     <Compile Include="News\NewsCategory.cs" />
@@ -80,7 +80,7 @@
     <Compile Include="ViewModels\News\NewsExtraAppView.cs" />
     <Compile Include="ViewModels\News\NewsSourceView.cs" />
     <Compile Include="ViewModels\News\NewsSubCategoryView.cs" />
-    <Compile Include="ViewModels\News\TouTiaoContentView.cs" />
+    <Compile Include="ViewModels\News\NewsContentView.cs" />
     <Compile Include="ViewModels\ResultBuilder.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
   </ItemGroup>

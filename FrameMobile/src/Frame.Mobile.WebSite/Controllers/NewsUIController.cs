@@ -69,7 +69,7 @@ namespace Frame.Mobile.WebSite.Controllers
         {
             int pageSize = 20;
             int pageNum = page.HasValue ? page.Value : 1;
-            PagedList<TouTiaoContentModel> newslist = dbContextService.GetPaged<TouTiaoContentModel>("PublishTime", pageNum, pageSize);
+            PagedList<NewsContent> newslist = dbContextService.GetPaged<NewsContent>("PublishTime", pageNum, pageSize);
             ViewData["newslist"] = newslist;
             ViewData["pageNum"] = pageNum;
             return View(newslist);
@@ -82,22 +82,22 @@ namespace Frame.Mobile.WebSite.Controllers
         }
 
         [HttpPost]
-        public ActionResult NewsAdd(TouTiaoContentModel model)
+        public ActionResult NewsAdd(NewsContent model)
         {
-            var ret = dbContextService.Add<TouTiaoContentModel>(model);
+            var ret = dbContextService.Add<NewsContent>(model);
             return RedirectToAction("NewsManage");
         }
 
         [HttpGet]
         public ActionResult NewsEdit(int newsId)
         {
-            var news = dbContextService.Single<TouTiaoContentModel>(newsId);
+            var news = dbContextService.Single<NewsContent>(newsId);
             ViewData["IsUpdate"] = true;
             return View("NewsAdd", news);
         }
 
         [HttpPost]
-        public ActionResult NewsEdit(TouTiaoContentModel model)
+        public ActionResult NewsEdit(NewsContent model)
         {
             /*
             ViewData["Categorylist"] = dbContextService.All<NewsCategory>().ToList();
@@ -105,7 +105,7 @@ namespace Frame.Mobile.WebSite.Controllers
             ViewData["ExtraApplist"] = dbContextService.All<NewsExtraApp>().ToList();
             */
 
-            var news = dbContextService.Single<TouTiaoContentModel>(model.Id);
+            var news = dbContextService.Single<NewsContent>(model.Id);
 
             news.Title = model.Title;
             news.CategoryId = model.CategoryId;
@@ -117,14 +117,14 @@ namespace Frame.Mobile.WebSite.Controllers
             news.Status = model.Status;
             news.CreateDateTime = DateTime.Now;
 
-            dbContextService.Update<TouTiaoContentModel>(news);
+            dbContextService.Update<NewsContent>(news);
 
             return RedirectToAction("NewsManage");
         }
 
         public ActionResult NewsDelete(int newsId)
         {
-            var ret = dbContextService.Delete<TouTiaoContentModel>(x=>x.Id == newsId);
+            var ret = dbContextService.Delete<NewsContent>(x=>x.Id == newsId);
             return RedirectToAction("NewsManage");
         }
 

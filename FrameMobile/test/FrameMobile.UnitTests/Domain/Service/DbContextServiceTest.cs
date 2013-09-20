@@ -70,7 +70,7 @@ namespace FrameMobile.UnitTests.Domain.Service
         [Fact]
         public void TouTiaoContentUpdate()
         {
-            var contentList = dbContextService.Find<TouTiaoContentModel>(x => x.SubCategoryId == 0);
+            var contentList = dbContextService.Find<NewsContent>(x => x.SubCategoryId == 0);
             foreach (var item in contentList)
             {
                 #region Case SubCategory
@@ -120,7 +120,7 @@ namespace FrameMobile.UnitTests.Domain.Service
                 }
                 #endregion
 
-                dbContextService.Update<TouTiaoContentModel>(item);
+                dbContextService.Update<NewsContent>(item);
             }
         }
 

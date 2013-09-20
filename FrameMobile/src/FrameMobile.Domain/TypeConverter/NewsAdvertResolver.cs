@@ -9,9 +9,9 @@ using StructureMap;
 
 namespace FrameMobile.Domain
 {
-    public class NewsAdvertResolver : ValueResolver<TouTiaoContentModel, string>
+    public class NewsAdvertResolver : ValueResolver<NewsContent, string>
     {
-        protected override string ResolveCore(TouTiaoContentModel source)
+        protected override string ResolveCore(NewsContent source)
         {
             var dbContextService = ObjectFactory.GetInstance<IDbContextService>();
 

@@ -239,24 +239,24 @@ namespace FrameMobile.Domain.Service
         }
 
         [ServiceCache]
-        public IList<TouTiaoContentView> GetTouTiaoContentList(MobileParam mobileParams, int newsId, bool action, string categoryIds, int startnum, int num, out int totalCount)
+        public IList<NewsContentView> GetTouTiaoContentList(MobileParam mobileParams, int newsId, bool action, string categoryIds, int startnum, int num, out int totalCount)
         {
             return GetTouTiaoContentViewList(mobileParams, categoryIds, newsId, action, startnum, num, out totalCount);
         }
 
         #region Helper
 
-        private List<TouTiaoContentModel> GetTouTiaoContentList(string response, int subcategoryId)
+        private List<NewsContent> GetTouTiaoContentList(string response, int subcategoryId)
         {
             long cursor = 10;
-            var result = new List<TouTiaoContentModel>();
+            var result = new List<NewsContent>();
             var dataResult = service.DeserializeTouTiao(response);
 
             var contentList = service.Anlynaze(dataResult, out cursor);
             var index = 1;
             foreach (var item in contentList)
             {
-                var touTiaoModel = item.To<TouTiaoContentModel>();
+                var touTiaoModel = item.To<NewsContent>();
                 touTiaoModel.Id = index + (subcategoryId * 10);
                 touTiaoModel.CategoryId = subcategoryId;
                 result.Add(touTiaoModel);
@@ -266,13 +266,13 @@ namespace FrameMobile.Domain.Service
 
         }
 
-        private List<TouTiaoContentView> GetTouTiaoContentViewList(List<TouTiaoContentModel> contentlist)
+        private List<NewsContentView> GetTouTiaoContentViewList(List<NewsContent> contentlist)
         {
-            var result = contentlist.To<List<TouTiaoContentView>>();
+            var result = contentlist.To<List<NewsContentView>>();
             return result;
         }
 
-        private List<TouTiaoContentView> GetTouTiaoContentViewList(MobileParam mobileParams, string categoryIds, int newsId, bool action, int startnum, int num, out int totalCont)
+        private List<NewsContentView> GetTouTiaoContentViewList(MobileParam mobileParams, string categoryIds, int newsId, bool action, int startnum, int num, out int totalCont)
         {
             var response1 = string.Empty;
             var response2 = string.Empty;
@@ -295,7 +295,7 @@ namespace FrameMobile.Domain.Service
             totalCont = 0;
 
             var categoryList = categoryIds.Split(';', '；').ToList();
-            var result = new List<TouTiaoContentView>();
+            var result = new List<NewsContentView>();
             foreach (var categoryId in categoryList)
             {
                 switch (categoryId.ToInt32())

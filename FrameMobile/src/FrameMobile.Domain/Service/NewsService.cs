@@ -66,9 +66,9 @@ namespace FrameMobile.Domain.Service
         }
 
         [ServiceCache]
-        public IList<TouTiaoContentView> GetTouTiaoContentList(MobileParam mobileParams, int newsId, bool action, string categoryIds, int startnum, int num, out int totalCount)
+        public IList<NewsContentView> GetTouTiaoContentList(MobileParam mobileParams, int newsId, bool action, string categoryIds, int startnum, int num, out int totalCount)
         {
-            var contentlist = new List<TouTiaoContentView>();
+            var contentlist = new List<NewsContentView>();
 
             totalCount = 0;
             var categoryIdList = categoryIds.Split(';', '；').ToList();
@@ -126,9 +126,9 @@ namespace FrameMobile.Domain.Service
             return extraAppList.ToList();
         }
 
-        private List<TouTiaoContentView> GetContentViewList(MobileParam mobileParams, int categoryId, int newsId, bool action)
+        private List<NewsContentView> GetContentViewList(MobileParam mobileParams, int categoryId, int newsId, bool action)
         {
-            var contentViewList = new List<TouTiaoContentView>();
+            var contentViewList = new List<NewsContentView>();
 
             var extraAppList = GetNewsExtraAppList();
             var imageType = GetImageURLTypeByResolution(mobileParams);
@@ -137,7 +137,7 @@ namespace FrameMobile.Domain.Service
             if (action)
             {
                 var subcategorycontentlist = (from l in
-                                                  dbContextService.Find<TouTiaoContentModel>(x => x.CategoryId == categoryId
+                                                  dbContextService.Find<NewsContent>(x => x.CategoryId == categoryId
                                                       && x.Id > newsId && x.Status == 1 && x.PublishTime > endDateTime)
                                               join m in
                                                   dbContextService.Find<NewsImageInfo>(y => y.Status == 1)
@@ -145,7 +145,7 @@ namespace FrameMobile.Domain.Service
                                               into d
                                               from s in d.DefaultIfEmpty()
                                               orderby l.PublishTime descending
-                                              select new TouTiaoContentView
+                                              select new NewsContentView
                                               {
                                                   Id = l.Id,
                                                   NewsId = l.NewsId,
@@ -166,7 +166,7 @@ namespace FrameMobile.Domain.Service
             else
             {
                 var subcategorycontentlist = (from l in
-                                                  dbContextService.Find<TouTiaoContentModel>(x => x.CategoryId == categoryId
+                                                  dbContextService.Find<NewsContent>(x => x.CategoryId == categoryId
                                                       && x.Id < newsId && x.Status == 1 && x.PublishTime > endDateTime)
                                               join m in
                                                   dbContextService.Find<NewsImageInfo>(y => y.Status == 1)
@@ -174,7 +174,7 @@ namespace FrameMobile.Domain.Service
                                               into d
                                               from s in d.DefaultIfEmpty()
                                               orderby l.PublishTime descending
-                                              select new TouTiaoContentView
+                                              select new NewsContentView
                                               {
                                                   Id = l.Id,
                                                   NewsId = l.NewsId,
@@ -217,48 +217,48 @@ namespace FrameMobile.Domain.Service
             return string.Empty;
         }
 
-        private List<TouTiaoContentModel> GetCategoryContentListByAction(int categoryId, int newsId, bool action)
+        private List<NewsContent> GetCategoryContentListByAction(int categoryId, int newsId, bool action)
         {
-            var contentlist = new List<TouTiaoContentModel>();
+            var contentlist = new List<NewsContent>();
 
             var endDateTime = DateTime.Now.AddDays(-10);
             if (action)
             {
-                var subcategorycontentlist = (from l in dbContextService.Find<TouTiaoContentModel>(x => x.CategoryId == categoryId && x.Id > newsId && x.Status == 1 && x.PublishTime > endDateTime) join m in dbContextService.Find<NewsImageInfo>(y => y.Status == 1) on l.NewsId equals (m.NewsId) orderby l.PublishTime descending select l);
+                var subcategorycontentlist = (from l in dbContextService.Find<NewsContent>(x => x.CategoryId == categoryId && x.Id > newsId && x.Status == 1 && x.PublishTime > endDateTime) join m in dbContextService.Find<NewsImageInfo>(y => y.Status == 1) on l.NewsId equals (m.NewsId) orderby l.PublishTime descending select l);
                 contentlist = contentlist.Union(subcategorycontentlist).ToList();
             }
             else
             {
-                var subcategorycontentlist = dbContextService.Find<TouTiaoContentModel>(x => x.CategoryId == categoryId && x.Id < newsId && x.Status == 1 && x.PublishTime > endDateTime).OrderByDescending(x => x
+                var subcategorycontentlist = dbContextService.Find<NewsContent>(x => x.CategoryId == categoryId && x.Id < newsId && x.Status == 1 && x.PublishTime > endDateTime).OrderByDescending(x => x
                     .PublishTime);
                 contentlist = contentlist.Union(subcategorycontentlist).ToList();
             }
             return contentlist;
         }
 
-        private List<TouTiaoContentModel> GetSubCategoryContentListByAction(int subcategoryId, int newsId, bool action)
+        private List<NewsContent> GetSubCategoryContentListByAction(int subcategoryId, int newsId, bool action)
         {
-            var contentlist = new List<TouTiaoContentModel>();
+            var contentlist = new List<NewsContent>();
 
             var endDateTime = DateTime.Now.AddDays(-10);
             if (action)
             {
-                var subcategorycontentlist = dbContextService.Find<TouTiaoContentModel>(x => x.SubCategoryId == subcategoryId && x.Id > newsId && x.Status == 1 && x.PublishTime > endDateTime).OrderByDescending(x => x
+                var subcategorycontentlist = dbContextService.Find<NewsContent>(x => x.SubCategoryId == subcategoryId && x.Id > newsId && x.Status == 1 && x.PublishTime > endDateTime).OrderByDescending(x => x
                     .PublishTime);
                 contentlist = contentlist.Union(subcategorycontentlist).ToList();
             }
             else
             {
-                var subcategorycontentlist = dbContextService.Find<TouTiaoContentModel>(x => x.SubCategoryId == subcategoryId && x.Id < newsId && x.Status == 1 && x.PublishTime > endDateTime).OrderByDescending(x => x
+                var subcategorycontentlist = dbContextService.Find<NewsContent>(x => x.SubCategoryId == subcategoryId && x.Id < newsId && x.Status == 1 && x.PublishTime > endDateTime).OrderByDescending(x => x
                     .PublishTime);
                 contentlist = contentlist.Union(subcategorycontentlist).ToList();
             }
             return contentlist;
         }
 
-        private IList<TouTiaoContentView> GetCompleteContentViewList(MobileParam mobileParams, List<TouTiaoContentModel> contentList)
+        private IList<NewsContentView> GetCompleteContentViewList(MobileParam mobileParams, List<NewsContent> contentList)
         {
-            var result = contentList.To<IList<TouTiaoContentView>>();
+            var result = contentList.To<IList<NewsContentView>>();
             var extraAppList = GetNewsExtraAppList();
             if (result == null)
             {
