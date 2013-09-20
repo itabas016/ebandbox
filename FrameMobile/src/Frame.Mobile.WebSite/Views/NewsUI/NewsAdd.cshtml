@@ -33,6 +33,7 @@
             <div>
                 <table>
                     @Html.ValidationSummary(true)
+                    @Html.HiddenFor(m => m.Id)
                     <tr>
                         <td><strong>标题: </strong></td>
                         <td class="txt-longer">@Html.TextAreaFor(m => m.Title)</td>

@@ -32,6 +32,7 @@
             <div style="clear: both">
                 <table>
                     @Html.ValidationSummary(true)
+                    @Html.HiddenFor(m => m.Id)
                     <tr>
                         <td><strong>名称: </strong></td>
                         <td>@Html.TextBoxFor(m => m.Name)</td>
