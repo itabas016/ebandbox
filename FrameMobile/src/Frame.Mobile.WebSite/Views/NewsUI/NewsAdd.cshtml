@@ -30,71 +30,56 @@
                 </div>
             </p>
 
-            <div class="content_left">
+            <div>
                 <table>
                     @Html.ValidationSummary(true)
+                    <tr>
+                        <td><strong>标题: </strong></td>
+                        <td class="txt-longer">@Html.TextAreaFor(m => m.Title)</td>
+                    </tr>
                     <tr>
                         <td><strong>分类: </strong></td>
                         @*<td>@Html.DropDownListFor(m => m.CategoryId, (SelectList)ViewData["Categorylist"])</td>*@
                         <td>@Html.TextBoxFor(m => m.CategoryId)</td>
-                    </tr>
-                    <tr>
                         <td><strong>子分类: </strong></td>
                         <td>@Html.TextBoxFor(m => m.SubCategoryId)</td>
                     </tr>
                     <tr>
+                        <td><strong>来源: </strong></td>
+                        <td>@Html.TextBoxFor(m => m.Site)</td>
                         <td><strong>外推应用: </strong></td>
                         <td>@Html.TextBoxFor(m => m.ExtraAppId)</td>
                     </tr>
                     <tr>
+                        <td><strong>发布时间: </strong></td>
+                        <td>@Html.TextBoxFor(m => m.PublishTime)</td>
                         <td><strong>状态: </strong></td>
                         <td>@Html.RadioButtonFor(m => m.Status, 1) 有效 @Html.RadioButtonFor(m => m.Status, 0) 无效</td>
-                    </tr>
-
-                </table>
-            </div>
-            
-            <div class="content_right">
-                <table>
-                    <tr>
-                        <td><strong>标题: </strong></td>
-                        <td>@Html.TextBoxFor(m => m.Title)</td>
-                    </tr>
-                    <tr>
-                        <td><strong>来源: </strong></td>
-                        <td>@Html.TextAreaFor(m => m.Site)</td>
                     </tr>
                     <tr>
                         <td><strong>Wap地址: </strong></td>
                         <td>@Html.TextAreaFor(m => m.WAPURL)</td>
-                    </tr>
-                    <tr>
-                        <td><strong>发布时间: </strong></td>
-                        <td>@Html.TextAreaFor(m => m.PublishTime)</td>
+                        <td></td>
+                        <td></td>
                     </tr>
                 </table>
             </div>
-            
             <div>
-                <table>
-                    <tr>
-                        <td><strong>图片地址: </strong></td>
-                        <td>@Html.TextAreaFor(m => m.ImageIds)</td>
-                    </tr>
-                    <tr>
-                        <td><strong>摘要: </strong></td>
-                        <td>@Html.TextBoxFor(m => m.Summary)</td>
-                    </tr>
-                    <tr>
-                        <td><strong>内容: </strong></td>
-                        <td>@Html.TextAreaFor(m => m.Content)</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <button class="btn btn-large btn-blue addapp" style="margin-left: 50px">@ViewBag.Title</button>
-                        </td>
-                    </tr>
-                </table>
+                <strong>图片地址: </strong>
+                @Html.TextBoxFor(m => m.ImageIds)
+            </div>
+            <div class="txt-medium">
+                <strong>摘要: </strong>
+                <br />
+                @Html.TextAreaFor(m => m.Summary)
+            </div>
+            <div>
+                <strong>内容: </strong>
+                <br />
+                @Html.TextAreaFor(m => m.Content)
+            </div>
+            <div>
+                <button class="btn btn-large btn-blue addapp" style="margin-left: 50px">@ViewBag.Title</button>
             </div>
         }
     </div>

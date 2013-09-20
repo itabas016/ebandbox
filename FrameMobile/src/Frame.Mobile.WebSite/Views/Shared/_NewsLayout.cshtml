@@ -31,11 +31,11 @@
                     @Html.Raw(TempData["errorMsg"].ToString())
                 }
             </div>
-            <div id="__progressbar__">
+            @*<div id="__progressbar__">
                 <img src="@Url.Content("~/Content/news/images/loading.gif")" />
                 <br />
                 Loading...
-            </div>
+            </div>*@
             @RenderBody()
         </div>
     </div>
