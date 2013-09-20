@@ -160,7 +160,7 @@ namespace Frame.Mobile.WebSite.Controllers
 
         public ActionResult ConfigDelete(int configId)
         {
-            var ret = dbContextService.Delete<NewsConfig>(x => x.Id == configId);
+            var ret = dbContextService.Delete<NewsConfig>(configId);
             return RedirectToAction("ConfigList");
         }
 
@@ -221,7 +221,7 @@ namespace Frame.Mobile.WebSite.Controllers
 
         public ActionResult SourceDelete(int sourceId)
         {
-            var ret = dbContextService.Delete<NewsSource>(x => x.Id == sourceId);
+            var ret = dbContextService.Delete<NewsSource>(sourceId);
             return RedirectToAction("SourceList");
         }
 
@@ -282,7 +282,7 @@ namespace Frame.Mobile.WebSite.Controllers
 
         public ActionResult CategoryDelete(int categoryId)
         {
-            var ret = dbContextService.Delete<NewsCategory>(x => x.Id == categoryId);
+            var ret = dbContextService.Delete<NewsCategory>(categoryId);
             return RedirectToAction("CategoryList");
         }
 
@@ -342,7 +342,7 @@ namespace Frame.Mobile.WebSite.Controllers
 
         public ActionResult SubCategoryDelete(int subcategoryId)
         {
-            var ret = dbContextService.Delete<NewsSubCategory>(x => x.Id == subcategoryId);
+            var ret = dbContextService.Delete<NewsSubCategory>(subcategoryId);
             return RedirectToAction("SubCategoryList");
         }
 
@@ -402,7 +402,7 @@ namespace Frame.Mobile.WebSite.Controllers
 
         public ActionResult ExtraAppDelete(int extraAppId)
         {
-            var ret = dbContextService.Delete<NewsExtraApp>(x => x.Id == extraAppId);
+            var ret = dbContextService.Delete<NewsExtraApp>(extraAppId);
             return RedirectToAction("ExtraAppList");
         }
 

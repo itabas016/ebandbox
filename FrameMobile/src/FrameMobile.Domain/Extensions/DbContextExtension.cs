@@ -20,19 +20,19 @@ namespace FrameMobile.Domain
             context.Repository.AddMany<T>(items);
         }
 
-        public static int Delete<T>(this IDbContext context, T model) where T : class, IMySQLModel, new()
+        public static int Delete<T>(this IDbContext context, object key) where T : class, IMySQLModel, new()
         {
-            return context.Repository.Delete<T>(model);
+            return context.Repository.Delete<T>(key);
         }
 
         public static int Delete<T>(this IDbContext context, IEnumerable<T> items) where T : class, IMySQLModel, new()
         {
-            return context.Repository.Delete<T>(items);
+            return context.Repository.DeleteMany<T>(items);
         }
 
         public static int Delete<T>(this IDbContext context, Expression<Func<T, bool>> expression) where T : class, IMySQLModel, new()
         {
-            return context.Repository.Delete<T>(expression);
+            return context.Repository.DeleteMany<T>(expression);
         }
 
         public static int Update<T>(this IDbContext context, T model) where T : class, IMySQLModel, new()
