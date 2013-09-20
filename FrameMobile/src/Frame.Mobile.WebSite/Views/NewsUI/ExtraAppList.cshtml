@@ -29,6 +29,7 @@
     <table class="table table-striped">
         <thead>
             <tr>
+                <th>序号</th>
                 <th>名称</th>
                 <th>简称</th>
                 <th>包名</th>
@@ -42,6 +43,7 @@
             @foreach (var item in extraapplist)
             {
                 <tr class="odd gradeX">
+                    <td><strong>@item.Id</strong></td>
                     <td><strong>@item.Name</strong></td>
                     <td>@item.NameLowCase</td>
                     <td>@item.PackageName</td>

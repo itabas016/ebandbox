@@ -324,9 +324,7 @@
     <Content Include="Utilities.Log4Net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Views\Shared\_NewsLayout.cshtml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="Views\Shared\_NewsLayout.cshtml" />
     <Content Include="Views\NewsUI\NewsManage.cshtml" />
     <Content Include="Views\NewsUI\ConfigList.cshtml" />
     <Content Include="Views\NewsUI\ConfigAdd.cshtml" />
