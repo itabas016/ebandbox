@@ -194,6 +194,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\news\css\main.css" />
+    <Content Include="Content\news\images\icos.png" />
+    <Content Include="Content\news\images\logout.png" />
+    <Content Include="Content\news\images\sidebarBg.png" />
+    <Content Include="Content\news\images\sidebarBg2.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
