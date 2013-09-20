@@ -69,7 +69,7 @@ namespace Frame.Mobile.WebSite.Controllers
         {
             int pageSize = 20;
             int pageNum = page.HasValue ? page.Value : 1;
-            PagedList<NewsContent> newslist = dbContextService.GetPaged<NewsContent>("PublishTime", pageNum, pageSize);
+            PagedList<NewsContent> newslist = dbContextService.GetPaged<NewsContent>("PublishTime desc", pageNum, pageSize);
             ViewData["newslist"] = newslist;
             ViewData["pageNum"] = pageNum;
             return View(newslist);
