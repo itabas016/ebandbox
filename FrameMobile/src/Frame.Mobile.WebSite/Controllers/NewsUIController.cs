@@ -361,12 +361,16 @@ namespace Frame.Mobile.WebSite.Controllers
 
             subcategory.Name = model.Name;
             subcategory.DisplayName = subcategory.DisplayName;
+
+            subcategory.SourceId = subcategory.SourceId;
+            subcategory.CategoryId = subcategory.CategoryId;
+            subcategory.Cursor = subcategory.Cursor;
             subcategory.Status = model.Status;
             subcategory.CreateDateTime = DateTime.Now;
 
             dbContextService.Update<NewsSubCategory>(subcategory);
 
-            return RedirectToAction("CategoryList");
+            return RedirectToAction("SubCategoryList");
         }
 
         #endregion

@@ -339,6 +339,8 @@
     <Content Include="Views\NewsUI\ExtraAppList.cshtml" />
     <Content Include="Views\NewsUI\ExtraAppAdd.cshtml" />
     <Content Include="Views\NewsUI\NewsAdd.cshtml" />
+    <Content Include="Views\NewsUI\SubCategoryAdd.cshtml" />
+    <Content Include="Views\NewsUI\SubCategoryList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
