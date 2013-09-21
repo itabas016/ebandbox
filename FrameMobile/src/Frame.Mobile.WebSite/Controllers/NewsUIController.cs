@@ -9,6 +9,7 @@ using FrameMobile.Model.News;
 using FrameMobile.Web;
 using StructureMap;
 using SubSonic.Schema;
+using FrameMobile.Model;
 
 namespace Frame.Mobile.WebSite.Controllers
 {
@@ -124,7 +125,7 @@ namespace Frame.Mobile.WebSite.Controllers
 
         public ActionResult NewsDelete(int newsId)
         {
-            var ret = dbContextService.Delete<NewsContent>(x=>x.Id == newsId);
+            var ret = dbContextService.Delete<NewsContent>(x => x.Id == newsId);
             return RedirectToAction("NewsManage");
         }
 
@@ -216,12 +217,18 @@ namespace Frame.Mobile.WebSite.Controllers
                 return View();
             }
             var ret = dbContextService.Add<NewsSource>(model);
+
+            UpdateServerVersion<NewsSource>();
+
             return RedirectToAction("SourceList");
         }
 
         public ActionResult SourceDelete(int sourceId)
         {
             var ret = dbContextService.Delete<NewsSource>(sourceId);
+
+            UpdateServerVersion<NewsSource>();
+
             return RedirectToAction("SourceList");
         }
 
@@ -244,7 +251,9 @@ namespace Frame.Mobile.WebSite.Controllers
             source.Status = model.Status;
             source.CreateDateTime = DateTime.Now;
 
-            dbContextService.Update<NewsSource>(source);
+            var ret = dbContextService.Update<NewsSource>(source);
+
+            UpdateServerVersion<NewsSource>();
 
             return RedirectToAction("SourceList");
         }
@@ -277,12 +286,18 @@ namespace Frame.Mobile.WebSite.Controllers
                 return View();
             }
             var ret = dbContextService.Add<NewsCategory>(model);
+
+            UpdateServerVersion<NewsCategory>();
+
             return RedirectToAction("CategoryList");
         }
 
         public ActionResult CategoryDelete(int categoryId)
         {
             var ret = dbContextService.Delete<NewsCategory>(categoryId);
+
+            UpdateServerVersion<NewsCategory>();
+
             return RedirectToAction("CategoryList");
         }
 
@@ -303,7 +318,9 @@ namespace Frame.Mobile.WebSite.Controllers
             category.Status = model.Status;
             category.CreateDateTime = DateTime.Now;
 
-            dbContextService.Update<NewsCategory>(category);
+            var ret = dbContextService.Update<NewsCategory>(category);
+
+            UpdateServerVersion<NewsCategory>();
 
             return RedirectToAction("CategoryList");
         }
@@ -337,12 +354,18 @@ namespace Frame.Mobile.WebSite.Controllers
                 return View();
             }
             var ret = dbContextService.Add<NewsSubCategory>(model);
+
+            UpdateServerVersion<NewsSubCategory>();
+
             return RedirectToAction("SubCategoryList");
         }
 
         public ActionResult SubCategoryDelete(int subcategoryId)
         {
             var ret = dbContextService.Delete<NewsSubCategory>(subcategoryId);
+
+            UpdateServerVersion<NewsSubCategory>();
+
             return RedirectToAction("SubCategoryList");
         }
 
@@ -368,7 +391,9 @@ namespace Frame.Mobile.WebSite.Controllers
             subcategory.Status = model.Status;
             subcategory.CreateDateTime = DateTime.Now;
 
-            dbContextService.Update<NewsSubCategory>(subcategory);
+            var ret = dbContextService.Update<NewsSubCategory>(subcategory);
+
+            UpdateServerVersion<NewsSubCategory>();
 
             return RedirectToAction("SubCategoryList");
         }
@@ -401,12 +426,18 @@ namespace Frame.Mobile.WebSite.Controllers
                 return View();
             }
             var ret = dbContextService.Add<NewsExtraApp>(model);
+
+            UpdateServerVersion<NewsExtraApp>();
+
             return RedirectToAction("ExtraAppList");
         }
 
         public ActionResult ExtraAppDelete(int extraAppId)
         {
             var ret = dbContextService.Delete<NewsExtraApp>(extraAppId);
+
+            UpdateServerVersion<NewsExtraApp>();
+
             return RedirectToAction("ExtraAppList");
         }
 
@@ -431,7 +462,9 @@ namespace Frame.Mobile.WebSite.Controllers
             extraApp.Status = model.Status;
             extraApp.CreateDateTime = DateTime.Now;
 
-            dbContextService.Update<NewsExtraApp>(extraApp);
+            var ret = dbContextService.Update<NewsExtraApp>(extraApp);
+
+            UpdateServerVersion<NewsExtraApp>();
 
             return RedirectToAction("ExtraAppList");
         }
@@ -439,6 +472,24 @@ namespace Frame.Mobile.WebSite.Controllers
         #endregion
 
         #region Helper
+
+        private void UpdateServerVersion<T>() where T : MySQLModelBase
+        {
+            try
+            {
+                var config = dbContextService.Single<NewsConfig>(x => x.Name == typeof(T).Name.ToLower());
+                if (config == null)
+                {
+                    return;
+                }
+                config.Version++;
+                dbContextService.Update<NewsConfig>(config);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
 
         #endregion
     }
