@@ -20,7 +20,11 @@
         <div class="left">
             <ul id="navOp">
                 <li><span class="ico icon-layers"></span>@Html.ActionLink("新闻列表管理", "NewsManage", "NewsUI", null, new { highlight = "true" })</li>
-                <li><span class="ico icon-compass"></span>@Html.ActionLink("属性配置", "AndroidAppManage", "NewsUI", null, new { highlight = "true" })</li>
+                <li><span class="ico icon-compass"></span>@Html.ActionLink("提供商配置", "SourceList", "NewsUI", null, new { highlight = "true", style = "color:white" })</li>
+                <li><span class="ico icon-compass"></span>@Html.ActionLink("配置表管理", "ConfigList", "NewsUI", null, new { highlight = "true", style = "color:white" })</li>
+                <li><span class="ico icon-compass"></span>@Html.ActionLink("外推应用管理", "ExtraAppList", "NewsUI", null, new { highlight = "true", style = "color:white" })</li>
+                <li><span class="ico icon-compass"></span>@Html.ActionLink("分类管理", "CategoryList", "NewsUI", null, new { highlight = "true", style = "color:white" })</li>
+                <li><span class="ico icon-compass"></span>@Html.ActionLink("子分类管理", "SubCategoryList", "NewsUI", null, new { highlight = "true", style = "color:white" })</li>
                 <li><span class="ico icon-list"></span>@Html.ActionLink("用户中心", "UserList", "Account", null, new { highlight = "true" })</li>
             </ul>
         </div>
