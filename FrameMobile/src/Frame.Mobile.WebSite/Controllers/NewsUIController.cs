@@ -316,7 +316,7 @@ namespace Frame.Mobile.WebSite.Controllers
         {
             var subcategorylist = dbContextService.All<NewsSubCategory>().ToList();
             ViewData["subcategorylist"] = subcategorylist;
-            ViewData["TotalCount"] = subcategorylist;
+            ViewData["TotalCount"] = subcategorylist.Count;
 
             return View();
         }
