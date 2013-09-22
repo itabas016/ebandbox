@@ -10,6 +10,7 @@ using FrameMobile.Web;
 using StructureMap;
 using SubSonic.Schema;
 using FrameMobile.Model;
+using NCore;
 
 namespace Frame.Mobile.WebSite.Controllers
 {
@@ -53,6 +54,8 @@ namespace Frame.Mobile.WebSite.Controllers
 
         protected override bool IsMobileInterface { get { return false; } }
 
+        public const int pageSize = 20;
+
         #endregion
 
         #region Ctor
@@ -68,7 +71,6 @@ namespace Frame.Mobile.WebSite.Controllers
 
         public ActionResult NewsManage(int? page)
         {
-            int pageSize = 20;
             int pageNum = page.HasValue ? page.Value : 1;
             PagedList<NewsContent> newslist = dbContextService.GetPaged<NewsContent>("PublishTime desc", pageNum, pageSize);
             ViewData["newslist"] = newslist;
@@ -127,6 +129,20 @@ namespace Frame.Mobile.WebSite.Controllers
         {
             var ret = dbContextService.Delete<NewsContent>(x => x.Id == newsId);
             return RedirectToAction("NewsManage");
+        }
+
+        public ActionResult NewsSearchResult(int? page)
+        {
+            int pageNum = page.HasValue ? page.Value : 1;
+            var searchKey = Request.QueryString["textfield"];
+
+            var newsResult = dbContextService.Find<NewsContent>(x => x.Title.Contains(searchKey)) as IQueryable<NewsContent>;
+
+            PagedList<NewsContent> newslist = new PagedList<NewsContent>(newsResult, pageNum, pageSize);
+
+            ViewData["newslist"] = newslist;
+            ViewData["pageNum"] = pageNum;
+            return View("NewsManage", newslist);
         }
 
         #endregion
