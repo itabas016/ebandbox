@@ -51,6 +51,18 @@
                         </td>
                     </tr>
                     <tr>
+                        <td><strong>当前版本: </strong></td>
+                        <td>
+                            @if (isUpdateMode)
+                            {
+                                @Html.TextBoxFor(m => m.Version, new { @readonly = true, Class = "txt-readonly" })}
+                            else
+                            {
+                                @Html.TextBoxFor(m => m.Version)
+                            }
+                        </td>
+                    </tr>
+                    <tr>
                         <td><strong>状态: </strong></td>
                         <td>@Html.RadioButtonFor(m => m.Status, 1) 有效 @Html.RadioButtonFor(m => m.Status, 0) 无效</td>
                     </tr>

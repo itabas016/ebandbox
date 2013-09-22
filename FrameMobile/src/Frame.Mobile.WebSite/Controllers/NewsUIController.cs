@@ -181,7 +181,6 @@ namespace Frame.Mobile.WebSite.Controllers
             config.DisplayName = model.DisplayName;
             config.Name = model.Name;
             config.Status = model.Status;
-            config.Version++;
             config.CreateDateTime = DateTime.Now;
 
             dbContextService.Update<NewsConfig>(config);
