@@ -2,6 +2,7 @@
 @using System.Web.UI;
 @using SubSonic.Schema;
 @using FrameMobile.Model.News;
+@using FrameMobile.Web;
 
 @{
     ViewBag.Title = "新闻列表管理";
@@ -59,7 +60,7 @@
             }
             <tr>
                 <td colspan="6">
-                    @*@Html.Pager(Model, new PagerOptions() { PageIndexParameterName = "page" })*@
+                    @Html.Pager(Model, new PagerOptions() { PageIndexParameterName = "page" })
                 </td>
             </tr>
         </tbody>
