@@ -33,7 +33,6 @@
                 <table>
                     @Html.ValidationSummary(true)
                     @Html.HiddenFor(m => m.Id)
-                    @Html.HiddenFor(m => m.Version)
                     <tr>
                         <td><strong>名称: </strong></td>
                         <td>@Html.TextBoxFor(m => m.DisplayName)</td>

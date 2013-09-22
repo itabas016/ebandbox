@@ -12,7 +12,6 @@
         <header>
             <div class="content-wrapper">
                 <div class="float-left">
-                    <p class="site-title">@Html.ActionLink("your logo here", "Index", "Home")</p>
                 </div>
                 <div class="float-right">
                     <section id="login">
@@ -20,9 +19,7 @@
                     </section>
                     <nav>
                         <ul id="menu">
-                            <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                            <li>@Html.ActionLink("About", "About", "Home")</li>
-                            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                            <li>@Html.ActionLink("新闻管理", "NewsManage", "NewsUI")</li>
                         </ul>
                     </nav>
                 </div>
@@ -37,7 +34,7 @@
         <footer>
             <div class="content-wrapper">
                 <div class="float-left">
-                    <p>&copy; @DateTime.Now.Year - My ASP.NET MVC Application</p>
+                    @FrameMobile.Common.Site.COMPANY_NAME 版权所有 © @FrameMobile.Common.Site.COPY_RIGHT | <a href="http://www.miitbeian.gov.cn" target="_blank">@FrameMobile.Common.Site.ICP</a>
                 </div>
             </div>
         </footer>

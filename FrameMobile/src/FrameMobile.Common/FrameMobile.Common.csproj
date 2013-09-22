@@ -47,6 +47,7 @@
     <Compile Include="Const\DateTimeFormat.cs" />
     <Compile Include="Const\EncodingNames.cs" />
     <Compile Include="Const\HeaderKeys.cs" />
+    <Compile Include="Const\Site.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
