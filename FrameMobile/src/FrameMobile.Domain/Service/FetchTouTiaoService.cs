@@ -112,7 +112,8 @@ namespace FrameMobile.Domain.Service
 
         public long GetCurrentCursor(string category)
         {
-            var cursor = GetCategoryCursor(category);
+            //var cursor = GetCategoryCursor(category);
+            long cursor = 0;
             var response = Request(category);
             var instance = DeserializeTouTiao(response);
             var contentList = Anlynaze(instance, out cursor);

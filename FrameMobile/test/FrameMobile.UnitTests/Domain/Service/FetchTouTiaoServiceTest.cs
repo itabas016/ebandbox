@@ -148,6 +148,24 @@ namespace FrameMobile.UnitTests.Domain
         }
 
         [Fact]
+        public void AnlynazeNoRepeatTest()
+        {
+            long cursor = 1379851192;
+            var response = dataService.Request("news_hot", cursor, 50);
+            var toutiaoResult = dataService.DeserializeTouTiao(response);
+
+            var result = dataService.Anlynaze(toutiaoResult, out cursor);
+            Console.WriteLine(result.Count);
+            Console.WriteLine(cursor);
+            var sb = new StringBuilder();
+            foreach (var item in result)
+            {
+                sb.Append(item.NewsId + " " + item.PublishTime.UTCStamp().ToString() + "\r");
+            }
+            Console.WriteLine(sb.ToString());
+        }
+
+        [Fact]
         public void Anlynaze_Error_Msg_Test()
         {
             var response = "\"msg\":REGDRET,\"ret\":1";
@@ -178,7 +196,7 @@ namespace FrameMobile.UnitTests.Domain
                 UrlList = new List<string>() { "http://p0.pstatp.com/origin/252/6926772543" }
             };
 
-            dataService.SingleImageSave(image,newsId);
+            dataService.SingleImageSave(image, newsId);
         }
 
         #region Helper
