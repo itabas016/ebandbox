@@ -77,7 +77,7 @@ namespace FrameMobile.Core
                     {
                         var destFileName = string.Format("{0}{1}{2}", destFilePath, newsId, fileInfo.Name);
                         destBitMap.Save(destFileName);
-                        var cdnFileURL = string.Format("{0}/{1}/{2}", NEWS_IMAGE_FILE_URL, width, fileInfo.Name);
+                        var cdnFileURL = string.Format("{0}/{1}/{2}{3}", NEWS_IMAGE_FILE_URL, width, newsId, fileInfo.Name);
                         return cdnFileURL;
                     }
                 }
@@ -86,7 +86,7 @@ namespace FrameMobile.Core
             {
                 var destFileName = string.Format("{0}{1}{2}", destFilePath, newsId, fileInfo.Name);
                 fileInfo.CopyTo(destFileName, true);
-                var cdnFileURL = string.Format("{0}/{1}/{2}", NEWS_IMAGE_FILE_URL, width, fileInfo.Name);
+                var cdnFileURL = string.Format("{0}/{1}/{2}{3}", NEWS_IMAGE_FILE_URL, width, newsId, fileInfo.Name);
                 return cdnFileURL;
             }
 
