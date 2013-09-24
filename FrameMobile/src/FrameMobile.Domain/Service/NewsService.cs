@@ -136,12 +136,12 @@ namespace FrameMobile.Domain.Service
             if (action)
             {
                 var subcategorycontentlist = (from l in
-                                                  dbContextService.Find<NewsContent>(x => categoryIds.Any(e => e == x.CategoryId)
-                                                      && x.Status == 1 && x.PublishTime > stampTime)
+                                                  dbContextService.Find<NewsContent>(x => x.Status == 1 && x.PublishTime > stampTime)
                                               join m in
                                                   dbContextService.Find<NewsImageInfo>(y => y.Status == 1)
                                               on l.NewsId equals (m.NewsId)
                                               into d
+                                              where categoryIds.Contains(l.CategoryId)
                                               from s in d.DefaultIfEmpty()
                                               orderby l.PublishTime descending
                                               select new NewsContentView
@@ -166,12 +166,12 @@ namespace FrameMobile.Domain.Service
             else
             {
                 var subcategorycontentlist = (from l in
-                                                  dbContextService.Find<NewsContent>(x => categoryIds.Any(e => e == x.CategoryId)
-                                                      && x.Status == 1 && x.PublishTime > endDateTime && x.PublishTime < stampTime)
+                                                  dbContextService.Find<NewsContent>(x => x.Status == 1 && x.PublishTime > endDateTime && x.PublishTime < stampTime)
                                               join m in
                                                   dbContextService.Find<NewsImageInfo>(y => y.Status == 1)
                                               on l.NewsId equals m.NewsId
                                               into d
+                                              where categoryIds.Contains(l.CategoryId)
                                               from s in d.DefaultIfEmpty()
                                               orderby l.PublishTime descending
                                               select new NewsContentView

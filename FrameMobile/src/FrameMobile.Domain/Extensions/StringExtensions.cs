@@ -41,7 +41,7 @@ namespace FrameMobile.Domain
         public static List<int> ToInt32List(this List<string> list)
         {
             var result = new List<int>();
-            if (list == null)
+            if (list != null)
             {
                 foreach (var item in list)
                 {
