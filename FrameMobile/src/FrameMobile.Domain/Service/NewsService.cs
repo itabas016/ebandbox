@@ -71,7 +71,7 @@ namespace FrameMobile.Domain.Service
             var contentlist = new List<NewsContentView>();
 
             totalCount = 0;
-            var categoryIdList = categoryIds.Split(';', '；').Select(n => int.Parse(n)).ToList();
+            var categoryIdList = categoryIds.Split(';', '；').ToList().ToInt32List();
 
             //contentlist = GetCategoryContentListByAction(categoryId, newsId, action);
 
@@ -167,7 +167,7 @@ namespace FrameMobile.Domain.Service
             {
                 var subcategorycontentlist = (from l in
                                                   dbContextService.Find<NewsContent>(x => categoryIds.Any(e => e == x.CategoryId)
-                                                      && x.Status == 1 && x.PublishTime > endDateTime && x.PublishTime < stamp.UTCStamp())
+                                                      && x.Status == 1 && x.PublishTime > endDateTime && x.PublishTime < stampTime)
                                               join m in
                                                   dbContextService.Find<NewsImageInfo>(y => y.Status == 1)
                                               on l.NewsId equals m.NewsId

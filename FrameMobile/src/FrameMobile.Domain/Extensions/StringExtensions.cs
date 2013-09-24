@@ -37,5 +37,18 @@ namespace FrameMobile.Domain
 
             return value;
         }
+
+        public static List<int> ToInt32List(this List<string> list)
+        {
+            var result = new List<int>();
+            if (list == null)
+            {
+                foreach (var item in list)
+                {
+                    result.Add(item.ToInt32());
+                }
+            }
+            return result;
+        }
     }
 }
