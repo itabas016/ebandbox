@@ -71,17 +71,15 @@ namespace FrameMobile.Domain.Service
             var contentlist = new List<NewsContentView>();
 
             totalCount = 0;
-            var categoryIdList = categoryIds.Split(';', '；').ToList();
+            var categoryIdList = categoryIds.Split(';', '；').Select(n => int.Parse(n)).ToList();
 
-            foreach (var item_category in categoryIdList)
-            {
-                var categoryId = item_category.ToInt32();
+            //contentlist = GetCategoryContentListByAction(categoryId, newsId, action);
 
-                //contentlist = GetCategoryContentListByAction(categoryId, newsId, action);
+            var categorylist = GetContentViewList(mobileParams, categoryIdList, stamp, action);
+            contentlist = contentlist.Union(categorylist).ToList();
+            //sort
 
-                contentlist = GetContentViewList(mobileParams, categoryId, stamp, action);
-                contentlist = contentlist.Union(contentlist).ToList();
-            }
+
             totalCount = totalCount + contentlist.Count;
             //var result = GetCompleteContentViewList(mobileParams, contentlist);
             return contentlist.Skip(startnum - 1).Take(num).ToList();
@@ -126,7 +124,7 @@ namespace FrameMobile.Domain.Service
             return extraAppList.ToList();
         }
 
-        private List<NewsContentView> GetContentViewList(MobileParam mobileParams, int categoryId, long stamp, bool action)
+        private List<NewsContentView> GetContentViewList(MobileParam mobileParams, List<int> categoryIds, long stamp, bool action)
         {
             var contentViewList = new List<NewsContentView>();
 
@@ -138,7 +136,7 @@ namespace FrameMobile.Domain.Service
             if (action)
             {
                 var subcategorycontentlist = (from l in
-                                                  dbContextService.Find<NewsContent>(x => x.CategoryId == categoryId
+                                                  dbContextService.Find<NewsContent>(x => categoryIds.Any(e => e == x.CategoryId)
                                                       && x.Status == 1 && x.PublishTime > stampTime)
                                               join m in
                                                   dbContextService.Find<NewsImageInfo>(y => y.Status == 1)
@@ -168,7 +166,7 @@ namespace FrameMobile.Domain.Service
             else
             {
                 var subcategorycontentlist = (from l in
-                                                  dbContextService.Find<NewsContent>(x => x.CategoryId == categoryId
+                                                  dbContextService.Find<NewsContent>(x => categoryIds.Any(e => e == x.CategoryId)
                                                       && x.Status == 1 && x.PublishTime > endDateTime && x.PublishTime < stamp.UTCStamp())
                                               join m in
                                                   dbContextService.Find<NewsImageInfo>(y => y.Status == 1)
