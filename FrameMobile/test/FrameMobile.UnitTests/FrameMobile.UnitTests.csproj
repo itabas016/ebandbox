@@ -62,6 +62,7 @@
   <ItemGroup>
     <Compile Include="Core\ImageHelperTest.cs" />
     <Compile Include="Domain\Extension\NewsExtensionTest.cs" />
+    <Compile Include="Domain\Extension\StringExtensionTest.cs" />
     <Compile Include="Domain\Mappers\ContentMapperTest.cs" />
     <Compile Include="Domain\Service\DbContextServiceTest.cs" />
     <Compile Include="Domain\Service\FetchTouTiaoServiceTest.cs" />

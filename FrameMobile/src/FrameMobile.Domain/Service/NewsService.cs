@@ -134,11 +134,12 @@ namespace FrameMobile.Domain.Service
             var imageType = GetImageURLTypeByResolution(mobileParams);
 
             var endDateTime = DateTime.Now.AddDays(-5);
+            var stampTime = stamp.UTCStamp();
             if (action)
             {
                 var subcategorycontentlist = (from l in
                                                   dbContextService.Find<NewsContent>(x => x.CategoryId == categoryId
-                                                      && x.Status == 1 && x.PublishTime > stamp.UTCStamp())
+                                                      && x.Status == 1 && x.PublishTime > stampTime)
                                               join m in
                                                   dbContextService.Find<NewsImageInfo>(y => y.Status == 1)
                                               on l.NewsId equals (m.NewsId)
