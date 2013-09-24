@@ -30,6 +30,19 @@ namespace FrameMobile.Domain.Service
             }
         }
 
+        public string TimeConvert(DateTime time, long stamp)
+        {
+            if (time != null)
+            {
+                return time.UnixStamp().ToString();
+            }
+            if (stamp != null)
+            {
+                return stamp.UTCStamp().ToString();
+            }
+            return string.Empty;
+        }
+
         [ServiceCache]
         public IList<NewsConfigView> GetConfigList(MobileParam mobileParams)
         {

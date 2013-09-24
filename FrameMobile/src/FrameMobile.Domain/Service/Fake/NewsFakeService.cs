@@ -41,6 +41,11 @@ namespace FrameMobile.Domain.Service
             service = new FetchTouTiaoService(dbContextService);
         }
 
+        public string TimeConvert(DateTime time, long stamp)
+        {
+            return null;
+        }
+
         [ServiceCache]
         public IList<NewsConfigView> GetConfigList(MobileParam mobileParams)
         {
