@@ -16,5 +16,16 @@ namespace FrameMobile.UnitTests.Domain.Extension
             var ret = NewsExtensions.CheckVersion(new NewsSource());
             Console.WriteLine(ret);
         }
+
+        [Fact]
+        public void RandomIntTest()
+        {
+            var list = new List<string>() { "1", "2" ,"3"};
+            for (int i = 0; i < 50; i++)
+            {
+                var ret = NewsExtensions.RandomInt(list);
+                Console.WriteLine(ret);
+            }
+        }
     }
 }

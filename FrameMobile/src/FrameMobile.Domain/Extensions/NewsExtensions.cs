@@ -29,7 +29,7 @@ namespace FrameMobile.Domain
         public static int RandomInt<T>(this IList<T> source)
         {
             if (source == null) return default(int);
-            var random = new Random();
+            var random = new Random(Guid.NewGuid().GetHashCode());
             return random.Next(0, source.Count + 1);
         }
 
