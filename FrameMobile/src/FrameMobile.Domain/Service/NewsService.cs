@@ -66,7 +66,7 @@ namespace FrameMobile.Domain.Service
         }
 
         [ServiceCache]
-        public IList<NewsContentView> GetTouTiaoContentList(MobileParam mobileParams, int newsId, bool action, string categoryIds, int startnum, int num, out int totalCount)
+        public IList<NewsContentView> GetTouTiaoContentList(MobileParam mobileParams, long stamp, bool action, string categoryIds, int startnum, int num, out int totalCount)
         {
             var contentlist = new List<NewsContentView>();
 
@@ -79,7 +79,7 @@ namespace FrameMobile.Domain.Service
 
                 //contentlist = GetCategoryContentListByAction(categoryId, newsId, action);
 
-                contentlist = GetContentViewList(mobileParams, categoryId, newsId, action);
+                contentlist = GetContentViewList(mobileParams, categoryId, stamp, action);
                 contentlist = contentlist.Union(contentlist).ToList();
             }
             totalCount = totalCount + contentlist.Count;
@@ -126,19 +126,19 @@ namespace FrameMobile.Domain.Service
             return extraAppList.ToList();
         }
 
-        private List<NewsContentView> GetContentViewList(MobileParam mobileParams, int categoryId, int newsId, bool action)
+        private List<NewsContentView> GetContentViewList(MobileParam mobileParams, int categoryId, long stamp, bool action)
         {
             var contentViewList = new List<NewsContentView>();
 
             var extraAppList = GetNewsExtraAppList();
             var imageType = GetImageURLTypeByResolution(mobileParams);
 
-            var endDateTime = DateTime.Now.AddDays(-10);
+            var endDateTime = DateTime.Now.AddDays(-5);
             if (action)
             {
                 var subcategorycontentlist = (from l in
                                                   dbContextService.Find<NewsContent>(x => x.CategoryId == categoryId
-                                                      && x.Id > newsId && x.Status == 1 && x.PublishTime > endDateTime)
+                                                      && x.Status == 1 && x.PublishTime > stamp.UTCStamp())
                                               join m in
                                                   dbContextService.Find<NewsImageInfo>(y => y.Status == 1)
                                               on l.NewsId equals (m.NewsId)
@@ -158,6 +158,7 @@ namespace FrameMobile.Domain.Service
                                                   AppOpenURL = l.AppOpenURL,
                                                   WAPURL = l.WAPURL,
                                                   PublishTime = l.PublishTime,
+                                                  Stamp = l.PublishTime.UnixStamp(),
                                                   ExtraAppId = l.ExtraAppId != 0 ? l.ExtraAppId : extraAppList.RandomInt(),
                                                   ImageURL = s == null ? string.Empty : GetImageURLByType(s, imageType)
                                               });
@@ -167,7 +168,7 @@ namespace FrameMobile.Domain.Service
             {
                 var subcategorycontentlist = (from l in
                                                   dbContextService.Find<NewsContent>(x => x.CategoryId == categoryId
-                                                      && x.Id < newsId && x.Status == 1 && x.PublishTime > endDateTime)
+                                                      && x.Status == 1 && x.PublishTime > endDateTime && x.PublishTime < stamp.UTCStamp())
                                               join m in
                                                   dbContextService.Find<NewsImageInfo>(y => y.Status == 1)
                                               on l.NewsId equals m.NewsId
@@ -187,6 +188,7 @@ namespace FrameMobile.Domain.Service
                                                   AppOpenURL = l.AppOpenURL,
                                                   WAPURL = l.WAPURL,
                                                   PublishTime = l.PublishTime,
+                                                  Stamp = l.PublishTime.UnixStamp(),
                                                   ExtraAppId = l.ExtraAppId != 0 ? l.ExtraAppId : extraAppList.RandomInt(),
                                                   ImageURL = s == null ? string.Empty : GetImageURLByType(s, imageType)
                                               });

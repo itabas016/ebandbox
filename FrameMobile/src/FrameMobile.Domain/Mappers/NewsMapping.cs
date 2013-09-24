@@ -75,6 +75,7 @@ namespace FrameMobile.Domain
                 .ForMember(dest => dest.Content, opt => opt.MapFrom(ori => ori.Content))
                 .ForMember(dest => dest.AppOpenURL, opt => opt.MapFrom(ori => ori.AppOpenURL))
                 .ForMember(dest => dest.PublishTime, opt => opt.MapFrom(ori => ori.PublishTime))
+                .ForMember(dest => dest.Stamp, opt => opt.MapFrom(ori => ori.PublishTime.UnixStamp()))
                 .IgnoreAllNonExisting();
 
             #endregion

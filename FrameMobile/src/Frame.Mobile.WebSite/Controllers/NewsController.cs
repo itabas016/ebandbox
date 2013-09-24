@@ -78,12 +78,12 @@ namespace Frame.Mobile.WebSite.Controllers
             return Content(actionResult.ToString());
         }
 
-        public ActionResult NewsList(string imsi, string lcd, string categoryIds, int newsId, bool action = true, int startnum = 1, int num = 10)
+        public ActionResult NewsList(string imsi, string lcd, string categoryIds, long stamp, bool action = true, int startnum = 1, int num = 10)
         {
             var mobileParams = GetMobileParam();
             int totalCount = 0;
 
-            Func<IList<NewsContentView>> gettoutiaocontentlist = () => NewsService.GetTouTiaoContentList(mobileParams, newsId, action, categoryIds, startnum, num, out totalCount);
+            Func<IList<NewsContentView>> gettoutiaocontentlist = () => NewsService.GetTouTiaoContentList(mobileParams, stamp, action, categoryIds, startnum, num, out totalCount);
 
             var actionResult = BuildResult(this.CheckRequiredParams(imsi, lcd), gettoutiaocontentlist);
 

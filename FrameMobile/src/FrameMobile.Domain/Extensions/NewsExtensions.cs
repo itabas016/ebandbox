@@ -30,7 +30,7 @@ namespace FrameMobile.Domain
         {
             if (source == null) return default(int);
             var random = new Random();
-            return random.Next(0, source.Count);
+            return random.Next(0, source.Count + 1);
         }
 
         public static int CheckVersion<T>(this T source) where T : class, IMySQLModel, new()

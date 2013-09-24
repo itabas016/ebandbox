@@ -239,9 +239,9 @@ namespace FrameMobile.Domain.Service
         }
 
         [ServiceCache]
-        public IList<NewsContentView> GetTouTiaoContentList(MobileParam mobileParams, int newsId, bool action, string categoryIds, int startnum, int num, out int totalCount)
+        public IList<NewsContentView> GetTouTiaoContentList(MobileParam mobileParams, long stamp, bool action, string categoryIds, int startnum, int num, out int totalCount)
         {
-            return GetTouTiaoContentViewList(mobileParams, categoryIds, newsId, action, startnum, num, out totalCount);
+            return GetTouTiaoContentViewList(mobileParams, categoryIds, stamp, action, startnum, num, out totalCount);
         }
 
         #region Helper
@@ -272,7 +272,7 @@ namespace FrameMobile.Domain.Service
             return result;
         }
 
-        private List<NewsContentView> GetTouTiaoContentViewList(MobileParam mobileParams, string categoryIds, int newsId, bool action, int startnum, int num, out int totalCont)
+        private List<NewsContentView> GetTouTiaoContentViewList(MobileParam mobileParams, string categoryIds, long stamp, bool action, int startnum, int num, out int totalCont)
         {
             var response1 = string.Empty;
             var response2 = string.Empty;

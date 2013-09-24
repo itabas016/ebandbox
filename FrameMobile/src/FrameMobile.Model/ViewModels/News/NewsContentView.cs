@@ -50,6 +50,9 @@ namespace FrameMobile.Model
         [JsonProperty("publishtime")]
         public DateTime PublishTime { get; set; }
 
+        [JsonProperty("stamp")]
+        public long Stamp { get; set; }
+
         [JsonProperty("imageurl")]
         public string ImageURL { get; set; }
 

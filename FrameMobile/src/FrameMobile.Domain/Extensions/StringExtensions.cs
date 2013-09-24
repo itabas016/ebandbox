@@ -23,12 +23,12 @@ namespace FrameMobile.Domain
             return time;
         }
 
-        public static double UnixStamp(this DateTime time)
+        public static long UnixStamp(this DateTime time)
         {
             double intResult = 0;
             System.DateTime startTime = TimeZone.CurrentTimeZone.ToLocalTime(new System.DateTime(1970, 1, 1));
             intResult = (time - startTime).TotalSeconds;
-            return intResult;
+            return (long)intResult;
         }
 
         public static string DefaultValue(this string str)
