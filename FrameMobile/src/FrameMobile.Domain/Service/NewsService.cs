@@ -73,15 +73,10 @@ namespace FrameMobile.Domain.Service
             totalCount = 0;
             var categoryIdList = categoryIds.Split(';', '；').ToList().ToInt32List();
 
-            //contentlist = GetCategoryContentListByAction(categoryId, newsId, action);
+            contentlist = GetContentViewList(mobileParams, categoryIdList, stamp, action);
 
-            var categorylist = GetContentViewList(mobileParams, categoryIdList, stamp, action);
-            contentlist = contentlist.Union(categorylist).ToList();
-            //sort
+            totalCount = contentlist.Count;
 
-
-            totalCount = totalCount + contentlist.Count;
-            //var result = GetCompleteContentViewList(mobileParams, contentlist);
             return contentlist.Skip(startnum - 1).Take(num).ToList();
         }
 
@@ -133,67 +128,75 @@ namespace FrameMobile.Domain.Service
 
             var endDateTime = DateTime.Now.AddDays(-5);
             var stampTime = stamp.UTCStamp();
-            if (action)
-            {
-                var subcategorycontentlist = (from l in
-                                                  dbContextService.Find<NewsContent>(x => x.Status == 1 && x.PublishTime > stampTime)
-                                              join m in
-                                                  dbContextService.Find<NewsImageInfo>(y => y.Status == 1)
-                                              on l.NewsId equals (m.NewsId)
-                                              into d
-                                              where categoryIds.Contains(l.CategoryId)
-                                              from s in d.DefaultIfEmpty()
-                                              orderby l.PublishTime descending
-                                              select new NewsContentView
-                                              {
-                                                  Id = l.Id,
-                                                  NewsId = l.NewsId,
-                                                  CategoryId = l.CategoryId,
-                                                  SubCategoryId = l.SubCategoryId,
-                                                  Site = l.Site,
-                                                  Title = l.Title,
-                                                  Summary = l.Summary,
-                                                  Content = l.Content,
-                                                  AppOpenURL = l.AppOpenURL,
-                                                  WAPURL = l.WAPURL,
-                                                  PublishTime = l.PublishTime,
-                                                  Stamp = l.PublishTime.UnixStamp(),
-                                                  ExtraAppId = l.ExtraAppId != 0 ? l.ExtraAppId : extraAppList.RandomInt(),
-                                                  ImageURL = s == null ? string.Empty : GetImageURLByType(s, imageType)
-                                              });
-                contentViewList = contentViewList.Union(subcategorycontentlist).ToList();
-            }
-            else
-            {
-                var subcategorycontentlist = (from l in
-                                                  dbContextService.Find<NewsContent>(x => x.Status == 1 && x.PublishTime > endDateTime && x.PublishTime < stampTime)
-                                              join m in
-                                                  dbContextService.Find<NewsImageInfo>(y => y.Status == 1)
-                                              on l.NewsId equals m.NewsId
-                                              into d
-                                              where categoryIds.Contains(l.CategoryId)
-                                              from s in d.DefaultIfEmpty()
-                                              orderby l.PublishTime descending
-                                              select new NewsContentView
-                                              {
-                                                  Id = l.Id,
-                                                  NewsId = l.NewsId,
-                                                  CategoryId = l.CategoryId,
-                                                  SubCategoryId = l.SubCategoryId,
-                                                  Site = l.Site,
-                                                  Title = l.Title,
-                                                  Summary = l.Summary,
-                                                  Content = l.Content,
-                                                  AppOpenURL = l.AppOpenURL,
-                                                  WAPURL = l.WAPURL,
-                                                  PublishTime = l.PublishTime,
-                                                  Stamp = l.PublishTime.UnixStamp(),
-                                                  ExtraAppId = l.ExtraAppId != 0 ? l.ExtraAppId : extraAppList.RandomInt(),
-                                                  ImageURL = s == null ? string.Empty : GetImageURLByType(s, imageType)
-                                              });
-                contentViewList = contentViewList.Union(subcategorycontentlist).ToList();
-            }
+
+            var categorycontentlist = action ? GetLatestNewsContentView(categoryIds, extraAppList, imageType, stampTime) :
+                GetOldestNewsContentView(categoryIds, extraAppList, imageType, endDateTime, stampTime);
+
+            contentViewList = categorycontentlist.ToList();
+
             return contentViewList;
+        }
+
+        private IEnumerable<NewsContentView> GetOldestNewsContentView(List<int> categoryIds, List<NewsExtraApp> extraAppList, int imageType, DateTime endDateTime, DateTime stampTime)
+        {
+            var categorycontentlist = (from l in
+                                           dbContextService.Find<NewsContent>(x => x.Status == 1 && x.PublishTime > endDateTime && x.PublishTime < stampTime)
+                                       join m in
+                                           dbContextService.Find<NewsImageInfo>(y => y.Status == 1)
+                                       on l.NewsId equals m.NewsId
+                                       into d
+                                       where categoryIds.Contains(l.CategoryId)
+                                       from s in d.DefaultIfEmpty()
+                                       orderby l.PublishTime descending
+                                       select new NewsContentView
+                                       {
+                                           Id = l.Id,
+                                           NewsId = l.NewsId,
+                                           CategoryId = l.CategoryId,
+                                           SubCategoryId = l.SubCategoryId,
+                                           Site = l.Site,
+                                           Title = l.Title,
+                                           Summary = l.Summary,
+                                           Content = l.Content,
+                                           AppOpenURL = l.AppOpenURL,
+                                           WAPURL = l.WAPURL,
+                                           PublishTime = l.PublishTime,
+                                           Stamp = l.PublishTime.UnixStamp(),
+                                           ExtraAppId = l.ExtraAppId != 0 ? l.ExtraAppId : extraAppList.RandomInt(),
+                                           ImageURL = s == null ? string.Empty : GetImageURLByType(s, imageType)
+                                       });
+            return categorycontentlist;
+        }
+
+        private IEnumerable<NewsContentView> GetLatestNewsContentView(List<int> categoryIds, List<NewsExtraApp> extraAppList, int imageType, DateTime stampTime)
+        {
+            var categorycontentlist = (from l in
+                                           dbContextService.Find<NewsContent>(x => x.Status == 1 && x.PublishTime > stampTime)
+                                       join m in
+                                           dbContextService.Find<NewsImageInfo>(y => y.Status == 1)
+                                       on l.NewsId equals (m.NewsId)
+                                       into d
+                                       where categoryIds.Contains(l.CategoryId)
+                                       from s in d.DefaultIfEmpty()
+                                       orderby l.PublishTime descending
+                                       select new NewsContentView
+                                       {
+                                           Id = l.Id,
+                                           NewsId = l.NewsId,
+                                           CategoryId = l.CategoryId,
+                                           SubCategoryId = l.SubCategoryId,
+                                           Site = l.Site,
+                                           Title = l.Title,
+                                           Summary = l.Summary,
+                                           Content = l.Content,
+                                           AppOpenURL = l.AppOpenURL,
+                                           WAPURL = l.WAPURL,
+                                           PublishTime = l.PublishTime,
+                                           Stamp = l.PublishTime.UnixStamp(),
+                                           ExtraAppId = l.ExtraAppId != 0 ? l.ExtraAppId : extraAppList.RandomInt(),
+                                           ImageURL = s == null ? string.Empty : GetImageURLByType(s, imageType)
+                                       });
+            return categorycontentlist;
         }
 
         #region Old Method Helper
