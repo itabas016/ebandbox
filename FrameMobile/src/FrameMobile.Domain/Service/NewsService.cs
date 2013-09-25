@@ -116,9 +116,7 @@ namespace FrameMobile.Domain.Service
             {
                 return 0;
             }
-            var lcdArray = mobileParams.Resolution.ToLower().Split('x');
-            var width = lcdArray[0].ToInt32();
-            var height = lcdArray[1].ToInt32();
+            var width = mobileParams.Resolution.GetResolutionWidth();
 
             if (width > Const.NEWS_HD_RESOLUTION_WIDTH)
                 return 2;

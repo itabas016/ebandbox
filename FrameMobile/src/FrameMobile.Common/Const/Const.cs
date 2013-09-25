@@ -14,5 +14,7 @@ namespace FrameMobile.Common
         public const string NEWS_SOURCES_PKG_NAME_TouTiao = "com.ss.android.article.news";
 
         public const int NEWS_HD_RESOLUTION_WIDTH = 720;
+
+        public const int NEWS_NORMAL_RESOLUTION_WIDTH = 480;
     }
 }

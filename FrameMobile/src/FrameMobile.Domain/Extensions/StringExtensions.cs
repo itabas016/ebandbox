@@ -50,5 +50,13 @@ namespace FrameMobile.Domain
             }
             return result;
         }
+
+        public static int GetResolutionWidth(this string resolution)
+        {
+            //format : 320x480
+            var lcdArray = resolution.ToLower().Split('x');
+            var width = lcdArray[0].ToInt32();
+            return width;
+        }
     }
 }
