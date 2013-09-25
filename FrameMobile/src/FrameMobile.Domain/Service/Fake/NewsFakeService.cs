@@ -41,7 +41,7 @@ namespace FrameMobile.Domain.Service
             service = new FetchTouTiaoService(dbContextService);
         }
 
-        public string TimeConvert(DateTime time, long stamp)
+        public string TimeConvert(string timeformat, long stamp)
         {
             return null;
         }

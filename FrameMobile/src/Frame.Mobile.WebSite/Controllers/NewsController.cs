@@ -28,7 +28,7 @@ namespace Frame.Mobile.WebSite.Controllers
         }
         private INewsService _newsService;
 
-        public ActionResult TimeConvert(DateTime time, long stamp)
+        public ActionResult TimeConvert(long stamp, string time)
         {
             var ret = _newsService.TimeConvert(time, stamp);
             return Content(ret);

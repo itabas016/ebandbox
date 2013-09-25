@@ -8,7 +8,7 @@ namespace FrameMobile.Domain.Service
 {
     public interface INewsService
     {
-        string TimeConvert(DateTime time, long stamp);
+        string TimeConvert(string timeformat, long stamp);
 
         IList<NewsConfigView> GetConfigList(MobileParam mobileParams);
 

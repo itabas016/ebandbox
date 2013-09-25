@@ -30,17 +30,31 @@ namespace FrameMobile.Domain.Service
             }
         }
 
-        public string TimeConvert(DateTime time, long stamp)
+        public string TimeConvert(string timeformat, long stamp)
         {
-            if (time != null)
+            var sb = new StringBuilder();
+            if (!string.IsNullOrEmpty(timeformat))
             {
-                return time.UnixStamp().ToString();
+                sb.Append(timeformat.ToExactDateTime(DateTimeFormat.COMMON_TO_SECOND).UnixStamp());
             }
-            if (stamp != null)
+            else if (stamp > 0)
             {
-                return stamp.UTCStamp().ToString();
+                sb.Append(stamp.UTCStamp());
             }
-            return string.Empty;
+            else if (!string.IsNullOrEmpty(timeformat) != null && stamp > 0)
+            {
+                sb.Append(timeformat.ToExactDateTime(DateTimeFormat.COMMON_TO_SECOND).UnixStamp());
+                sb.AppendLine();
+                sb.Append(stamp.UTCStamp());
+            }
+            else
+            {
+                sb.Append(DateTime.Now.UnixStamp());
+                sb.AppendLine();
+                sb.Append(DateTime.Now);
+            }
+
+            return sb.ToString();
         }
 
         [ServiceCache]
