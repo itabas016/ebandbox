@@ -89,7 +89,7 @@ namespace Frame.Mobile.WebSite.Controllers
             var mobileParams = GetMobileParam();
             int totalCount = 0;
 
-            Func<IList<NewsContentView>> gettoutiaocontentlist = () => NewsService.GetTouTiaoContentList(mobileParams, stamp, act, categoryIds, startnum, num, out totalCount);
+            Func<IList<NewsContentView>> gettoutiaocontentlist = () => NewsService.GetNewsContentList(mobileParams, stamp, act, categoryIds, startnum, num, out totalCount);
 
             var actionResult = BuildResult(this.CheckRequiredParams(imsi, lcd), gettoutiaocontentlist);
 

@@ -50,7 +50,7 @@ namespace FrameMobile.UnitTests.Domain.Service
             var categoryIds = "1;2";
             var totalCount = 0;
 
-            var result = newsService.GetTouTiaoContentList(mobileParam, newsId, action, categoryIds, 1, 5, out totalCount);
+            var result = newsService.GetNewsContentList(mobileParam, newsId, action, categoryIds, 1, 5, out totalCount);
             foreach (var item in result)
             {
                 Console.WriteLine(item.NewsId);

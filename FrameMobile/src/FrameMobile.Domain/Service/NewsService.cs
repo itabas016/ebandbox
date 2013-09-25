@@ -93,7 +93,7 @@ namespace FrameMobile.Domain.Service
         }
 
         [ServiceCache]
-        public IList<NewsContentView> GetTouTiaoContentList(MobileParam mobileParams, long stamp, bool action, string categoryIds, int startnum, int num, out int totalCount)
+        public IList<NewsContentView> GetNewsContentList(MobileParam mobileParams, long stamp, bool action, string categoryIds, int startnum, int num, out int totalCount)
         {
             var contentlist = new List<NewsContentView>();
 
