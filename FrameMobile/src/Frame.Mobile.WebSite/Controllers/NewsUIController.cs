@@ -71,8 +71,8 @@ namespace Frame.Mobile.WebSite.Controllers
 
         public ActionResult NewsManage(int? page)
         {
-            int pageNum = page.HasValue ? page.Value : 1;
-            PagedList<NewsContent> newslist = dbContextService.GetPaged<NewsContent>("PublishTime desc", pageNum - 1, pageSize);
+            int pageNum = page.HasValue ? page.Value : 0;
+            PagedList<NewsContent> newslist = dbContextService.GetPaged<NewsContent>("PublishTime desc", pageNum, pageSize);
             ViewData["newslist"] = newslist;
             ViewData["pageNum"] = pageNum;
             return View(newslist);

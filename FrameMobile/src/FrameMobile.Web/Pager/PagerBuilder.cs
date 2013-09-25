@@ -173,14 +173,15 @@ namespace FrameMobile.Web
 
         private void AddPrevious(ICollection<PagerItem> results)
         {
-            var item = new PagerItem(_pagerOptions.PrevPageText, _pageIndex - 1, _pageIndex == 1, PagerItemType.PrevPage);
+            var item = new PagerItem(_pagerOptions.PrevPageText, _pageIndex - 1, _pageIndex == 0, PagerItemType.PrevPage);
             if (!item.Disabled || (item.Disabled && _pagerOptions.ShowDisabledPagerItems))
                 results.Add(item);
         }
 
         private void AddFirst(ICollection<PagerItem> results)
         {
-            var item = new PagerItem(_pagerOptions.FirstPageText, 1, _pageIndex == 1, PagerItemType.FirstPage);
+            var item = new PagerItem(_pagerOptions.FirstPageText, 0, _pageIndex == 0, PagerItemType.FirstPage);
+
             //只有导航按钮未被禁用，或导航按钮被禁用但ShowDisabledButtoms=true时才添加
             if (!item.Disabled || (item.Disabled && _pagerOptions.ShowDisabledPagerItems))
                 results.Add(item);
@@ -304,7 +305,7 @@ namespace FrameMobile.Web
             if (_totalPageCount <= 1 && _pagerOptions.AutoHide)
                 return MvcHtmlString.Create(CopyrightText);
             //Display error message if pageIndex out of range
-            if ((_pageIndex > _totalPageCount && _totalPageCount > 0) || _pageIndex < 1)
+            if ((_pageIndex > _totalPageCount && _totalPageCount > 0) || _pageIndex < 0)
             {
                 return
                     MvcHtmlString.Create(string.Format("{0}<div style=\"color:red;font-weight:bold\">{1}</div>{0}",
