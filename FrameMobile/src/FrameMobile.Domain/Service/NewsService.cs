@@ -137,6 +137,7 @@ namespace FrameMobile.Domain.Service
             return string.Empty;
         }
 
+        [ServiceCache]
         private List<NewsExtraApp> GetNewsExtraAppList()
         {
             var extraAppList = dbContextService.Find<NewsExtraApp>(x => x.Status == 1);
