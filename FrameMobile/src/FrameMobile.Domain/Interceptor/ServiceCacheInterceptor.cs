@@ -9,6 +9,7 @@ using FrameMobile.Common;
 using FrameMobile.Model;
 using Snap;
 using StructureMap;
+using NCore;
 
 namespace FrameMobile.Domain
 {
@@ -67,20 +68,7 @@ namespace FrameMobile.Domain
             {
                 if (methodName == checkName)
                 {
-                    for (int i = 0; i < parameters.Length; i++)
-                    {
-                        if (parameters[i].ParameterType.Equals(typeof(MobileParam)))
-                        {
-                            var mobileParam = args[i] as MobileParam;
-                            if (mobileParam != null)
-                            {
-                                var width = mobileParam.Resolution.GetResolutionWidth();
-                                var value = width > Const.NEWS_HD_RESOLUTION_WIDTH ? Const.NEWS_HD_RESOLUTION_WIDTH : Const.NEWS_NORMAL_RESOLUTION_WIDTH;
-                                paramSb.AppendFormat("{0}[{1}]", MobileParam.Key_Resolution, value);
-                            }
-                        }
-                        paramSb.AppendFormat("{0}[{1}]", parameters[i].Name, args[i] == null ? string.Empty : args[i].ToString());
-                    }
+                    paramSb.Append(GetCacheKey(invocation, args, parameters));
                 }
                 else
                 {
@@ -94,6 +82,37 @@ namespace FrameMobile.Domain
                 return "SVC:" + cachekey.SHA1Hash();
             }
             return string.Empty;
+        }
+
+        private string GetCacheKey(IInvocation invocation, object[] args, ParameterInfo[] parameters)
+        {
+            StringBuilder paramSb = new StringBuilder();
+
+            for (int i = 0; i < parameters.Length; i++)
+            {
+                if (parameters[i].ParameterType.Equals(typeof(MobileParam)))
+                {
+                    var mobileParam = args[i] as MobileParam;
+                    if (mobileParam != null)
+                    {
+                        var width = mobileParam.Resolution.GetResolutionWidth();
+                        var value = width > Const.NEWS_HD_RESOLUTION_WIDTH ? Const.NEWS_HD_RESOLUTION_WIDTH : Const.NEWS_NORMAL_RESOLUTION_WIDTH;
+                        paramSb.AppendFormat("{0}[{1}]", MobileParam.Key_Resolution, value);
+                    }
+                }
+                if (parameters[i].Name == "stamp")
+                {
+                    var stamp = args[i] as string;
+                    var modulo = stamp.ToInt32() / 120;
+                    if (modulo == 0)
+                    {
+                        paramSb.AppendFormat("{0}[{1}]", parameters[i].Name, stamp);
+                    }
+                }
+
+                paramSb.AppendFormat("{0}[{1}]", parameters[i].Name, args[i] == null ? string.Empty : args[i].ToString());
+            }
+            return paramSb.ToString();
         }
 
         private void AddCacheKey(IInvocation invocation, ICacheManagerHelper redisCacheHepler, ParameterInfo[] parameters, ServiceCacheAttribute svcCacheAttribute, string cacheKey)
