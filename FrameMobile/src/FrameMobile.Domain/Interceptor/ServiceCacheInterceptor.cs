@@ -99,20 +99,51 @@ namespace FrameMobile.Domain
                         var value = width > Const.NEWS_HD_RESOLUTION_WIDTH ? Const.NEWS_HD_RESOLUTION_WIDTH : Const.NEWS_NORMAL_RESOLUTION_WIDTH;
                         paramSb.AppendFormat("{0}[{1}]", MobileParam.Key_Resolution, value);
                     }
+                    continue;
                 }
                 if (parameters[i].Name == "stamp")
                 {
-                    var stamp = args[i] as string;
-                    var modulo = stamp.ToInt32() / 120;
-                    if (modulo == 0)
-                    {
-                        paramSb.AppendFormat("{0}[{1}]", parameters[i].Name, stamp);
-                    }
+                    var stamp = (long)args[i];
+                    paramSb.Append(CacheTimeKey(parameters[i].Name, stamp));
+                    continue;
                 }
 
                 paramSb.AppendFormat("{0}[{1}]", parameters[i].Name, args[i] == null ? string.Empty : args[i].ToString());
             }
             return paramSb.ToString();
+        }
+
+        private string CacheTimeKey(string keyName, long stamp)
+        {
+            var currentTime = stamp.UTCStamp();
+
+            var date = int.Parse(currentTime.ToString("yyyyMMdd"));
+
+            var Hm = int.Parse(currentTime.ToString("HHmm"));
+
+            var value = 0;
+
+            if ((Hm >= 700 && Hm <= 1000) || (Hm >= 1130 && Hm <= 1430) || (Hm >= 1730 && Hm <= 2030))
+            {
+                // 2minutes
+                value = date + Hm / 2;
+            }
+            else if ((Hm > 1000 && Hm < 1130) || (Hm > 1430 && Hm < 1730))
+            {
+                //5minutes
+                value = date + Hm / 5;
+            }
+            else if ((Hm > 2030 && Hm < 2400))
+            {
+                //10minutes
+                value = date + Hm / 10;
+            }
+            else if ((Hm >= 0 && Hm <= 700))
+            {
+                //20minutes
+                value = date + Hm / 20;
+            }
+            return string.Format("{0}[{1}]", keyName, value);
         }
 
         private void AddCacheKey(IInvocation invocation, ICacheManagerHelper redisCacheHepler, ParameterInfo[] parameters, ServiceCacheAttribute svcCacheAttribute, string cacheKey)
