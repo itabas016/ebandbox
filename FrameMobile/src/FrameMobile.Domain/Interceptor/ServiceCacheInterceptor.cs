@@ -121,27 +121,27 @@ namespace FrameMobile.Domain
 
             var Hm = int.Parse(currentTime.ToString("HHmm"));
 
-            var value = 0;
+            var value = string.Empty;
 
             if ((Hm >= 700 && Hm <= 1000) || (Hm >= 1130 && Hm <= 1430) || (Hm >= 1730 && Hm <= 2030))
             {
                 // 2minutes
-                value = date + Hm / 2;
+                value = string.Format("{0}{1}", date, Hm / 2);
             }
             else if ((Hm > 1000 && Hm < 1130) || (Hm > 1430 && Hm < 1730))
             {
                 //5minutes
-                value = date + Hm / 5;
+                value = string.Format("{0}{1}", date, Hm / 5);
             }
             else if ((Hm > 2030 && Hm < 2400))
             {
                 //10minutes
-                value = date + Hm / 10;
+                value = string.Format("{0}{1}", date, Hm / 10);
             }
             else if ((Hm >= 0 && Hm <= 700))
             {
                 //20minutes
-                value = date + Hm / 20;
+                value = string.Format("{0}{1}", date, Hm / 20);
             }
             return string.Format("{0}[{1}]", keyName, value);
         }
