@@ -152,8 +152,8 @@ namespace FrameMobile.Domain.Service
             var extraAppList = GetNewsExtraAppList();
             var imageType = GetImageURLTypeByResolution(mobileParams);
 
-            var endDateTime = DateTime.Now.AddDays(-5);
             var stampTime = stamp.UTCStamp();
+            var endDateTime = stampTime.AddDays(-5);
 
             var categorycontentlist = action ? GetLatestNewsContentView(categoryIds, extraAppList, imageType, stampTime) :
                 GetOldestNewsContentView(categoryIds, extraAppList, imageType, endDateTime, stampTime);
