@@ -10,15 +10,14 @@ using Microsoft.Web.WebPages.OAuth;
 using WebMatrix.WebData;
 using Frame.Mobile.WebSite.Filters;
 using Frame.Mobile.WebSite.Models;
+using FrameMobile.Web;
 
 namespace Frame.Mobile.WebSite.Controllers
 {
     [Authorize]
-    [InitializeSimpleMembership]
-    public class AccountController : Controller
+    public class AccountController : MvcControllerBase
     {
-        //
-        // GET: /Account/Login
+        protected override bool IsMobileInterface { get { return false; } }
 
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
@@ -26,9 +25,6 @@ namespace Frame.Mobile.WebSite.Controllers
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
-
-        //
-        // POST: /Account/Login
 
         [HttpPost]
         [AllowAnonymous]
@@ -45,9 +41,6 @@ namespace Frame.Mobile.WebSite.Controllers
             return View(model);
         }
 
-        //
-        // POST: /Account/LogOff
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
@@ -57,17 +50,11 @@ namespace Frame.Mobile.WebSite.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        //
-        // GET: /Account/Register
-
         [AllowAnonymous]
         public ActionResult Register()
         {
             return View();
         }
-
-        //
-        // POST: /Account/Register
 
         [HttpPost]
         [AllowAnonymous]
@@ -92,9 +79,6 @@ namespace Frame.Mobile.WebSite.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
-
-        //
-        // POST: /Account/Disassociate
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -122,9 +106,6 @@ namespace Frame.Mobile.WebSite.Controllers
             return RedirectToAction("Manage", new { Message = message });
         }
 
-        //
-        // GET: /Account/Manage
-
         public ActionResult Manage(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
@@ -136,9 +117,6 @@ namespace Frame.Mobile.WebSite.Controllers
             ViewBag.ReturnUrl = Url.Action("Manage");
             return View();
         }
-
-        //
-        // POST: /Account/Manage
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -200,9 +178,6 @@ namespace Frame.Mobile.WebSite.Controllers
             return View(model);
         }
 
-        //
-        // POST: /Account/ExternalLogin
-
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -210,9 +185,6 @@ namespace Frame.Mobile.WebSite.Controllers
         {
             return new ExternalLoginResult(provider, Url.Action("ExternalLoginCallback", new { ReturnUrl = returnUrl }));
         }
-
-        //
-        // GET: /Account/ExternalLoginCallback
 
         [AllowAnonymous]
         public ActionResult ExternalLoginCallback(string returnUrl)
@@ -243,9 +215,6 @@ namespace Frame.Mobile.WebSite.Controllers
                 return View("ExternalLoginConfirmation", new RegisterExternalLoginModel { UserName = result.UserName, ExternalLoginData = loginData });
             }
         }
-
-        //
-        // POST: /Account/ExternalLoginConfirmation
 
         [HttpPost]
         [AllowAnonymous]
@@ -289,9 +258,6 @@ namespace Frame.Mobile.WebSite.Controllers
             ViewBag.ReturnUrl = returnUrl;
             return View(model);
         }
-
-        //
-        // GET: /Account/ExternalLoginFailure
 
         [AllowAnonymous]
         public ActionResult ExternalLoginFailure()
