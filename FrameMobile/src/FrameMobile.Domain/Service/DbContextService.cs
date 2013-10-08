@@ -15,7 +15,7 @@ namespace FrameMobile.Domain.Service
         {
             get
             {
-                 return new SimpleRepository(ConnectionStrings.NEWS_MYSQL_CONNECTSTRING, SimpleRepositoryOptions.RunMigrations);
+                 return new SimpleRepository(ConnectionStrings.NEWS_MYSQL_CONNECTSTRING, SimpleRepositoryOptions.None);
             }
             set
             {

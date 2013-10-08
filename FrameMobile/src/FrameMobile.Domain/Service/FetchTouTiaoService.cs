@@ -129,15 +129,15 @@ namespace FrameMobile.Domain.Service
                 var no_repeat = 0;
                 foreach (var item_content in contentList)
                 {
-                    var touTiaoModel = item_content.To<NewsContent>();
+                    var touTiaoModel = item_content.To<NewsContentRefactor>();
                     touTiaoModel.CategoryId = GetCategoryId(category);
                     touTiaoModel.SubCategoryId = GetSubCategoryId(category);
-                    var exist = dbContextService.Exists<NewsContent>(x => x.NewsId == item_content.NewsId);
+                    var exist = dbContextService.Exists<NewsContentRefactor>(x => x.NewsId == item_content.NewsId);
                     if (!exist)
                     {
                         no_repeat++;
-                        touTiaoModel.ImageIds = ImageListSave(item_content);
-                        dbContextService.Add<NewsContent>(touTiaoModel);
+                        touTiaoModel = ImageSave(item_content, touTiaoModel);
+                        dbContextService.Add<NewsContentRefactor>(touTiaoModel);
                     }
                 }
                 NLogHelper.WriteInfo(string.Format("{0} content count is {1}. Not repeat content count is {2} ", category, contentList.Count, no_repeat));
@@ -356,6 +356,43 @@ namespace FrameMobile.Domain.Service
                 return (int)imageId;
             }
             return 0;
+        }
+
+        public NewsContentRefactor ImageSave(TouTiaoContent content, NewsContentRefactor result)
+        {
+            var imageList = content.ImageList;
+            var HDURL = string.Empty;
+            var NormalURL = string.Empty;
+            if (imageList != null && imageList.Count > 0)
+            {
+                //NLogHelper.WriteInfo(string.Format("images count is {0}", imageList.Count));
+                var newsId = content.NewsId;
+
+                //Save first image
+                SingleImageSave(imageList[0], newsId, out HDURL, out NormalURL);
+                result.HDURL = HDURL;
+                result.NormalURL = NormalURL;
+            }
+            return result;
+        }
+
+        public void SingleImageSave(TouTiaoImageInfo imageInfo, long newsId, out string HDURL, out string NormalURL)
+        {
+            HDURL = NormalURL = string.Empty;
+            if (imageInfo.UrlList != null && imageInfo.UrlList.Count > 0)
+            {
+                //download single one from any one url
+                var single_img_url = imageInfo.UrlList[0];
+                MakeSureDIRExist(NEWS_IMAGE_DIR_BASE);
+                MakeSureDIRExist(NEWS_DEST_HD_IMAGE_DIR_BASE);
+                MakeSureDIRExist(NEWS_DEST_NORMAL_IMAGE_DIR_BASE);
+                var fileNamePath = HttpHelper.DownloadFile(single_img_url, Path.Combine(NEWS_IMAGE_DIR_BASE, GetFileNameFromURL(single_img_url)));
+
+                var destFileNameHD = ImageHelper.ResizedHD(fileNamePath, NEWS_DEST_HD_IMAGE_DIR_BASE, newsId);
+                var destFileNameNormal = ImageHelper.ResizedNormal(fileNamePath, NEWS_DEST_NORMAL_IMAGE_DIR_BASE, newsId);
+                HDURL = destFileNameHD;
+                NormalURL = destFileNameNormal;
+            }
         }
 
         private string GetFileNameFromURL(string uriPath)
