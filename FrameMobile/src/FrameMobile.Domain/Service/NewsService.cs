@@ -137,6 +137,20 @@ namespace FrameMobile.Domain.Service
             return string.Empty;
         }
 
+        private string GetImageURLByType(NewsContentRefactor content, int imageType)
+        {
+            switch (imageType)
+            {
+                case 0:
+                    return string.Empty;
+                case 1:
+                    return content.NormalURL;
+                case 2:
+                    return content.HDURL;
+            }
+            return string.Empty;
+        }
+
         [ServiceCache]
         private List<NewsExtraApp> GetNewsExtraAppList()
         {
@@ -166,13 +180,8 @@ namespace FrameMobile.Domain.Service
         private IEnumerable<NewsContentView> GetOldestNewsContentView(List<int> categoryIds, List<NewsExtraApp> extraAppList, int imageType, DateTime endDateTime, DateTime stampTime)
         {
             var categorycontentlist = (from l in
-                                           dbContextService.Find<NewsContent>(x => x.Status == 1 && x.PublishTime > endDateTime && x.PublishTime < stampTime)
-                                       join m in
-                                           dbContextService.Find<NewsImageInfo>(y => y.Status == 1)
-                                       on l.NewsId equals m.NewsId
-                                       into d
+                                           dbContextService.Find<NewsContentRefactor>(x => x.Status == 1 && x.PublishTime > endDateTime && x.PublishTime < stampTime)
                                        where categoryIds.Contains(l.CategoryId)
-                                       from s in d.DefaultIfEmpty()
                                        orderby l.PublishTime descending
                                        select new NewsContentView
                                        {
@@ -183,13 +192,13 @@ namespace FrameMobile.Domain.Service
                                            Site = l.Site,
                                            Title = l.Title,
                                            Summary = l.Summary,
-                                           Content = l.Content,
+                                           Content = l.Content == null ? string.Empty : l.Content,
                                            AppOpenURL = l.AppOpenURL,
                                            WAPURL = l.WAPURL,
                                            PublishTime = l.PublishTime,
                                            Stamp = l.PublishTime.UnixStamp(),
                                            ExtraAppId = l.ExtraAppId != 0 ? l.ExtraAppId : extraAppList.RandomInt(),
-                                           ImageURL = s == null ? string.Empty : GetImageURLByType(s, imageType)
+                                           ImageURL = l.NormalURL == null ? string.Empty : GetImageURLByType(l, imageType)
                                        });
             return categorycontentlist;
         }
@@ -197,13 +206,8 @@ namespace FrameMobile.Domain.Service
         private IEnumerable<NewsContentView> GetLatestNewsContentView(List<int> categoryIds, List<NewsExtraApp> extraAppList, int imageType, DateTime stampTime)
         {
             var categorycontentlist = (from l in
-                                           dbContextService.Find<NewsContent>(x => x.Status == 1 && x.PublishTime > stampTime)
-                                       join m in
-                                           dbContextService.Find<NewsImageInfo>(y => y.Status == 1)
-                                       on l.NewsId equals (m.NewsId)
-                                       into d
+                                           dbContextService.Find<NewsContentRefactor>(x => x.Status == 1 && x.PublishTime > stampTime)
                                        where categoryIds.Contains(l.CategoryId)
-                                       from s in d.DefaultIfEmpty()
                                        orderby l.PublishTime descending
                                        select new NewsContentView
                                        {
@@ -214,13 +218,13 @@ namespace FrameMobile.Domain.Service
                                            Site = l.Site,
                                            Title = l.Title,
                                            Summary = l.Summary,
-                                           Content = l.Content,
+                                           Content = l.Content == null ? string.Empty : l.Content,
                                            AppOpenURL = l.AppOpenURL,
                                            WAPURL = l.WAPURL,
                                            PublishTime = l.PublishTime,
                                            Stamp = l.PublishTime.UnixStamp(),
                                            ExtraAppId = l.ExtraAppId != 0 ? l.ExtraAppId : extraAppList.RandomInt(),
-                                           ImageURL = s == null ? string.Empty : GetImageURLByType(s, imageType)
+                                           ImageURL = l.NormalURL == null ? string.Empty : GetImageURLByType(l, imageType)
                                        });
             return categorycontentlist;
         }
