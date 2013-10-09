@@ -1,4 +1,4 @@
-﻿@model PagedList<NewsContent>
+﻿@model PagedList<NewsContentRefactor>
 @using System.Web.UI;
 @using SubSonic.Schema;
 @using FrameMobile.Model.News;
@@ -8,8 +8,8 @@
     ViewBag.Title = "新闻列表管理";
     Layout = "~/Views/Shared/_NewsLayout.cshtml";
     int? pageNum = ViewData["pageNum"] as int?;
-    PagedList<NewsContent> newslist = ViewData["newslist"] as PagedList<NewsContent>;
-    newslist = newslist != null ? newslist : new List<NewsContent>() as PagedList<NewsContent>;
+    PagedList<NewsContentRefactor> newslist = ViewData["newslist"] as PagedList<NewsContentRefactor>;
+    newslist = newslist != null ? newslist : new List<NewsContentRefactor>() as PagedList<NewsContentRefactor>;
 }
 <div class="contentHeader">
     <div class="contentHeaderInfo">
