@@ -57,8 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\MobileParam.cs" />
-    <Compile Include="News\NewsContentRefactor.cs" />
-    <Compile Include="News\NewsAdvert.cs" />
+    <Compile Include="News\NewsContent.cs" />
     <Compile Include="News\NewsConfig.cs" />
     <Compile Include="News\NewsExtraApp.cs" />
     <Compile Include="News\NewsSource.cs" />
@@ -73,7 +72,6 @@
     <Compile Include="ThirdPart\TouTiao\TouTiaoImageInfo.cs" />
     <Compile Include="News\NewsImageInfo.cs" />
     <Compile Include="News\NewsSubCategory.cs" />
-    <Compile Include="News\NewsContent.cs" />
     <Compile Include="ThirdPart\TouTiao\TouTiaoParameter.cs" />
     <Compile Include="ThirdPart\TouTiao\TouTiaoResult.cs" />
     <Compile Include="News\NewsCategory.cs" />

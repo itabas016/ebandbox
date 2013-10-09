@@ -54,6 +54,12 @@
                     <tr>
                         <td><strong>发布时间: </strong></td>
                         <td>@Html.TextBoxFor(m => m.PublishTime)</td>
+                        <td><strong>星级: </strong></td>
+                        <td>@Html.TextBoxFor(m => m.Rating)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>修改时间: </strong></td>
+                        <td>@Html.TextBoxFor(m => m.ModifiedTime)</td>
                         <td><strong>状态: </strong></td>
                         <td>@Html.RadioButtonFor(m => m.Status, 1) 有效 @Html.RadioButtonFor(m => m.Status, 0) 无效</td>
                     </tr>
@@ -67,7 +73,8 @@
             </div>
             <div>
                 <strong>图片地址: </strong>
-                @Html.TextBoxFor(m => m.ImageIds)
+                @Html.TextBoxFor(m => m.NormalURL)
+                @Html.TextBoxFor(m => m.HDURL)
             </div>
             <div class="txt-medium">
                 <strong>摘要: </strong>

@@ -106,7 +106,6 @@
     <Compile Include="Service\Interface\INewsUIService.cs" />
     <Compile Include="Service\NewsService.cs" />
     <Compile Include="Service\NewsUIService.cs" />
-    <Compile Include="TypeConverter\NewsAdvertResolver.cs" />
     <Compile Include="TypeConverter\NewsExtraAppResolver.cs" />
     <Compile Include="TypeConverter\NewsImageURLResolver.cs" />
     <Compile Include="TypeConverter\TouTIaoContentTypeConverter.cs" />

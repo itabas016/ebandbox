@@ -29,7 +29,6 @@ namespace FrameMobile.Domain
         {
 
             var loadmodelist = service.Find<NewsExtraApp>(x => x.Status == 1);
-            var advertlist = service.Find<NewsAdvert>(x => x.Status == 1);
 
             return null;
         }

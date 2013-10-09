@@ -110,46 +110,6 @@ namespace FrameMobile.Domain.Service
         #region Helper
 
         //1 为Normal 2为HD
-        private int GetImageURLTypeByResolution(MobileParam mobileParams)
-        {
-            if (string.IsNullOrEmpty(mobileParams.Resolution))
-            {
-                return 0;
-            }
-            var width = mobileParams.Resolution.GetResolutionWidth();
-
-            if (width > Const.NEWS_HD_RESOLUTION_WIDTH)
-                return 2;
-            return 1;
-        }
-
-        private string GetImageURLByType(NewsImageInfo image, int imageType)
-        {
-            switch (imageType)
-            {
-                case 0:
-                    return string.Empty;
-                case 1:
-                    return image.NormalURL;
-                case 2:
-                    return image.HDURL;
-            }
-            return string.Empty;
-        }
-
-        private string GetImageURLByType(NewsContentRefactor content, int imageType)
-        {
-            switch (imageType)
-            {
-                case 0:
-                    return string.Empty;
-                case 1:
-                    return content.NormalURL;
-                case 2:
-                    return content.HDURL;
-            }
-            return string.Empty;
-        }
 
         [ServiceCache]
         private List<NewsExtraApp> GetNewsExtraAppList()
@@ -180,7 +140,7 @@ namespace FrameMobile.Domain.Service
         private IEnumerable<NewsContentView> GetOldestNewsContentView(List<int> categoryIds, List<NewsExtraApp> extraAppList, int imageType, DateTime endDateTime, DateTime stampTime)
         {
             var categorycontentlist = (from l in
-                                           dbContextService.Find<NewsContentRefactor>(x => x.Status == 1 && x.PublishTime > endDateTime && x.PublishTime < stampTime)
+                                           dbContextService.Find<NewsContent>(x => x.Status == 1 && x.PublishTime > endDateTime && x.PublishTime < stampTime)
                                        where categoryIds.Contains(l.CategoryId)
                                        orderby l.PublishTime descending
                                        select new NewsContentView
@@ -206,7 +166,7 @@ namespace FrameMobile.Domain.Service
         private IEnumerable<NewsContentView> GetLatestNewsContentView(List<int> categoryIds, List<NewsExtraApp> extraAppList, int imageType, DateTime stampTime)
         {
             var categorycontentlist = (from l in
-                                           dbContextService.Find<NewsContentRefactor>(x => x.Status == 1 && x.PublishTime > stampTime)
+                                           dbContextService.Find<NewsContent>(x => x.Status == 1 && x.PublishTime > stampTime)
                                        where categoryIds.Contains(l.CategoryId)
                                        orderby l.PublishTime descending
                                        select new NewsContentView
@@ -229,8 +189,6 @@ namespace FrameMobile.Domain.Service
             return categorycontentlist;
         }
 
-        #region Old Method Helper
-
         private string GetImageURLByResolution(MobileParam mobileParams, long newsId)
         {
             if (string.IsNullOrEmpty(mobileParams.Resolution))
@@ -251,62 +209,32 @@ namespace FrameMobile.Domain.Service
             return string.Empty;
         }
 
-        private List<NewsContent> GetCategoryContentListByAction(int categoryId, int newsId, bool action)
+        private int GetImageURLTypeByResolution(MobileParam mobileParams)
         {
-            var contentlist = new List<NewsContent>();
+            if (string.IsNullOrEmpty(mobileParams.Resolution))
+            {
+                return 0;
+            }
+            var width = mobileParams.Resolution.GetResolutionWidth();
 
-            var endDateTime = DateTime.Now.AddDays(-10);
-            if (action)
-            {
-                var subcategorycontentlist = (from l in dbContextService.Find<NewsContent>(x => x.CategoryId == categoryId && x.Id > newsId && x.Status == 1 && x.PublishTime > endDateTime) join m in dbContextService.Find<NewsImageInfo>(y => y.Status == 1) on l.NewsId equals (m.NewsId) orderby l.PublishTime descending select l);
-                contentlist = contentlist.Union(subcategorycontentlist).ToList();
-            }
-            else
-            {
-                var subcategorycontentlist = dbContextService.Find<NewsContent>(x => x.CategoryId == categoryId && x.Id < newsId && x.Status == 1 && x.PublishTime > endDateTime).OrderByDescending(x => x
-                    .PublishTime);
-                contentlist = contentlist.Union(subcategorycontentlist).ToList();
-            }
-            return contentlist;
+            if (width > Const.NEWS_HD_RESOLUTION_WIDTH)
+                return 2;
+            return 1;
         }
 
-        private List<NewsContent> GetSubCategoryContentListByAction(int subcategoryId, int newsId, bool action)
+        private string GetImageURLByType(NewsContent content, int imageType)
         {
-            var contentlist = new List<NewsContent>();
-
-            var endDateTime = DateTime.Now.AddDays(-10);
-            if (action)
+            switch (imageType)
             {
-                var subcategorycontentlist = dbContextService.Find<NewsContent>(x => x.SubCategoryId == subcategoryId && x.Id > newsId && x.Status == 1 && x.PublishTime > endDateTime).OrderByDescending(x => x
-                    .PublishTime);
-                contentlist = contentlist.Union(subcategorycontentlist).ToList();
+                case 0:
+                    return string.Empty;
+                case 1:
+                    return content.NormalURL;
+                case 2:
+                    return content.HDURL;
             }
-            else
-            {
-                var subcategorycontentlist = dbContextService.Find<NewsContent>(x => x.SubCategoryId == subcategoryId && x.Id < newsId && x.Status == 1 && x.PublishTime > endDateTime).OrderByDescending(x => x
-                    .PublishTime);
-                contentlist = contentlist.Union(subcategorycontentlist).ToList();
-            }
-            return contentlist;
+            return string.Empty;
         }
-
-        private IList<NewsContentView> GetCompleteContentViewList(MobileParam mobileParams, List<NewsContent> contentList)
-        {
-            var result = contentList.To<IList<NewsContentView>>();
-            var extraAppList = GetNewsExtraAppList();
-            if (result == null)
-            {
-                return null;
-            }
-            foreach (var item in result)
-            {
-                item.ExtraAppId = extraAppList.RandomInt();
-                item.ImageURL = GetImageURLByResolution(mobileParams, item.NewsId);
-            }
-            return result;
-        }
-
-        #endregion
 
         #endregion
     }

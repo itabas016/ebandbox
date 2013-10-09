@@ -129,15 +129,15 @@ namespace FrameMobile.Domain.Service
                 var no_repeat = 0;
                 foreach (var item_content in contentList)
                 {
-                    var touTiaoModel = item_content.To<NewsContentRefactor>();
+                    var touTiaoModel = item_content.To<NewsContent>();
                     touTiaoModel.CategoryId = GetCategoryId(category);
                     touTiaoModel.SubCategoryId = GetSubCategoryId(category);
-                    var exist = dbContextService.Exists<NewsContentRefactor>(x => x.NewsId == item_content.NewsId);
+                    var exist = dbContextService.Exists<NewsContent>(x => x.NewsId == item_content.NewsId);
                     if (!exist)
                     {
                         no_repeat++;
                         touTiaoModel = ImageSave(item_content, touTiaoModel);
-                        dbContextService.Add<NewsContentRefactor>(touTiaoModel);
+                        dbContextService.Add<NewsContent>(touTiaoModel);
                     }
                 }
                 NLogHelper.WriteInfo(string.Format("{0} content count is {1}. Not repeat content count is {2} ", category, contentList.Count, no_repeat));
@@ -315,50 +315,7 @@ namespace FrameMobile.Domain.Service
             return newsSubCategory;
         }
 
-        public string ImageListSave(TouTiaoContent content)
-        {
-            var imageList = content.ImageList;
-            if (imageList != null && imageList.Count > 0)
-            {
-                //NLogHelper.WriteInfo(string.Format("images count is {0}", imageList.Count));
-                var newsId = content.NewsId;
-
-                var sb = new StringBuilder();
-                //Save first image
-                var imageId = SingleImageSave(imageList[0], newsId);
-                //多个图片Id用;隔开
-
-                sb.Append(imageId + ASCII.SEMICOLON);
-                return sb.ToString().TrimEnd(ASCII.SEMICOLON_CHAR);
-            }
-            return string.Empty;
-        }
-
-        public int SingleImageSave(TouTiaoImageInfo imageInfo, long newsId)
-        {
-            var destImage = imageInfo.To<NewsImageInfo>();
-            destImage.NewsId = newsId;
-            if (imageInfo.UrlList != null && imageInfo.UrlList.Count > 0)
-            {
-                //download single one from any one url
-                var single_img_url = imageInfo.UrlList[0];
-                MakeSureDIRExist(NEWS_IMAGE_DIR_BASE);
-                MakeSureDIRExist(NEWS_DEST_HD_IMAGE_DIR_BASE);
-                MakeSureDIRExist(NEWS_DEST_NORMAL_IMAGE_DIR_BASE);
-                var fileNamePath = HttpHelper.DownloadFile(single_img_url, Path.Combine(NEWS_IMAGE_DIR_BASE, GetFileNameFromURL(single_img_url)));
-
-                var destFileNameHD = ImageHelper.ResizedHD(fileNamePath, NEWS_DEST_HD_IMAGE_DIR_BASE, newsId);
-                var destFileNameNormal = ImageHelper.ResizedNormal(fileNamePath, NEWS_DEST_NORMAL_IMAGE_DIR_BASE, newsId);
-                destImage.HDURL = destFileNameHD;
-                destImage.NormalURL = destFileNameNormal;
-
-                var imageId = dbContextService.Add<NewsImageInfo>(destImage);
-                return (int)imageId;
-            }
-            return 0;
-        }
-
-        public NewsContentRefactor ImageSave(TouTiaoContent content, NewsContentRefactor result)
+        public NewsContent ImageSave(TouTiaoContent content, NewsContent result)
         {
             var imageList = content.ImageList;
             var HDURL = string.Empty;

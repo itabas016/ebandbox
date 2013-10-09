@@ -189,6 +189,8 @@ namespace FrameMobile.UnitTests.Domain
         public void SingleImageSave()
         {
             long newsId = 32434321;
+            var HDURL = string.Empty;
+            var NormalURL = string.Empty;
             var image = new TouTiaoImageInfo()
             {
                 Height = 200,
@@ -196,7 +198,7 @@ namespace FrameMobile.UnitTests.Domain
                 UrlList = new List<string>() { "http://p0.pstatp.com/origin/252/6926772543" }
             };
 
-            dataService.SingleImageSave(image, newsId);
+            dataService.SingleImageSave(image, newsId, out HDURL, out NormalURL);
         }
 
         #region Helper

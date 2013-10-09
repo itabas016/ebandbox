@@ -7,7 +7,7 @@ using SubSonic.SqlGeneration.Schema;
 namespace FrameMobile.Model.News
 {
     [Serializable]
-    [SubSonicTableNameOverride("newscontent")]
+    [SubSonicTableNameOverride("newscontent2")]
     public class NewsContent : MySQLModelBase
     {
         public long NewsId { get; set; }
@@ -45,9 +45,21 @@ namespace FrameMobile.Model.News
 
         public DateTime PublishTime { get; set; }
 
-        [SubSonicStringLength(256)]
+        public DateTime ModifiedTime
+        {
+            get { return modifiedTime; }
+            set { modifiedTime = value; }
+        } private DateTime modifiedTime = DateTime.Now;
+
+        [SubSonicStringLength(512)]
         [SubSonicNullString]
-        public string ImageIds { get; set; }
+        public string NormalURL { get; set; }
+
+        [SubSonicStringLength(512)]
+        [SubSonicNullString]
+        public string HDURL { get; set; }
+
+        public int Rating { get; set; }
 
         //预留字段
         [SubSonicStringLength(256)]
