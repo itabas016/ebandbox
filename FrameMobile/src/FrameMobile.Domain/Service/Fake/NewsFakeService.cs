@@ -47,7 +47,7 @@ namespace FrameMobile.Domain.Service
         }
 
         [ServiceCache]
-        public IList<NewsConfigView> GetConfigList(MobileParam mobileParams)
+        public IList<NewsConfigView> GetConfigViewList(MobileParam mobileParams)
         {
             #region instance
             var config = new NewsConfig()
@@ -86,7 +86,7 @@ namespace FrameMobile.Domain.Service
         }
 
         [ServiceCache]
-        public IList<NewsSourceView> GetSourceList(MobileParam mobileParams, int cver, out int sver)
+        public IList<NewsSourceView> GetSourceViewList(MobileParam mobileParams, int cver, out int sver)
         {
             #region instance
             var source = new NewsSource()
@@ -118,7 +118,7 @@ namespace FrameMobile.Domain.Service
         }
 
         [ServiceCache]
-        public IList<NewsExtraAppView> GetExtraAppList(MobileParam mobileParams, int cver, out int sver)
+        public IList<NewsExtraAppView> GetExtraAppViewList(MobileParam mobileParams, int cver, out int sver)
         {
             #region instance
 
@@ -157,7 +157,7 @@ namespace FrameMobile.Domain.Service
         }
 
         [ServiceCache]
-        public IList<NewsCategoryView> GetCategoryList(MobileParam mobileParams, int cver, out int sver)
+        public IList<NewsCategoryView> GetCategoryViewList(MobileParam mobileParams, int cver, out int sver)
         {
             #region instance
             var category = new NewsCategory()
@@ -184,7 +184,7 @@ namespace FrameMobile.Domain.Service
         }
 
         [ServiceCache]
-        public IList<NewsSubCategoryView> GetSubCategoryList(MobileParam mobileParams)
+        public IList<NewsSubCategoryView> GetSubCategoryViewList(MobileParam mobileParams)
         {
             #region instance
             var subcategory = new NewsSubCategory()
@@ -244,7 +244,7 @@ namespace FrameMobile.Domain.Service
         }
 
         [ServiceCache]
-        public IList<NewsContentView> GetNewsContentList(MobileParam mobileParams, long stamp, bool action, string categoryIds, int startnum, int num, out int totalCount)
+        public IList<NewsContentView> GetNewsContentViewList(MobileParam mobileParams, long stamp, bool action, string categoryIds, int startnum, int num, out int totalCount)
         {
             return GetTouTiaoContentViewList(mobileParams, categoryIds, stamp, action, startnum, num, out totalCount);
         }

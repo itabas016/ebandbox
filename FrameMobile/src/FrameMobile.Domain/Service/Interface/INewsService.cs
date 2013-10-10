@@ -10,16 +10,16 @@ namespace FrameMobile.Domain.Service
     {
         string TimeConvert(string timeformat, long stamp);
 
-        IList<NewsConfigView> GetConfigList(MobileParam mobileParams);
+        IList<NewsConfigView> GetConfigViewList(MobileParam mobileParams);
 
-        IList<NewsSourceView> GetSourceList(MobileParam mobileParams, int cver, out int sver);
+        IList<NewsSourceView> GetSourceViewList(MobileParam mobileParams, int cver, out int sver);
 
-        IList<NewsExtraAppView> GetExtraAppList(MobileParam mobileParams, int cver, out int sver);
+        IList<NewsExtraAppView> GetExtraAppViewList(MobileParam mobileParams, int cver, out int sver);
 
-        IList<NewsCategoryView> GetCategoryList(MobileParam mobileParams, int cver, out int sver);
+        IList<NewsCategoryView> GetCategoryViewList(MobileParam mobileParams, int cver, out int sver);
 
-        IList<NewsSubCategoryView> GetSubCategoryList(MobileParam mobileParams);
+        IList<NewsSubCategoryView> GetSubCategoryViewList(MobileParam mobileParams);
 
-        IList<NewsContentView> GetNewsContentList(MobileParam mobileParams, long stamp, bool action, string categoryIds, int startnum, int num, out int totalCount);
+        IList<NewsContentView> GetNewsContentViewList(MobileParam mobileParams, long stamp, bool action, string categoryIds, int startnum, int num, out int totalCount);
     }
 }

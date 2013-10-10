@@ -103,9 +103,9 @@ namespace Frame.Mobile.WebSite.Controllers
         public ActionResult NewsEdit(NewsContent model)
         {
             /*
-            ViewData["Categorylist"] = dbContextService.All<NewsCategory>().ToList();
-            ViewData["SubCategorylist"] = dbContextService.All<NewsSubCategory>().ToList();
-            ViewData["ExtraApplist"] = dbContextService.All<NewsExtraApp>().ToList();
+            ViewData["Categorylist"] = NewsUIService.GetNewsCategoryList();
+            ViewData["SubCategorylist"] = NewsUIService.GetNewsSubCategoryList();
+            ViewData["ExtraApplist"] = NewsUIService.GetNewsExtraAppList();
             */
 
             var news = dbContextService.Single<NewsContent>(model.Id);
@@ -118,7 +118,7 @@ namespace Frame.Mobile.WebSite.Controllers
             news.Summary = model.Summary;
             news.Content = model.Content;
             news.Status = model.Status;
-            news.CreateDateTime = DateTime.Now;
+            news.ModifiedTime = DateTime.Now;
 
             dbContextService.Update<NewsContent>(news);
 

@@ -11,25 +11,8 @@ using NCore;
 
 namespace FrameMobile.Domain.Service
 {
-    public class NewsService : INewsService
+    public class NewsService : NewsServiceBase, INewsService
     {
-        private IDbContextService _dbContextService;
-        public IDbContextService dbContextService
-        {
-            get
-            {
-                if (_dbContextService == null)
-                {
-                    _dbContextService = ObjectFactory.GetInstance<IDbContextService>();
-                }
-                return _dbContextService;
-            }
-            set
-            {
-                _dbContextService = value;
-            }
-        }
-
         public string TimeConvert(string timeformat, long stamp)
         {
             var sb = new StringBuilder();
@@ -58,42 +41,42 @@ namespace FrameMobile.Domain.Service
         }
 
         [ServiceCache]
-        public IList<NewsConfigView> GetConfigList(MobileParam mobileParams)
+        public IList<NewsConfigView> GetConfigViewList(MobileParam mobileParams)
         {
             var configlist = dbContextService.Find<NewsConfig>(x => x.Status == 1);
             return configlist.To<IList<NewsConfigView>>();
         }
 
         [ServiceCache]
-        public IList<NewsSourceView> GetSourceList(MobileParam mobileParams, int cver, out int sver)
+        public IList<NewsSourceView> GetSourceViewList(MobileParam mobileParams, int cver, out int sver)
         {
             var sourcelist = new NewsSource().GetResultByVer<NewsSource>(cver, out sver);
             return sourcelist.To<IList<NewsSourceView>>();
         }
 
         [ServiceCache]
-        public IList<NewsExtraAppView> GetExtraAppList(MobileParam mobileParams, int cver, out int sver)
+        public IList<NewsExtraAppView> GetExtraAppViewList(MobileParam mobileParams, int cver, out int sver)
         {
             var extraAppList = new NewsExtraApp().GetResultByVer<NewsExtraApp>(cver, out sver);
             return extraAppList.To<IList<NewsExtraAppView>>();
         }
 
         [ServiceCache]
-        public IList<NewsCategoryView> GetCategoryList(MobileParam mobileParams, int cver, out int sver)
+        public IList<NewsCategoryView> GetCategoryViewList(MobileParam mobileParams, int cver, out int sver)
         {
             var categorylist = new NewsCategory().GetResultByVer<NewsCategory>(cver, out sver);
             return categorylist.To<IList<NewsCategoryView>>();
         }
 
         [ServiceCache]
-        public IList<NewsSubCategoryView> GetSubCategoryList(MobileParam mobileParams)
+        public IList<NewsSubCategoryView> GetSubCategoryViewList(MobileParam mobileParams)
         {
             var subcategorylist = dbContextService.Find<NewsSubCategory>(x => x.Status == 1);
             return subcategorylist.To<IList<NewsSubCategoryView>>();
         }
 
         [ServiceCache]
-        public IList<NewsContentView> GetNewsContentList(MobileParam mobileParams, long stamp, bool action, string categoryIds, int startnum, int num, out int totalCount)
+        public IList<NewsContentView> GetNewsContentViewList(MobileParam mobileParams, long stamp, bool action, string categoryIds, int startnum, int num, out int totalCount)
         {
             var contentlist = new List<NewsContentView>();
 

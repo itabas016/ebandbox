@@ -105,6 +105,7 @@
     <Compile Include="Service\DbContextService.cs" />
     <Compile Include="Service\Interface\INewsUIService.cs" />
     <Compile Include="Service\NewsService.cs" />
+    <Compile Include="Service\NewsServiceBase.cs" />
     <Compile Include="Service\NewsUIService.cs" />
     <Compile Include="TypeConverter\NewsExtraAppResolver.cs" />
     <Compile Include="TypeConverter\NewsImageURLResolver.cs" />

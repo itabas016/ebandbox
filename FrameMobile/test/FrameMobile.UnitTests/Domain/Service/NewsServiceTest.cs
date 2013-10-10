@@ -50,11 +50,19 @@ namespace FrameMobile.UnitTests.Domain.Service
             var categoryIds = "1;2";
             var totalCount = 0;
 
-            var result = newsService.GetNewsContentList(mobileParam, newsId, action, categoryIds, 1, 5, out totalCount);
+            var result = newsService.GetNewsContentViewList(mobileParam, newsId, action, categoryIds, 1, 5, out totalCount);
             foreach (var item in result)
             {
                 Console.WriteLine(item.NewsId);
             }
+        }
+
+        public void test()
+        {
+            var s = "http://news.kk874.com/NewsResources/Images/480/2801491477_large_325_681220495.jpg";
+            var ret = s.Split('/').ToList();
+            Console.WriteLine(ret[ret.Count-1]);
+            ret.ForEach(m => Console.WriteLine(m));
         }
     }
 }

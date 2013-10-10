@@ -39,7 +39,7 @@ namespace Frame.Mobile.WebSite.Controllers
             var mobileParams = GetMobileParam();
             int sver = 0;
 
-            Func<IList<NewsSourceView>> getsourcelist = () => NewsService.GetSourceList(mobileParams, cver, out sver);
+            Func<IList<NewsSourceView>> getsourcelist = () => NewsService.GetSourceViewList(mobileParams, cver, out sver);
 
             var actionResult = BuildResult(this.CheckRequiredParams(imsi), getsourcelist);
 
@@ -52,7 +52,7 @@ namespace Frame.Mobile.WebSite.Controllers
             var mobileParams = GetMobileParam();
             int sver = 0;
 
-            Func<IList<NewsExtraAppView>> getextraapplist = () => NewsService.GetExtraAppList(mobileParams, cver, out sver);
+            Func<IList<NewsExtraAppView>> getextraapplist = () => NewsService.GetExtraAppViewList(mobileParams, cver, out sver);
 
             var actionResult = BuildResult(this.CheckRequiredParams(imsi), getextraapplist);
 
@@ -65,7 +65,7 @@ namespace Frame.Mobile.WebSite.Controllers
             var mobileParams = GetMobileParam();
             int sver = 0;
 
-            Func<IList<NewsCategoryView>> getcategorylist = () => NewsService.GetCategoryList(mobileParams, cver, out sver);
+            Func<IList<NewsCategoryView>> getcategorylist = () => NewsService.GetCategoryViewList(mobileParams, cver, out sver);
 
             var actionResult = BuildResult(this.CheckRequiredParams(imsi), getcategorylist);
 
@@ -77,7 +77,7 @@ namespace Frame.Mobile.WebSite.Controllers
         {
             var mobileParams = GetMobileParam();
 
-            Func<IList<NewsSubCategoryView>> getsubcategorylist = () => NewsService.GetSubCategoryList(mobileParams);
+            Func<IList<NewsSubCategoryView>> getsubcategorylist = () => NewsService.GetSubCategoryViewList(mobileParams);
 
             var actionResult = BuildResult(this.CheckRequiredParams(imsi), getsubcategorylist);
 
@@ -89,7 +89,7 @@ namespace Frame.Mobile.WebSite.Controllers
             var mobileParams = GetMobileParam();
             int totalCount = 0;
 
-            Func<IList<NewsContentView>> gettoutiaocontentlist = () => NewsService.GetNewsContentList(mobileParams, stamp, act, categoryIds, startnum, num, out totalCount);
+            Func<IList<NewsContentView>> gettoutiaocontentlist = () => NewsService.GetNewsContentViewList(mobileParams, stamp, act, categoryIds, startnum, num, out totalCount);
 
             var actionResult = BuildResult(this.CheckRequiredParams(imsi, lcd), gettoutiaocontentlist);
 

@@ -1,10 +1,14 @@
 ﻿@using FrameMobile.Model.News;
+@using FrameMobile.Domain.Service;
 @model NewsContent
 @{
     bool isUpdateMode = ViewData["IsUpdate"] != null;
     ViewBag.Title = isUpdateMode ? "修改新闻" : "添加新闻";
     Layout = "~/Views/Shared/_NewsLayout.cshtml";
-    
+
+    var categorylist = ViewData["Categorylist"] as List<NewsCategory>;
+    var t = @Model.NormalURL == string.Empty ? null : @Model.NormalURL.Split('/').ToList();
+    var displayURL = @Model.NormalURL == string.Empty ? string.Empty : t[t.Count - 1];
 }
 
 <div class="contentHeader">
@@ -40,7 +44,11 @@
                     </tr>
                     <tr>
                         <td><strong>分类: </strong></td>
-                        @*<td>@Html.DropDownListFor(m => m.CategoryId, (SelectList)ViewData["Categorylist"])</td>*@
+                        @*<td>@Html.DropDownListFor(m => m.CategoryId, (SelectList)categorylist.Select(a => new SelectListItem
+                       {
+                           Text = a.Name,
+                           Value = a.Id.ToString()
+                       }), "请选择")</td>*@
                         <td>@Html.TextBoxFor(m => m.CategoryId)</td>
                         <td><strong>子分类: </strong></td>
                         <td>@Html.TextBoxFor(m => m.SubCategoryId)</td>
@@ -65,7 +73,13 @@
                     </tr>
                     <tr>
                         <td><strong>Wap地址: </strong></td>
-                        <td>@Html.TextAreaFor(m => m.WAPURL)</td>
+                        <td>@if (isUpdateMode)
+                            {
+                            @Html.TextAreaFor(m => m.WAPURL, new { @readonly = true, Class = "txt-readonly" })}
+                            else
+                            {
+                            @Html.TextAreaFor(m => m.WAPURL)
+                            }</td>
                         <td></td>
                         <td></td>
                     </tr>
@@ -73,8 +87,15 @@
             </div>
             <div>
                 <strong>图片地址: </strong>
-                @Html.TextBoxFor(m => m.NormalURL)
-                @Html.TextBoxFor(m => m.HDURL)
+                <input type="file" name="newsimage" id="newsimage" accept="bmp|gif|jpg|jpeg|png|tiff|abm" />
+                <div>
+                    <label class="filename">@displayURL</label>
+                    <br />
+                    @if (Model.NormalURL != null && Model.NormalURL != string.Empty)
+                    {
+                        <img src="@Model.NormalURL" />
+                    }
+                </div>
             </div>
             <div class="txt-medium">
                 <strong>摘要: </strong>
