@@ -156,5 +156,34 @@ namespace FrameMobile.UnitTests.Domain.Service
             dbContextService.Add<NewsConfig>(configlist);
         }
 
+        [Fact]
+        public void BatchInsertNewsContentTable()
+        {
+            var random = new Random(Guid.NewGuid().GetHashCode());
+
+            var example = dbContextService.Single<NewsContent>(x => x.Id == 44);
+
+            for (int i = 10012; i <= 100000; i++)
+            {
+                var content = new NewsContent();
+                content.NewsId = i;
+                content.CategoryId = random.Next(0, 7);
+                content.SubCategoryId = random.Next(0,10);
+                content.ExtraAppId= random.Next(0,5);
+                content.Title = example.Title;
+                content.Summary = example.Summary;
+                content.Site = example.Site;
+                content.WAPURL = example.WAPURL;
+                content.HDURL = example.HDURL;
+                content.NormalURL = example.NormalURL;
+                content.AppOpenURL = example.AppOpenURL;
+                content.PublishTime = DateTime.Now.AddMinutes(random.Next(0, 5000));
+
+                var outputId = dbContextService.Add<NewsContent>(content);
+
+                Console.WriteLine((int)outputId);
+            }
+        }
+
     }
 }
