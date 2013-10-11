@@ -15,5 +15,8 @@ namespace FrameMobile.Model
 
         [JsonProperty("name")]
         public string Name { get; set; }
+
+        [JsonProperty("status")]
+        public int Status { get; set; }
     }
 }

@@ -51,7 +51,10 @@ namespace FrameMobile.Domain
             {
                 var dbContextService = ObjectFactory.GetInstance<IDbContextService>();
                 sver = version;
-                result = dbContextService.Find<T>(x => x.Status == 1).ToList();
+                var type = typeof(T);
+                var flag = (type == typeof(NewsCategory));
+                result = flag ?
+                    dbContextService.All<T>().ToList() : dbContextService.Find<T>(x => x.Status == 1).ToList();
                 return result;
             }
             return result;

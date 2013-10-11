@@ -53,7 +53,8 @@ namespace FrameMobile.Domain
 
             Mapper.CreateMap<NewsCategory, NewsCategoryView>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(ori => ori.Id))
-                .ForMember(dest => dest.Name, opt => opt.MapFrom(ori => ori.Name));
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(ori => ori.Name))
+                .ForMember(dest => dest.Status, opt => opt.MapFrom(ori => ori.Status));
 
             Mapper.CreateMap<NewsSubCategory, NewsSubCategoryView>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(ori => ori.Id))
