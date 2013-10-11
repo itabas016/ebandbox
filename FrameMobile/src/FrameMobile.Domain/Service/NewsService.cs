@@ -123,7 +123,7 @@ namespace FrameMobile.Domain.Service
         private IEnumerable<NewsContentView> GetOldestNewsContentView(List<int> categoryIds, List<NewsExtraApp> extraAppList, int imageType, DateTime endDateTime, DateTime stampTime)
         {
             var categorycontentlist = (from l in
-                                           dbContextService.Find<NewsContent>(x => x.Status == 1 && x.PublishTime > endDateTime && x.PublishTime < stampTime)
+                                           dbContextService.Find<NewsContent>(x => x.Status == 1 && x.PublishTime >= endDateTime && x.PublishTime <= stampTime)
                                        where categoryIds.Contains(l.CategoryId)
                                        orderby l.PublishTime descending
                                        select new NewsContentView
@@ -149,7 +149,7 @@ namespace FrameMobile.Domain.Service
         private IEnumerable<NewsContentView> GetLatestNewsContentView(List<int> categoryIds, List<NewsExtraApp> extraAppList, int imageType, DateTime stampTime)
         {
             var categorycontentlist = (from l in
-                                           dbContextService.Find<NewsContent>(x => x.Status == 1 && x.PublishTime > stampTime)
+                                           dbContextService.Find<NewsContent>(x => x.Status == 1 && x.PublishTime >= stampTime)
                                        where categoryIds.Contains(l.CategoryId)
                                        orderby l.PublishTime descending
                                        select new NewsContentView
