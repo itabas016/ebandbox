@@ -172,7 +172,7 @@ namespace FrameMobile.Domain.Service
 
         public void UpdateCategoryCursor(string categoryName, long cursor)
         {
-            var subcategory = dbContextService.Single<NewsSubCategory>(x => x.Name == categoryName);
+            var subcategory = dbContextService.Single<NewsSubCategory>(x => x.NameLowCase == categoryName);
             if (subcategory != null && cursor != subcategory.Cursor)
             {
                 subcategory.Cursor = cursor;
