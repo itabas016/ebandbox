@@ -8,11 +8,8 @@ namespace FrameMobile.Model.News
 {
     [Serializable]
     [SubSonicTableNameOverride("newssource")]
-    public class NewsSource : MySQLModelBase
+    public class NewsSource : MySQLModel
     {
-        [SubSonicStringLength(64)]
-        public string Name { get; set; }
-
         [SubSonicStringLength(64)]
         public string NameLowCase { get; set; }
 

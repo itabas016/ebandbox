@@ -64,6 +64,7 @@
     <Compile Include="Common\NewsUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Support\IMySQLModel.cs" />
+    <Compile Include="Support\MySQLModel.cs" />
     <Compile Include="Support\MySQLModelBase.cs" />
     <Compile Include="Support\RedisModelBase.cs" />
     <Compile Include="ThirdPart\TouTiao\TouTiaoCategory.cs" />

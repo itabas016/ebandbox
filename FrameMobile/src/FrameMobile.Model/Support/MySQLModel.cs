@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using SubSonic.SqlGeneration.Schema;
 
-namespace FrameMobile.Model.News
+namespace FrameMobile.Model
 {
     [Serializable]
-    [SubSonicTableNameOverride("newscategory")]
-    public class NewsCategory : MySQLModel
+    public class MySQLModel : MySQLModelBase
     {
+        [SubSonicStringLength(64)]
+        public string Name { get; set; }
     }
 }
