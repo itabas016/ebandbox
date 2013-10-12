@@ -89,6 +89,7 @@
     <Compile Include="DI\StructureMapDependencyResolver.cs" />
     <Compile Include="DI\StructureMapScope.cs" />
     <Compile Include="Extensions\DbContextExtension.cs" />
+    <Compile Include="Extensions\EnumExtension.cs" />
     <Compile Include="Extensions\IDbContext.cs" />
     <Compile Include="Extensions\MappingExtensions.cs" />
     <Compile Include="Extensions\NewsExtensions.cs" />

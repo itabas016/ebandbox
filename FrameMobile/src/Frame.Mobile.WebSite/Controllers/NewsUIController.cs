@@ -81,6 +81,14 @@ namespace Frame.Mobile.WebSite.Controllers
         [HttpGet]
         public ActionResult NewsAdd()
         {
+            var categorylist = NewsUIService.GetNewsCategoryList().ToList();
+            var subcategorylist = NewsUIService.GetNewsSubCategoryList().ToList();
+            var extraapplist = NewsUIService.GetNewsExtraAppList().ToList();
+
+            ViewData["Categorylist"] = categorylist.GetSelectList();
+            ViewData["SubCategorylist"] = subcategorylist.GetSelectList();
+            ViewData["ExtraApplist"] = extraapplist.GetSelectList();
+
             return View();
         }
 
@@ -95,6 +103,15 @@ namespace Frame.Mobile.WebSite.Controllers
         public ActionResult NewsEdit(int newsId)
         {
             var news = dbContextService.Single<NewsContent>(newsId);
+
+            var categorylist = NewsUIService.GetNewsCategoryList().ToList();
+            var subcategorylist = NewsUIService.GetNewsSubCategoryList().ToList();
+            var extraapplist = NewsUIService.GetNewsExtraAppList().ToList();
+
+            ViewData["Categorylist"] = categorylist.GetSelectList(news.CategoryId);
+            ViewData["SubCategorylist"] = subcategorylist.GetSelectList(news.SubCategoryId);
+            ViewData["ExtraApplist"] = extraapplist.GetSelectList(news.ExtraAppId);
+
             ViewData["IsUpdate"] = true;
             return View("NewsAdd", news);
         }
@@ -102,12 +119,6 @@ namespace Frame.Mobile.WebSite.Controllers
         [HttpPost]
         public ActionResult NewsEdit(NewsContent model)
         {
-            /*
-            ViewData["Categorylist"] = NewsUIService.GetNewsCategoryList();
-            ViewData["SubCategorylist"] = NewsUIService.GetNewsSubCategoryList();
-            ViewData["ExtraApplist"] = NewsUIService.GetNewsExtraAppList();
-            */
-
             var news = dbContextService.Single<NewsContent>(model.Id);
 
             news.Title = model.Title;

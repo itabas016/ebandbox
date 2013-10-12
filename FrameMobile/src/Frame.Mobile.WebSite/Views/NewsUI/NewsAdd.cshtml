@@ -6,9 +6,16 @@
     ViewBag.Title = isUpdateMode ? "修改新闻" : "添加新闻";
     Layout = "~/Views/Shared/_NewsLayout.cshtml";
 
-    var categorylist = ViewData["Categorylist"] as List<NewsCategory>;
-    var t = string.IsNullOrEmpty(@Model.NormalURL) ? null : @Model.NormalURL.Split('/').ToList();
-    var displayURL = string.IsNullOrEmpty(@Model.NormalURL) ? string.Empty : t[t.Count - 1];
+    var categorylist = ViewData["Categorylist"] as SelectList;
+    var subcategorylist = ViewData["SubCategorylist"] as SelectList;
+    var extraapplist = ViewData["ExtraApplist"] as SelectList;
+
+    var displayURL = string.Empty;
+    if (isUpdateMode)
+    {
+        var t = string.IsNullOrEmpty(@Model.NormalURL) ? null : @Model.NormalURL.Split('/').ToList();
+        displayURL = string.IsNullOrEmpty(@Model.NormalURL) ? string.Empty : t[t.Count - 1];
+    }
 }
 
 <div class="contentHeader">
@@ -44,20 +51,21 @@
                     </tr>
                     <tr>
                         <td><strong>分类: </strong></td>
-                        @*<td>@Html.DropDownListFor(m => m.CategoryId, (SelectList)categorylist.Select(a => new SelectListItem
-                       {
-                           Text = a.Name,
-                           Value = a.Id.ToString()
-                       }), "请选择")</td>*@
-                        <td>@Html.TextBoxFor(m => m.CategoryId)</td>
+                        <td>
+                            @Html.DropDownListFor(m => m.CategoryId, (SelectList)categorylist, "请选择")
+                        </td>
                         <td><strong>子分类: </strong></td>
-                        <td>@Html.TextBoxFor(m => m.SubCategoryId)</td>
+                        <td>
+                            @Html.DropDownListFor(m => m.SubCategoryId, (SelectList)subcategorylist, "请选择")
+                        </td>
                     </tr>
                     <tr>
                         <td><strong>来源: </strong></td>
                         <td>@Html.TextBoxFor(m => m.Site)</td>
                         <td><strong>外推应用: </strong></td>
-                        <td>@Html.TextBoxFor(m => m.ExtraAppId)</td>
+                        <td>
+                            @Html.DropDownListFor(m => m.ExtraAppId, (SelectList)extraapplist, "请选择")
+                        </td>
                     </tr>
                     <tr>
                         <td><strong>发布时间: </strong></td>
@@ -88,14 +96,13 @@
             <div>
                 <strong>图片地址: </strong>
                 <input type="file" name="newsimage" id="newsimage" accept="bmp|gif|jpg|jpeg|png|tiff|abm" />
-                <div>
-                    <label class="filename">@displayURL</label>
-                    <br />
-                    @if (Model.NormalURL != null && Model.NormalURL != string.Empty)
-                    {
-                        <img src="@Model.NormalURL" />
-                    }
-                </div>
+                <br />
+                <label class="filename">@displayURL</label>
+                <br />
+                @if (@displayURL != string.Empty)
+                {
+                    <img src="@Model.NormalURL" />
+                }
             </div>
             <div class="txt-medium">
                 <strong>摘要: </strong>
