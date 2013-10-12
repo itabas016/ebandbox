@@ -11,7 +11,7 @@ namespace FrameMobile.Model.News
     public class NewsConfig : MySQLModel
     {
         [SubSonicStringLength(64)]
-        public string DisplayName { get; set; }
+        public string NameLowCase { get; set; }
 
         [SubSonicStringLength(64)]
         public int Version { get; set; }

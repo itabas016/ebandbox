@@ -205,8 +205,8 @@ namespace Frame.Mobile.WebSite.Controllers
         {
             var config = dbContextService.Single<NewsConfig>(model.Id);
 
-            config.DisplayName = model.DisplayName;
             config.Name = model.Name;
+            config.NameLowCase = model.NameLowCase;
             config.Status = model.Status;
             config.CreateDateTime = DateTime.Now;
 
@@ -373,7 +373,7 @@ namespace Frame.Mobile.WebSite.Controllers
         [HttpPost]
         public ActionResult SubCategoryAdd(NewsSubCategory model)
         {
-            var exist = dbContextService.Exists<NewsSubCategory>(x => x.Name == model.Name);
+            var exist = dbContextService.Exists<NewsSubCategory>(x => x.NameLowCase == model.NameLowCase);
             if (exist)
             {
                 TempData["errorMsg"] = "该子分类已存在！";
@@ -409,7 +409,7 @@ namespace Frame.Mobile.WebSite.Controllers
             var subcategory = dbContextService.Single<NewsSubCategory>(model.Id);
 
             subcategory.Name = model.Name;
-            subcategory.DisplayName = subcategory.DisplayName;
+            subcategory.NameLowCase = subcategory.NameLowCase;
 
             subcategory.SourceId = subcategory.SourceId;
             subcategory.CategoryId = subcategory.CategoryId;
@@ -503,7 +503,7 @@ namespace Frame.Mobile.WebSite.Controllers
         {
             try
             {
-                var config = dbContextService.Single<NewsConfig>(x => x.Name == typeof(T).Name.ToLower());
+                var config = dbContextService.Single<NewsConfig>(x => x.NameLowCase == typeof(T).Name.ToLower());
                 if (config == null)
                 {
                     return;

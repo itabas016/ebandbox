@@ -2,7 +2,7 @@
 
 --CREATE INDEX ix_category ON NewsCategory ([Status]);
 
---CREATE INDEX ix_subcategory ON NewsSubCategory (DisplayName,SourceId,CategoryId,[Status]);
+--CREATE INDEX ix_subcategory ON NewsSubCategory (Name,SourceId,CategoryId,[Status]);
 
 ALTER TABLE newssource ADD CONSTRAINT uc_source_pkg_name UNIQUE (PackageName);
 

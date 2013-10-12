@@ -35,17 +35,17 @@
                         @Html.ValidationSummary(true)
                         @Html.HiddenFor(m => m.Id)
                         <td><strong>名称: </strong></td>
-                        <td>@Html.TextBoxFor(m => m.DisplayName)</td>
+                        <td>@Html.TextBoxFor(m => m.Name)</td>
                     </tr>
                     <tr>
                         <td><strong>缩写: </strong></td>
                         <td>
                             @if (isUpdateMode)
                             {
-                                @Html.TextBoxFor(m => m.Name, new { @readonly = true, Class = "txt-readonly" })}
+                                @Html.TextBoxFor(m => m.NameLowCase, new { @readonly = true, Class = "txt-readonly" })}
                             else
                             {
-                                @Html.TextBoxFor(m => m.Name)
+                                @Html.TextBoxFor(m => m.NameLowCase)
                             }
 
                         </td>

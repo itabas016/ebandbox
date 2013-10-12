@@ -53,7 +53,8 @@ namespace FrameMobile.Domain.Service
             var config = new NewsConfig()
                 {
                     Id = 1,
-                    Name = "newssource",
+                    Name="提供商",
+                    NameLowCase = "newssource",
                     Version = 1,
                     Status = 1,
                     CreateDateTime = DateTime.Now
@@ -62,7 +63,8 @@ namespace FrameMobile.Domain.Service
             var config2 = new NewsConfig()
             {
                 Id = 2,
-                Name = "newscategory",
+                Name = "分类",
+                NameLowCase = "newscategory",
                 Version = 2,
                 Status = 1,
                 CreateDateTime = DateTime.Now
@@ -71,7 +73,8 @@ namespace FrameMobile.Domain.Service
             var config3 = new NewsConfig()
             {
                 Id = 3,
-                Name = "newsextraapp",
+                Name= "外推应用",
+                NameLowCase = "newsextraapp",
                 Version = 1,
                 Status = 1,
                 CreateDateTime = DateTime.Now
@@ -192,8 +195,8 @@ namespace FrameMobile.Domain.Service
                     Id = 1,
                     CategoryId = 1,
                     SourceId = 1,
-                    Name = "news_hot",
-                    DisplayName = "热门",
+                    NameLowCase = "news_hot",
+                    Name = "热门",
                     Cursor = 10,
                     Status = 1,
                     CreateDateTime = DateTime.Now
@@ -204,8 +207,8 @@ namespace FrameMobile.Domain.Service
                 Id = 2,
                 CategoryId = 1,
                 SourceId = 1,
-                Name = "news_focus",
-                DisplayName = "焦点",
+                NameLowCase = "news_focus",
+                Name = "焦点",
                 Cursor = 20,
                 Status = 1,
                 CreateDateTime = DateTime.Now
@@ -216,8 +219,8 @@ namespace FrameMobile.Domain.Service
                 Id = 3,
                 CategoryId = 2,
                 SourceId = 1,
-                Name = "news_finance",
-                DisplayName = "财经郎眼",
+                NameLowCase = "news_finance",
+                Name = "财经郎眼",
                 Cursor = 30,
                 Status = 1,
                 CreateDateTime = DateTime.Now
@@ -228,8 +231,8 @@ namespace FrameMobile.Domain.Service
                 Id = 4,
                 CategoryId = 2,
                 SourceId = 1,
-                Name = "news_today_finance",
-                DisplayName = "今日财经",
+                NameLowCase = "news_today_finance",
+                Name = "今日财经",
                 Cursor = 40,
                 Status = 1,
                 CreateDateTime = DateTime.Now

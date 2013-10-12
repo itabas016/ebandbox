@@ -194,7 +194,7 @@ namespace FrameMobile.Domain.Service
 
         public int GetCategoryId(string categoryName)
         {
-            var subCategory = dbContextService.Single<NewsSubCategory>(x => x.Name == categoryName);
+            var subCategory = dbContextService.Single<NewsSubCategory>(x => x.NameLowCase == categoryName);
             if (subCategory == null)
             {
                 return GetCategoryId(categoryName, true);
@@ -204,7 +204,7 @@ namespace FrameMobile.Domain.Service
 
         public int GetSubCategoryId(string categoryName)
         {
-            var subCategory = dbContextService.Single<NewsSubCategory>(x => x.Name == categoryName);
+            var subCategory = dbContextService.Single<NewsSubCategory>(x => x.NameLowCase == categoryName);
             if (subCategory == null)
             {
                 return GetSubCategoryId(categoryName, true);
@@ -264,46 +264,46 @@ namespace FrameMobile.Domain.Service
 
         public NewsSubCategory MatchCategory(NewsSubCategory newsSubCategory, string categoryName)
         {
-            newsSubCategory.Name = categoryName;
+            newsSubCategory.NameLowCase = categoryName;
 
             #region case
             switch (categoryName)
             {
                 case "news_hot":
-                    newsSubCategory.DisplayName = "热门";
+                    newsSubCategory.Name = "热门";
                     newsSubCategory.CategoryId = 1;
 
                     break;
                 case "news_finance":
-                    newsSubCategory.DisplayName = "财经";
+                    newsSubCategory.Name = "财经";
                     newsSubCategory.CategoryId = 5;
                     break;
                 case "news_entertainment":
-                    newsSubCategory.DisplayName = "娱乐";
+                    newsSubCategory.Name = "娱乐";
                     newsSubCategory.CategoryId = 3;
                     break;
                 case "news_tech":
-                    newsSubCategory.DisplayName = "科技";
+                    newsSubCategory.Name = "科技";
                     newsSubCategory.CategoryId = 2;
                     break;
                 case "news_story":
-                    newsSubCategory.DisplayName = "故事";
+                    newsSubCategory.Name = "故事";
                     newsSubCategory.CategoryId = 6;
                     break;
                 case "news_discovery":
-                    newsSubCategory.DisplayName = "探索";
+                    newsSubCategory.Name = "探索";
                     newsSubCategory.CategoryId = 6;
                     break;
                 case "news_history":
-                    newsSubCategory.DisplayName = "历史";
+                    newsSubCategory.Name = "历史";
                     newsSubCategory.CategoryId = 6;
                     break;
                 case "news_regimen":
-                    newsSubCategory.DisplayName = "养生";
+                    newsSubCategory.Name = "养生";
                     newsSubCategory.CategoryId = 6;
                     break;
                 case "positive":
-                    newsSubCategory.DisplayName = "正能量";
+                    newsSubCategory.Name = "正能量";
                     newsSubCategory.CategoryId = 6;
                     break;
                 default:

@@ -35,6 +35,7 @@ namespace FrameMobile.Domain
             Mapper.CreateMap<NewsConfig, NewsConfigView>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(ori => ori.Id))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(ori => ori.Name))
+                .ForMember(dest => dest.NameLowCase, opt => opt.MapFrom(ori => ori.NameLowCase))
                 .ForMember(dest => dest.Version, opt => opt.MapFrom(ori => ori.Version));
 
             Mapper.CreateMap<NewsSource, NewsSourceView>()
@@ -59,7 +60,7 @@ namespace FrameMobile.Domain
             Mapper.CreateMap<NewsSubCategory, NewsSubCategoryView>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(ori => ori.Id))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(ori => ori.Name))
-                .ForMember(dest => dest.DisplayName, opt => opt.MapFrom(ori => ori.DisplayName))
+                .ForMember(dest => dest.NameLowCase, opt => opt.MapFrom(ori => ori.NameLowCase))
                 .ForMember(dest => dest.CategoryId, opt => opt.MapFrom(ori => ori.CategoryId))
                 .ForMember(dest => dest.SourceId, opt => opt.MapFrom(ori => ori.SourceId))
                 .ForMember(dest => dest.Cursor, opt => opt.MapFrom(ori => ori.Cursor));

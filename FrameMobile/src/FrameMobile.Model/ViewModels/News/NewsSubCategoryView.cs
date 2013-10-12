@@ -16,8 +16,8 @@ namespace FrameMobile.Model
         [JsonProperty("name")]
         public string Name { get; set; }
 
-        [JsonProperty("displayname")]
-        public string DisplayName { get; set; }
+        [JsonProperty("namelowcase")]
+        public string NameLowCase { get; set; }
 
         [JsonProperty("sourceid")]
         public int SourceId { get; set; }
