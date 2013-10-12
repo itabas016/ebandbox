@@ -4,6 +4,9 @@
     bool isUpdateMode = ViewData["IsUpdate"] != null;
     ViewBag.Title = isUpdateMode ? "修改子分类" : "添加子分类";
     Layout = "~/Views/Shared/_NewsLayout.cshtml";
+
+    var sourcelist = ViewData["Sourcelist"] as SelectList;
+    var categorylist = ViewData["Categorylist"] as SelectList;
 }
 
 <div class="contentHeader">
@@ -52,11 +55,15 @@
                     </tr>
                     <tr>
                         <td><strong>提供商: </strong></td>
-                        <td>@Html.TextBoxFor(m => m.SourceId)</td>
+                        <td>
+                            @Html.DropDownListFor(m => m.SourceId, (SelectList)sourcelist, "请选择")
+                        </td>
                     </tr>
                     <tr>
                         <td><strong>主分类: </strong></td>
-                        <td>@Html.TextBoxFor(m => m.CategoryId)</td>
+                        <td>
+                            @Html.DropDownListFor(m => m.CategoryId, (SelectList)categorylist, "请选择")
+                        </td>
                     </tr>
                     <tr>
                         <td><strong>当前游标值: </strong></td>

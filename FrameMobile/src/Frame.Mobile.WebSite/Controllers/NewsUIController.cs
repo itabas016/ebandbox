@@ -367,6 +367,11 @@ namespace Frame.Mobile.WebSite.Controllers
         [HttpGet]
         public ActionResult SubCategoryAdd()
         {
+            var sourcelist = NewsUIService.GetNewsSourceList().ToList();
+            var categorylist = NewsUIService.GetNewsCategoryList().ToList();
+
+            ViewData["Sourcelist"] = sourcelist.GetSelectList();
+            ViewData["Categorylist"] = categorylist.GetSelectList();
             return View();
         }
 
@@ -399,6 +404,13 @@ namespace Frame.Mobile.WebSite.Controllers
         public ActionResult SubCategoryEdit(int subcategoryId)
         {
             var subcategory = dbContextService.Single<NewsSubCategory>(subcategoryId);
+
+            var sourcelist = NewsUIService.GetNewsSourceList().ToList();
+            var categorylist = NewsUIService.GetNewsCategoryList().ToList();
+
+            ViewData["Sourcelist"] = sourcelist.GetSelectList(subcategory.SourceId);
+            ViewData["Categorylist"] = categorylist.GetSelectList(subcategory.CategoryId);
+
             ViewData["IsUpdate"] = true;
             return View("SubCategoryAdd", subcategory);
         }
