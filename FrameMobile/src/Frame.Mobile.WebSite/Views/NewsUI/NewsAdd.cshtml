@@ -7,8 +7,8 @@
     Layout = "~/Views/Shared/_NewsLayout.cshtml";
 
     var categorylist = ViewData["Categorylist"] as List<NewsCategory>;
-    var t = @Model.NormalURL == string.Empty ? null : @Model.NormalURL.Split('/').ToList();
-    var displayURL = @Model.NormalURL == string.Empty ? string.Empty : t[t.Count - 1];
+    var t = string.IsNullOrEmpty(@Model.NormalURL) ? null : @Model.NormalURL.Split('/').ToList();
+    var displayURL = string.IsNullOrEmpty(@Model.NormalURL) ? string.Empty : t[t.Count - 1];
 }
 
 <div class="contentHeader">
