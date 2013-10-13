@@ -68,16 +68,23 @@
                         </td>
                     </tr>
                     <tr>
-                        <td><strong>发布时间: </strong></td>
-                        <td>@Html.TextBoxFor(m => m.PublishTime)</td>
                         <td><strong>星级: </strong></td>
-                        <td>@Html.TextBoxFor(m => m.Rating)</td>
+                        <td>@Html.TextBoxFor(m => m.Rating, new { type="number", min="0", max="99999999"})</td>
+                        <td><strong>发布时间: </strong></td>
+                        <td>
+                            @Html.TextBoxFor(m => m.PublishTime, new { @class = "Wdate", Value = Model.PublishTime.ToString("yyyy-MM-dd HH:mm:ss"), onclick = "WdatePicker({ dateFmt: 'yyyy-MM-dd HH:mm:ss' })" })
+                        </td>
                     </tr>
                     <tr>
-                        <td><strong>修改时间: </strong></td>
-                        <td>@Html.TextBoxFor(m => m.ModifiedTime)</td>
                         <td><strong>状态: </strong></td>
                         <td>@Html.RadioButtonFor(m => m.Status, 1) 有效 @Html.RadioButtonFor(m => m.Status, 0) 无效</td>
+                        @if (isUpdateMode)
+                        {
+                            <td><strong>修改时间: </strong></td>
+                            <td>
+                                @Html.TextBoxFor(m => m.ModifiedTime, new { @readonly = true, Class = "txt-readonly" })
+                            </td>
+                        }
                     </tr>
                     <tr>
                         <td><strong>Wap地址: </strong></td>

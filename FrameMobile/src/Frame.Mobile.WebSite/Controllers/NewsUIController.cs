@@ -124,11 +124,14 @@ namespace Frame.Mobile.WebSite.Controllers
             news.Title = model.Title;
             news.CategoryId = model.CategoryId;
             news.SubCategoryId = model.SubCategoryId;
+            news.ExtraAppId = model.ExtraAppId;
+            news.Rating = model.Rating;
             news.WAPURL = model.WAPURL;
             news.Site = model.Site;
             news.Summary = model.Summary;
             news.Content = model.Content;
             news.Status = model.Status;
+            news.PublishTime = model.PublishTime;
             news.ModifiedTime = DateTime.Now;
 
             dbContextService.Update<NewsContent>(news);
