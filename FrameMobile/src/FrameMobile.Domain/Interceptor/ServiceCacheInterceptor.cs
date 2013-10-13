@@ -60,7 +60,7 @@ namespace FrameMobile.Domain
         private string GetCacheKey(IInvocation invocation, ParameterInfo[] parameters)
         {
             var methodName = invocation.Method.Name;
-            var checkName = "GetNewsContentList";
+            var checkName = "GetNewsContentViewList";
 
             StringBuilder paramSb = new StringBuilder();
             var args = invocation.Arguments;
