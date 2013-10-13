@@ -11,6 +11,7 @@ using StructureMap;
 using SubSonic.Schema;
 using FrameMobile.Model;
 using NCore;
+using FrameMobile.Common;
 
 namespace Frame.Mobile.WebSite.Controllers
 {
@@ -55,6 +56,11 @@ namespace Frame.Mobile.WebSite.Controllers
         protected override bool IsMobileInterface { get { return false; } }
 
         public const int pageSize = 20;
+
+        public static string IMAGE_URL_PREFIX_BASE = ConfigKeys.TYD_NEWS_IMAGE_FILE_URL.ConfigValue();
+
+        public string IMAGE_HD_URL_PREFIX = string.Format("{0}/{1}", IMAGE_URL_PREFIX_BASE,"720");
+        public string IMAGE_NORMAL_URL_PREFIX = string.Format("{0}/{1}", IMAGE_URL_PREFIX_BASE, "480");
 
         #endregion
 
@@ -117,7 +123,7 @@ namespace Frame.Mobile.WebSite.Controllers
         }
 
         [HttpPost]
-        public ActionResult NewsEdit(NewsContent model)
+        public ActionResult NewsEdit(NewsContent model, HttpPostedFileBase imageFile)
         {
             var news = dbContextService.Single<NewsContent>(model.Id);
 
@@ -133,6 +139,10 @@ namespace Frame.Mobile.WebSite.Controllers
             news.Status = model.Status;
             news.PublishTime = model.PublishTime;
             news.ModifiedTime = DateTime.Now;
+
+            var imageURL = imageFile == null ? string.Empty : GetImageURL(imageFile);
+            news.HDURL = imageURL == string.Empty ? string.Empty : imageURL;
+            news.NormalURL = imageURL == string.Empty ? string.Empty : imageURL;
 
             dbContextService.Update<NewsContent>(news);
 
@@ -247,7 +257,7 @@ namespace Frame.Mobile.WebSite.Controllers
             }
             var ret = dbContextService.Add<NewsSource>(model);
 
-            UpdateServerVersion<NewsSource>();
+            NewsUIService.UpdateServerVersion<NewsSource>();
 
             return RedirectToAction("SourceList");
         }
@@ -256,7 +266,7 @@ namespace Frame.Mobile.WebSite.Controllers
         {
             var ret = dbContextService.Delete<NewsSource>(sourceId);
 
-            UpdateServerVersion<NewsSource>();
+            NewsUIService.UpdateServerVersion<NewsSource>();
 
             return RedirectToAction("SourceList");
         }
@@ -282,7 +292,7 @@ namespace Frame.Mobile.WebSite.Controllers
 
             var ret = dbContextService.Update<NewsSource>(source);
 
-            UpdateServerVersion<NewsSource>();
+            NewsUIService.UpdateServerVersion<NewsSource>();
 
             return RedirectToAction("SourceList");
         }
@@ -316,7 +326,7 @@ namespace Frame.Mobile.WebSite.Controllers
             }
             var ret = dbContextService.Add<NewsCategory>(model);
 
-            UpdateServerVersion<NewsCategory>();
+            NewsUIService.UpdateServerVersion<NewsCategory>();
 
             return RedirectToAction("CategoryList");
         }
@@ -325,7 +335,7 @@ namespace Frame.Mobile.WebSite.Controllers
         {
             var ret = dbContextService.Delete<NewsCategory>(categoryId);
 
-            UpdateServerVersion<NewsCategory>();
+            NewsUIService.UpdateServerVersion<NewsCategory>();
 
             return RedirectToAction("CategoryList");
         }
@@ -349,7 +359,7 @@ namespace Frame.Mobile.WebSite.Controllers
 
             var ret = dbContextService.Update<NewsCategory>(category);
 
-            UpdateServerVersion<NewsCategory>();
+            NewsUIService.UpdateServerVersion<NewsCategory>();
 
             return RedirectToAction("CategoryList");
         }
@@ -389,7 +399,7 @@ namespace Frame.Mobile.WebSite.Controllers
             }
             var ret = dbContextService.Add<NewsSubCategory>(model);
 
-            UpdateServerVersion<NewsSubCategory>();
+            NewsUIService.UpdateServerVersion<NewsSubCategory>();
 
             return RedirectToAction("SubCategoryList");
         }
@@ -398,7 +408,7 @@ namespace Frame.Mobile.WebSite.Controllers
         {
             var ret = dbContextService.Delete<NewsSubCategory>(subcategoryId);
 
-            UpdateServerVersion<NewsSubCategory>();
+            NewsUIService.UpdateServerVersion<NewsSubCategory>();
 
             return RedirectToAction("SubCategoryList");
         }
@@ -434,7 +444,7 @@ namespace Frame.Mobile.WebSite.Controllers
 
             var ret = dbContextService.Update<NewsSubCategory>(subcategory);
 
-            UpdateServerVersion<NewsSubCategory>();
+            NewsUIService.UpdateServerVersion<NewsSubCategory>();
 
             return RedirectToAction("SubCategoryList");
         }
@@ -468,7 +478,7 @@ namespace Frame.Mobile.WebSite.Controllers
             }
             var ret = dbContextService.Add<NewsExtraApp>(model);
 
-            UpdateServerVersion<NewsExtraApp>();
+            NewsUIService.UpdateServerVersion<NewsExtraApp>();
 
             return RedirectToAction("ExtraAppList");
         }
@@ -477,7 +487,7 @@ namespace Frame.Mobile.WebSite.Controllers
         {
             var ret = dbContextService.Delete<NewsExtraApp>(extraAppId);
 
-            UpdateServerVersion<NewsExtraApp>();
+            NewsUIService.UpdateServerVersion<NewsExtraApp>();
 
             return RedirectToAction("ExtraAppList");
         }
@@ -505,7 +515,7 @@ namespace Frame.Mobile.WebSite.Controllers
 
             var ret = dbContextService.Update<NewsExtraApp>(extraApp);
 
-            UpdateServerVersion<NewsExtraApp>();
+            NewsUIService.UpdateServerVersion<NewsExtraApp>();
 
             return RedirectToAction("ExtraAppList");
         }
@@ -514,22 +524,9 @@ namespace Frame.Mobile.WebSite.Controllers
 
         #region Helper
 
-        private void UpdateServerVersion<T>() where T : MySQLModelBase
+        private string GetImageURL(HttpPostedFileBase imageFile)
         {
-            try
-            {
-                var config = dbContextService.Single<NewsConfig>(x => x.NameLowCase == typeof(T).Name.ToLower());
-                if (config == null)
-                {
-                    return;
-                }
-                config.Version++;
-                dbContextService.Update<NewsConfig>(config);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            return string.Empty;
         }
 
         #endregion

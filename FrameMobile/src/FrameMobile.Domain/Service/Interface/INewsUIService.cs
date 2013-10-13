@@ -13,5 +13,6 @@ namespace FrameMobile.Domain.Service
         IList<NewsCategory> GetNewsCategoryList();
         IList<NewsSubCategory> GetNewsSubCategoryList();
         IList<NewsExtraApp> GetNewsExtraAppList();
+        void UpdateServerVersion<T>() where T : MySQLModelBase;
     }
 }

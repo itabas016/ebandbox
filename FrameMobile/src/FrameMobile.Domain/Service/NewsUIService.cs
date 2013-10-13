@@ -33,5 +33,23 @@ namespace FrameMobile.Domain.Service
             var extraapplist = dbContextService.All<NewsExtraApp>().ToList();
             return extraapplist;
         }
+
+        public void UpdateServerVersion<T>() where T : MySQLModelBase
+        {
+            try
+            {
+                var config = dbContextService.Single<NewsConfig>(x => x.NameLowCase == typeof(T).Name.ToLower());
+                if (config == null)
+                {
+                    return;
+                }
+                config.Version++;
+                dbContextService.Update<NewsConfig>(config);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }
