@@ -6,6 +6,7 @@
     ViewBag.Title = isUpdateMode ? "修改新闻" : "添加新闻";
     Layout = "~/Views/Shared/_NewsLayout.cshtml";
 
+    var actionName = isUpdateMode ? "NewsEdit" : "NewsAdd";
     var categorylist = ViewData["Categorylist"] as SelectList;
     var subcategorylist = ViewData["SubCategorylist"] as SelectList;
     var extraapplist = ViewData["ExtraApplist"] as SelectList;
@@ -31,7 +32,7 @@
 </div>
 <div class="content">
     <div class="windows">
-        @using (Html.BeginForm())
+        @using (Html.BeginForm(actionName, "NewsUI", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
 
             <p>
@@ -102,9 +103,9 @@
             </div>
             <div>
                 <strong>图片地址: </strong>
-                <input type="file" name="newsimage" id="newsimage" accept="bmp|gif|jpg|jpeg|png|tiff|abm" />
+                <input type="file" accept="bmp|gif|jpg|jpeg|png|tiff|abm" />
                 <br />
-                <label class="filename">@displayURL</label>
+                <label>@displayURL</label>
                 <br />
                 @if (@displayURL != string.Empty)
                 {

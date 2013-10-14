@@ -12,6 +12,7 @@ using SubSonic.Schema;
 using FrameMobile.Model;
 using NCore;
 using FrameMobile.Common;
+using System.IO;
 
 namespace Frame.Mobile.WebSite.Controllers
 {
@@ -59,7 +60,7 @@ namespace Frame.Mobile.WebSite.Controllers
 
         public static string IMAGE_URL_PREFIX_BASE = ConfigKeys.TYD_NEWS_IMAGE_FILE_URL.ConfigValue();
 
-        public string IMAGE_HD_URL_PREFIX = string.Format("{0}/{1}", IMAGE_URL_PREFIX_BASE,"720");
+        public string IMAGE_HD_URL_PREFIX = string.Format("{0}/{1}", IMAGE_URL_PREFIX_BASE, "720");
         public string IMAGE_NORMAL_URL_PREFIX = string.Format("{0}/{1}", IMAGE_URL_PREFIX_BASE, "480");
 
         #endregion
@@ -140,9 +141,12 @@ namespace Frame.Mobile.WebSite.Controllers
             news.PublishTime = model.PublishTime;
             news.ModifiedTime = DateTime.Now;
 
-            var imageURL = imageFile == null ? string.Empty : GetImageURL(imageFile);
-            news.HDURL = imageURL == string.Empty ? string.Empty : imageURL;
-            news.NormalURL = imageURL == string.Empty ? string.Empty : imageURL;
+            if (imageFile != null)
+            {
+                var imageURL = imageFile == null ? string.Empty : GetImageURL(imageFile);
+                news.HDURL = imageURL == string.Empty ? string.Empty : imageURL;
+                news.NormalURL = imageURL == string.Empty ? string.Empty : imageURL;
+            }
 
             dbContextService.Update<NewsContent>(news);
 
@@ -526,7 +530,25 @@ namespace Frame.Mobile.WebSite.Controllers
 
         private string GetImageURL(HttpPostedFileBase imageFile)
         {
-            return string.Empty;
+            var outputURL = SaveResourceFile("D:\\temp", imageFile, string.Format("{1}_{2}", Guid.NewGuid().ToString(), Path.GetExtension(imageFile.FileName)));
+            return outputURL;
+        }
+
+        protected string SaveResourceFile(string dirPath, HttpPostedFileBase file, string fileName)
+        {
+            fileName = string.IsNullOrEmpty(fileName) ? file.FileName : fileName;
+            var filePath = GetResourceFilePath(dirPath, fileName);
+
+            file.SaveAs(filePath);
+            return filePath;
+        }
+
+        protected string GetResourceFilePath(string dirPath, string fileName)
+        {
+            var filePath = string.Empty;
+            filePath = Path.Combine(dirPath, fileName);
+
+            return filePath;
         }
 
         #endregion
