@@ -38,7 +38,7 @@ namespace FrameMobile.Domain
             if (source == null) return 0;
 
             var dbContextService = ObjectFactory.GetInstance<IDbContextService>();
-            var result = dbContextService.Single<NewsConfig>(x => x.Name == source.GetType().Name.ToLower() && x.Status == 1);
+            var result = dbContextService.Single<NewsConfig>(x => x.NameLowCase == source.GetType().Name.ToLower() && x.Status == 1);
             return result != null ? result.Version : 0;
         }
 
