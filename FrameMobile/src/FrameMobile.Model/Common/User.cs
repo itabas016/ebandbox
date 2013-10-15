@@ -15,5 +15,8 @@ namespace FrameMobile.Model
 
         [SubSonicStringLength(64)]
         public string Password { get; set; }
+
+        [SubSonicStringLength(128)]
+        public string Email { get; set; }
     }
 }
