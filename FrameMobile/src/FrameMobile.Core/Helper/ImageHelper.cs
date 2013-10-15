@@ -5,6 +5,7 @@ using System.Drawing.Drawing2D;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Web;
 using FrameMobile.Common;
 using NCore;
 
@@ -55,6 +56,16 @@ namespace FrameMobile.Core
         public static string ResizedToSmall(string oriFileName, string destFilePath)
         {
             return ResizedBySize(oriFileName, destFilePath, SMALL_IMAGE_WIDTH, SMALL_IMAGE_HEIGHT);
+        }
+
+        public static string ResizedNormal(HttpPostedFileBase imageFile, string destFilePath, string destFileName)
+        {
+            return ResizedByWidth(imageFile, destFilePath, destFileName, NORMAL_IMAGE_WIDTH);
+        }
+
+        public static string ResizedHD(HttpPostedFileBase imageFile, string destFilePath, string destFileName)
+        {
+            return ResizedByWidth(imageFile, destFilePath, destFileName, HD_IMAGE_WIDTH);
         }
 
         #endregion
@@ -113,6 +124,37 @@ namespace FrameMobile.Core
             return string.Empty;
         }
 
+        private static string ResizedByWidth(HttpPostedFileBase imageFile, string destFilePath, string destFileName, int width)
+        {
+            var bitmap = new Bitmap(imageFile.InputStream);
+            if (bitmap.Width > width)
+            {
+                var height = (width * bitmap.Height) / bitmap.Width;
+                var size = new Size(width, height);
+
+                if (bitmap != null)
+                {
+                    var destBitMap = ResizeImage(bitmap, size);
+                    if (destBitMap != null)
+                    {
+                        var destFullFileName = string.Format("{0}{1}", destFilePath, destFileName);
+                        destBitMap.Save(destFullFileName);
+                        var cdnFileURL = string.Format("{0}/{1}/{2}", NEWS_IMAGE_FILE_URL, width, destFileName);
+                        return cdnFileURL;
+                    }
+                }
+            }
+            else
+            {
+                var destFullFileName = string.Format("{0}{1}", destFilePath, destFileName);
+                imageFile.SaveAs(destFullFileName);
+                var cdnFileURL = string.Format("{0}/{1}/{2}", NEWS_IMAGE_FILE_URL, width, destFileName);
+                return cdnFileURL;
+            }
+
+            return string.Empty;
+        }
+
         private static Image ResizeImage(Bitmap mg, Size newSize)
         {
             double ratio = 0d;
@@ -145,7 +187,6 @@ namespace FrameMobile.Core
             return bp;
 
         }
-
 
         #endregion
     }

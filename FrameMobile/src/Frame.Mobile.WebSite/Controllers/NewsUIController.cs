@@ -13,6 +13,7 @@ using FrameMobile.Model;
 using NCore;
 using FrameMobile.Common;
 using System.IO;
+using FrameMobile.Core;
 
 namespace Frame.Mobile.WebSite.Controllers
 {
@@ -58,10 +59,11 @@ namespace Frame.Mobile.WebSite.Controllers
 
         public const int pageSize = 20;
 
-        public static string IMAGE_URL_PREFIX_BASE = ConfigKeys.TYD_NEWS_IMAGE_FILE_URL.ConfigValue();
+        public static string NEWS_RESOURCES_DIR_ROOT = ConfigKeys.TYD_NEWS_RESOURCES_DIR_ROOT.ConfigValue();
 
-        public string IMAGE_HD_URL_PREFIX = string.Format("{0}/{1}", IMAGE_URL_PREFIX_BASE, "720");
-        public string IMAGE_NORMAL_URL_PREFIX = string.Format("{0}/{1}", IMAGE_URL_PREFIX_BASE, "480");
+        public string NEWS_DEST_HD_IMAGE_DIR_BASE = string.Format("{0}\\Images\\720\\", NEWS_RESOURCES_DIR_ROOT);
+
+        public string NEWS_DEST_NORMAL_IMAGE_DIR_BASE = string.Format("{0}\\Images\\480\\", NEWS_RESOURCES_DIR_ROOT);
 
         #endregion
 
@@ -124,7 +126,7 @@ namespace Frame.Mobile.WebSite.Controllers
         }
 
         [HttpPost]
-        public ActionResult NewsEdit(NewsContent model, HttpPostedFileBase imageFile)
+        public ActionResult NewsEdit(NewsContent model, HttpPostedFileBase newsimage)
         {
             var news = dbContextService.Single<NewsContent>(model.Id);
 
@@ -141,11 +143,13 @@ namespace Frame.Mobile.WebSite.Controllers
             news.PublishTime = model.PublishTime;
             news.ModifiedTime = DateTime.Now;
 
-            if (imageFile != null)
+            if (newsimage != null && newsimage.ContentLength > 0)
             {
-                var imageURL = imageFile == null ? string.Empty : GetImageURL(imageFile);
-                news.HDURL = imageURL == string.Empty ? string.Empty : imageURL;
-                news.NormalURL = imageURL == string.Empty ? string.Empty : imageURL;
+                var HDURL = string.Empty;
+                var NormalURL = string.Empty;
+                GetImageURL(newsimage, out HDURL, out NormalURL);
+                news.HDURL = HDURL;
+                news.NormalURL = NormalURL;
             }
 
             dbContextService.Update<NewsContent>(news);
@@ -528,10 +532,13 @@ namespace Frame.Mobile.WebSite.Controllers
 
         #region Helper
 
-        private string GetImageURL(HttpPostedFileBase imageFile)
+        private void GetImageURL(HttpPostedFileBase imageFile, out string HDURL, out string NormalURL)
         {
-            var outputURL = SaveResourceFile("D:\\temp", imageFile, string.Format("{1}_{2}", Guid.NewGuid().ToString(), Path.GetExtension(imageFile.FileName)));
-            return outputURL;
+            var fileName = string.Format("{0}_{1}", Guid.NewGuid().ToString(), Path.GetExtension(imageFile.FileName));
+            MakeSureDIRExist(NEWS_DEST_HD_IMAGE_DIR_BASE);
+            MakeSureDIRExist(NEWS_DEST_NORMAL_IMAGE_DIR_BASE);
+            HDURL = ImageHelper.ResizedHD(imageFile, NEWS_DEST_HD_IMAGE_DIR_BASE, fileName);
+            NormalURL = ImageHelper.ResizedNormal(imageFile, NEWS_DEST_NORMAL_IMAGE_DIR_BASE, fileName);
         }
 
         protected string SaveResourceFile(string dirPath, HttpPostedFileBase file, string fileName)
@@ -549,6 +556,14 @@ namespace Frame.Mobile.WebSite.Controllers
             filePath = Path.Combine(dirPath, fileName);
 
             return filePath;
+        }
+
+        private void MakeSureDIRExist(string dir)
+        {
+            if (!Directory.Exists(dir))
+            {
+                Directory.CreateDirectory(dir);
+            }
         }
 
         #endregion
