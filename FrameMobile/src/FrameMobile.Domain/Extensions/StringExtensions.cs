@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using FrameMobile.Core;
 using NCore;
 
 namespace FrameMobile.Domain
@@ -13,6 +14,11 @@ namespace FrameMobile.Domain
         {
             return Convert.ToBase64String(new SHA1CryptoServiceProvider()
                 .ComputeHash(Encoding.ASCII.GetBytes(str.EncodeChineseChars())));
+        }
+
+        public static string GetMD5Hash(this string input)
+        {
+            return Encrypt.GetMD5Hash(input);
         }
 
         public static DateTime UTCStamp(this long timeStamp)

@@ -18,5 +18,8 @@ namespace FrameMobile.Model
 
         [SubSonicStringLength(128)]
         public string Email { get; set; }
+
+        [SubSonicStringLength(256)]
+        public string Comment { get; set; }
     }
 }

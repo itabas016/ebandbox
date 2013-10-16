@@ -11,6 +11,9 @@ using WebMatrix.WebData;
 using Frame.Mobile.WebSite.Filters;
 using Frame.Mobile.WebSite.Models;
 using FrameMobile.Web;
+using FrameMobile.Model;
+using FrameMobile.Domain.Service;
+using StructureMap;
 
 namespace Frame.Mobile.WebSite.Controllers
 {
@@ -18,6 +21,28 @@ namespace Frame.Mobile.WebSite.Controllers
     public class AccountController : MvcControllerBase
     {
         protected override bool IsMobileInterface { get { return false; } }
+
+        private IAccountService _accountService;
+        public IAccountService AccountService
+        {
+            get
+            {
+                if (_accountService == null)
+                {
+                    _accountService = ObjectFactory.GetInstance<IAccountService>();
+                }
+                return _accountService;
+            }
+            set
+            {
+                _accountService = value;
+            }
+        }
+
+        public AccountController(IAccountService accountService)
+        {
+            this.AccountService = accountService;
+        }
 
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
@@ -47,7 +72,7 @@ namespace Frame.Mobile.WebSite.Controllers
         {
             WebSecurity.Logout();
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Account");
         }
 
         [AllowAnonymous]
@@ -59,24 +84,21 @@ namespace Frame.Mobile.WebSite.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Register(RegisterModel model)
+        public ActionResult Register(RegisterView model)
         {
             if (ModelState.IsValid)
             {
-                // Attempt to register the user
                 try
                 {
-                    WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
-                    WebSecurity.Login(model.UserName, model.Password);
-                    return RedirectToAction("Index", "Home");
+                    AccountService.CreateUser(model);
+                    AccountService.Login(model.UserName, model.Password);
+                    return RedirectToAction("Manage", "Account");
                 }
                 catch (MembershipCreateUserException e)
                 {
                     ModelState.AddModelError("", ErrorCodeToString(e.StatusCode));
                 }
             }
-
-            // If we got this far, something failed, redisplay form
             return View(model);
         }
 
