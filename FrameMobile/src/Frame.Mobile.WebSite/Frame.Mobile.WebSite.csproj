@@ -196,6 +196,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\account\images\linentexture.jpg" />
     <Content Include="Content\news\css\main.css" />
     <Content Include="Content\news\images\icos.png" />
     <Content Include="Content\news\images\logout.png" />
@@ -329,18 +330,12 @@
     <Content Include="Images\orderedList8.png" />
     <Content Include="Images\orderedList9.png" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Account\_ChangePasswordPartial.cshtml" />
-    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
-    <Content Include="Views\Account\_RemoveExternalLoginsPartial.cshtml" />
-    <Content Include="Views\Account\_SetPasswordPartial.cshtml" />
+    <Content Include="Views\Account\ChangePassword.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Manage.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
-    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
-    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Shared\_AccountLayout.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Utilities.Log4Net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -358,6 +353,9 @@
     <Content Include="Views\NewsUI\NewsAdd.cshtml" />
     <Content Include="Views\NewsUI\SubCategoryAdd.cshtml" />
     <Content Include="Views\NewsUI\SubCategoryList.cshtml" />
+    <Content Include="Views\Account\UserList.cshtml" />
+    <Content Include="Views\Account\UserAdd.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

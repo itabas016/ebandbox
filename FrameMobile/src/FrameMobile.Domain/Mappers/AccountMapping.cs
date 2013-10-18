@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using AutoMapper;
 using FrameMobile.Model;
+using FrameMobile.Model.Account;
 
 namespace FrameMobile.Domain
 {

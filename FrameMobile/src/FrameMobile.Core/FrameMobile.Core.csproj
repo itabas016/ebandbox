@@ -65,6 +65,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Algorithm\Decrypt.cs" />
     <Compile Include="Algorithm\DicSortALG.cs" />
     <Compile Include="Algorithm\Encrypt.cs" />
     <Compile Include="Attribute\ViewFieldAttribute.cs" />
@@ -75,6 +76,7 @@
     <Compile Include="Helper\LogHelper.cs" />
     <Compile Include="Helper\NLogHelper.cs" />
     <Compile Include="IRequestRepository.cs" />
+    <Compile Include="RetrieveValueWithDefaultHelper.cs" />
     <Compile Include="SelectItem.cs" />
     <Compile Include="IViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

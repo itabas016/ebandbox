@@ -25,6 +25,7 @@ namespace FrameMobile.Domain
             For<IDbContextService>().Use<DbContextService>();
             For<ICacheManagerHelper>().Use<RedisCacheHelper>();
             For<IAccountService>().Use<AccountService>();
+            For<ICookieService>().Use<CookieService>();
         }
 
         private void RegistyNewsService()

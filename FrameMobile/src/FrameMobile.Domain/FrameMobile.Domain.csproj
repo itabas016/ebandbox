@@ -101,9 +101,11 @@
     <Compile Include="Mappers\NewsMapping.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\AccountService.cs" />
+    <Compile Include="Service\CookieService.cs" />
     <Compile Include="Service\Fake\NewsFakeService.cs" />
     <Compile Include="Service\FetchTouTiaoService.cs" />
     <Compile Include="Service\Interface\IAccountService.cs" />
+    <Compile Include="Service\Interface\ICookieService.cs" />
     <Compile Include="Service\Interface\IDbContextService.cs" />
     <Compile Include="Service\Interface\INewsService.cs" />
     <Compile Include="Service\DbContextService.cs" />

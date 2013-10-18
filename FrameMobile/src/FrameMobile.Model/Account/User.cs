@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using SubSonic.SqlGeneration.Schema;
 
-namespace FrameMobile.Model
+namespace FrameMobile.Model.Account
 {
     [Serializable]
     [SubSonicTableNameOverride("user")]
@@ -18,6 +18,10 @@ namespace FrameMobile.Model
 
         [SubSonicStringLength(128)]
         public string Email { get; set; }
+
+        public DateTime LastActiveTime { get; set; }
+
+        public DateTime LastModifiedTime { get; set; }
 
         [SubSonicStringLength(256)]
         public string Comment { get; set; }

@@ -21,6 +21,20 @@ namespace FrameMobile.Domain
             return Encrypt.GetMD5Hash(input);
         }
 
+        public static bool VerifyMd5Hash(this string input, string hash)
+        {
+            string hashOfInput = GetMD5Hash(input);
+            StringComparer comparer = StringComparer.OrdinalIgnoreCase;
+            if (0 == comparer.Compare(hashOfInput, hash))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         public static DateTime UTCStamp(this long timeStamp)
         {
             System.DateTime time = System.DateTime.MinValue;

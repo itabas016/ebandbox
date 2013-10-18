@@ -14,12 +14,15 @@ using FrameMobile.Web;
 using FrameMobile.Model;
 using FrameMobile.Domain.Service;
 using StructureMap;
+using FrameMobile.Model.Account;
 
 namespace Frame.Mobile.WebSite.Controllers
 {
     [Authorize]
     public class AccountController : MvcControllerBase
     {
+        #region Prop
+
         protected override bool IsMobileInterface { get { return false; } }
 
         private IAccountService _accountService;
@@ -39,10 +42,36 @@ namespace Frame.Mobile.WebSite.Controllers
             }
         }
 
-        public AccountController(IAccountService accountService)
+        private ICookieService _cookieService;
+        public ICookieService CookieService
+        {
+            get
+            {
+                if (_cookieService == null)
+                {
+                    _cookieService = ObjectFactory.GetInstance<ICookieService>();
+                }
+                return _cookieService;
+            }
+            set
+            {
+                _cookieService = value;
+            }
+        }
+
+        #endregion
+
+        #region Ctor
+
+        public AccountController(IAccountService accountService, ICookieService cookieService)
         {
             this.AccountService = accountService;
+            this.CookieService = cookieService;
         }
+
+        #endregion
+
+        #region Login and Logff
 
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
@@ -54,14 +83,13 @@ namespace Frame.Mobile.WebSite.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(LoginModel model, string returnUrl)
+        public ActionResult Login(LoginView model, string returnUrl)
         {
-            if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
+            if (ModelState.IsValid && AccountService.Login(model.UserName, model.Password))
             {
                 return RedirectToLocal(returnUrl);
             }
 
-            // If we got this far, something failed, redisplay form
             ModelState.AddModelError("", "The user name or password provided is incorrect.");
             return View(model);
         }
@@ -74,6 +102,10 @@ namespace Frame.Mobile.WebSite.Controllers
 
             return RedirectToAction("Login", "Account");
         }
+
+        #endregion
+
+        #region Register
 
         [AllowAnonymous]
         public ActionResult Register()
@@ -101,6 +133,84 @@ namespace Frame.Mobile.WebSite.Controllers
             }
             return View(model);
         }
+
+        #endregion
+
+        #region Users
+
+        public ActionResult UserList()
+        {
+            var users = AccountService.GetUserList();
+
+            return View(users);
+        }
+
+        [HttpGet]
+        public ActionResult UserAdd()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult UserAdd(User model)
+        {
+            var user = AccountService.AddUser(model);
+            return RedirectToAction("UserList");
+        }
+
+        [HttpGet]
+        public ActionResult UserEdit(int userId)
+        {
+            var user = AccountService.GetUser(userId);
+            ViewData["IsUpdate"] = true;
+            return View("UserAdd", user);
+        }
+
+        [HttpPost]
+        public ActionResult UserEdit(User model)
+        {
+            var ret = AccountService.UpdateUser(model);
+
+            return RedirectToAction("UserList");
+        }
+
+        public ActionResult UserDelete(int userId)
+        {
+            var ret = AccountService.DeleteUser(userId);
+            return RedirectToAction("UserList");
+        }
+
+        #endregion
+
+        #region ChangePassword
+
+        [AllowAnonymous]
+        public ActionResult ChangePassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult ChangePassword(LocalPasswordView model)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    AccountService.ChangePassword(model);
+                    return RedirectToAction("Manage", "Account");
+                }
+                catch (MembershipCreateUserException e)
+                {
+                    ModelState.AddModelError("", ErrorCodeToString(e.StatusCode));
+                }
+            }
+            return View(model);
+        }
+
+        #endregion
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -325,7 +435,7 @@ namespace Frame.Mobile.WebSite.Controllers
             }
             else
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Login", "Account");
             }
         }
 
@@ -355,8 +465,6 @@ namespace Frame.Mobile.WebSite.Controllers
 
         private static string ErrorCodeToString(MembershipCreateStatus createStatus)
         {
-            // See http://go.microsoft.com/fwlink/?LinkID=177550 for
-            // a full list of status codes.
             switch (createStatus)
             {
                 case MembershipCreateStatus.DuplicateUserName:
