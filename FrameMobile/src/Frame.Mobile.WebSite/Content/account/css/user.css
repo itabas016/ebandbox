@@ -1,0 +1,32 @@
+﻿body {
+    font-size: 12px;
+    font-family: 宋体, Arial, Helvetica, sans-serif;
+}
+.header {
+    height:80px;
+    width:100%;
+}
+
+.leftnav {
+    width:200px;
+    float:left;
+}
+.leftnav li {
+    list-style-type: none;
+    height:20px;
+}
+fieldset {
+    width:auto;
+}
+    fieldset li {
+    display: block;
+    min-height: 32px;
+    list-style-type: none;
+}
+.editor-label {
+    width: 120px;
+    float: left;
+}
+.editor-field {
+    width: auto;
+}

@@ -59,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommonActionResult.cs" />
+    <Compile Include="Extenstions\DisplayDescriptionExtensions.cs" />
     <Compile Include="Interface\IUrlSignature.cs" />
     <Compile Include="Json\JsonCommonResult.cs" />
     <Compile Include="Json\JsonResultBase.cs" />

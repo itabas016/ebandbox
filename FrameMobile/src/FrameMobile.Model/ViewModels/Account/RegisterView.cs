@@ -4,31 +4,33 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Web.Mvc;
+using FrameMobile.Model.Account;
 
 namespace FrameMobile.Model
 {
-    public class RegisterView
+    public class RegisterView : User
     {
-        [Required]
-        [Display(Name = "User name")]
-        public string UserName { get; set; }
-
-        [Required]
-        [DataType(DataType.EmailAddress)]
-        [Display(Name = "Email address")]
-        public string Email { get; set; }
-
-        [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        /// <summary>
+        /// 密码
+        /// </summary>
+        [Display(Name = "密码", Description = "6-20个字符。")]
+        [Required(ErrorMessage = "×")]
+        [StringLength(20, MinimumLength = 6, ErrorMessage = "×")]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
-        public string Password { get; set; }
-
+        public new string Password { get; set; }
+        /// <summary>
+        /// 确认密码
+        /// </summary>
+        [Display(Name = "确认密码", Description = "再次输入密码。")]
+        [Compare("Password", ErrorMessage = "×")]
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
-
-        public string Comment { get; set; }
+        /// <summary>
+        /// 验证码
+        /// </summary>
+        [Display(Name = "验证码", Description = "请输入图片中的验证码。")]
+        [Required(ErrorMessage = "×")]
+        [StringLength(4, MinimumLength = 4, ErrorMessage = "×")]
+        public string VerificationCode { get; set; }
     }
 }

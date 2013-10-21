@@ -8,9 +8,8 @@ body {
     font-size: .85em;
     font-family: "Microsoft YaHei";
     color: #232323;
-    background-color: #fff;
+    background-color: #e2e2e2;
     margin: 0;
-    background-image :url(../Content/account/images/linentexture.jpg);
 }
 
 header, footer, nav, section

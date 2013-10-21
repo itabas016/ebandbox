@@ -9,20 +9,30 @@ namespace FrameMobile.Model
 {
     public class LocalPasswordView
     {
-        [Required]
+        /// <summary>
+        /// 原密码
+        /// </summary>
+        [Display(Name = "原密码")]
+        [Required(ErrorMessage = "×")]
+        [StringLength(20, MinimumLength = 6, ErrorMessage = "×")]
         [DataType(DataType.Password)]
-        [Display(Name = "Current password")]
-        public string OldPassword { get; set; }
+        public string Password { get; set; }
 
-        [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        /// <summary>
+        /// 新密码
+        /// </summary>
+        [Display(Name = "新密码", Description = "6-20个字符。")]
+        [Required(ErrorMessage = "×")]
+        [StringLength(20, MinimumLength = 6, ErrorMessage = "×")]
         [DataType(DataType.Password)]
-        [Display(Name = "New password")]
         public string NewPassword { get; set; }
 
+        /// <summary>
+        /// 确认密码
+        /// </summary>
+        [Display(Name = "确认密码", Description = "再次输入密码。")]
+        [Compare("NewPassword", ErrorMessage = "×")]
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm new password")]
-        [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
     }
 }

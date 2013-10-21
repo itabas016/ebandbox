@@ -2,5 +2,61 @@
 @model LoginView
 
 @{
-    Layout = "~/Views/Shared/_AccountLayout.cshtml";
+    ViewBag.Title = "用户登陆";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="banner">
+    <img src="~/Content/account/Images/banner.jpg" />
+</div>
+
+@using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <div class="form">
+        <dl>
+            <dt>用户登陆</dt>
+            <dd>
+                <div class="label">@Html.LabelFor(model => model.UserName)：</div>
+                <div class="ctrl">@Html.EditorFor(model => model.UserName)
+                    @Html.ValidationMessageFor(model => model.UserName)
+                    @Html.DisplayDescriptionFor(model => model.UserName)
+                </div>
+            </dd>
+            <dd>
+                <div class="label">@Html.LabelFor(model => model.Password)：</div>
+                <div class="ctrl">@Html.PasswordFor(model => model.Password)
+                    @Html.ValidationMessageFor(model => model.Password)
+                    @Html.DisplayDescriptionFor(model => model.Password)
+                </div>
+            </dd>
+            <dd>
+                <div class="label">验证码：</div>
+                <div class="ctrl">
+                    @Html.TextBoxFor(model => model.VerificationCode)
+                    @Html.ValidationMessageFor(model => model.VerificationCode)
+                    <img id="verificationcode" alt="" src="@Url.Action("VerificationCode", "Account")" />
+                    <a id="trydifferent" style="cursor: pointer">换一张</a>
+                </div>
+            </dd>
+            <dd>
+                <div class="label"></div>
+                <div class="ctrl">
+                    <input type="submit" value="登陆" />@Html.ValidationMessage("Message")
+                </div>
+            </dd>
+        </dl>
+        <div class="clear"></div>
+    </div>
+}
+
+<script type="text/javascript">
+    $("#trydifferent").click(function () {
+        $("#verificationcode").attr("src", "/Account/VerificationCode?" + new Date());
+    })
+
+</script>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
 }

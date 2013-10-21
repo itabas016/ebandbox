@@ -58,6 +58,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Account\UserGroup.cs" />
     <Compile Include="Common\MobileParam.cs" />
     <Compile Include="News\NewsContent.cs" />
     <Compile Include="News\NewsConfig.cs" />

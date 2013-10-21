@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using FrameMobile.Common;
+using FrameMobile.Core;
 using FrameMobile.Model;
 using FrameMobile.Model.Account;
 using SubSonic.DataProviders;
@@ -24,7 +26,7 @@ namespace FrameMobile.Domain.Service
         {
             if (model != null)
             {
-                var exist = dbContextService.Exists<User>(x => x.Name == model.UserName.ToLower());
+                var exist = dbContextService.Exists<User>(x => x.Name == model.Name.ToLower());
                 if (!exist)
                 {
                     var user = model.To<User>();

@@ -1,0 +1,189 @@
+﻿body
+{
+    color: #333;
+    font-size: 12px;
+    font-family: 宋体, Arial, Helvetica, sans-serif;
+}
+
+a
+{
+    color: #333;
+    outline: none;
+    padding-left: 3px;
+    padding-right: 3px;
+    text-decoration: underline;
+}
+
+    a:link, a:visited,
+    a:active, a:hover
+    {
+        color: #333;
+    }
+
+    a:hover
+    {
+        background-color: #c7d1d6;
+    }
+
+.field-validation-error
+{
+    font-weight: bold;
+    color: red;
+}
+
+.input-validation-error
+{
+    border: 1px solid #ff0000;
+    background-color: #ffeeee;
+}
+
+.clear
+{
+    clear: both;
+}
+
+.wrapper
+{
+    width: 1000px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+    .wrapper .header
+    {
+        width: 1000px;
+        height: 63px;
+    }
+
+        .wrapper .header .menu
+        {
+            float: right;
+            height: 24px;
+        }
+
+            .wrapper .header .menu ul
+            {
+                margin: 0;
+            }
+
+            .wrapper .header .menu li
+            {
+                text-align: center;
+                width: 60px;
+                float: left;
+                font-family: 黑体;
+                font-size: 14px;
+                height: 24px;
+                line-height: 24px;
+                list-style-type: none;
+            }
+
+    .wrapper .nav
+    {
+        float: right;
+        height: 39px;
+        width: 776px;
+        background-image: url('Images/nav_bg.jpg');
+        background-repeat: repeat-x;
+    }
+
+    .wrapper .content_wrapper
+    {
+        background-color: #198494;
+        width: 1000px;
+        min-height: 106px;
+        display: table;
+    }
+
+        .wrapper .content_wrapper .content
+        {
+            margin: 0px 6px 6px 0px;
+            background-color: #FFFFFF;
+            min-height: 100px;
+            display: table;
+        }
+
+.banner
+{
+    width: 100%;
+    height: 200px;
+}
+
+.wrapper .footer
+{
+    height: 110px;
+}
+
+    .wrapper .footer .menu
+    {
+        background-image: url('Images/footer_nav_bg.jpg');
+        background-repeat: repeat-x;
+        height: 40px;
+        line-height: 40px;
+        margin-top: 22px;
+    }
+
+    .wrapper .footer .address
+    {
+        height: 48px;
+        line-height: 20px;
+        text-align: center;
+    }
+
+/*form*/
+.form
+{
+    border: 1px solid #C0C0C0;
+    margin: 0px;
+    width: 994px;
+    min-height: 100px;
+    height: auto;
+}
+
+    .form input[type=text]
+    {
+        width: 180px;
+    }
+
+    .form input[type=password]
+    {
+        width: 180px;
+    }
+
+    .form dl
+    {
+        margin-left: 100px;
+        margin-right: 100px;
+    }
+
+    .form dt
+    {
+        font-size: 14px;
+        font-weight: bold;
+        padding-left: 200px;
+        height: 40px;
+        line-height: 40px;
+    }
+
+    .form dd
+    {
+        float: left;
+        width: 100%;
+        display: table-cell;
+        height: auto;
+        min-height: 40px;
+        line-height: 20px;
+    }
+
+    .form .label
+    {
+        width: 200px;
+        float: left;
+        text-align: right;
+    }
+
+    .form .ctrl
+    {
+        width: 590px;
+        float: left;
+    }
