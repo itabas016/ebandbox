@@ -45,18 +45,41 @@ namespace FrameMobile.Domain.Service
             var user = dbContextService.Single<User>(x => x.Name == userName.ToLower());
             if (userName.Equals(user.Name) && hash.Equals(user.Password))
             {
+                user.LastLoginTime = DateTime.Now;
+                var ret = dbContextService.Update<User>(user);
                 return true;
             }
             return false;
         }
 
-        public int ChangePassword(LocalPasswordView model)
+        public int ChangePassword(LocalPasswordView model, string userName)
         {
-            var user = dbContextService.Single<User>(x => x.Name == "");
+            var user = dbContextService.Single<User>(x => x.Name == userName);
             if (model != null && user != null)
             {
                 user.Password = model.NewPassword.GetMD5Hash();
                 user.LastModifiedTime = DateTime.Now;
+                var ret = dbContextService.Update<User>(user);
+                return ret;
+            }
+            return 0;
+        }
+
+        public int ChangeInfo(User model)
+        {
+            var user = dbContextService.Single<User>(x => x.Name == model.Name);
+            if (model != null && user != null)
+            {
+                user.UserGroupId = model.UserGroupId;
+                user.Email = model.Email;
+                user.PostCode = model.PostCode;
+                user.QQ = model.QQ;
+                user.Tel = model.Tel;
+                user.Address = model.Address;
+                user.SecurityQuestion = model.SecurityQuestion;
+                user.SecurityAnswer = model.SecurityAnswer;
+                user.LastModifiedTime = DateTime.Now;
+                user.Comment = model.Comment;
                 var ret = dbContextService.Update<User>(user);
                 return ret;
             }
@@ -72,6 +95,12 @@ namespace FrameMobile.Domain.Service
         public User GetUser(int userId)
         {
             var user = dbContextService.Single<User>(userId);
+            return user;
+        }
+
+        public User GetUser(string userName)
+        {
+            var user = dbContextService.Single<User>(x => x.Name == userName);
             return user;
         }
 
@@ -108,6 +137,14 @@ namespace FrameMobile.Domain.Service
         {
             var ret = dbContextService.Delete<User>(userId);
             return ret;
+        }
+
+        public int Authentication(string userName, string password)
+        {
+            var _user = dbContextService.Single<User>(x => x.Name == userName);
+            if (_user == null) return 1;
+            else if (_user.Password != password.GetMD5Hash()) return 2;
+            else return 0;
         }
 
         private void UserDBInitialize()

@@ -68,7 +68,6 @@
     <Compile Include="Algorithm\Decrypt.cs" />
     <Compile Include="Algorithm\DicSortALG.cs" />
     <Compile Include="Algorithm\Encrypt.cs" />
-    <Compile Include="Attribute\UserAuthorizeAttribute.cs" />
     <Compile Include="Attribute\ViewFieldAttribute.cs" />
     <Compile Include="Helper\AuthHelper.cs" />
     <Compile Include="Helper\CacheHelper.cs" />

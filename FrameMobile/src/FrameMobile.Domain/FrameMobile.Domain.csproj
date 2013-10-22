@@ -84,7 +84,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attribute\AdminAuthorizeAttribute.cs" />
     <Compile Include="Attribute\ServiceCacheAttribute.cs" />
+    <Compile Include="Attribute\UserAuthorizeAttribute.cs" />
     <Compile Include="DI\Bootstrapper.cs" />
     <Compile Include="DI\ControllerRegistry.cs" />
     <Compile Include="DI\StructureMapDependencyResolver.cs" />

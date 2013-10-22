@@ -17,6 +17,7 @@ using FrameMobile.Core;
 
 namespace Frame.Mobile.WebSite.Controllers
 {
+    [UserAuthorize]
     public class NewsUIController : MvcControllerBase
     {
         #region Prop

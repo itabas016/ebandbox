@@ -8,8 +8,6 @@ using System.Web.Security;
 using DotNetOpenAuth.AspNet;
 using Microsoft.Web.WebPages.OAuth;
 using WebMatrix.WebData;
-using Frame.Mobile.WebSite.Filters;
-using Frame.Mobile.WebSite.Models;
 using FrameMobile.Web;
 using FrameMobile.Model;
 using FrameMobile.Domain.Service;
@@ -18,6 +16,8 @@ using FrameMobile.Model.Account;
 using System.Drawing;
 using FrameMobile.Core;
 using System.IO;
+using FrameMobile.Domain;
+using NCore;
 
 namespace Frame.Mobile.WebSite.Controllers
 {
@@ -61,6 +61,16 @@ namespace Frame.Mobile.WebSite.Controllers
             }
         }
 
+        const int CookieTimeoutSeconds = 1209600;
+
+        public string UserName
+        {
+            get
+            {
+                return CookieService.TryGet("NewsUserName");
+            }
+        }
+
         #endregion
 
         #region Ctor
@@ -75,7 +85,6 @@ namespace Frame.Mobile.WebSite.Controllers
 
         #region Login and Logff
 
-        [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
@@ -84,11 +93,14 @@ namespace Frame.Mobile.WebSite.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        [ValidateAntiForgeryToken]
         public ActionResult Login(LoginView model, string returnUrl)
         {
+            if (returnUrl.IsNullOrEmpty()) returnUrl = "/NewsUI/NewsManage";
+
             if (ModelState.IsValid && AccountService.Login(model.UserName, model.Password) && Session["VerificationCode"].ToString() == model.VerificationCode.ToUpper())
             {
+                CookieService.Set("NewsUserName", model.UserName, CookieTimeoutSeconds);
+                CookieService.Set("NewsPassword", model.Password, CookieTimeoutSeconds);
                 return RedirectToLocal(returnUrl);
             }
 
@@ -97,7 +109,6 @@ namespace Frame.Mobile.WebSite.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
             return RedirectToAction("Login", "Account");
@@ -107,7 +118,6 @@ namespace Frame.Mobile.WebSite.Controllers
 
         #region Register
 
-        [AllowAnonymous]
         public ActionResult Register()
         {
             return View();
@@ -115,7 +125,6 @@ namespace Frame.Mobile.WebSite.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        [ValidateAntiForgeryToken]
         public ActionResult Register(RegisterView model)
         {
             if (ModelState.IsValid && Session["VerificationCode"].ToString() == model.VerificationCode.ToUpper())
@@ -123,8 +132,11 @@ namespace Frame.Mobile.WebSite.Controllers
                 try
                 {
                     AccountService.CreateUser(model);
-                    AccountService.Login(model.Name, model.Password);
-                    return RedirectToAction("Manage", "Account");
+                    var ret = AccountService.Login(model.Name, model.Password);
+                    if (ret)
+                    {
+                        return RedirectToAction("Manage", "Account", new { userName = model.Name });
+                    }
                 }
                 catch (MembershipCreateUserException e)
                 {
@@ -138,9 +150,11 @@ namespace Frame.Mobile.WebSite.Controllers
 
         #region Manage
 
-        public ActionResult Manage()
+        public ActionResult Manage(string userName)
         {
-            return View();
+            var user = AccountService.GetUser(userName);
+
+            return View(user);
         }
 
         #endregion
@@ -191,25 +205,50 @@ namespace Frame.Mobile.WebSite.Controllers
 
         #endregion
 
+        #region ChangeInfo
+
+        public ActionResult ChangeInfo()
+        {
+            var user = AccountService.GetUser(UserName);
+            return View(user);
+        }
+
+        [HttpPost]
+        public ActionResult ChangeInfo(User model)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    AccountService.ChangeInfo(model);
+                    return RedirectToAction("Manage", "Account", new { userName = model.Name });
+                }
+                catch (MembershipCreateUserException e)
+                {
+                    ModelState.AddModelError("", ErrorCodeToString(e.StatusCode));
+                }
+            }
+            return View(model);
+        }
+
+        #endregion
+
         #region ChangePassword
 
-        [AllowAnonymous]
         public ActionResult ChangePassword()
         {
             return View();
         }
 
         [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
         public ActionResult ChangePassword(LocalPasswordView model)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    AccountService.ChangePassword(model);
-                    return RedirectToAction("Manage", "Account");
+                    AccountService.ChangePassword(model, UserName);
+                    return RedirectToAction("Manage", "Account", new { userName = UserName});
                 }
                 catch (MembershipCreateUserException e)
                 {

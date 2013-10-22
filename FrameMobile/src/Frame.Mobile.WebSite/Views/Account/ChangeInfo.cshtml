@@ -1,0 +1,117 @@
+﻿@using FrameMobile.Model.Account
+@model User
+
+@{
+    ViewBag.Title = "修改资料";
+    Layout = "~/Views/Shared/_AccountLayout.cshtml";
+}
+
+<div class="contentHeader">
+    <div class="apphead">
+        <div class="title">
+            <b>@ViewBag.Title</b>
+        </div>
+        <div>
+            <button class="btn btn-quaternary btn-large" onclick="history.back();">
+                返 回</button>
+        </div>
+    </div>
+</div>
+
+<div class="content">
+    <div>
+        <div>
+            @using (Html.BeginForm())
+            {
+                @Html.ValidationSummary(true)
+
+                <fieldset>
+                    <legend>修改资料</legend>
+                    @Html.HiddenFor(model => model.Id)
+                    <ul>
+                        <li>
+                            <div class="editor-label">
+                                @Html.LabelFor(model => model.Name)
+                            </div>
+                            <div class="editor-field">
+                                @Html.DisplayFor(model => model.Name)
+                            </div>
+                        </li>
+                        <li>
+                            <div class="editor-label">
+                                @Html.LabelFor(model => model.Password)
+                            </div>
+                            <div class="editor-field">
+                                @Html.Password("Password")
+                                @Html.ValidationMessageFor(model => model.Password)
+                                输入正确的密码才能修改资料。
+                            </div>
+                        </li>
+                        <li>
+                            <div class="editor-label">
+                                @Html.LabelFor(model => model.Gender)
+                            </div>
+                            <div class="editor-field">
+                                @Html.RadioButtonFor(model => model.Gender, 0) 男
+                    @Html.RadioButtonFor(model => model.Gender, 1) 女
+                    @Html.RadioButtonFor(model => model.Gender, 2) 保密
+                            </div>
+                        </li>
+                        <li>
+                            <div class="editor-label">
+                                @Html.LabelFor(model => model.Email)
+                            </div>
+                            <div class="editor-field">
+                                @Html.EditorFor(model => model.Email)
+                                @Html.ValidationMessageFor(model => model.Email)
+                                @Html.DisplayDescriptionFor(model => model.Email)
+                            </div>
+                        </li>
+                        <li>
+                            <div class="editor-label">
+                                @Html.LabelFor(model => model.QQ)
+                            </div>
+                            <div class="editor-field">
+                                @Html.EditorFor(model => model.QQ)
+                                @Html.ValidationMessageFor(model => model.QQ)
+                                @Html.DisplayDescriptionFor(model => model.QQ)
+                            </div>
+                        </li>
+                        <li>
+                            <div class="editor-label">
+                                @Html.LabelFor(model => model.Tel)
+                            </div>
+                            <div class="editor-field">
+                                @Html.EditorFor(model => model.Tel)
+                                @Html.ValidationMessageFor(model => model.Tel)
+                                @Html.DisplayDescriptionFor(model => model.Tel)
+                            </div>
+                        </li>
+                        <li>
+                            <div class="editor-label">
+                                @Html.LabelFor(model => model.Address)
+                            </div>
+                            <div class="editor-field">
+                                @Html.EditorFor(model => model.Address)
+                                @Html.ValidationMessageFor(model => model.Address)
+                                @Html.DisplayDescriptionFor(model => model.Address)
+                            </div>
+                        </li>
+                        <li>
+                            <div class="editor-label">
+                                @Html.LabelFor(model => model.PostCode)
+                            </div>
+                            <div class="editor-field">
+                                @Html.EditorFor(model => model.PostCode)
+                                @Html.ValidationMessageFor(model => model.PostCode)
+                                @Html.DisplayDescriptionFor(model => model.PostCode)
+                            </div>
+                        </li>
+                        <li>
+                            <input type="submit" value="修改" /></li>
+                    </ul>
+                </fieldset>
+            }
+        </div>
+    </div>
+</div>

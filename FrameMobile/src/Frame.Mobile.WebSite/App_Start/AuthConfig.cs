@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Web.WebPages.OAuth;
-using Frame.Mobile.WebSite.Models;
 
 namespace Frame.Mobile.WebSite
 {
