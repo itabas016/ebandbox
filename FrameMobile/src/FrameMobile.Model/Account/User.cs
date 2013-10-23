@@ -58,26 +58,26 @@ namespace FrameMobile.Model.Account
         /// 密保问题
         /// </summary>
         [Display(Name = "密保问题", Description = "请正确填写，在您忘记密码时用户找回密码。4-20个字符。")]
-        [Required(ErrorMessage = "×")]
         [StringLength(20, MinimumLength = 4, ErrorMessage = "×")]
         [SubSonicStringLength(256)]
+        [SubSonicNullString]
         public string SecurityQuestion { get; set; }
 
         /// <summary>
         /// 密保答案
         /// </summary>
         [Display(Name = "密保答案", Description = "请认真填写，忘记密码后回答正确才能找回密码。2-20个字符。")]
-        [Required(ErrorMessage = "×")]
         [StringLength(20, MinimumLength = 2, ErrorMessage = "×")]
         [SubSonicStringLength(256)]
+        [SubSonicNullString]
         public string SecurityAnswer { get; set; }
 
         /// <summary>
         /// QQ号码
         /// </summary>
         [Display(Name = "QQ号码")]
-        [RegularExpression("^[1-9][0-9]{4-13}$", ErrorMessage = "×")]
-        [StringLength(12, MinimumLength = 6, ErrorMessage = "×")]
+        [RegularExpression("^[1-9][0-9]{4,13}$", ErrorMessage = "×")]
+        [StringLength(12, MinimumLength = 5, ErrorMessage = "×")]
         [SubSonicNullString]
         public string QQ { get; set; }
 
@@ -85,7 +85,7 @@ namespace FrameMobile.Model.Account
         /// 电话号码
         /// </summary>
         [Display(Name = "电话号码", Description = "常用的联系电话（手机或固话），固话格式为：区号-号码。")]
-        [RegularExpression("^[0-9-]{11-13}$", ErrorMessage = "×")]
+        [RegularExpression("(\\(\\d{3,4}\\)|\\d{3,4}-|\\s)?\\d{7,14}", ErrorMessage = "×")]
         [SubSonicNullString]
         public string Tel { get; set; }
 

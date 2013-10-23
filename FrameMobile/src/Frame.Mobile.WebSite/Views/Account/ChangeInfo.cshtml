@@ -6,18 +6,6 @@
     Layout = "~/Views/Shared/_AccountLayout.cshtml";
 }
 
-<div class="contentHeader">
-    <div class="apphead">
-        <div class="title">
-            <b>@ViewBag.Title</b>
-        </div>
-        <div>
-            <button class="btn btn-quaternary btn-large" onclick="history.back();">
-                返 回</button>
-        </div>
-    </div>
-</div>
-
 <div class="content">
     <div>
         <div>
@@ -34,7 +22,7 @@
                                 @Html.LabelFor(model => model.Name)
                             </div>
                             <div class="editor-field">
-                                @Html.DisplayFor(model => model.Name)
+                                @Html.TextBoxFor(model => model.Name, new { @readonly = true, Class = "txt-readonly" })
                             </div>
                         </li>
                         <li>
@@ -69,6 +57,26 @@
                         </li>
                         <li>
                             <div class="editor-label">
+                                @Html.LabelFor(model => model.SecurityQuestion)
+                            </div>
+                            <div class="editor-field">
+                                @Html.EditorFor(model => model.SecurityQuestion)
+                                @Html.ValidationMessageFor(model => model.SecurityQuestion)
+                                @Html.DisplayDescriptionFor(model => model.SecurityQuestion)
+                            </div>
+                        </li>
+                        <li>
+                            <div class="editor-label">
+                                @Html.LabelFor(model => model.SecurityAnswer)
+                            </div>
+                            <div class="editor-field">
+                                @Html.EditorFor(model => model.SecurityAnswer)
+                                @Html.ValidationMessageFor(model => model.SecurityAnswer)
+                                @Html.DisplayDescriptionFor(model => model.SecurityAnswer)
+                            </div>
+                        </li>
+                        <li>
+                            <div class="editor-label">
                                 @Html.LabelFor(model => model.QQ)
                             </div>
                             <div class="editor-field">
@@ -89,22 +97,30 @@
                         </li>
                         <li>
                             <div class="editor-label">
-                                @Html.LabelFor(model => model.Address)
-                            </div>
-                            <div class="editor-field">
-                                @Html.EditorFor(model => model.Address)
-                                @Html.ValidationMessageFor(model => model.Address)
-                                @Html.DisplayDescriptionFor(model => model.Address)
-                            </div>
-                        </li>
-                        <li>
-                            <div class="editor-label">
                                 @Html.LabelFor(model => model.PostCode)
                             </div>
                             <div class="editor-field">
                                 @Html.EditorFor(model => model.PostCode)
                                 @Html.ValidationMessageFor(model => model.PostCode)
                                 @Html.DisplayDescriptionFor(model => model.PostCode)
+                            </div>
+                        </li>
+                        <li>
+                            <div class="editor-label">
+                                @Html.LabelFor(model => model.Address)
+                            </div>
+                            <div class="editor-field">
+                                @Html.TextAreaFor(model => model.Address)
+                                @Html.ValidationMessageFor(model => model.Address)
+                                @Html.DisplayDescriptionFor(model => model.Address)
+                            </div>
+                        </li>
+                        <li>
+                            <div class="editor-label">
+                                @Html.LabelFor(model => model.Comment)
+                            </div>
+                            <div class="editor-field">
+                                @Html.TextAreaFor(model => model.Comment)
                             </div>
                         </li>
                         <li>

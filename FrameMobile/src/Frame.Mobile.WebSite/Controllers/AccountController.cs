@@ -92,7 +92,6 @@ namespace Frame.Mobile.WebSite.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous]
         public ActionResult Login(LoginView model, string returnUrl)
         {
             if (returnUrl.IsNullOrEmpty()) returnUrl = "/NewsUI/NewsManage";
@@ -100,7 +99,7 @@ namespace Frame.Mobile.WebSite.Controllers
             if (ModelState.IsValid && AccountService.Login(model.UserName, model.Password) && Session["VerificationCode"].ToString() == model.VerificationCode.ToUpper())
             {
                 CookieService.Set("NewsUserName", model.UserName, CookieTimeoutSeconds);
-                CookieService.Set("NewsPassword", model.Password, CookieTimeoutSeconds);
+                CookieService.Set("NewsPassword", model.Password.GetMD5Hash(), CookieTimeoutSeconds);
                 return RedirectToLocal(returnUrl);
             }
 
@@ -108,7 +107,6 @@ namespace Frame.Mobile.WebSite.Controllers
             return View(model);
         }
 
-        [HttpPost]
         public ActionResult LogOff()
         {
             return RedirectToAction("Login", "Account");
@@ -124,9 +122,10 @@ namespace Frame.Mobile.WebSite.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous]
         public ActionResult Register(RegisterView model)
         {
+            var errors = ModelState.Values.SelectMany(v => v.Errors);
+
             if (ModelState.IsValid && Session["VerificationCode"].ToString() == model.VerificationCode.ToUpper())
             {
                 try
@@ -166,35 +165,6 @@ namespace Frame.Mobile.WebSite.Controllers
             var users = AccountService.GetUserList();
 
             return View(users);
-        }
-
-        [HttpGet]
-        public ActionResult UserAdd()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult UserAdd(User model)
-        {
-            var user = AccountService.AddUser(model);
-            return RedirectToAction("UserList");
-        }
-
-        [HttpGet]
-        public ActionResult UserEdit(int userId)
-        {
-            var user = AccountService.GetUser(userId);
-            ViewData["IsUpdate"] = true;
-            return View("UserAdd", user);
-        }
-
-        [HttpPost]
-        public ActionResult UserEdit(User model)
-        {
-            var ret = AccountService.UpdateUser(model);
-
-            return RedirectToAction("UserList");
         }
 
         public ActionResult UserDelete(int userId)
@@ -248,6 +218,7 @@ namespace Frame.Mobile.WebSite.Controllers
                 try
                 {
                     AccountService.ChangePassword(model, UserName);
+                    CookieService.Remove("NewsPassword");
                     return RedirectToAction("Manage", "Account", new { userName = UserName});
                 }
                 catch (MembershipCreateUserException e)

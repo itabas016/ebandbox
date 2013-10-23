@@ -5,39 +5,32 @@
     Layout = "~/Views/Shared/_AccountLayout.cshtml";
 }
 
-<div class="contentHeader">
-    <div class="apphead">
-        <div class="title">
-            <b>@ViewBag.Title</b>
-        </div>
-        <div>
-            <button class="btn btn-quaternary btn-large" onclick="history.back();">
-                返 回</button>
-        </div>
-    </div>
-</div>
-
 <div class="content">
-    <table class="table table-striped">
+    <table class="singletable">
         <thead>
             <tr>
                 <th>用户名</th>
                 <th>邮箱</th>
+                <th>用户组</th>
+                <th>密保问题</th>
+                <th>密保答案</th>
+                <th>备注</th>
                 <th>状态</th>
-                <th>&nbsp;</th>
+                <th>操作</th>
             </tr>
         </thead>
-        <tbody class="prolist">
+        <tbody>
 
-            <tr class="odd gradeX">
+            <tr>
                 <td><strong>@Model.Name</strong></td>
-                <td><strong>@Model.Email</strong></td>
+                <td>@Model.Email</td>
+                <td>@Model.UserGroupId</td>
+                <td>@Model.SecurityQuestion</td>
+                <td>@Model.SecurityAnswer</td>
+                <td>@Model.Comment</td>
                 <td>@Model.Status</td>
-                <td class="center">
-                    <button type="button" class="btn btn-large btn-gray"  onclick="window.open('UserEdit?userId=@Model.Id','_self');">修 改</button>
-                </td>
-                <td class="center">
-                    <button type="button" class="btn btn-large btn-gray"  onclick="var c=confirm('确定要删除?'); if(c==true){window.open('UserDelete?userId=@Model.Id','_self');}">
+                <td>
+                    <button type="button" onclick="var c=confirm('确定要删除?'); if(c==true){window.open('UserDelete?userId=@Model.Id','_self');}">
                         删 除</button>
                 </td>
             </tr>

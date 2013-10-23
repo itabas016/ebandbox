@@ -201,6 +201,8 @@
     <Content Include="Content\account\images\linentexture.jpg" />
     <Content Include="Content\account\images\nav_bg.jpg" />
     <Content Include="Content\account\images\nav_l.jpg" />
+    <Content Include="Content\account\images\newsbanner.jpg" />
+    <Content Include="Content\account\images\signup.jpg" />
     <Content Include="Content\news\css\main.css" />
     <Content Include="Content\news\images\icos.png" />
     <Content Include="Content\news\images\logout.png" />

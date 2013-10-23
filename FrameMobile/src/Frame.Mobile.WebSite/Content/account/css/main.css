@@ -1,6 +1,6 @@
 ﻿body
 {
-    color: #333;
+    background-color: #EEF7FC;
     font-size: .85em;
     font-family: "Microsoft YaHei";
 }
@@ -18,6 +18,16 @@ div.left
     border-right: 1px solid #94CFDD;
 }
 
+.left ul
+{
+    margin-top: 20%;
+    font-size: 20px;
+}
+
+.left li
+{
+}
+
 div.right
 {
     left: 210px;
@@ -29,10 +39,28 @@ div.right
     padding-bottom: 20px;
 }
 
+    div.right .top
+    {
+        height: 5px;
+        text-align: center;
+        font-family: "Microsoft YaHei";
+        font-size: 30px;
+        margin-top: 15px;
+        margin-bottom: 20px;
+    }
 
+    div.right .content
+    {
+        margin-top: 5%;
+        margin-right: 60%;
+    }
 
-
-
+        div.right .content .singletable, th, td
+        {
+            margin-left: 2px;
+            border: solid 1px #000000;
+            border-collapse:collapse;
+        }
 
 a
 {
@@ -136,6 +164,7 @@ a
 {
     width: 100%;
     height: 200px;
+    background-image: url('../images/newsbanner.jpg');
     text-align: center;
 }
 
@@ -146,7 +175,7 @@ a
 
     .wrapper .footer .menu
     {
-        background-image: url('Images/footer_nav_bg.jpg');
+        background-image: url('../images/footer_nav_bg.jpg');
         background-repeat: repeat-x;
         height: 40px;
         line-height: 40px;
@@ -163,6 +192,7 @@ a
 /*form*/
 .form
 {
+    background-color: #EEF7FC;
     border: 1px solid #C0C0C0;
     margin: 0px;
     width: 994px;
@@ -216,4 +246,9 @@ a
     {
         width: 590px;
         float: left;
+    }
+
+    .form .signup
+    {
+        text-align: center;
     }

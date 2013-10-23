@@ -15,16 +15,14 @@ namespace FrameMobile.Domain
         {
             IAccountService accountService = ObjectFactory.GetInstance<IAccountService>();
 
-            if (httpContext.Request.Cookies["User"] == null) return false;
+            ICookieService cookieService = ObjectFactory.GetInstance<ICookieService>();
 
-            HttpCookie _cookie = httpContext.Request.Cookies["User"];
+            var userName = cookieService.TryGet("NewsUserName");
+            var password = cookieService.TryGet("NewsPassword");
 
-            string _userName = _cookie["UserName"];
-            string _password = _cookie["Password"];
+            if (userName == "" || password == "") return false;
 
-            if (_userName == "" || _password == "") return false;
-
-            if (accountService.Authentication(_userName, _password) == 0) return true;
+            if (accountService.Authentication(userName, password) == 0) return true;
 
             else return false;
         }
