@@ -22,6 +22,8 @@ namespace FrameMobile.Domain.Service
             UserDBInitialize();
         }
 
+        #region Register Login
+
         public int CreateUser(RegisterView model)
         {
             if (model != null)
@@ -51,6 +53,10 @@ namespace FrameMobile.Domain.Service
             }
             return false;
         }
+
+        #endregion
+
+        #region Change Info Password
 
         public int ChangePassword(LocalPasswordView model, string userName)
         {
@@ -86,10 +92,14 @@ namespace FrameMobile.Domain.Service
             return 0;
         }
 
+        #endregion
+
+        #region User
+
         public IList<User> GetUserList()
         {
-            var users = dbContextService.All<User>();
-            return users.ToList();
+            var users = dbContextService.All<User>().ToList();
+            return users;
         }
 
         public User GetUser(int userId)
@@ -106,7 +116,7 @@ namespace FrameMobile.Domain.Service
 
         public int AddUser(User model)
         {
-            if (model!= null)
+            if (model != null)
             {
                 var exist = dbContextService.Exists<User>(x => x.Name == model.Name.ToLower());
                 if (!exist)
@@ -139,6 +149,59 @@ namespace FrameMobile.Domain.Service
             return ret;
         }
 
+        #endregion
+
+        #region UserGroup
+
+        public IList<UserGroup> GetUserGroupList()
+        {
+            var userGrouplist = dbContextService.All<UserGroup>().ToList();
+
+            return userGrouplist;
+        }
+
+        public UserGroup GetUserGroup(int userGroupId)
+        {
+            var userGroup = dbContextService.Single<UserGroup>(userGroupId);
+
+            return userGroup;
+        }
+
+        public int AddUserGroup(UserGroup model)
+        {
+            if (model != null)
+            {
+                var exist = dbContextService.Exists<UserGroup>(x => x.Name == model.Name.ToLower());
+                if (!exist)
+                {
+                    var ret = dbContextService.Add<UserGroup>(model);
+                    return (int)ret;
+                }
+            }
+            return 0;
+        }
+
+        public int UpdateUserGroup(UserGroup model)
+        {
+            var userGroup = dbContextService.Single<UserGroup>(model.Id);
+
+            userGroup.Name = model.Name;
+            userGroup.Description = model.Description;
+
+            var ret = dbContextService.Update<UserGroup>(model);
+            return ret;
+        }
+
+        public int DeleteUserGroup(int userGroupId)
+        {
+            var ret = dbContextService.Delete<UserGroup>(userGroupId);
+            return ret;
+        }
+
+        #endregion
+
+        #region Helper
+
         public int Authentication(string userName, string password)
         {
             var _user = dbContextService.Single<User>(x => x.Name == userName);
@@ -162,5 +225,7 @@ namespace FrameMobile.Domain.Service
             }
             query.ExecuteTransaction();
         }
+
+        #endregion
     }
 }

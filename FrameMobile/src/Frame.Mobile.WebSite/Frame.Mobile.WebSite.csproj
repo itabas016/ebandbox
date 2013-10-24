@@ -359,9 +359,10 @@
     <Content Include="Views\NewsUI\SubCategoryAdd.cshtml" />
     <Content Include="Views\NewsUI\SubCategoryList.cshtml" />
     <Content Include="Views\Account\UserList.cshtml" />
-    <Content Include="Views\Account\UserAdd.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Account\ChangeInfo.cshtml" />
+    <Content Include="Views\Account\UserGroupList.cshtml" />
+    <Content Include="Views\Account\UserGroupAdd.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

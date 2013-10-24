@@ -5,40 +5,51 @@
     Layout = "~/Views/Shared/_AccountLayout.cshtml";
 
     List<User> userlist = ViewData["userlist"] as List<User>;
+    var userGrouplist = ViewData["UserGrouplist"] as SelectList;
 }
 
-<div class="content">
-    <table class="tableContent">
+<div class="userlist">
+    <table class="singletable">
         <thead>
             <tr>
                 <th>序号</th>
                 <th>用户名</th>
                 <th>注册邮箱</th>
+                <th>用户组</th>
+                <th>密保问题</th>
+                <th>密保答案</th>
+                <th>QQ</th>
+                <th>电话</th>
+                <th>住址</th>
                 <th>最后活动时间</th>
                 <th>最后修改时间</th>
                 <th>用户创建时间</th>
                 <th>状态</th>
                 <th>备注</th>
-                <th>&nbsp;</th>
+                <th>操作</th>
             </tr>
         </thead>
-        <tbody class="prolist">
+        <tbody>
             @foreach (var item in userlist)
             {
-                <tr class="odd gradeX">
+                <tr>
                     <td>@item.Id</td>
                     <td>@item.Name</td>
                     <td>@item.Email</td>
+                    <td>@item.UserGroupId</td>
+                    <td>@item.SecurityQuestion</td>
+                    <td>@item.SecurityAnswer</td>
+                    <td>@item.QQ</td>
+                    <td>@item.Tel</td>
+                    <td>@item.Address</td>
                     <td>@item.LastLoginTime</td>
                     <td>@item.LastModifiedTime</td>
                     <td>@item.CreateDateTime</td>
                     <td>@item.Status</td>
                     <td>@item.Comment</td>
-                    <td class="center">
-                        <button type="button" class="btn btn-blue" onclick="window.open('UserEdit?userId=@item.Id','_self');">修 改</button>
-                    </td>
-                    <td class="center">
-                        <button type="button" class="btn btn-blue" onclick="var c=confirm('确定要删除?'); if(c==true){window.open('UserDelete?userId=@item.Id','_self');}">
+                    <td>
+                        <button type="button" onclick="window.open('UserEdit?userId=@item.Id','_self');">修 改</button>
+                        <button type="button" onclick="var c=confirm('确定要删除?'); if(c==true){window.open('UserDelete?userId=@item.Id','_self');}">
                             删 除</button>
                     </td>
                 </tr>

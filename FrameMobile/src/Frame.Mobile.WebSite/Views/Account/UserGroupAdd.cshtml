@@ -1,0 +1,51 @@
+﻿@using FrameMobile.Model.Account
+@model UserGroup
+@{
+    bool isUpdateMode = ViewData["IsUpdate"] != null;
+    ViewBag.Title = isUpdateMode ? "用户组修改" : "用户组添加";
+    Layout = "~/Views/Shared/_AccountLayout.cshtml";
+}
+
+<div class="usergroup">
+    @using (Html.BeginForm())
+    {
+        @Html.ValidationSummary(true)
+        <fieldset>
+            <legend>@ViewBag.Title</legend>
+            <div>
+                <table>
+                    <tr>
+                        @Html.HiddenFor(m => m.Id)
+                        <td><strong>用户组名称: </strong></td>
+                        <td>
+                            @if (isUpdateMode)
+                            {
+                                @Html.TextBoxFor(m => m.Name, new { @readonly = true, Class = "txt-readonly" })}
+                            else
+                            {
+                                @Html.TextBoxFor(m => m.Name)
+                            }
+                            @Html.DisplayDescriptionFor(model => model.Name)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>用户组描述: </strong></td>
+                        <td>
+                            @Html.TextAreaFor(m => m.Description)
+                            @Html.DisplayDescriptionFor(model => model.Description)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>用户组状态: </strong></td>
+                        <td>@Html.RadioButtonFor(m => m.Status, 1) 有效 @Html.RadioButtonFor(m => m.Status, 0) 无效</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <input type="submit" value="@ViewBag.Title" />@Html.ValidationMessage("Message")
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </fieldset>
+    }
+</div>

@@ -59,8 +59,23 @@ div.right
         {
             margin-left: 2px;
             border: solid 1px #000000;
-            border-collapse:collapse;
+            border-collapse: collapse;
         }
+
+    div.right .userlist, .singletable, th, td
+    {
+        margin-top: 5%;
+        margin-right: 5%;
+        border-collapse: collapse;
+    }
+
+    div.right .usergroup, th, td
+    {
+        margin-top: 5%;
+        margin-left: 2px;
+        margin-right: 60%;
+        border-collapse: collapse;
+    }
 
 a
 {

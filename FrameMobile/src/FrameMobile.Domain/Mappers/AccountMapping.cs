@@ -22,7 +22,6 @@ namespace FrameMobile.Domain
                 .ForMember(dest => dest.QQ, opt => opt.MapFrom(ori => ori.QQ))
                 .ForMember(dest => dest.PostCode, opt => opt.MapFrom(ori => ori.PostCode))
                 .ForMember(dest => dest.Tel, opt => opt.MapFrom(ori => ori.Tel))
-                .ForMember(dest => dest.Gender, opt => opt.MapFrom(ori => ori.Gender))
                 .ForMember(dest => dest.Comment, opt => opt.MapFrom(ori => ori.Comment))
                 .IgnoreAllNonExisting();
         }

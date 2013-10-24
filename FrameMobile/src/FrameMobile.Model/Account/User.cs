@@ -16,7 +16,6 @@ namespace FrameMobile.Model.Account
         /// </summary>
         [Display(Name = "用户组Id")]
         [Required(ErrorMessage = "×")]
-        [System.Web.Mvc.Remote("Exists", "Account", ErrorMessage = "用户名已存在")]
         public int UserGroupId { get; set; }
 
         /// <summary>
@@ -36,14 +35,6 @@ namespace FrameMobile.Model.Account
         [StringLength(512)]
         [SubSonicStringLength(64)]
         public string Password { get; set; }
-
-        /// <summary>
-        /// 性别【0-男；1-女；2-保密】
-        /// </summary>
-        [Display(Name = "性别")]
-        [Required(ErrorMessage = "×")]
-        [Range(0, 2, ErrorMessage = "×")]
-        public byte Gender { get; set; }
 
         /// <summary>
         /// Email

@@ -1,0 +1,41 @@
+﻿@using FrameMobile.Model.Account
+@model List<UserGroup>
+@{
+    ViewBag.Title = "用户组列表";
+    Layout = "~/Views/Shared/_AccountLayout.cshtml";
+
+    List<UserGroup> userGrouplist = ViewData["userGrouplist"] as List<UserGroup>;
+}
+<div>
+    <button onclick="window.open('UserGroupAdd','_self');">
+            用户组添加</button>
+</div>
+<div class="userlist">
+    <table class="singletable">
+        <thead>
+            <tr>
+                <th>序号</th>
+                <th>用户组名</th>
+                <th>创建时间</th>
+                <th>状态</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in userGrouplist)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Name</td>
+                    <td>@item.CreateDateTime</td>
+                    <td>@item.Status</td>
+                    <td>
+                        <button type="button" onclick="window.open('UserGroupEdit?userGroupId=@item.Id','_self');">修 改</button>
+                        <button type="button" onclick="var c=confirm('确定要删除?'); if(c==true){window.open('UserGroupDelete?userGroupId=@item.Id','_self');}">
+                            删 除</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

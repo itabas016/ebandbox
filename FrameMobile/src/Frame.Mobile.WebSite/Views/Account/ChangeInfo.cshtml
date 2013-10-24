@@ -4,6 +4,8 @@
 @{
     ViewBag.Title = "修改资料";
     Layout = "~/Views/Shared/_AccountLayout.cshtml";
+
+    var userGrouplist = ViewData["UserGrouplist"] as SelectList;
 }
 
 <div class="content">
@@ -37,12 +39,10 @@
                         </li>
                         <li>
                             <div class="editor-label">
-                                @Html.LabelFor(model => model.Gender)
+                                @Html.LabelFor(model => model.UserGroupId)
                             </div>
                             <div class="editor-field">
-                                @Html.RadioButtonFor(model => model.Gender, 0) 男
-                    @Html.RadioButtonFor(model => model.Gender, 1) 女
-                    @Html.RadioButtonFor(model => model.Gender, 2) 保密
+                                @Html.DropDownListFor(model => model.UserGroupId, (SelectList)userGrouplist, "请选择")
                             </div>
                         </li>
                         <li>

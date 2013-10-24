@@ -160,11 +160,21 @@ namespace Frame.Mobile.WebSite.Controllers
 
         #region Users
 
+        [AdminAuthorize]
         public ActionResult UserList()
         {
             var users = AccountService.GetUserList();
+            var userGrouplist = AccountService.GetUserGroupList();
 
-            return View(users);
+            ViewData["userlist"] = users;
+            ViewData["UserGrouplist"] = userGrouplist.GetSelectList();
+
+            return View();
+        }
+
+        public ActionResult UserEdit(int userId)
+        {
+            return RedirectToAction("ChangeInfo", "Account", new { userId = userId });
         }
 
         public ActionResult UserDelete(int userId)
@@ -175,12 +185,71 @@ namespace Frame.Mobile.WebSite.Controllers
 
         #endregion
 
+        #region UserGroup
+
+        public ActionResult UserGroupList()
+        {
+            var userGrouplist = AccountService.GetUserGroupList();
+            ViewData["userGrouplist"] = userGrouplist;
+            return View();
+        }
+
+        [AdminAuthorize]
+        [HttpGet]
+        public ActionResult UserGroupAdd()
+        {
+            return View();
+        }
+
+        [AdminAuthorize]
+        [HttpPost]
+        public ActionResult UserGroupAdd(UserGroup model)
+        {
+            var ret = AccountService.AddUserGroup(model);
+            return RedirectToAction("UserGroupList");
+        }
+
+        [AdminAuthorize]
+        [HttpGet]
+        public ActionResult UserGroupEdit(int userGroupId)
+        {
+            var userGroup = AccountService.GetUserGroup(userGroupId);
+            ViewData["IsUpdate"] = true;
+            return View("UserGroupAdd", userGroup);
+        }
+
+        [AdminAuthorize]
+        [HttpPost]
+        public ActionResult UserGroupEdit(UserGroup model)
+        {
+            var ret = AccountService.UpdateUserGroup(model);
+            return RedirectToAction("UserGroupList");
+        }
+
+        [AdminAuthorize]
+        public ActionResult UserGroupDelete(int userGroupId)
+        {
+            var ret = AccountService.DeleteUserGroup(userGroupId);
+            return RedirectToAction("UserGroupList");
+        }
+
+        #endregion
+
         #region ChangeInfo
 
-        public ActionResult ChangeInfo()
+        [HttpGet]
+        public ActionResult ChangeInfo(int? userId)
         {
-            var user = AccountService.GetUser(UserName);
-            return View(user);
+            var userGrouplist = AccountService.GetUserGroupList();
+            ViewData["UserGrouplist"] = userGrouplist.GetSelectList();
+
+            if (userId.HasValue)
+            {
+                var user = AccountService.GetUser(userId.Value);
+                return View(user);
+            }
+            var currentuser = AccountService.GetUser(UserName);
+            return View(currentuser);
         }
 
         [HttpPost]
@@ -219,7 +288,7 @@ namespace Frame.Mobile.WebSite.Controllers
                 {
                     AccountService.ChangePassword(model, UserName);
                     CookieService.Remove("NewsPassword");
-                    return RedirectToAction("Manage", "Account", new { userName = UserName});
+                    return RedirectToAction("Manage", "Account", new { userName = UserName });
                 }
                 catch (MembershipCreateUserException e)
                 {

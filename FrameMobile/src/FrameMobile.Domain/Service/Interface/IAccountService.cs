@@ -20,5 +20,10 @@ namespace FrameMobile.Domain.Service
         int UpdateUser(User model);
         int DeleteUser(int userId);
         int Authentication(string userName, string password);
+        IList<UserGroup> GetUserGroupList();
+        UserGroup GetUserGroup(int userGroupId);
+        int AddUserGroup(UserGroup model);
+        int UpdateUserGroup(UserGroup model);
+        int DeleteUserGroup(int userGroupId);
     }
 }

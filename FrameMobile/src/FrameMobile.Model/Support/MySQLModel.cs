@@ -10,6 +10,6 @@ namespace FrameMobile.Model
     public class MySQLModel : MySQLModelBase
     {
         [SubSonicStringLength(64)]
-        public string Name { get; set; }
+        public virtual string Name { get; set; }
     }
 }
