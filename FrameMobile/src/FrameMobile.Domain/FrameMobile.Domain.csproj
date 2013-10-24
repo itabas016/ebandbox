@@ -85,6 +85,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attribute\AdminAuthorizeAttribute.cs" />
+    <Compile Include="Attribute\NewsAuthorizeAttribute.cs" />
     <Compile Include="Attribute\ServiceCacheAttribute.cs" />
     <Compile Include="Attribute\UserAuthorizeAttribute.cs" />
     <Compile Include="DI\Bootstrapper.cs" />

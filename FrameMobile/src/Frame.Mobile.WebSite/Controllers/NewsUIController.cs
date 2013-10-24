@@ -102,6 +102,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return View();
         }
 
+        [AdminAuthorize]
         [HttpPost]
         public ActionResult NewsAdd(NewsContent model)
         {
@@ -126,6 +127,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return View("NewsAdd", news);
         }
 
+        [AdminAuthorize]
         [HttpPost]
         public ActionResult NewsEdit(NewsContent model, HttpPostedFileBase newsimage)
         {
@@ -158,6 +160,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return RedirectToAction("NewsManage");
         }
 
+        [AdminAuthorize]
         public ActionResult NewsDelete(int newsId)
         {
             var ret = dbContextService.Delete<NewsContent>(x => x.Id == newsId);
@@ -195,6 +198,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return View();
         }
 
+        [AdminAuthorize]
         [HttpPost]
         public ActionResult ConfigAdd(NewsConfig model)
         {
@@ -208,6 +212,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return RedirectToAction("ConfigList");
         }
 
+        [AdminAuthorize]
         public ActionResult ConfigDelete(int configId)
         {
             var ret = dbContextService.Delete<NewsConfig>(configId);
@@ -222,6 +227,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return View("ConfigAdd", config);
         }
 
+        [AdminAuthorize]
         [HttpPost]
         public ActionResult ConfigEdit(NewsConfig model)
         {
@@ -255,6 +261,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return View();
         }
 
+        [AdminAuthorize]
         [HttpPost]
         public ActionResult SourceAdd(NewsSource model)
         {
@@ -271,6 +278,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return RedirectToAction("SourceList");
         }
 
+        [AdminAuthorize]
         public ActionResult SourceDelete(int sourceId)
         {
             var ret = dbContextService.Delete<NewsSource>(sourceId);
@@ -288,6 +296,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return View("SourceAdd", source);
         }
 
+        [AdminAuthorize]
         [HttpPost]
         public ActionResult SourceEdit(NewsSource model)
         {
@@ -324,6 +333,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return View();
         }
 
+        [AdminAuthorize]
         [HttpPost]
         public ActionResult CategoryAdd(NewsCategory model)
         {
@@ -340,6 +350,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return RedirectToAction("CategoryList");
         }
 
+        [AdminAuthorize]
         public ActionResult CategoryDelete(int categoryId)
         {
             var ret = dbContextService.Delete<NewsCategory>(categoryId);
@@ -357,6 +368,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return View("CategoryAdd", category);
         }
 
+        [AdminAuthorize]
         [HttpPost]
         public ActionResult CategoryEdit(NewsCategory model)
         {
@@ -397,6 +409,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return View();
         }
 
+        [AdminAuthorize]
         [HttpPost]
         public ActionResult SubCategoryAdd(NewsSubCategory model)
         {
@@ -413,6 +426,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return RedirectToAction("SubCategoryList");
         }
 
+        [AdminAuthorize]
         public ActionResult SubCategoryDelete(int subcategoryId)
         {
             var ret = dbContextService.Delete<NewsSubCategory>(subcategoryId);
@@ -437,6 +451,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return View("SubCategoryAdd", subcategory);
         }
 
+        [AdminAuthorize]
         [HttpPost]
         public ActionResult SubCategoryEdit(NewsSubCategory model)
         {
@@ -476,6 +491,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return View();
         }
 
+        [AdminAuthorize]
         [HttpPost]
         public ActionResult ExtraAppAdd(NewsExtraApp model)
         {
@@ -509,6 +525,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return View("ExtraAppAdd", extraApp);
         }
 
+        [AdminAuthorize]
         [HttpPost]
         public ActionResult ExtraAppEdit(NewsExtraApp model)
         {

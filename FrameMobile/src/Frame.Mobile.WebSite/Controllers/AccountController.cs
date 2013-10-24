@@ -242,13 +242,19 @@ namespace Frame.Mobile.WebSite.Controllers
         {
             var userGrouplist = AccountService.GetUserGroupList();
             ViewData["UserGrouplist"] = userGrouplist.GetSelectList();
-
-            if (userId.HasValue)
+            var userGroupName = string.Empty;
+            var currentuser = userId.HasValue ? AccountService.GetUser(userId.Value) : AccountService.GetUser(UserName);
+            var userGroup = AccountService.GetUserGroup(currentuser.UserGroupId);
+            if (userGroup != null)
             {
-                var user = AccountService.GetUser(userId.Value);
-                return View(user);
+                userGroupName = userGroup.Name;
+
+                if (userGroup.Name.ToLower() == "administrator")
+                {
+                    ViewData["IsAdmin"] = true;
+                }
             }
-            var currentuser = AccountService.GetUser(UserName);
+            ViewData["UserGroupName"] = userGroupName;
             return View(currentuser);
         }
 

@@ -45,7 +45,7 @@ namespace FrameMobile.Domain.Service
             var hash = password.GetMD5Hash();
 
             var user = dbContextService.Single<User>(x => x.Name == userName.ToLower());
-            if (userName.Equals(user.Name) && hash.Equals(user.Password))
+            if (user != null && userName.Equals(user.Name) && hash.Equals(user.Password))
             {
                 user.LastLoginTime = DateTime.Now;
                 var ret = dbContextService.Update<User>(user);

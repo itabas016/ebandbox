@@ -28,7 +28,6 @@ namespace FrameMobile.Domain
                     return true;
                 }
             }
-            
             return false;
         }
     }
