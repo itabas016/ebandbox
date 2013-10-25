@@ -1,0 +1,41 @@
+﻿@using FrameMobile.Model.Account
+@model List<InvitationCode>
+@{
+    ViewBag.Title = "邀请码列表";
+    Layout = "~/Views/Shared/_AccountLayout.cshtml";
+
+    List<InvitationCode> invitationCodelist = ViewData["invitationCodelist"] as List<InvitationCode>;
+}
+
+<div>
+    <button type="button" onclick="window.open('InvitationCode','_self');">获取邀请码</button>
+</div>
+
+<div class="userlist">
+    <table class="singletable">
+        <thead>
+            <tr>
+                <th>序号</th>
+                <th>邀请码</th>
+                <th>用户创建时间</th>
+                <th>状态</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in invitationCodelist)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Code</td>
+                    <td>@item.CreateDateTime</td>
+                    <td>@item.Status</td>
+                    <td>
+                        <button type="button" onclick="var c=confirm('确定要删除?'); if(c==true){window.open('InvitationCodeDelete?invitationCodeId=@item.Id','_self');}">
+                            删 除</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

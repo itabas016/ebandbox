@@ -20,6 +20,11 @@ namespace FrameMobile.Domain.Service
         int UpdateUser(User model);
         int DeleteUser(int userId);
         int Authentication(string userName, string password);
+        IList<InvitationCode> GetInvitationCodelist();
+        bool AuthInvitationCode(string invitationCode);
+        void ExpireInvitationCode(string invitationCode);
+        int GenerateInvitationCode(out string code);
+        int InvitationCodeDelete(int invitationCodeId);
         IList<UserGroup> GetUserGroupList();
         UserGroup GetUserGroup(int userGroupId);
         int AddUserGroup(UserGroup model);

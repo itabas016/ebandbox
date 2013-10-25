@@ -18,6 +18,7 @@ namespace FrameMobile.Model
         [StringLength(20, MinimumLength = 6, ErrorMessage = "×")]
         [DataType(DataType.Password)]
         public new string Password { get; set; }
+
         /// <summary>
         /// 确认密码
         /// </summary>
@@ -25,6 +26,7 @@ namespace FrameMobile.Model
         [Compare("Password", ErrorMessage = "×")]
         [DataType(DataType.Password)]
         public string ConfirmPassword { get; set; }
+
         /// <summary>
         /// 验证码
         /// </summary>
@@ -32,5 +34,13 @@ namespace FrameMobile.Model
         [Required(ErrorMessage = "×")]
         [StringLength(4, MinimumLength = 4, ErrorMessage = "×")]
         public string VerificationCode { get; set; }
+
+        /// <summary>
+        /// 邀请码
+        /// </summary>
+        [Display(Name = "邀请码", Description = "请输入你的邀请码，区分大小写，且只能用一次。")]
+        [Required(ErrorMessage = "×")]
+        [StringLength(6, MinimumLength = 6, ErrorMessage = "×")]
+        public string InvitationCode { get; set; }
     }
 }

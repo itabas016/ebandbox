@@ -126,11 +126,16 @@ namespace Frame.Mobile.WebSite.Controllers
         {
             var errors = ModelState.Values.SelectMany(v => v.Errors);
 
-            if (ModelState.IsValid && Session["VerificationCode"].ToString() == model.VerificationCode.ToUpper())
+            var isInvited = AccountService.AuthInvitationCode(model.InvitationCode);
+            if (ModelState.IsValid && Session["VerificationCode"].ToString() == model.VerificationCode.ToUpper() && isInvited)
             {
                 try
                 {
-                    AccountService.CreateUser(model);
+                    var userId = AccountService.CreateUser(model);
+                    if (userId > 0)
+                    {
+                        AccountService.ExpireInvitationCode(model.InvitationCode);
+                    }
                     var ret = AccountService.Login(model.Name, model.Password);
                     if (ret)
                     {
@@ -302,6 +307,34 @@ namespace Frame.Mobile.WebSite.Controllers
                 }
             }
             return View(model);
+        }
+
+        #endregion
+
+        #region InvitationCode
+
+        [AdminAuthorize]
+        public ActionResult InvitationCode()
+        {
+            var code = string.Empty;
+            var invitationCode = AccountService.GenerateInvitationCode(out code);
+
+            return Content(code);
+        }
+
+        [AdminAuthorize]
+        public ActionResult InvitationCodeList()
+        {
+            var codelist = AccountService.GetInvitationCodelist();
+            ViewData["invitationCodelist"] = codelist;
+            return View();
+        }
+
+        [AdminAuthorize]
+        public ActionResult InvitationCodeDelete(int invitationCodeId)
+        {
+            var ret = AccountService.InvitationCodeDelete(invitationCodeId);
+            return RedirectToAction("InvitationCodelist");
         }
 
         #endregion

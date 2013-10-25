@@ -200,6 +200,59 @@ namespace FrameMobile.Domain.Service
 
         #endregion
 
+        #region Inviation Code
+
+        public IList<InvitationCode> GetInvitationCodelist()
+        {
+            var codelist = dbContextService.All<InvitationCode>().ToList();
+            return codelist;
+        }
+
+        public bool AuthInvitationCode(string invitationCode)
+        {
+            var isInvited = dbContextService.Exists<InvitationCode>(x => x.Code == invitationCode && x.Status == 1);
+
+            return isInvited;
+        }
+
+        public void ExpireInvitationCode(string invitationCode)
+        {
+            var code = dbContextService.Single<InvitationCode>(x => x.Code == invitationCode);
+            code.Status = 0;
+
+            var ret = dbContextService.Update<InvitationCode>(code);
+        }
+
+        public int GenerateInvitationCode(out string output)
+        {
+            var code = AuthHelper.VerificationText(6);
+            output = string.Empty;
+
+            var exist = dbContextService.Exists<InvitationCode>(x => x.Code == code);
+            if (!exist)
+            {
+                var invitationCode = new InvitationCode()
+                {
+                    Code = code
+                };
+
+                var ret = dbContextService.Add<InvitationCode>(invitationCode);
+                output = invitationCode.Code;
+                return (int)ret;
+            }
+
+            return 0;
+        }
+
+        public int InvitationCodeDelete(int invitationCodeId)
+        {
+            var ret = dbContextService.Delete<InvitationCode>(invitationCodeId);
+
+            return ret;
+        }
+
+        #endregion
+
         #region Helper
 
         public int Authentication(string userName, string password)

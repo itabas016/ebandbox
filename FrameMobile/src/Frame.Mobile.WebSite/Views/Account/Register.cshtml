@@ -44,6 +44,13 @@
                 </div>
             </dd>
             <dd>
+                <div class="label">@Html.LabelFor(model => model.InvitationCode)：</div>
+                <div class="ctrl">@Html.EditorFor(model => model.InvitationCode)
+                    @Html.ValidationMessageFor(model => model.InvitationCode)
+                    @Html.DisplayDescriptionFor(model => model.InvitationCode)
+                </div>
+            </dd>
+            <dd>
                 <div class="label">验证码：</div>
                 <div class="ctrl">
                     @Html.TextBoxFor(model => model.VerificationCode)
