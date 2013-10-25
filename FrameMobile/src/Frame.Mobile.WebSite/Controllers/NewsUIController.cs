@@ -550,6 +550,11 @@ namespace Frame.Mobile.WebSite.Controllers
 
         #region Helper
 
+        public ActionResult LackOfPermission()
+        {
+            return View();
+        }
+
         private void GetImageURL(HttpPostedFileBase imageFile, out string HDURL, out string NormalURL)
         {
             var fileName = string.Format("{0}_{1}", Guid.NewGuid().ToString(), Path.GetExtension(imageFile.FileName));

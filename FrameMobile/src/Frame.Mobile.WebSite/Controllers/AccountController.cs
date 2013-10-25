@@ -112,6 +112,11 @@ namespace Frame.Mobile.WebSite.Controllers
             return RedirectToAction("Login", "Account");
         }
 
+        public ActionResult LackOfPermission()
+        {
+            return View();
+        }
+
         #endregion
 
         #region Register

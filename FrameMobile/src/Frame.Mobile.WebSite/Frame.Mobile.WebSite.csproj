@@ -363,7 +363,9 @@
     <Content Include="Views\Account\ChangeInfo.cshtml" />
     <Content Include="Views\Account\UserGroupList.cshtml" />
     <Content Include="Views\Account\UserGroupAdd.cshtml" />
-    <Content Include="Views\Account\InviationCodeList.cshtml" />
+    <Content Include="Views\Account\InvitationCodeList.cshtml" />
+    <Content Include="Views\Account\LackOfPermission.cshtml" />
+    <Content Include="Views\NewsUI\LackOfPermission.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
