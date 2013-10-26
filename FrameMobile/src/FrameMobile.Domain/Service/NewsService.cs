@@ -102,6 +102,32 @@ namespace FrameMobile.Domain.Service
             return extraAppList.ToList();
         }
 
+        [ServiceCache]
+        private IEnumerable<NewsContentView> GetLocalContentViewList(List<NewsExtraApp> extraAppList, int imageType)
+        {
+            var contentlist = (from l in
+                                   dbContextService.Find<NewsContent>(x => x.Rating > 0 && x.Status == 1)
+                               orderby l.PublishTime descending, l.Rating descending
+                               select new NewsContentView
+                               {
+                                   Id = l.Id,
+                                   NewsId = l.NewsId,
+                                   CategoryId = l.CategoryId,
+                                   SubCategoryId = l.SubCategoryId,
+                                   Site = l.Site,
+                                   Title = l.Title,
+                                   Summary = l.Summary,
+                                   Content = l.Content == null ? string.Empty : l.Content,
+                                   AppOpenURL = l.AppOpenURL,
+                                   WAPURL = l.WAPURL,
+                                   PublishTime = l.PublishTime,
+                                   Stamp = l.PublishTime.UnixStamp(),
+                                   ExtraAppId = l.ExtraAppId != 0 ? l.ExtraAppId : extraAppList.RandomInt(),
+                                   ImageURL = l.NormalURL == null ? string.Empty : GetImageURLByType(l, imageType)
+                               });
+            return contentlist;
+        }
+
         private List<NewsContentView> GetContentViewList(MobileParam mobileParams, List<int> categoryIds, long stamp, bool action)
         {
             var contentViewList = new List<NewsContentView>();
@@ -114,6 +140,8 @@ namespace FrameMobile.Domain.Service
 
             var categorycontentlist = action ? GetLatestNewsContentView(categoryIds, extraAppList, imageType, stampTime) :
                 GetOldestNewsContentView(categoryIds, extraAppList, imageType, endDateTime, stampTime);
+
+            var localContentList = GetLocalContentViewList(extraAppList, imageType);
 
             contentViewList = categorycontentlist.ToList();
 
