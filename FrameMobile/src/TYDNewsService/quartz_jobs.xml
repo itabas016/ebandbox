@@ -14,7 +14,6 @@
       <durable>true</durable>
       <recover>false</recover>
     </job-detail>
-
     <trigger>
       <cron>
         <name>every10min</name>
@@ -23,6 +22,27 @@
         <job-group>TouTiao</job-group>
         <start-time>1900-01-01T00:00:00.0Z</start-time>
         <cron-expression>0 0/15 * * * ?</cron-expression>
+      </cron>
+    </trigger>
+  </job>
+  <job>
+    <job-detail>
+      <name>CleanJob</name>
+      <group>Clean</group>
+      <description></description>
+      <job-type>TYDNewsService.CleanJob,TYDNewsService</job-type>
+      <volatile>false</volatile>
+      <durable>true</durable>
+      <recover>false</recover>
+    </job-detail>
+    <trigger>
+      <cron>
+        <name>every1month</name>
+        <group>Clean</group>
+        <job-name>CleanJob</job-name>
+        <job-group>Clean</job-group>
+        <start-time>1900-01-01T00:00:00.0Z</start-time>
+        <cron-expression>0 0 1 * * ?</cron-expression>
       </cron>
     </trigger>
   </job>

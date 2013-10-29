@@ -29,5 +29,9 @@ namespace FrameMobile.Common
 
         public const string TYD_NEWS_APP_DOWNLOAD_PREFIX_URL = "TYD_News_App_Download_Prefix_URL";
 
+        //Clean
+
+        public const string CLEANUP_NEWS_CONTENT_DAYS_AGO_VALUE = "Cleanup_News_Content_Days_Ago_Value";
+
     }
 }

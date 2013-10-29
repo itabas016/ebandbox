@@ -63,6 +63,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\lib\MySQL\MySql.Web.dll</HintPath>
     </Reference>
+    <Reference Include="NCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=86f0aa1179a5132d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\NCore\NCore.dll</HintPath>
+    </Reference>
     <Reference Include="Quartz">
       <HintPath>..\..\..\lib\quartz.net\Quartz.dll</HintPath>
     </Reference>
@@ -94,6 +98,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Job\CleanJob.cs" />
+    <Compile Include="Job\JobBase.cs" />
     <Compile Include="Job\TouTiaoJob.cs" />
     <Compile Include="TYDNewsService.cs">
       <SubType>Component</SubType>

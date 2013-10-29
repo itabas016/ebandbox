@@ -14,26 +14,9 @@ using System.Web;
 
 namespace FrameMobile.Domain.Service
 {
-    public class FetchTouTiaoService
+    public class FetchTouTiaoService : NewsServiceBase
     {
         #region Prop
-
-        private IDbContextService _dbContextService;
-        public IDbContextService dbContextService
-        {
-            get
-            {
-                if (_dbContextService == null)
-                {
-                    _dbContextService = ObjectFactory.GetInstance<IDbContextService>();
-                }
-                return _dbContextService;
-            }
-            set
-            {
-                _dbContextService = value;
-            }
-        }
 
         public static string NEWS_RESOURCES_DIR_ROOT = ConfigKeys.TYD_NEWS_RESOURCES_DIR_ROOT.ConfigValue();
 

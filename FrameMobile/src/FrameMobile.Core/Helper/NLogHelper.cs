@@ -26,5 +26,10 @@ namespace FrameMobile.Core
             LogManager.GetLogger("ErrorLogger").Error(content);
 
         }
+
+        public static void WriteTrace(string content)
+        {
+            LogManager.GetLogger("TraceLogger").Trace(content);
+        }
     }
 }
