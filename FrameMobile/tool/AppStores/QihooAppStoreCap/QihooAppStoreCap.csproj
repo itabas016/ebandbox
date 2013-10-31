@@ -33,6 +33,9 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\..\..\lib\Newtonsoft.Json.4.5.8\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="RestSharp">
+      <HintPath>..\..\..\..\lib\Restsharp\RestSharp.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -42,7 +45,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Invocation\GetApps.cs" />
+    <Compile Include="Invocation\GetOffineApps.cs" />
     <Compile Include="Invocation\InvocationBase.cs" />
+    <Compile Include="Invocation\InvocationExtension.cs" />
     <Compile Include="Model\Qihoo\QihooAppStoreApp.cs" />
     <Compile Include="Model\Qihoo\QihooAppStoreGetAppResult.cs" />
     <Compile Include="Model\Qihoo\QihooAppStoreGetOffineAppResult.cs" />

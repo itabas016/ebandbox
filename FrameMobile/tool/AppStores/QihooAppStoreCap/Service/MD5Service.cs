@@ -21,24 +21,10 @@ namespace QihooAppStoreCap.Service
 
             var query = uri.Query.TrimStart(new char[] { '?' });
 
-            var keyValues = query.Split(new string[] { "&" }, StringSplitOptions.RemoveEmptyEntries).ToList();
-            var paraDic = new Dictionary<string, string>();
-            keyValues.ForEach(s =>
-            {
-                var parts = s.Split('=');
-                if (parts.Length == 2 && string.Compare(parts[0], "api_sig", true) != 0)
-                {
-                    paraDic[parts[0].ToLower()] = parts[1].ToLower();
-                }
-            });
-
             var encSource = new StringBuilder();
+
+            encSource.Append(query);
             encSource.Append(Secret);
-            foreach (var keyvalue in paraDic)
-            {
-                encSource.Append(keyvalue.Key);
-                encSource.Append(keyvalue.Value);
-            }
 
             var ret = string.Empty;
             using (MD5 md5Hash = MD5.Create())

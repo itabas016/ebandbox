@@ -27,23 +27,29 @@ namespace QihooAppStoreCap.Invocation
             }
         }
 
-        protected virtual string BuildUrl(string host, Dictionary<string, string> parameters)
+        protected virtual string BuildUrl(string host, string method, Dictionary<string, string> parameters)
         {
             this.NameValues.Clear();
 
             this.AddAdditionalParams(parameters);
 
-            this.NameValues["aid"] = this.MethodName;
-
             var sb = new StringBuilder();
             sb.Append(host);
-
+            sb.Append(method);
+            sb.Append("?");
             sb.Append((from c in this.NameValues
                        let x = c.Key + "=" + c.Value
                        select x).Aggregate((a, b) => a + "&" + b)
                        );
 
             return sb.ToString();
+        }
+
+        public virtual string GetData(Dictionary<string, string> parameters)
+        {
+            var url = this.BuildUrl(MOBILE_AIDE_URL, this.MethodName, parameters);
+
+            return this.Proxy.GetData(url);
         }
     }
 }
