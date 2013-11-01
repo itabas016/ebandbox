@@ -12,7 +12,7 @@ namespace QihooAppStoreCap.Service
 
         public ServiceProxy()
         {
-            MD5Service = new MD5Service("234232143f342");
+            MD5Service = new MD5Service("4b697bec6e1629ca90");
         }
 
         public string Sign(string url)

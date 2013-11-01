@@ -10,7 +10,7 @@ namespace QihooAppStoreCap.Invocation
     {
         protected abstract string MethodName { get; }
 
-        protected const string MOBILE_AIDE_URL = "http://openboxmobilem.360.cn/third/";
+        protected const string MOBILE_AIDE_URL = "http://openbox.mobilem.360.cn/third/";
 
         protected ServiceProxy Proxy = new ServiceProxy();
 

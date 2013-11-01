@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using QihooAppStoreCap.Invocation;
 
 namespace QihooAppStoreCap.Service
 {
@@ -21,15 +22,33 @@ namespace QihooAppStoreCap.Service
 
             var query = uri.Query.TrimStart(new char[] { '?' });
 
+            var keyValues = query.Split(new string[] { "&" }, StringSplitOptions.RemoveEmptyEntries).ToList();
+            var paraDic = new Dictionary<string, string>();
+            keyValues.ForEach(s =>
+            {
+                var parts = s.Split('=');
+                if (parts.Length == 2 && string.Compare(parts[0], "sign", true) != 0)
+                {
+                    paraDic[parts[0]] = parts[1];
+                }
+            });
+
+            paraDic = paraDic.SortHightedByKey();
+
             var encSource = new StringBuilder();
 
-            encSource.Append(query);
-            encSource.Append(Secret);
+            foreach (var keyvalue in paraDic)
+            {
+                encSource.Append(string.Format("{0}={1}&", keyvalue.Key, keyvalue.Value));
+            }
+            var keyString = encSource.ToString().TrimEnd('&');
+
+            keyString = string.Format("{0}{1}", keyString, Secret);
 
             var ret = string.Empty;
             using (MD5 md5Hash = MD5.Create())
             {
-                ret = GetMd5Hash(md5Hash, encSource.ToString());
+                ret = GetMd5Hash(md5Hash, keyString);
             }
 
             return ret;

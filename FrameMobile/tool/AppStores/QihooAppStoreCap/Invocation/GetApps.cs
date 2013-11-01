@@ -17,7 +17,7 @@ namespace QihooAppStoreCap.Invocation
             this.NameValues["start"] = "0";
             this.NameValues["num"] = "100";
             this.NameValues["startTime"] = DateTime.Now.AddDays(-1).UnixStamp().ToString();
-            this.NameValues["from"] = "sina";
+            this.NameValues["from"] = "tianyida";
             base.AddAdditionalParams(parameters);
         }
     }
