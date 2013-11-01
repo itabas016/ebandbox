@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppItemCap.cs" />
     <Compile Include="Invocation\GetApps.cs" />
     <Compile Include="Invocation\GetOffineApps.cs" />
     <Compile Include="Invocation\InvocationBase.cs" />
@@ -55,6 +56,7 @@
     <Compile Include="Model\Qihoo\QihooAppStoreParameter.cs" />
     <Compile Include="Model\Qihoo\QihooAppStoreResultBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\DataConvertService.cs" />
     <Compile Include="Service\MD5Service.cs" />
     <Compile Include="Service\ServiceProxy.cs" />
   </ItemGroup>

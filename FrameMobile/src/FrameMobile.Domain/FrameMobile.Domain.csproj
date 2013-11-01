@@ -53,8 +53,9 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\..\lib\Newtonsoft.Json.4.5.8\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="RedisMapper">
-      <HintPath>..\..\..\lib\RedisMapper.dll</HintPath>
+    <Reference Include="RedisMapper, Version=2.0.0.0, Culture=neutral, PublicKeyToken=86f0aa1179a5132d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\RedisMapper\RedisMapper.dll</HintPath>
     </Reference>
     <Reference Include="Snap">
       <HintPath>..\..\..\lib\Snap\Snap.dll</HintPath>
