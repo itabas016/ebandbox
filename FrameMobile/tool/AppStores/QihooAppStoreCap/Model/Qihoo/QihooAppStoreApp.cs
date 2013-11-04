@@ -163,7 +163,7 @@ namespace QihooAppStoreCap.Model
         /// 是否beta 为空
         /// </summary>
         [JsonProperty(PropertyName = "isBeta")]
-        public bool IsBeta { get; set; }
+        public string IsBeta { get; set; }
 
         /// <summary>
         /// 市场的详细页 为空
