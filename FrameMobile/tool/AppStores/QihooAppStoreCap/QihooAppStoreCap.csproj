@@ -30,8 +30,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="NCore">
+      <HintPath>..\..\..\..\lib\NCore\NCore.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\..\..\lib\Newtonsoft.Json.4.5.8\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog">
+      <HintPath>..\..\..\..\lib\NLog.2.0.0.2000\lib\net40\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="RedisMapper">
+      <HintPath>..\..\..\..\lib\RedisMapper\RedisMapper.dll</HintPath>
     </Reference>
     <Reference Include="RestSharp">
       <HintPath>..\..\..\..\lib\Restsharp\RestSharp.dll</HintPath>
@@ -43,18 +52,36 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="TYD.Mobile.Core">
+      <HintPath>..\..\..\..\lib\infra\TYD.Mobile.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="TYD.Mobile.Infrastructure.AppStore.Models">
+      <HintPath>..\..\..\..\lib\infra\TYD.Mobile.Infrastructure.AppStore.Models.dll</HintPath>
+    </Reference>
+    <Reference Include="TYD.Mobile.Infrastructure.Common">
+      <HintPath>..\..\..\..\lib\infra\TYD.Mobile.Infrastructure.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="TYD.Mobile.Infrastructure.Domain">
+      <HintPath>..\..\..\..\lib\infra\TYD.Mobile.Infrastructure.Domain.dll</HintPath>
+    </Reference>
+    <Reference Include="TYD.Mobile.Infrastructure.Models">
+      <HintPath>..\..\..\..\lib\infra\TYD.Mobile.Infrastructure.Models.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppConfigKey.cs" />
     <Compile Include="AppItemCap.cs" />
     <Compile Include="Invocation\GetApps.cs" />
     <Compile Include="Invocation\GetOffineApps.cs" />
     <Compile Include="Invocation\InvocationBase.cs" />
     <Compile Include="Invocation\InvocationExtension.cs" />
+    <Compile Include="LogHelper.cs" />
     <Compile Include="Model\Qihoo\QihooAppStoreApp.cs" />
     <Compile Include="Model\Qihoo\QihooAppStoreGetAppResult.cs" />
     <Compile Include="Model\Qihoo\QihooAppStoreGetOffineAppResult.cs" />
     <Compile Include="Model\Qihoo\QihooAppStoreParameter.cs" />
     <Compile Include="Model\Qihoo\QihooAppStoreResultBase.cs" />
+    <Compile Include="Model\ReformApp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\DataConvertService.cs" />
     <Compile Include="Service\MD5Service.cs" />
