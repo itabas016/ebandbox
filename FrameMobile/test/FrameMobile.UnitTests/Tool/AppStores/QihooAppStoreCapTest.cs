@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using QihooAppStoreCap;
 using QihooAppStoreCap.Invocation;
+using QihooAppStoreCap.Model;
 using QihooAppStoreCap.Service;
 using Xunit;
 
@@ -11,6 +13,14 @@ namespace FrameMobile.UnitTests.Tool.AppStores
 {
     public class QihooAppStoreCapTest
     {
+        private DataConvertService _service;
+        private AppItemCap _cap;
+        public QihooAppStoreCapTest()
+        {
+            _service = new DataConvertService();
+            _cap = new AppItemCap();
+        }
+
         [Fact]
         public void RequestTest()
         {
@@ -21,18 +31,11 @@ namespace FrameMobile.UnitTests.Tool.AppStores
         }
 
         [Fact]
-        public void GenerateUrlTest()
-        {
-
-        }
-
-        [Fact]
         public void DataConvertServiceTest()
         {
-            DataConvertService service = new DataConvertService();
             var content = MockResponse();
 
-            var result = service.DeserializeBase(content);
+            var result = _service.DeserializeBase(content);
 
             Console.WriteLine(result.Total);
 
@@ -40,6 +43,24 @@ namespace FrameMobile.UnitTests.Tool.AppStores
             {
                 Console.WriteLine(result.QihooApplist.Count);
             }
+        }
+
+        [Fact]
+        public void FakeDataInsert()
+        {
+            var content = MockResponse();
+
+            var result = _service.DeserializeBase(content);
+
+            var reformApp = new ReformApp();
+            foreach (var item in result.QihooApplist)
+            {
+                _cap.BuildAppProject(reformApp, item);
+            }
+
+            Console.WriteLine(reformApp.NewAppCount);
+            Console.WriteLine(reformApp.NewVersionCount);
+            Console.WriteLine(reformApp.DupVersionCount);
         }
 
         private string MockResponse()

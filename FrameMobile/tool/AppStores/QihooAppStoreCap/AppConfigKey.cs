@@ -22,5 +22,8 @@ namespace QihooAppStoreCap
         public const string TAG_LATEST = "最新";
         public const string CLIENT_IMAGE_TYPE_ID = "1";
         public const string CATEGORY_SOFT_NAME = "软件";
+        public const string TAG_LIVE = "Live";
+        public const string TAG_VALID = "Valid";
+        public const string TAG_FROM_QIHOO = "From_360";
     }
 }

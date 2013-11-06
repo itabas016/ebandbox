@@ -13,6 +13,8 @@ using TYD.Mobile.Infrastructure.AppStore.Models;
 using TYD.Mobile.Infrastructure.Domain.Services;
 using NCore;
 using TYD.Mobile.Infrastructure.Models.ViewModels.AppStores;
+using System.Net;
+using System.Threading;
 
 namespace QihooAppStoreCap
 {
@@ -139,6 +141,8 @@ namespace QihooAppStoreCap
 
         #endregion
 
+        #region Build
+
         public void BuildAppProject(ReformApp reformApp, QihooAppStoreApp appItem)
         {
             var appProject = AppStoreUIService.GetAppProjectByPKGName(appItem.PackageName);
@@ -148,24 +152,125 @@ namespace QihooAppStoreCap
                 LogHelper.WriteInfo(string.Format("Has new app, name {0}, downloading...", appItem.Name), ConsoleColor.Yellow);
                 reformApp.NewAppCount++;
 
+
                 appProject = AddNewApp(appItem, appProject);
+            }
+            else
+            {
+                try
+                {
+                    var appitems = AppStoreUIService.GetAppsFromAppList<AppProject>(appProject.Id);
+                    if (appitems == null)
+                    {
+                        AppProjectDelete(appProject.Id);
+                    }
+                    else
+                    {
+                        AddNewVersionApp(reformApp, appItem, appProject);
+                    }
+                }
+                catch (Exception)
+                {
+                    AppProjectDelete(appProject.Id);
+                }
             }
         }
 
         public AppProject AddNewApp(QihooAppStoreApp appItem, AppProject appProject)
         {
-            var app = new App();
+            try
+            {
+                var app = new App();
 
-            appProject = SetupAppList(appProject, out app);
-
-            appProject = SetupAppProject(appItem, appProject);
-
-            app = SetupApp(appItem, appProject, app);
-
-            SetupTags(appItem, appProject, app);
-
+                appProject = SetupAppList(appProject, out app);
+                appProject = SetupAppProject(appItem, appProject);
+                app = SetupApp(appItem, appProject, app);
+                SetupTags(appItem, appProject, app);
+            }
+            catch (Exception ex)
+            {
+                LogHelper.WriteError(ex.Message + ex.StackTrace);
+                AppProjectDelete(appProject.Id);
+                LogHelper.WriteInfo(string.Format("{AppProjectId: {0} is delete.}", appProject.Id));
+            }
             return appProject;
         }
+
+        public void AddNewVersionApp(ReformApp reformApp, QihooAppStoreApp appItem, AppProject appProject)
+        {
+            try
+            {
+                var appitems = AppStoreUIService.GetAppsFromAppList<AppProject>(appProject.Id);
+                foreach (var a in appitems)
+                {
+                    var versions = RedisService.GetAllSubModelIdsByType<App, AppVersion>(a.Id).ToIdsWithNoPrefix<AppVersion>();
+
+                    if (!versions.Contains(appItem.VersionCode))
+                    {
+                        reformApp.NewVersionCount = AddNewVersionForApp(reformApp.NewVersionCount, appItem, a);
+                    }
+                    else
+                    {
+                        reformApp.DupVersionCount++;
+                        LogHelper.WriteInfo(string.Format("Already has version {1} for app name {0}", appItem.Name, appItem.VersionCode), ConsoleColor.DarkYellow);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.WriteError(ex.Message + ex.StackTrace);
+            }
+        }
+
+        private int AddNewVersionForApp(int newVersionCount, QihooAppStoreApp appItem, App app)
+        {
+            newVersionCount++;
+
+            var flag = CheckTYDApp(appItem, app);
+
+            if (!flag)
+            {
+                SetupAppVersion(appItem, app);
+
+                SetupTags(appItem, app);
+            }
+            return newVersionCount;
+        }
+
+        public void AppProjectDelete(string appProjectId)
+        {
+            DeleteTags(appProjectId);
+            DeleteAppsByAppProject(appProjectId);
+
+            RedisService.DeleteWithCustomProperties<AppProject, CustomProperty>(appProjectId);
+        }
+
+        #endregion
+
+        #region Download
+
+        public void DownloadResources(QihooAppStoreApp appItem)
+        {
+            if (appItem != null)
+            {
+                MakeSureDIRExist(APK_Folder_Base);
+                MakeSureDIRExist(Screenshots_Folder_Base);
+                MakeSureDIRExist(Logo_Folder_Base);
+
+                DownloadFile(appItem.IconURL, Path.Combine(Logo_Folder_Base, GetFileNameFromUri(appItem.IconURL)));
+
+                var screenshotlist = GetScreenShotlist(appItem);
+                foreach (var img in screenshotlist)
+                {
+                    DownloadFile(img, Path.Combine(Screenshots_Folder_Base, GetFileNameFromUri(img)));
+                }
+                DownloadFile(appItem.DownloadURL, Path.Combine(APK_Folder_Base, GetFileNameFromUri(appItem.DownloadURL)));
+            }
+        }
+
+        #endregion
+
+        #region Setup
 
         public AppProject SetupAppList(AppProject appProject, out App app)
         {
@@ -247,7 +352,7 @@ namespace QihooAppStoreCap
             app.OrderNumber = appItem.DownloadTimes.ToInt32();
             app.DownloadTimes = appItem.DownloadTimes.ToInt32();
             app.Status = 1;
-            var screenShotlist = appItem.ScreenHotsURL.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+            var screenShotlist = GetScreenShotlist(appItem);
             foreach (var s in screenShotlist)
             {
                 ImageInfo ss = new ImageInfo
@@ -282,13 +387,21 @@ namespace QihooAppStoreCap
                         VersionName = appItem.VersionName,
                         Id = appItem.VersionCode
                     };
-                    RedisService.SetSubModel<App, AppVersion>(app.Id, ver);
-                    AppStoreUIService.SetAppCurrentTestVersion(app.Id, ver.Id);
-                    AppStoreUIService.PublishAppVersion(app.Id);
 
                     AndroidPackageView apkInfo = FileService.GetAndroidPackageInfomation(fi.FullName);
                     apkInfo.Id = ver.Id;
+
+                    var originalApp = RedisService.Get<App>(app.Id);
+                    if (app.Status == 0)
+                    {
+                        RedisService.UpdateWithRebuildIndex<App>(originalApp, app);
+                        LogHelper.WriteInfo(string.Format("This App {0} status is invaild", app.Name), ConsoleColor.Gray);
+                    }
+
+                    RedisService.SetSubModel<App, AppVersion>(app.Id, ver);
                     RedisService.SetSubModel<App, AndroidPackageView>(app.Id, apkInfo);
+                    AppStoreUIService.SetAppCurrentTestVersion(app.Id, ver.Id);
+                    AppStoreUIService.PublishAppVersion(app.Id);
                 }
             }
         }
@@ -308,14 +421,148 @@ namespace QihooAppStoreCap
             AppStoreUIService.AddTagForAppProject(AppConfigKey.TAG_LATEST, appProject.Id);
             AppStoreUIService.AddTagForAppProject(appItem.CategoryName, appProject.Id);
             AddMarketTag(appItem.CategoryName, app.Id);
-            AppStoreUIService.AddTagForApp("Live", app.Id);
-            AppStoreUIService.AddTagForApp("Valid", app.Id);
-            AppStoreUIService.AddTagForAppProject("From_tencent", appProject.Id);
+            AppStoreUIService.AddTagForApp(AppConfigKey.TAG_LIVE, app.Id);
+            AppStoreUIService.AddTagForApp(AppConfigKey.TAG_VALID, app.Id);
+            AppStoreUIService.AddTagForAppProject(AppConfigKey.TAG_FROM_QIHOO, appProject.Id);
+        }
+
+        public void SetupTags(QihooAppStoreApp appItem, App app)
+        {
+            if (app.Status != 0)
+                AppStoreUIService.AddTagForApp(AppConfigKey.TAG_LIVE, app.Id);
+            AppStoreUIService.AddTagForApp(appItem.CategoryName, app.Id);
+            AddMarketTag(appItem.CategoryName, app.Id);
+            AppStoreUIService.AddTagForApp(AppConfigKey.TAG_FROM_QIHOO, app.Id);
+            AppStoreUIService.AddTagForApp(AppConfigKey.TAG_LIVE, app.Id);
         }
 
         #endregion
 
+        #region Delete
+
+        public void DeleteAppsByAppProject(string appProjectId)
+        {
+            var apps = this.AppStoreUIService.GetAppsFromAppList<AppProject>(appProjectId);
+
+            if (apps != null)
+            {
+                foreach (var app in apps)
+                {
+                    DeleteTags(app);
+                    DeleteRedundanceForAppBranch(app.Id);
+                    RedisService.DeleteWithCustomProperties<App, CustomProperty>(app.Id);
+                    DeleteAppSettingForAppColumn(app.Id);
+                }
+            }
+        }
+
+        public void DeleteTags(string appProjectId)
+        {
+            var tags = AppStoreUIService.GetTagsByAppProject(appProjectId);
+            if (tags != null)
+            {
+                foreach (var t in tags)
+                {
+                    AppStoreUIService.DeleteTagFromAppProject(t.Id, appProjectId);
+                }
+            }
+        }
+
+        public void DeleteTags(App app)
+        {
+            var appTags = AppStoreUIService.GetTagsByApp(app.Id);
+            if (appTags != null)
+            {
+                foreach (var t in appTags)
+                {
+                    AppStoreUIService.DeleteTagForApp(t.Id, app.Id);
+                }
+            }
+        }
+
+        private void DeleteRedundanceForAppBranch(string appId)
+        {
+            //delete LogoImage
+            var app = RedisService.Get<App>(appId);
+            if (app.Logo != null)
+            {
+                var logoImage = app.Logo;
+                RedisService.Delete<ImageInfo>(logoImage);
+            }
+
+            //delete ScreenShotImage
+            var screenShotImages = app.ScreenShot;
+            foreach (var screenShotImage in screenShotImages)
+            {
+                RedisService.Delete<ImageInfo>(screenShotImage);
+            }
+
+            //delete ClientLogosImage
+            var clientLogoImages = app.ClientLogos;
+            foreach (var clientLogoImage in clientLogoImages)
+            {
+                RedisService.Delete<ClientImageInfo>(clientLogoImage);
+            }
+        }
+
+        private void DeleteAppSettingForAppColumn(string appId)
+        {
+            var appColumnIds = RedisService.GetAllActiveModelIds<AppColumn>();
+            foreach (var appColumnId in appColumnIds)
+            {
+                var appSettings = RedisService.GetAllSubModelsByType<AppColumn, AppSettingsForAppList>(appColumnId);
+                foreach (var appSetting in appSettings)
+                {
+                    if (appSetting.Id == appId)
+                    {
+                        AppStoreUIService.DeleteAppFromAppList<AppColumn>(appColumnId, appId);
+                    }
+                }
+            }
+        }
+
+        #endregion
+
+        #endregion
+
         #region Helper
+
+        private void DownloadFile(string fileUrl, string path, bool force = false)
+        {
+            int retryTimes = 0;
+        Label_0002:
+            try
+            {
+                if (File.Exists(path) && (new FileInfo(path)).Length > 0 && !force)
+                {
+                    LogHelper.WriteInfo("Downloaded already: " + path, ConsoleColor.DarkMagenta);
+
+                    return;
+                }
+
+                if (retryTimes > 0)
+                {
+                    //LogHelper.WriteInfo("Retry to download path: " + fileUrl, ConsoleColor.Magenta);
+                }
+                using (WebClient webClient = new WebClient())
+                {
+                    Console.WriteLine(fileUrl);
+                    webClient.DownloadFile(fileUrl, path);
+                }
+                LogHelper.WriteInfo("Downloaded file: " + path, ConsoleColor.DarkGreen);
+                retryTimes = 0;
+            }
+            catch (Exception ex)
+            {
+                Thread.Sleep(500);
+                LogHelper.WriteInfo(ex.Message, ConsoleColor.Red);
+                retryTimes++;
+                if (retryTimes <= 3)
+                {
+                    goto Label_0002;
+                }
+            }
+        }
 
         private string GetFileNameFromUri(string uriPath)
         {
@@ -372,7 +619,7 @@ namespace QihooAppStoreCap
             }
         }
 
-        public void AddMarketTag(string category, string appId)
+        private void AddMarketTag(string category, string appId)
         {
             switch (category)
             {
@@ -444,6 +691,33 @@ namespace QihooAppStoreCap
                     break;
                 #endregion
             }
+        }
+
+        private bool CheckTYDApp(QihooAppStoreApp appItem, App app)
+        {
+            var tags = AppStoreUIService.GetTagsByApp(app.Id);
+
+            if (tags.FindIndex(x => (x.Name == AppConfigKey.TAG_TYD_SKIP) || (x.Id == AppConfigKey.TAG_TYD_SKIP_ID)) != -1)
+            {
+                LogHelper.WriteInfo(string.Format("TYD手动维护 -- {0}, skipped", appItem.Name), ConsoleColor.Yellow);
+                return true;
+            }
+            LogHelper.WriteInfo(string.Format("Has new version for app, name {0}, downloading...", appItem.Name), ConsoleColor.Yellow);
+            return false;
+        }
+
+        private void MakeSureDIRExist(string dir)
+        {
+            if (!Directory.Exists(dir))
+            {
+                Directory.CreateDirectory(dir);
+            }
+        }
+
+        private string[] GetScreenShotlist(QihooAppStoreApp appItem)
+        {
+            var imagelist = appItem.ScreenHotsURL.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+            return imagelist;
         }
 
         #endregion

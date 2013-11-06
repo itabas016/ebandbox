@@ -9,6 +9,9 @@ namespace QihooAppStoreCap.Runner
     {
         static void Main(string[] args)
         {
+            AppItemCap cap = new AppItemCap();
+
+            cap.AppItemCompleteCap();
         }
     }
 }
