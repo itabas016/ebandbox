@@ -33,7 +33,7 @@ namespace QihooAppStoreCap.Service
                 }
             });
 
-            paraDic = paraDic.SortHightedByKey();
+            paraDic = paraDic.SortLowedByKey();
 
             var encSource = new StringBuilder();
 
