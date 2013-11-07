@@ -15,6 +15,8 @@ using NCore;
 using TYD.Mobile.Infrastructure.Models.ViewModels.AppStores;
 using System.Net;
 using System.Threading;
+using System.Collections.Specialized;
+using RestSharp.Contrib;
 
 namespace QihooAppStoreCap
 {
@@ -152,6 +154,7 @@ namespace QihooAppStoreCap
                 LogHelper.WriteInfo(string.Format("Has new app, name {0}, downloading...", appItem.Name), ConsoleColor.Yellow);
                 reformApp.NewAppCount++;
 
+                DownloadResources(appItem);
 
                 appProject = AddNewApp(appItem, appProject);
             }
@@ -230,6 +233,8 @@ namespace QihooAppStoreCap
 
             if (!flag)
             {
+                DownloadResources(appItem);
+
                 SetupAppVersion(appItem, app);
 
                 SetupTags(appItem, app);
@@ -264,7 +269,7 @@ namespace QihooAppStoreCap
                 {
                     DownloadFile(img, Path.Combine(Screenshots_Folder_Base, GetFileNameFromUri(img)));
                 }
-                DownloadFile(appItem.DownloadURL, Path.Combine(APK_Folder_Base, GetFileNameFromUri(appItem.DownloadURL)));
+                DownloadFile(appItem.DownloadURL, Path.Combine(APK_Folder_Base, GetFileNameFromUri(GetDownloadUrl(appItem.DownloadURL))));
             }
         }
 
@@ -374,7 +379,7 @@ namespace QihooAppStoreCap
         {
             if (!string.IsNullOrEmpty(appItem.DownloadURL))
             {
-                FileInfo fi = new FileInfo(Path.Combine(APK_Folder_Base, GetFileNameFromUri(appItem.DownloadURL)));
+                FileInfo fi = new FileInfo(Path.Combine(APK_Folder_Base, GetFileNameFromUri(GetDownloadUrl(appItem.DownloadURL))));
 
                 if (fi != null && fi.Exists)
                 {
@@ -568,6 +573,85 @@ namespace QihooAppStoreCap
         {
             Uri uri = new Uri(uriPath);
             return uri.AbsolutePath.Replace("/", "_");
+        }
+
+        public string GetDownloadUrl(string fullDownloadUrl)
+        {
+            Uri uri = new Uri(fullDownloadUrl);
+
+            var queryString = uri.Query;
+
+            NameValueCollection collection = GetQueryString(queryString);
+
+            return collection[AppConfigKey.PARAMETER_DOWNLOADURL];
+        }
+
+        public NameValueCollection GetQueryString(string queryString)
+        {
+            return GetQueryString(queryString, null);
+        }
+
+        private NameValueCollection GetQueryString(string queryString, Encoding encoding)
+        {
+            queryString = queryString.Replace("?", "");
+            NameValueCollection result = new NameValueCollection(StringComparer.OrdinalIgnoreCase);
+            if (!string.IsNullOrEmpty(queryString))
+            {
+                int count = queryString.Length;
+                for (int i = 0; i < count; i++)
+                {
+                    int startIndex = i;
+                    int index = -1;
+                    while (i < count)
+                    {
+                        char item = queryString[i];
+                        if (item == '=')
+                        {
+                            if (index < 0)
+                            {
+                                index = i;
+                            }
+                        }
+                        else if (item == '&')
+                        {
+                            break;
+                        }
+                        i++;
+                    }
+                    string key = null;
+                    string value = null;
+                    if (index >= 0)
+                    {
+                        key = queryString.Substring(startIndex, index - startIndex);
+                        value = queryString.Substring(index + 1, (i - index) - 1);
+                    }
+                    else
+                    {
+                        key = queryString.Substring(startIndex, i - startIndex);
+                    }
+                    result[UrlDeCode(key, encoding)] = UrlDeCode(value, encoding);
+                    if ((i == (count - 1)) && (queryString[i] == '&'))
+                    {
+                        result[key] = string.Empty;
+                    }
+                }
+            }
+            return result;
+        }
+
+        private string UrlDeCode(string str, Encoding encoding)
+        {
+            if (encoding == null)
+            {
+                Encoding utf8 = Encoding.UTF8;
+                string code = HttpUtility.UrlDecode(str.ToUpper(), utf8);
+                string encode = HttpUtility.UrlEncode(code, utf8).ToUpper();
+                if (str == encode)
+                    encoding = Encoding.UTF8;
+                else
+                    encoding = Encoding.GetEncoding("gb2312");
+            }
+            return HttpUtility.UrlDecode(str, encoding);
         }
 
         private void SetLCD(string appId, string lcd)

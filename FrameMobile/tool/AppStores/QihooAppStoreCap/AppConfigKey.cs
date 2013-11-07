@@ -25,5 +25,6 @@ namespace QihooAppStoreCap
         public const string TAG_LIVE = "Live";
         public const string TAG_VALID = "Valid";
         public const string TAG_FROM_QIHOO = "From_360";
+        public const string PARAMETER_DOWNLOADURL = "downloadUrl";
     }
 }
