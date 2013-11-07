@@ -404,7 +404,7 @@ namespace QihooAppStoreCap
                     AppVersion ver = new AppVersion
                     {
                         FileSize = (int)fi.Length,
-                        FileUrl = GetFileNameFromUri(appItem.DownloadURL),
+                        FileUrl = GetFileNameFromUri(GetDownloadUrl(appItem.DownloadURL)),
                         PublishDateTime = appItem.UpdateTime.ToExactDateTime("yyyy-MM-dd"),
                         Status = 1,
                         VersionName = appItem.VersionName,
