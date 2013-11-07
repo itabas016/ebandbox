@@ -25,6 +25,7 @@ namespace QihooAppStoreCap
         #region prop
 
         private GetApps _app;
+        private GetCategorys _category;
         private DataConvertService _service;
 
         public IFileService FileService { get; set; }
@@ -51,6 +52,7 @@ namespace QihooAppStoreCap
         public AppItemCap()
         {
             _app = new GetApps();
+            _category = new GetCategorys();
             _service = new DataConvertService();
 
             FileService = new FileService();
@@ -139,6 +141,22 @@ namespace QihooAppStoreCap
             applist = applist.Union(apppagelist).ToList();
 
             return applist;
+        }
+
+        #endregion
+
+        #region Get Category
+
+        public List<QihooAppStoreCategory> GetAllCategory()
+        {
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+
+            var data = _category.GetData(parameters, true);
+
+            var catlist = _service.DeserializeCategory(data);
+
+            return catlist;
+
         }
 
         #endregion
@@ -314,7 +332,7 @@ namespace QihooAppStoreCap
         {
             var originalAppProject = CloneHelper.DeepClone<AppProject>(appProject);
 
-            appProject.AppNo = "tencent_" + appItem.Id;
+            appProject.AppNo = "qh360_" + appItem.Id;
             appProject.Creator = appItem.Developer;
             appProject.LogoFile = GetFileNameFromUri(appItem.IconURL);
             appProject.Name = appItem.Name;
@@ -424,8 +442,9 @@ namespace QihooAppStoreCap
                 AppStoreUIService.AddTagForAppProject(AppConfigKey.TAG_TOT_10_GAMES, appProject.Id);
             }
             AppStoreUIService.AddTagForAppProject(AppConfigKey.TAG_LATEST, appProject.Id);
-            AppStoreUIService.AddTagForAppProject(appItem.CategoryName, appProject.Id);
-            AddMarketTag(appItem.CategoryName, app.Id);
+            AppStoreUIService.AddTagForAppProject(GetCategoryTagName(appItem.CategoryName), appProject.Id);
+
+            AppStoreUIService.AddTagForApp(GetCategoryTagName(appItem.CategoryName), app.Id);
             AppStoreUIService.AddTagForApp(AppConfigKey.TAG_LIVE, app.Id);
             AppStoreUIService.AddTagForApp(AppConfigKey.TAG_VALID, app.Id);
             AppStoreUIService.AddTagForAppProject(AppConfigKey.TAG_FROM_QIHOO, appProject.Id);
@@ -435,8 +454,7 @@ namespace QihooAppStoreCap
         {
             if (app.Status != 0)
                 AppStoreUIService.AddTagForApp(AppConfigKey.TAG_LIVE, app.Id);
-            AppStoreUIService.AddTagForApp(appItem.CategoryName, app.Id);
-            AddMarketTag(appItem.CategoryName, app.Id);
+            AppStoreUIService.AddTagForApp(GetCategoryTagName(appItem.CategoryName), app.Id);
             AppStoreUIService.AddTagForApp(AppConfigKey.TAG_FROM_QIHOO, app.Id);
             AppStoreUIService.AddTagForApp(AppConfigKey.TAG_LIVE, app.Id);
         }
@@ -775,6 +793,24 @@ namespace QihooAppStoreCap
                     break;
                 #endregion
             }
+        }
+
+        private string GetCategoryTagName(string fullCategoryName)
+        {
+            var prefix = fullCategoryName.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+            var suffix = prefix[0].Split(new string[] { ":" }, StringSplitOptions.RemoveEmptyEntries);
+            var category = suffix[1].Replace("•", "");
+
+            switch (category)
+            {
+                case "游戏":
+                case "推荐":
+                case "软件排行":
+                case "游戏排行":
+                    category = string.Empty;
+                    break;
+            }
+            return category;
         }
 
         private bool CheckTYDApp(QihooAppStoreApp appItem, App app)

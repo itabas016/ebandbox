@@ -42,5 +42,19 @@ namespace QihooAppStoreCap.Service
             }
             return null;
         }
+
+        public List<QihooAppStoreCategory> DeserializeCategory(string content)
+        {
+            if (!string.IsNullOrEmpty(content))
+            {
+                var getAppResult = JsonConvert.DeserializeObject<QihooAppStoreGetCategoryResult>(content);
+
+                if (getAppResult != null && getAppResult.QihooCategorylist.Count > 0)
+                {
+                    return getAppResult.QihooCategorylist;
+                }
+            }
+            return null;
+        }
     }
 }

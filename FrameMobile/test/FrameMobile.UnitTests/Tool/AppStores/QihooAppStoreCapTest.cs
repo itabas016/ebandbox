@@ -31,6 +31,13 @@ namespace FrameMobile.UnitTests.Tool.AppStores
         }
 
         [Fact]
+        public void CategoryTest()
+        {
+            var ret = _cap.GetAllCategory();
+            ret.ForEach(x=>Console.WriteLine(x.CategoryName));
+        }
+
+        [Fact]
         public void DataConvertServiceTest()
         {
             var content = MockResponse();
@@ -39,7 +46,7 @@ namespace FrameMobile.UnitTests.Tool.AppStores
 
             Console.WriteLine(result.Total);
 
-            if (result!= null)
+            if (result != null)
             {
                 Console.WriteLine(result.QihooApplist.Count);
             }

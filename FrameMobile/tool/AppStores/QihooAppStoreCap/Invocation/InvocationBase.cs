@@ -12,6 +12,8 @@ namespace QihooAppStoreCap.Invocation
 
         protected const string MOBILE_AIDE_URL = "http://openbox.mobilem.360.cn/third/";
 
+        protected const string MOBILE_OPEN_INTF_AIDE_URL = "http://api.np.mobilem.360.cn/intf/";
+
         protected ServiceProxy Proxy = new ServiceProxy();
 
         protected Dictionary<string, string> NameValues = new Dictionary<string, string>();
@@ -45,9 +47,11 @@ namespace QihooAppStoreCap.Invocation
             return sb.ToString();
         }
 
-        public virtual string GetData(Dictionary<string, string> parameters)
+        public virtual string GetData(Dictionary<string, string> parameters, bool openIntf = false)
         {
-            var url = this.BuildUrl(MOBILE_AIDE_URL, this.MethodName, parameters);
+            var host = openIntf ? MOBILE_OPEN_INTF_AIDE_URL : MOBILE_AIDE_URL;
+
+            var url = this.BuildUrl(host, this.MethodName, parameters);
 
             return this.Proxy.GetData(url);
         }
