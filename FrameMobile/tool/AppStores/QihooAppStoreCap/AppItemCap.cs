@@ -337,7 +337,7 @@ namespace QihooAppStoreCap
             appProject.LogoFile = GetFileNameFromUri(appItem.IconURL);
             appProject.Name = appItem.Name;
             appProject.PackageName = appItem.PackageName;
-            appProject.Rate = appItem.Rating;
+            appProject.Rate = appItem.Rating.ToInt32();
             RedisService.UpdateWithRebuildIndex<AppProject>(originalAppProject, appProject);
 
             return appProject;

@@ -61,7 +61,7 @@ namespace QihooAppStoreCap.Model
         /// 应用评分
         /// </summary>
         [JsonProperty(PropertyName = "rating")]
-        public int Rating { get; set; }
+        public string Rating { get; set; }
 
         /// <summary>
         /// 语言
@@ -133,7 +133,7 @@ namespace QihooAppStoreCap.Model
         /// 是否有免费
         /// </summary>
         [JsonProperty(PropertyName = "isFree")]
-        public bool IsFree { get; set; }
+        public string IsFree { get; set; }
 
         /// <summary>
         /// 应用别名
@@ -181,30 +181,48 @@ namespace QihooAppStoreCap.Model
         /// 是否有广告
         /// </summary>
         [JsonProperty(PropertyName = "isAd")]
-        public bool IsAD { get; set; }
+        public string IsAD { get; set; }
 
         /// <summary>
         /// 是否有推送
         /// </summary>
         [JsonProperty(PropertyName = "isPush")]
-        public bool IsPush { get; set; }
+        public string IsPush { get; set; }
 
         /// <summary>
         /// 是否有插件
         /// </summary>
         [JsonProperty(PropertyName = "isSdk")]
-        public bool IsSDK { get; set; }
+        public string IsSDK { get; set; }
 
         /// <summary>
         /// 是否有积分墙
         /// </summary>
         [JsonProperty(PropertyName = "isIntegral")]
-        public bool IsIntegral { get; set; }
+        public string IsIntegral { get; set; }
 
         /// <summary>
         /// 应用是否安全 恒为1
         /// </summary>
         [JsonProperty(PropertyName = "isSecurity")]
-        public bool IsSecurity { get; set; }
+        public string IsSecurity { get; set; }
+
+        /// <summary>
+        /// 下载数
+        /// </summary>
+        [JsonProperty(PropertyName = "downloadNum")]
+        public string DownloadNum { get; set; }
+
+        /// <summary>
+        /// 价格信息
+        /// </summary>
+        [JsonProperty(PropertyName = "priceInfo")]
+        public string PriceInfo { get; set; }
+
+        /// <summary>
+        /// 百科名称
+        /// </summary>
+        [JsonProperty(PropertyName = "baikeName")]
+        public string BaikeName { get; set; }
     }
 }
