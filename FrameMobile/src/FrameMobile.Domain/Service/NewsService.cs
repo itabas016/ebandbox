@@ -145,6 +145,33 @@ namespace FrameMobile.Domain.Service
 
             contentViewList = categorycontentlist.ToList();
 
+            contentViewList = InsertRange(contentViewList, localContentList);
+
+            return contentViewList;
+        }
+
+        private List<NewsContentView> InsertRange(List<NewsContentView> contentViewList, IEnumerable<NewsContentView> localContentList)
+        {
+            if (localContentList == null || localContentList.ToList().Count == 0)
+            {
+                return contentViewList;
+            }
+
+            var random = new Random(Guid.NewGuid().GetHashCode());
+            var sum = random.Next(1, 3);
+
+            var i = 0;
+            foreach (var item in localContentList)
+            {
+                if (i > 20) break;
+
+                for (int j = 0; j < sum; j++)
+                {
+                    var index = random.Next(1, 10);
+                    contentViewList.Insert(10 * i + index, item);
+                }
+                i++;
+            }
             return contentViewList;
         }
 
