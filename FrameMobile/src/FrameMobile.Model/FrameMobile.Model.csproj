@@ -61,6 +61,7 @@
     <Compile Include="Account\InvitationCode.cs" />
     <Compile Include="Account\UserGroup.cs" />
     <Compile Include="Common\MobileParam.cs" />
+    <Compile Include="Common\TimeStamp.cs" />
     <Compile Include="News\NewsContent.cs" />
     <Compile Include="News\NewsConfig.cs" />
     <Compile Include="News\NewsExtraApp.cs" />

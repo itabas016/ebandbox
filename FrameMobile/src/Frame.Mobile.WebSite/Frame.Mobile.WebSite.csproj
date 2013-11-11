@@ -366,6 +366,7 @@
     <Content Include="Views\Account\InvitationCodeList.cshtml" />
     <Content Include="Views\Account\LackOfPermission.cshtml" />
     <Content Include="Views\NewsUI\LackOfPermission.cshtml" />
+    <Content Include="Views\NewsUI\TimeConvert.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

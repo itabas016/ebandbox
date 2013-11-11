@@ -28,12 +28,6 @@ namespace Frame.Mobile.WebSite.Controllers
         }
         private INewsService _newsService;
 
-        public ActionResult TimeConvert(long stamp, string time)
-        {
-            var ret = _newsService.TimeConvert(time, stamp);
-            return Content(ret);
-        }
-
         public ActionResult SourceList(string imsi, int cver = 0)
         {
             var mobileParams = GetMobileParam();

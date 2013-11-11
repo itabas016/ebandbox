@@ -13,33 +13,6 @@ namespace FrameMobile.Domain.Service
 {
     public class NewsService : NewsServiceBase, INewsService
     {
-        public string TimeConvert(string timeformat, long stamp)
-        {
-            var sb = new StringBuilder();
-            if (!string.IsNullOrEmpty(timeformat))
-            {
-                sb.Append(timeformat.ToExactDateTime(DateTimeFormat.COMMON_TO_SECOND).UnixStamp());
-            }
-            else if (stamp > 0)
-            {
-                sb.Append(stamp.UTCStamp());
-            }
-            else if (!string.IsNullOrEmpty(timeformat) != null && stamp > 0)
-            {
-                sb.Append(timeformat.ToExactDateTime(DateTimeFormat.COMMON_TO_SECOND).UnixStamp());
-                sb.AppendLine();
-                sb.Append(stamp.UTCStamp());
-            }
-            else
-            {
-                sb.Append(DateTime.Now.UnixStamp());
-                sb.AppendLine();
-                sb.Append(DateTime.Now);
-            }
-
-            return sb.ToString();
-        }
-
         [ServiceCache]
         public IList<NewsConfigView> GetConfigViewList(MobileParam mobileParams)
         {

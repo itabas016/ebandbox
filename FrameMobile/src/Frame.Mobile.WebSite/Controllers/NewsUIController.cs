@@ -14,6 +14,7 @@ using NCore;
 using FrameMobile.Common;
 using System.IO;
 using FrameMobile.Core;
+using FrameMobile.Model.Common;
 
 namespace Frame.Mobile.WebSite.Controllers
 {
@@ -549,6 +550,20 @@ namespace Frame.Mobile.WebSite.Controllers
         #endregion
 
         #region Helper
+
+        [HttpGet]
+        public ActionResult TimeConvert()
+        {
+            var model = new TimeStamp();
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult TimeConvert(TimeStamp model)
+        {
+            var ret = NewsUIService.TimeConvert(model.InputTime.ToString("yyyy-MM-dd HH:mm:ss"), model.InputStamp.ToString());
+            return View(ret);
+        }
 
         public ActionResult LackOfPermission()
         {

@@ -1,0 +1,56 @@
+﻿@using FrameMobile.Model.Common
+@model TimeStamp
+
+@{
+    ViewBag.Title = "时间格式转换";
+    Layout = "~/Views/Shared/_NewsLayout.cshtml";
+}
+<div class="contentHeader">
+    <div class="contentHeaderInfo">
+        <button class="btn btn-quaternary btn-large addapp" onclick="history.back();">
+            返 回</button>
+    </div>
+    <div class="apphead">
+        <div class="title">
+            <b>@ViewBag.Title </b>
+        </div>
+    </div>
+</div>
+
+<div class="content">
+    <div class="windows">
+        @using (Html.BeginForm())
+        {
+
+            <p>
+                <div class="title">
+                    <h1>
+                        @ViewBag.Title</h1>
+                </div>
+            </p>
+
+            <div style="clear: both">
+                <table>
+                    @Html.ValidationSummary(true)
+                    <tr>
+                        <td><strong>输入GMT时间: </strong></td>
+                        <td>@Html.TextBoxFor(m => m.InputTime, new { @class = "Wdate", Value = Model.InputTime.ToString("yyyy-MM-dd HH:mm:ss"), onclick = "WdatePicker({ dateFmt: 'yyyy-MM-dd HH:mm:ss' })" })</td>
+                        <td><strong>输出UNIX时间戳: </strong></td>
+                        <td>@Html.TextBoxFor(m => m.OutputStamp)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>输入UNIX时间戳: </strong></td>
+                        <td>@Html.TextBoxFor(m => m.InputStamp)</td>
+                        <td><strong>输出GMT时间: </strong></td>
+                        <td>@Html.TextBoxFor(m => m.OutputTime)</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">
+                            <button class="btn btn-large btn-blue addapp" style="margin-left: 50px">@ViewBag.Title</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        }
+    </div>
+</div>
