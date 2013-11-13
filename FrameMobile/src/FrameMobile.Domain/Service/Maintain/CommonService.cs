@@ -40,11 +40,11 @@ namespace FrameMobile.Domain.Service
 
                     item.PublishTime = item.PublishTime.AddSeconds(random.Next(1, 60 * 60));
                 }
+
+                var ret = dbContextService.Update<NewsContent>(contentlist);
+
+                NLogHelper.WriteTrace(string.Format("Update NewsContent {0} rows from {1} to {2}.", ret, startTime, endTime));
             }
-
-            var ret = dbContextService.Update<NewsContent>(contentlist);
-
-            NLogHelper.WriteTrace(string.Format("Update NewsContent {0} rows from {1} to {2}.", ret, startTime, endTime));
         }
     }
 }
