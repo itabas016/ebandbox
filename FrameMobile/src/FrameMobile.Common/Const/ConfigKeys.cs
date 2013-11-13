@@ -33,5 +33,10 @@ namespace FrameMobile.Common
 
         public const string CLEANUP_NEWS_CONTENT_DAYS_AGO_VALUE = "Cleanup_News_Content_Days_Ago_Value";
 
+        //Update
+
+        public const string UPDATE_NEWS_SAME_PUBLISH_TIME_LIMIT = "Update_News_Same_PublishTime_Limit";
+
+        public const string UPDATE_NEWS_START_PUBLISH_TIME_HOUR = "Update_News_Start_PublishTime_Hour";
     }
 }

@@ -27,6 +27,27 @@
   </job>
   <job>
     <job-detail>
+      <name>UpdateNewsJob</name>
+      <group>UpdateNews</group>
+      <description></description>
+      <job-type>TYDNewsService.UpdateNewsJob,TYDNewsService</job-type>
+      <volatile>false</volatile>
+      <durable>true</durable>
+      <recover>false</recover>
+    </job-detail>
+    <trigger>
+      <cron>
+        <name>every1Hour</name>
+        <group>UpdateNews</group>
+        <job-name>UpdateNewsJob</job-name>
+        <job-group>UpdateNews</job-group>
+        <start-time>1900-01-01T00:00:00.0Z</start-time>
+        <cron-expression>0 0 0/1 * * ?</cron-expression>
+      </cron>
+    </trigger>
+  </job>
+  <job>
+    <job-detail>
       <name>CleanJob</name>
       <group>Clean</group>
       <description></description>

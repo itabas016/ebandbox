@@ -40,6 +40,11 @@ namespace FrameMobile.Domain
             return context.Repository.Update<T>(model);
         }
 
+        public static int Update<T>(this IDbContext context, IEnumerable<T> items) where T : class, IMySQLModel, new()
+        {
+            return context.Repository.UpdateMany<T>(items);
+        }
+
         public static IList<T> Find<T>(this IDbContext context, Expression<Func<T, bool>> expression) where T : class, IMySQLModel, new()
         {
             return  context.Repository.Find<T>(expression);

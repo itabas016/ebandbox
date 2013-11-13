@@ -38,6 +38,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\lib\MySQL\MySql.Data.dll</HintPath>
     </Reference>
+    <Reference Include="NCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=86f0aa1179a5132d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\NCore\NCore.dll</HintPath>
+    </Reference>
     <Reference Include="StructureMap, Version=2.6.3.0, Culture=neutral, PublicKeyToken=e60ad81abae3c223, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\lib\structuremap.2.6.3\lib\StructureMap.dll</HintPath>
@@ -65,6 +69,7 @@
     <Compile Include="Domain\Extension\NewsExtensionTest.cs" />
     <Compile Include="Domain\Extension\StringExtensionTest.cs" />
     <Compile Include="Domain\Mappers\ContentMapperTest.cs" />
+    <Compile Include="Domain\Service\CommonServiceTest.cs" />
     <Compile Include="Domain\Service\DbContextServiceTest.cs" />
     <Compile Include="Domain\Service\FetchTouTiaoServiceTest.cs" />
     <Compile Include="Domain\Service\NewsServiceTest.cs" />
