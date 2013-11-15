@@ -45,6 +45,10 @@ namespace FrameMobile.Domain.Service
 
                 NLogHelper.WriteTrace(string.Format("Update NewsContent {0} rows from {1} to {2}.", ret, startTime, endTime));
             }
+            else
+            {
+                NLogHelper.WriteTrace(string.Format("No rows update!")); 
+            }
         }
     }
 }
