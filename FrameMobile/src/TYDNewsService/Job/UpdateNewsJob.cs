@@ -15,7 +15,7 @@ namespace TYDNewsService
         {
             var _commonService = new CommonService();
 
-            var startTime = DateTime.Now.AddHours(ConfigKeys.UPDATE_NEWS_START_PUBLISH_TIME_HOUR.ConfigValue().ToDouble());
+            var startTime = DateTime.Now.AddHours(-ConfigKeys.UPDATE_NEWS_START_PUBLISH_TIME_HOUR.ConfigValue().ToDouble());
             var endTime = DateTime.Now;
 
             _commonService.UpdateNews(startTime, endTime);
