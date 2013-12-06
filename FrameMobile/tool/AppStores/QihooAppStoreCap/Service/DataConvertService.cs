@@ -9,11 +9,11 @@ namespace QihooAppStoreCap.Service
 {
     public class DataConvertService
     {
-        public QihooAppStoreGetAppResult DeserializeBase(string content)
+        public T DeserializeBase<T>(string content) where T : QihooAppStoreResultBase
         {
             if (!string.IsNullOrEmpty(content))
             {
-                var getAppResult = JsonConvert.DeserializeObject<QihooAppStoreGetAppResult>(content);
+                var getAppResult = JsonConvert.DeserializeObject<T>(content);
 
                 return getAppResult;
             }
@@ -29,11 +29,34 @@ namespace QihooAppStoreCap.Service
             return null;
         }
 
+        public List<QihooAppStoreCompleteApp> DeserializeAppItem(QihooAppStoreGetCompleteAppResult result)
+        {
+            if (result != null && result.QihooApplist.Count > 0)
+            {
+                return result.QihooApplist;
+            }
+            return null;
+        }
+
         public List<QihooAppStoreApp> DeserializeAppItem(string content)
         {
             if (!string.IsNullOrEmpty(content))
             {
                 var getAppResult = JsonConvert.DeserializeObject<QihooAppStoreGetAppResult>(content);
+
+                if (getAppResult != null && getAppResult.QihooApplist.Count > 0)
+                {
+                    return getAppResult.QihooApplist;
+                }
+            }
+            return null;
+        }
+
+        public List<QihooAppStoreCompleteApp> DeserializeCompleteAppItem(string content)
+        {
+            if (!string.IsNullOrEmpty(content))
+            {
+                var getAppResult = JsonConvert.DeserializeObject<QihooAppStoreGetCompleteAppResult>(content);
 
                 if (getAppResult != null && getAppResult.QihooApplist.Count > 0)
                 {

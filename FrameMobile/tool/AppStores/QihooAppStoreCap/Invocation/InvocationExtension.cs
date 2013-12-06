@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace QihooAppStoreCap.Invocation
+namespace QihooAppStoreCap
 {
     public static class InvocationExtension
     {

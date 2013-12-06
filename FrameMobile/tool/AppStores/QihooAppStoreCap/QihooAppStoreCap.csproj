@@ -71,16 +71,19 @@
   <ItemGroup>
     <Compile Include="AppConfigKey.cs" />
     <Compile Include="AppItemCap.cs" />
+    <Compile Include="Invocation\GetApp.cs" />
     <Compile Include="Invocation\GetApps.cs" />
     <Compile Include="Invocation\GetCategorys.cs" />
     <Compile Include="Invocation\GetOffineApps.cs" />
     <Compile Include="Invocation\InvocationBase.cs" />
     <Compile Include="Invocation\InvocationExtension.cs" />
     <Compile Include="LogHelper.cs" />
+    <Compile Include="Model\Qihoo\QihooAppStoreCompleteApp.cs" />
     <Compile Include="Model\Qihoo\QihooAppStoreGetCategoryResult.cs" />
     <Compile Include="Model\Qihoo\QihooAppStoreCategory.cs" />
     <Compile Include="Model\Qihoo\QihooAppStoreApp.cs" />
     <Compile Include="Model\Qihoo\QihooAppStoreGetAppResult.cs" />
+    <Compile Include="Model\Qihoo\QihooAppStoreGetCompleteAppResult.cs" />
     <Compile Include="Model\Qihoo\QihooAppStoreGetOffineAppResult.cs" />
     <Compile Include="Model\Qihoo\QihooAppStoreParameter.cs" />
     <Compile Include="Model\Qihoo\QihooAppStoreResultBase.cs" />

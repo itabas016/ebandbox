@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using QihooAppStoreCap.Service;
 
-namespace QihooAppStoreCap.Invocation
+namespace QihooAppStoreCap
 {
     public abstract class InvocationBase
     {
@@ -20,6 +20,8 @@ namespace QihooAppStoreCap.Invocation
 
         public virtual void AddAdditionalParams(Dictionary<string, string> parameters)
         {
+            this.NameValues["from"] = "tianyida";
+
             if (parameters != null)
             {
                 foreach (var p in parameters)

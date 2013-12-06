@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using Newtonsoft.Json.Linq;
-using QihooAppStoreCap.Invocation;
+using QihooAppStoreCap;
 using QihooAppStoreCap.Model;
 using QihooAppStoreCap.Service;
 using RedisMapper;
@@ -89,7 +89,7 @@ namespace QihooAppStoreCap
 
             var data = _app.GetData(parameters);
 
-            var appResult = _service.DeserializeBase(data);
+            var appResult = _service.DeserializeBase<QihooAppStoreGetAppResult>(data);
 
             if (appResult != null)
             {
@@ -142,6 +142,27 @@ namespace QihooAppStoreCap
 
             return applist;
         }
+
+        public List<QihooAppStoreCompleteApp> GetAllSoftAppItem()
+        {
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+
+            var startTime = DateTime.Now.AddDays(-1).UnixStamp().ToString();
+
+            parameters["startTime"] = startTime;
+            parameters["startTime"] = startTime;
+
+            int total = 0;
+
+            //ar applist = GetAllAppItem(parameters, out total);
+
+            //var apppagelist = GetAllAppItem(parameters, total);
+
+            //applist = applist.Union(apppagelist).ToList();
+
+            return null;
+        }
+
 
         #endregion
 

@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using QihooAppStoreCap;
-using QihooAppStoreCap.Invocation;
 using QihooAppStoreCap.Model;
 using QihooAppStoreCap.Service;
 using Xunit;
@@ -31,6 +30,16 @@ namespace FrameMobile.UnitTests.Tool.AppStores
         }
 
         [Fact]
+        public void RequestCompleteTest()
+        {
+            var app = new GetApp();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters["type"] = "1";
+            var data = app.GetData(parameters, true);
+            Console.WriteLine(data);
+        }
+
+        [Fact]
         public void CategoryTest()
         {
             var ret = _cap.GetAllCategory();
@@ -42,7 +51,7 @@ namespace FrameMobile.UnitTests.Tool.AppStores
         {
             var content = MockResponse();
 
-            var result = _service.DeserializeBase(content);
+            var result = _service.DeserializeBase<QihooAppStoreGetAppResult>(content);
 
             Console.WriteLine(result.Total);
 
@@ -57,7 +66,25 @@ namespace FrameMobile.UnitTests.Tool.AppStores
         {
             var content = MockResponse();
 
-            var result = _service.DeserializeBase(content);
+            var result = _service.DeserializeBase<QihooAppStoreGetAppResult>(content);
+
+            var reformApp = new ReformApp();
+            foreach (var item in result.QihooApplist)
+            {
+                _cap.BuildAppProject(reformApp, item);
+            }
+
+            Console.WriteLine(reformApp.NewAppCount);
+            Console.WriteLine(reformApp.NewVersionCount);
+            Console.WriteLine(reformApp.DupVersionCount);
+        }
+
+        [Fact]
+        public void FakeDataInsert2()
+        {
+            var content = MockResponseComplete();
+
+            var result = _service.DeserializeBase<QihooAppStoreGetCompleteAppResult>(content);
 
             var reformApp = new ReformApp();
             foreach (var item in result.QihooApplist)
@@ -74,6 +101,16 @@ namespace FrameMobile.UnitTests.Tool.AppStores
         {
             var response = string.Empty;
             using (var sr = new StreamReader("Files\\QihoogetAppResponse.txt"))
+            {
+                response = sr.ReadToEnd();
+            }
+            return response;
+        }
+
+        private string MockResponseComplete()
+        {
+            var response = string.Empty;
+            using (var sr = new StreamReader("Files\\QihooGetCompleteAppResponse.txt"))
             {
                 response = sr.ReadToEnd();
             }

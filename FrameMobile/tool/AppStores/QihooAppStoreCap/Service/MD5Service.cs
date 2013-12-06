@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using QihooAppStoreCap.Invocation;
+using QihooAppStoreCap;
 
 namespace QihooAppStoreCap.Service
 {

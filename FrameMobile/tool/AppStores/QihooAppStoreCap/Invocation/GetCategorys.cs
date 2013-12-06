@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace QihooAppStoreCap.Invocation
+namespace QihooAppStoreCap
 {
     public class GetCategorys : InvocationBase
     {
@@ -14,7 +14,6 @@ namespace QihooAppStoreCap.Invocation
 
         public override void AddAdditionalParams(Dictionary<string, string> parameters)
         {
-            this.NameValues["channel"] = "tianyida";
             base.AddAdditionalParams(parameters);
         }
     }
