@@ -143,26 +143,67 @@ namespace QihooAppStoreCap
             return applist;
         }
 
-        public List<QihooAppStoreCompleteApp> GetAllSoftAppItem()
+        public List<QihooAppStoreCompleteApp> GetAppItem(string typeValue)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
 
             var startTime = DateTime.Now.AddDays(-1).UnixStamp().ToString();
 
             parameters["startTime"] = startTime;
-            parameters["startTime"] = startTime;
+            parameters["type"] = typeValue;
 
             int total = 0;
 
-            //ar applist = GetAllAppItem(parameters, out total);
+            var applist = GetAppItem(parameters, out total);
 
-            //var apppagelist = GetAllAppItem(parameters, total);
+            var apppagelist = GetAppItem(parameters, total);
 
-            //applist = applist.Union(apppagelist).ToList();
+            applist = applist.Union(apppagelist).ToList();
 
             return null;
         }
 
+        public List<QihooAppStoreCompleteApp> GetAppItem(Dictionary<string, string> parameters, out int total)
+        {
+            var result = new List<QihooAppStoreCompleteApp>();
+            total = 0;
+
+            var data = _app.GetData(parameters);
+
+            var appResult = _service.DeserializeBase<QihooAppStoreGetCompleteAppResult>(data);
+
+            if (appResult != null)
+            {
+                result = appResult.QihooApplist;
+                total = appResult.Total;
+            }
+
+            return result;
+        }
+
+        public List<QihooAppStoreCompleteApp> GetAppItem(Dictionary<string, string> parameters, int total)
+        {
+            var result = new List<QihooAppStoreCompleteApp>();
+
+            var page = total / 100;
+            if (page > 1)
+            {
+                for (int i = 1; i < total / 100 + 1; i++)
+                {
+                    parameters["start"] = (i * 100 + 1).ToString();
+
+                    var data = _app.GetData(parameters);
+
+                    var applist = _service.DeserializeCompleteAppItem(data);
+
+                    if (applist != null && applist.Count > 0)
+                    {
+                        result = result.Union(applist).ToList();
+                    }
+                }
+            }
+            return result;
+        }
 
         #endregion
 
