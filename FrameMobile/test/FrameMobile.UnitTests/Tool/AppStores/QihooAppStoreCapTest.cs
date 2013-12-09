@@ -71,7 +71,7 @@ namespace FrameMobile.UnitTests.Tool.AppStores
             var reformApp = new ReformApp();
             foreach (var item in result.QihooApplist)
             {
-                _cap.BuildAppProject(reformApp, item);
+                _cap.BuildAppProject<QihooAppStoreApp>(reformApp, item);
             }
 
             Console.WriteLine(reformApp.NewAppCount);
@@ -89,7 +89,7 @@ namespace FrameMobile.UnitTests.Tool.AppStores
             var reformApp = new ReformApp();
             foreach (var item in result.QihooApplist)
             {
-                _cap.BuildAppProject(reformApp, item);
+                _cap.BuildAppProject<QihooAppStoreCompleteApp>(reformApp, item);
             }
 
             Console.WriteLine(reformApp.NewAppCount);

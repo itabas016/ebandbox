@@ -19,7 +19,7 @@ namespace QihooAppStoreCap.Model
         /// 市场标识
         /// </summary>
         [JsonProperty(PropertyName = "marketId")]
-        public string MarketId { get; set; }
+        public virtual string MarketId { get; set; }
 
         /// <summary>
         /// 应用包名
@@ -121,13 +121,13 @@ namespace QihooAppStoreCap.Model
         /// 下载地址
         /// </summary>
         [JsonProperty(PropertyName = "downloadUrl")]
-        public string DownloadURL { get; set; }
+        public virtual string DownloadURL { get; set; }
 
         /// <summary>
         /// apk包的Md5值
         /// </summary>
         [JsonProperty(PropertyName = "apkMd5")]
-        public string ApkMD5 { get; set; }
+        public virtual string ApkMD5 { get; set; }
 
         /// <summary>
         /// 是否有免费

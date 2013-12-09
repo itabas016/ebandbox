@@ -25,6 +25,7 @@ namespace QihooAppStoreCap
         #region prop
 
         private GetApps _app;
+        private GetApp _completeApp;
         private GetCategorys _category;
         private DataConvertService _service;
 
@@ -52,6 +53,7 @@ namespace QihooAppStoreCap
         public AppItemCap()
         {
             _app = new GetApps();
+            _completeApp = new GetApp();
             _category = new GetCategorys();
             _service = new DataConvertService();
 
@@ -69,6 +71,30 @@ namespace QihooAppStoreCap
             ReformApp reformApp = new ReformApp();
 
             var appItemlist = GetAllAppItem();
+
+            foreach (var item in appItemlist)
+            {
+                BuildAppProject(reformApp, item);
+            }
+
+            LogHelper.WriteInfo("新增应用数：" + reformApp.NewAppCount);
+            LogHelper.WriteInfo("新增apk版本数：" + reformApp.NewVersionCount);
+            LogHelper.WriteInfo("已有重复应用apk数：" + reformApp.DupVersionCount);
+        }
+
+        public void NewAppItemCompleteCap()
+        {
+            ReformApp reformApp = new ReformApp();
+
+            var softTypeValue = "1";
+
+            var gameTypeValue = "2";
+
+            var appItemSoftlist = GetAppItem(softTypeValue);
+
+            var appItemGamelist = GetAppItem(gameTypeValue);
+
+            var appItemlist = appItemSoftlist.Union(appItemGamelist);
 
             foreach (var item in appItemlist)
             {
@@ -160,7 +186,7 @@ namespace QihooAppStoreCap
 
             applist = applist.Union(apppagelist).ToList();
 
-            return null;
+            return applist;
         }
 
         public List<QihooAppStoreCompleteApp> GetAppItem(Dictionary<string, string> parameters, out int total)
@@ -168,7 +194,7 @@ namespace QihooAppStoreCap
             var result = new List<QihooAppStoreCompleteApp>();
             total = 0;
 
-            var data = _app.GetData(parameters);
+            var data = _completeApp.GetData(parameters, true);
 
             var appResult = _service.DeserializeBase<QihooAppStoreGetCompleteAppResult>(data);
 
@@ -192,7 +218,7 @@ namespace QihooAppStoreCap
                 {
                     parameters["start"] = (i * 100 + 1).ToString();
 
-                    var data = _app.GetData(parameters);
+                    var data = _completeApp.GetData(parameters, true);
 
                     var applist = _service.DeserializeCompleteAppItem(data);
 
@@ -225,7 +251,7 @@ namespace QihooAppStoreCap
 
         #region Build
 
-        public void BuildAppProject(ReformApp reformApp, QihooAppStoreApp appItem)
+        public void BuildAppProject<T>(ReformApp reformApp, T appItem) where T : QihooAppStoreApp
         {
             var appProject = AppStoreUIService.GetAppProjectByPKGName(appItem.PackageName);
 
@@ -234,9 +260,9 @@ namespace QihooAppStoreCap
                 LogHelper.WriteInfo(string.Format("Has new app, name {0}, downloading...", appItem.Name), ConsoleColor.Yellow);
                 reformApp.NewAppCount++;
 
-                DownloadResources(appItem);
+                DownloadResources<T>(appItem);
 
-                appProject = AddNewApp(appItem, appProject);
+                appProject = AddNewApp<T>(appItem, appProject);
             }
             else
             {
@@ -259,16 +285,16 @@ namespace QihooAppStoreCap
             }
         }
 
-        public AppProject AddNewApp(QihooAppStoreApp appItem, AppProject appProject)
+        public AppProject AddNewApp<T>(T appItem, AppProject appProject) where T : QihooAppStoreApp
         {
             try
             {
                 var app = new App();
 
                 appProject = SetupAppList(appProject, out app);
-                appProject = SetupAppProject(appItem, appProject);
-                app = SetupApp(appItem, appProject, app);
-                SetupTags(appItem, appProject, app);
+                appProject = SetupAppProject<T>(appItem, appProject);
+                app = SetupApp<T>(appItem, appProject, app);
+                SetupTags<T>(appItem, appProject, app);
             }
             catch (Exception ex)
             {
@@ -279,7 +305,7 @@ namespace QihooAppStoreCap
             return appProject;
         }
 
-        public void AddNewVersionApp(ReformApp reformApp, QihooAppStoreApp appItem, AppProject appProject)
+        public void AddNewVersionApp<T>(ReformApp reformApp, T appItem, AppProject appProject) where T : QihooAppStoreApp
         {
             try
             {
@@ -290,7 +316,7 @@ namespace QihooAppStoreCap
 
                     if (!versions.Contains(appItem.VersionCode))
                     {
-                        reformApp.NewVersionCount = AddNewVersionForApp(reformApp.NewVersionCount, appItem, a);
+                        reformApp.NewVersionCount = AddNewVersionForApp<T>(reformApp.NewVersionCount, appItem, a);
                     }
                     else
                     {
@@ -305,19 +331,19 @@ namespace QihooAppStoreCap
             }
         }
 
-        private int AddNewVersionForApp(int newVersionCount, QihooAppStoreApp appItem, App app)
+        private int AddNewVersionForApp<T>(int newVersionCount, T appItem, App app) where T : QihooAppStoreApp
         {
             newVersionCount++;
 
-            var flag = CheckTYDApp(appItem, app);
+            var flag = CheckTYDApp<T>(appItem, app);
 
             if (!flag)
             {
-                DownloadResources(appItem);
+                DownloadResources<T>(appItem);
 
-                SetupAppVersion(appItem, app);
+                SetupAppVersion<T>(appItem, app);
 
-                SetupTags(appItem, app);
+                SetupTags<T>(appItem, app);
             }
             return newVersionCount;
         }
@@ -334,7 +360,7 @@ namespace QihooAppStoreCap
 
         #region Download
 
-        public void DownloadResources(QihooAppStoreApp appItem)
+        public void DownloadResources<T>(T appItem) where T : QihooAppStoreApp
         {
             if (appItem != null)
             {
@@ -344,12 +370,12 @@ namespace QihooAppStoreCap
 
                 DownloadFile(appItem.IconURL, Path.Combine(Logo_Folder_Base, GetFileNameFromUri(appItem.IconURL)));
 
-                var screenshotlist = GetScreenShotlist(appItem);
+                var screenshotlist = GetScreenShotlist<T>(appItem);
                 foreach (var img in screenshotlist)
                 {
                     DownloadFile(img, Path.Combine(Screenshots_Folder_Base, GetFileNameFromUri(img)));
                 }
-                DownloadFile(appItem.DownloadURL, Path.Combine(APK_Folder_Base, GetFileNameFromUri(GetDownloadUrl(appItem.DownloadURL))));
+                DownloadFile(appItem.DownloadURL, Path.Combine(APK_Folder_Base, GetFileNameFromUri(GetDownloadUrl(appItem, appItem.DownloadURL))));
             }
         }
 
@@ -390,7 +416,7 @@ namespace QihooAppStoreCap
             return appProject;
         }
 
-        public AppProject SetupAppProject(QihooAppStoreApp appItem, AppProject appProject)
+        public AppProject SetupAppProject<T>(T appItem, AppProject appProject) where T : QihooAppStoreApp
         {
             var originalAppProject = CloneHelper.DeepClone<AppProject>(appProject);
 
@@ -405,7 +431,7 @@ namespace QihooAppStoreCap
             return appProject;
         }
 
-        public App SetupApp(QihooAppStoreApp appItem, AppProject appProject, App app)
+        public App SetupApp<T>(T appItem, AppProject appProject, App app) where T : QihooAppStoreApp
         {
             var originalApp = CloneHelper.DeepClone<App>(app);
             var originalApp2 = RedisService.Get<App>(app.Id);
@@ -455,18 +481,18 @@ namespace QihooAppStoreCap
             return app;
         }
 
-        public void SetupAppVersion(QihooAppStoreApp appItem, App app)
+        public void SetupAppVersion<T>(T appItem, App app) where T : QihooAppStoreApp
         {
             if (!string.IsNullOrEmpty(appItem.DownloadURL))
             {
-                FileInfo fi = new FileInfo(Path.Combine(APK_Folder_Base, GetFileNameFromUri(GetDownloadUrl(appItem.DownloadURL))));
+                FileInfo fi = new FileInfo(Path.Combine(APK_Folder_Base, GetFileNameFromUri(GetDownloadUrl(appItem, appItem.DownloadURL))));
 
                 if (fi != null && fi.Exists)
                 {
                     AppVersion ver = new AppVersion
                     {
                         FileSize = (int)fi.Length,
-                        FileUrl = GetFileNameFromUri(GetDownloadUrl(appItem.DownloadURL)),
+                        FileUrl = GetFileNameFromUri(GetDownloadUrl(appItem, appItem.DownloadURL)),
                         PublishDateTime = appItem.UpdateTime.ToExactDateTime("yyyy-MM-dd"),
                         Status = 1,
                         VersionName = appItem.VersionName,
@@ -491,7 +517,7 @@ namespace QihooAppStoreCap
             }
         }
 
-        public void SetupTags(QihooAppStoreApp appItem, AppProject appProject, App app)
+        public void SetupTags<T>(T appItem, AppProject appProject, App app) where T : QihooAppStoreApp
         {
             if (appItem.CategoryName.StartsWith(AppConfigKey.CATEGORY_SOFT_NAME, StringComparison.OrdinalIgnoreCase))
             {
@@ -512,7 +538,7 @@ namespace QihooAppStoreCap
             AppStoreUIService.AddTagForAppProject(AppConfigKey.TAG_FROM_QIHOO, appProject.Id);
         }
 
-        public void SetupTags(QihooAppStoreApp appItem, App app)
+        public void SetupTags<T>(T appItem, App app) where T : QihooAppStoreApp
         {
             if (app.Status != 0)
                 AppStoreUIService.AddTagForApp(AppConfigKey.TAG_LIVE, app.Id);
@@ -655,15 +681,25 @@ namespace QihooAppStoreCap
             return uri.AbsolutePath.Replace("/", "_");
         }
 
-        public string GetDownloadUrl(string fullDownloadUrl)
+        public string GetDownloadUrl<T>(T appItem, string fullDownloadUrl) where T : QihooAppStoreApp
         {
+            var collectionKey = string.Empty;
+            if (appItem.GetType() == typeof(QihooAppStoreApp))
+            {
+                collectionKey = AppConfigKey.PARAMETER_DOWNLOADURL;
+            }
+            if (appItem.GetType() == typeof(QihooAppStoreCompleteApp))
+            {
+                collectionKey = AppConfigKey.PARAMETER_DOWNLOADURL_DEVELOP;
+            }
+
             Uri uri = new Uri(fullDownloadUrl);
 
             var queryString = uri.Query;
 
             NameValueCollection collection = GetQueryString(queryString);
 
-            return collection[AppConfigKey.PARAMETER_DOWNLOADURL];
+            return collection[collectionKey];
         }
 
         public NameValueCollection GetQueryString(string queryString)
@@ -875,7 +911,7 @@ namespace QihooAppStoreCap
             return category;
         }
 
-        private bool CheckTYDApp(QihooAppStoreApp appItem, App app)
+        private bool CheckTYDApp<T>(T appItem, App app) where T : QihooAppStoreApp
         {
             var tags = AppStoreUIService.GetTagsByApp(app.Id);
 
@@ -896,9 +932,18 @@ namespace QihooAppStoreCap
             }
         }
 
-        private string[] GetScreenShotlist(QihooAppStoreApp appItem)
+        private string[] GetScreenShotlist<T>(T appItem) where T : QihooAppStoreApp
         {
-            var imagelist = appItem.ScreenHotsURL.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+            var separator = string.Empty;
+            if (appItem.GetType() == typeof(QihooAppStoreApp))
+            {
+                separator = " ";
+            }
+            if (appItem.GetType() == typeof(QihooAppStoreCompleteApp))
+            {
+                separator = ",";
+            }
+            var imagelist = appItem.ScreenHotsURL.Split(new string[] { separator }, StringSplitOptions.RemoveEmptyEntries);
             return imagelist;
         }
 

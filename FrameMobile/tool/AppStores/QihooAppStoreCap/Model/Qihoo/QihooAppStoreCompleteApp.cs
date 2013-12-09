@@ -37,13 +37,13 @@ namespace QihooAppStoreCap.Model
         /// 下载地址
         /// </summary>
         [JsonProperty(PropertyName = "download_url")]
-        public string DownloadURL { get; set; }
+        public override string DownloadURL { get; set; }
 
         /// <summary>
         /// 市场标识
         /// </summary>
         [JsonProperty(PropertyName = "market_id")]
-        public string MarketId { get; set; }
+        public override string MarketId { get; set; }
 
         /// <summary>
         /// 应用签名
@@ -67,7 +67,7 @@ namespace QihooAppStoreCap.Model
         /// Apk包的md5值
         /// </summary>
         [JsonProperty(PropertyName = "apk_md5")]
-        public string ApkMD5 { get; set; }
+        public override string ApkMD5 { get; set; }
 
         /// <summary>
         /// 应用入库时间
