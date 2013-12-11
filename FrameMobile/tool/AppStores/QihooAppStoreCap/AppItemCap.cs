@@ -90,9 +90,9 @@ namespace QihooAppStoreCap
 
             var gameTypeValue = "2";
 
-            var appItemSoftlist = GetAppItem(softTypeValue);
+            var appItemSoftlist = GetAppItem(gameTypeValue);
 
-            var appItemGamelist = GetAppItem(gameTypeValue);
+            var appItemGamelist = GetAppItem(softTypeValue);
 
             var appItemlist = appItemSoftlist.Union(appItemGamelist);
 
@@ -517,28 +517,66 @@ namespace QihooAppStoreCap
             }
         }
 
-        public void SetupTags<T>(T appItem, AppProject appProject, App app) where T : QihooAppStoreApp
+        public void SetupTagsByCategoryName(QihooAppStoreApp appItem, AppProject appProject, App app)
         {
-            if (appItem.CategoryName.StartsWith(AppConfigKey.CATEGORY_SOFT_NAME, StringComparison.OrdinalIgnoreCase))
+            if (!string.IsNullOrEmpty(appItem.CategoryName))
             {
-                AppStoreUIService.AddTagForAppProject(AppConfigKey.TAG_SOFTWARE, appProject.Id);
-                AppStoreUIService.AddTagForAppProject(AppConfigKey.TAG_TOT_10_SOFTWARE, appProject.Id);
+                if (appItem.CategoryName.StartsWith(AppConfigKey.CATEGORY_SOFT_NAME, StringComparison.OrdinalIgnoreCase))
+                {
+                    AppStoreUIService.AddTagForAppProject(AppConfigKey.TAG_SOFTWARE, appProject.Id);
+                    AppStoreUIService.AddTagForAppProject(AppConfigKey.TAG_TOT_10_SOFTWARE, appProject.Id);
+                }
+                else
+                {
+                    AppStoreUIService.AddTagForAppProject(AppConfigKey.TAG_GAME, appProject.Id);
+                    AppStoreUIService.AddTagForAppProject(AppConfigKey.TAG_TOT_10_GAMES, appProject.Id);
+                }
+                AppStoreUIService.AddTagForAppProject(AppConfigKey.TAG_LATEST, appProject.Id);
+                AppStoreUIService.AddTagForAppProject(GetCategoryTagName(appItem.CategoryName), appProject.Id);
+
+                AppStoreUIService.AddTagForApp(GetCategoryTagName(appItem.CategoryName), app.Id);
+                AppStoreUIService.AddTagForApp(AppConfigKey.TAG_LIVE, app.Id);
+                AppStoreUIService.AddTagForApp(AppConfigKey.TAG_VALID, app.Id);
+                AppStoreUIService.AddTagForAppProject(AppConfigKey.TAG_FROM_QIHOO, appProject.Id);
             }
-            else
+        }
+
+        public void SetupTagsByCategoryPId(QihooAppStoreCompleteApp appItem, AppProject appProject, App app)
+        {
+            switch (appItem.CategoryPId)
             {
-                AppStoreUIService.AddTagForAppProject(AppConfigKey.TAG_GAME, appProject.Id);
-                AppStoreUIService.AddTagForAppProject(AppConfigKey.TAG_TOT_10_GAMES, appProject.Id);
+                case "0":
+                case "1":
+                    AppStoreUIService.AddTagForAppProject(AppConfigKey.TAG_SOFTWARE, appProject.Id);
+                    AppStoreUIService.AddTagForAppProject(AppConfigKey.TAG_TOT_10_SOFTWARE, appProject.Id);
+                    break;
+                case "2":
+                    AppStoreUIService.AddTagForAppProject(AppConfigKey.TAG_GAME, appProject.Id);
+                    AppStoreUIService.AddTagForAppProject(AppConfigKey.TAG_TOT_10_GAMES, appProject.Id);
+                    break;
+                default:
+                    break;
             }
             AppStoreUIService.AddTagForAppProject(AppConfigKey.TAG_LATEST, appProject.Id);
-            AppStoreUIService.AddTagForAppProject(GetCategoryTagName(appItem.CategoryName), appProject.Id);
-
-            AppStoreUIService.AddTagForApp(GetCategoryTagName(appItem.CategoryName), app.Id);
             AppStoreUIService.AddTagForApp(AppConfigKey.TAG_LIVE, app.Id);
             AppStoreUIService.AddTagForApp(AppConfigKey.TAG_VALID, app.Id);
             AppStoreUIService.AddTagForAppProject(AppConfigKey.TAG_FROM_QIHOO, appProject.Id);
+
+
+            AppStoreUIService.AddTagForAppProject(GetCategoryTagName(appItem.CategoryName), appProject.Id);
+            AppStoreUIService.AddTagForApp(GetCategoryTagName(appItem.CategoryName), app.Id);
         }
 
-        public void SetupTags<T>(T appItem, App app) where T : QihooAppStoreApp
+        public void SetupTagsByCategoryName(QihooAppStoreApp appItem, App app)
+        {
+            if (app.Status != 0)
+                AppStoreUIService.AddTagForApp(AppConfigKey.TAG_LIVE, app.Id);
+            AppStoreUIService.AddTagForApp(GetCategoryTagName(appItem.CategoryName), app.Id);
+            AppStoreUIService.AddTagForApp(AppConfigKey.TAG_FROM_QIHOO, app.Id);
+            AppStoreUIService.AddTagForApp(AppConfigKey.TAG_LIVE, app.Id);
+        }
+
+        public void SetupTagsByCategoryPId(QihooAppStoreCompleteApp appItem, App app)
         {
             if (app.Status != 0)
                 AppStoreUIService.AddTagForApp(AppConfigKey.TAG_LIVE, app.Id);

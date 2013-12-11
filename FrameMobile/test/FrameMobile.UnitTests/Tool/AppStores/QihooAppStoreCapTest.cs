@@ -43,7 +43,12 @@ namespace FrameMobile.UnitTests.Tool.AppStores
         public void CategoryTest()
         {
             var ret = _cap.GetAllCategory();
-            ret.ForEach(x=>Console.WriteLine(x.CategoryName));
+            ret.ForEach(x => Console.WriteLine(x.CategoryName));
+            ret.ForEach(x => Console.WriteLine(x.CategoryPId));
+            ret.ForEach(x => Console.WriteLine(x.CategoryId));
+            ret.ForEach(x => Console.WriteLine(x.CategoryBrief));
+            ret.ForEach(x => Console.WriteLine(x.CategoryBanner1));
+            ret.ForEach(x => Console.WriteLine(x.CategoryBanner2));
         }
 
         [Fact]
