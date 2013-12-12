@@ -11,8 +11,10 @@ namespace QihooAppStoreCap.Runner
         {
             AppItemCap cap = new AppItemCap();
 
+            NewAppItemCap newcap = new NewAppItemCap();
+
             //cap.AppItemCompleteCap();
-            cap.NewAppItemCompleteCap();
+            newcap.NewAppItemCompleteCap();
         }
     }
 }

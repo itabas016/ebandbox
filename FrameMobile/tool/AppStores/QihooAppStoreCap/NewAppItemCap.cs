@@ -3,30 +3,33 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Newtonsoft.Json.Linq;
-using QihooAppStoreCap;
-using QihooAppStoreCap.Model;
 using QihooAppStoreCap.Service;
 using RedisMapper;
-using TYD.Mobile.Core.Helpers;
-using TYD.Mobile.Infrastructure.AppStore.Models;
 using TYD.Mobile.Infrastructure.Domain.Services;
 using NCore;
-using TYD.Mobile.Infrastructure.Models.ViewModels.AppStores;
+using QihooAppStoreCap.Model;
 using System.Net;
 using System.Threading;
 using System.Collections.Specialized;
-using RestSharp.Contrib;
+using TYD.Mobile.Infrastructure.AppStore.Models;
 
 namespace QihooAppStoreCap
 {
-    public class AppItemCap : AppItemCapBase
+    public class NewAppItemCap : AppItemCapBase
     {
-        public void AppItemCompleteCap()
+        public void NewAppItemCompleteCap()
         {
             ReformApp reformApp = new ReformApp();
 
-            var appItemlist = GetAllAppItem();
+            var softTypeValue = "1";
+
+            var gameTypeValue = "2";
+
+            var appItemSoftlist = GetAppItem(gameTypeValue);
+
+            var appItemGamelist = GetAppItem(softTypeValue);
+
+            var appItemlist = appItemSoftlist.Union(appItemGamelist);
 
             foreach (var item in appItemlist)
             {
@@ -38,16 +41,36 @@ namespace QihooAppStoreCap
             LogHelper.WriteInfo("已有重复应用apk数：" + reformApp.DupVersionCount);
         }
 
-        #region Get AppItem
+        #region GetAppItem
 
-        public List<QihooAppStoreApp> GetAllAppItem(Dictionary<string, string> parameters, out int total)
+        public List<QihooAppStoreCompleteApp> GetAppItem(string typeValue)
         {
-            var result = new List<QihooAppStoreApp>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+
+            var startTime = DateTime.Now.AddDays(-1).UnixStamp().ToString();
+
+            parameters["startTime"] = startTime;
+            parameters["type"] = typeValue;
+
+            int total = 0;
+
+            var applist = GetAppItem(parameters, out total);
+
+            var apppagelist = GetAppItem(parameters, total);
+
+            applist = applist.Union(apppagelist).ToList();
+
+            return applist;
+        }
+
+        public List<QihooAppStoreCompleteApp> GetAppItem(Dictionary<string, string> parameters, out int total)
+        {
+            var result = new List<QihooAppStoreCompleteApp>();
             total = 0;
 
-            var data = _app.GetData(parameters);
+            var data = _completeApp.GetData(parameters, true);
 
-            var appResult = _service.DeserializeBase<QihooAppStoreGetAppResult>(data);
+            var appResult = _service.DeserializeBase<QihooAppStoreGetCompleteAppResult>(data);
 
             if (appResult != null)
             {
@@ -58,9 +81,9 @@ namespace QihooAppStoreCap
             return result;
         }
 
-        public List<QihooAppStoreApp> GetAllAppItem(Dictionary<string, string> parameters, int total)
+        public List<QihooAppStoreCompleteApp> GetAppItem(Dictionary<string, string> parameters, int total)
         {
-            var result = new List<QihooAppStoreApp>();
+            var result = new List<QihooAppStoreCompleteApp>();
 
             var page = total / 100;
             if (page >= 1)
@@ -69,9 +92,9 @@ namespace QihooAppStoreCap
                 {
                     parameters["start"] = (i * 100 + 1).ToString();
 
-                    var data = _app.GetData(parameters);
+                    var data = _completeApp.GetData(parameters, true);
 
-                    var applist = _service.DeserializeAppItem(data);
+                    var applist = _service.DeserializeCompleteAppItem(data);
 
                     if (applist != null && applist.Count > 0)
                     {
@@ -82,30 +105,11 @@ namespace QihooAppStoreCap
             return result;
         }
 
-        public List<QihooAppStoreApp> GetAllAppItem()
-        {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
-
-            var startTime = DateTime.Now.AddDays(-1).UnixStamp().ToString();
-
-            parameters["startTime"] = startTime;
-
-            int total = 0;
-
-            var applist = GetAllAppItem(parameters, out total);
-
-            var apppagelist = GetAllAppItem(parameters, total);
-
-            applist = applist.Union(apppagelist).ToList();
-
-            return applist;
-        }
-
         #endregion
 
         #region Build
 
-        public void BuildAppProject(ReformApp reformApp, QihooAppStoreApp appItem)
+        public void BuildAppProject(ReformApp reformApp, QihooAppStoreCompleteApp appItem)
         {
             var appProject = AppStoreUIService.GetAppProjectByPKGName(appItem.PackageName);
 
@@ -139,7 +143,7 @@ namespace QihooAppStoreCap
             }
         }
 
-        public AppProject AddNewApp(QihooAppStoreApp appItem, AppProject appProject)
+        public AppProject AddNewApp(QihooAppStoreCompleteApp appItem, AppProject appProject)
         {
             try
             {
@@ -153,13 +157,13 @@ namespace QihooAppStoreCap
             catch (Exception ex)
             {
                 LogHelper.WriteError(ex.Message + ex.StackTrace);
-                AppProjectDelete(appProject.Id);
                 LogHelper.WriteInfo(string.Format("{AppProjectId: {0} is delete.}", appProject.Id));
+                AppProjectDelete(appProject.Id);
             }
             return appProject;
         }
 
-        public void AddNewVersionApp(ReformApp reformApp, QihooAppStoreApp appItem, AppProject appProject)
+        public void AddNewVersionApp(ReformApp reformApp, QihooAppStoreCompleteApp appItem, AppProject appProject)
         {
             try
             {
@@ -185,7 +189,7 @@ namespace QihooAppStoreCap
             }
         }
 
-        private int AddNewVersionForApp(int newVersionCount, QihooAppStoreApp appItem, App app)
+        private int AddNewVersionForApp(int newVersionCount, QihooAppStoreCompleteApp appItem, App app)
         {
             newVersionCount++;
 
@@ -207,14 +211,15 @@ namespace QihooAppStoreCap
 
         #region Setup
 
-        public void SetupTags(QihooAppStoreApp appItem, AppProject appProject, App app)
+        public void SetupTags(QihooAppStoreCompleteApp appItem, AppProject appProject, App app)
         {
-            SetupTagsByCategoryName(appItem, appProject, app);
+
+            SetupTagsByCategoryId(appItem, appProject, app);
         }
 
-        public void SetupTags(QihooAppStoreApp appItem, App app)
+        public void SetupTags(QihooAppStoreCompleteApp appItem, App app)
         {
-            SetupTagsByCategoryName(appItem, app);
+            SetupTagsByCategoryId(appItem, app);
         }
 
         #endregion

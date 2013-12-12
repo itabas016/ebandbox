@@ -14,10 +14,14 @@ namespace FrameMobile.UnitTests.Tool.AppStores
     {
         private DataConvertService _service;
         private AppItemCap _cap;
+        private NewAppItemCap _newcap;
+
+
         public QihooAppStoreCapTest()
         {
             _service = new DataConvertService();
             _cap = new AppItemCap();
+            _newcap = new NewAppItemCap();
         }
 
         [Fact]
@@ -42,7 +46,8 @@ namespace FrameMobile.UnitTests.Tool.AppStores
         [Fact]
         public void CategoryTest()
         {
-            var ret = _cap.GetAllCategory();
+            var repo = new CategoryRepository();
+            var ret = repo.GetAllCategory();
             ret.ForEach(x => Console.WriteLine(x.CategoryName));
             ret.ForEach(x => Console.WriteLine(x.CategoryPId));
             ret.ForEach(x => Console.WriteLine(x.CategoryId));
@@ -76,7 +81,7 @@ namespace FrameMobile.UnitTests.Tool.AppStores
             var reformApp = new ReformApp();
             foreach (var item in result.QihooApplist)
             {
-                _cap.BuildAppProject<QihooAppStoreApp>(reformApp, item);
+                _cap.BuildAppProject(reformApp, item);
             }
 
             Console.WriteLine(reformApp.NewAppCount);
@@ -94,7 +99,7 @@ namespace FrameMobile.UnitTests.Tool.AppStores
             var reformApp = new ReformApp();
             foreach (var item in result.QihooApplist)
             {
-                _cap.BuildAppProject<QihooAppStoreCompleteApp>(reformApp, item);
+                _newcap.BuildAppProject(reformApp, item);
             }
 
             Console.WriteLine(reformApp.NewAppCount);

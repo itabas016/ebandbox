@@ -83,6 +83,7 @@
   <ItemGroup>
     <Compile Include="AppConfigKey.cs" />
     <Compile Include="AppItemCap.cs" />
+    <Compile Include="AppItemCapBase.cs" />
     <Compile Include="Invocation\GetApp.cs" />
     <Compile Include="Invocation\GetApps.cs" />
     <Compile Include="Invocation\GetCategorys.cs" />
@@ -100,7 +101,9 @@
     <Compile Include="Model\Qihoo\QihooAppStoreParameter.cs" />
     <Compile Include="Model\Qihoo\QihooAppStoreResultBase.cs" />
     <Compile Include="Model\ReformApp.cs" />
+    <Compile Include="NewAppItemCap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\CategoryRepository.cs" />
     <Compile Include="Service\DataConvertService.cs" />
     <Compile Include="Service\MD5Service.cs" />
     <Compile Include="Service\ServiceProxy.cs" />
