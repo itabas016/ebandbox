@@ -45,10 +45,15 @@
     <Compile Include="AppItemCap.cs" />
     <Compile Include="Invocation\Board.cs" />
     <Compile Include="Invocation\BoardList.cs" />
+    <Compile Include="Invocation\Category.cs" />
     <Compile Include="Invocation\InvocationBase.cs" />
+    <Compile Include="Invocation\Update.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\MD5Service.cs" />
     <Compile Include="Service\ServiceProxy.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Model\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

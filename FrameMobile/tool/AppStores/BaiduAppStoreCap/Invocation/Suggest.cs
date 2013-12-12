@@ -5,16 +5,17 @@ using System.Text;
 
 namespace BaiduAppStoreCap
 {
-    public class Board : BoardList
+    public class Suggest : InvocationBase
     {
-        public int BoardId { get; set; }
+        protected override string MethodName
+        {
+            get { return "sug"; }
+        }
 
         public override void AddAdditionalParams(Dictionary<string, string> parameters)
         {
             this.NameValues["action"] = this.MethodName;
-            this.NameValues["id"] = this.BoardId.ToString();
-            this.NameValues["apilevel"] = "4";
-            this.NameValues["pn"] = "0";
+            this.NameValues["word"] = "";
             base.AddAdditionalParams(parameters);
         }
     }
