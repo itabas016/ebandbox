@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<response>
+	<statuscode>0</statuscode>
+	<statusmessage>done</statusmessage>
+	<result>
+		<title></title>
+		<pn>0</pn>
+		<rn>20</rn>
+		<disp_num>1005</disp_num>
+		<ret_num>19</ret_num>
+		<apps>
+			<app>
+				<sname><![CDATA[QQ]]></sname>
+				<docid>4639277</docid>
+				<catename><![CDATA[聊天通讯]]></catename>
+				<size>28608702</size>
+				<download_url><![CDATA[http://m.baidu.com/api?action=redirect&token=tianyida&from=1001816u&type=app&dltype=new&tj=soft_4639277_1858121943_QQ&blink=46c3687474703a2f2f67646f776e2e62616964752e636f6d2f646174612f7769736567616d652f336239396661636563336465316431332f51515f38322e61706baa52&crversion=1]]></download_url>
+				<icon><![CDATA[http://cdn00.baidu-img.cn/timg?vsapp&size=b800_800&quality=100&imgtype=3&sec=1386922822&di=388106fa3479cd3907f1bd718c5ef96c&src=http%3A%2F%2Fe.hiphotos.bdimg.com%2Fwisegame%2Fpic%2Fitem%2Fba33c895d143ad4b950037d280025aafa40f06f1.jpg]]></icon>
+				<versionname>4.5.2</versionname>
+				<updatetime>2013-10-30</updatetime>
+			</app>
+			<app>
+				<sname><![CDATA[微信]]></sname>
+				<docid>5004331</docid>
+				<catename><![CDATA[聊天通讯]]></catename>
+				<size>24390833</size>
+				<download_url><![CDATA[http://m.baidu.com/api?action=redirect&token=tianyida&from=1001816u&type=app&dltype=new&tj=soft_5004331_2786482313_%E5%BE%AE%E4%BF%A1&blink=46c3687474703a2f2f7265736765742e39312e636f6d2f536f66742f436f6e74726f6c6c65722e617368783f616374696f6e3d646f776e6c6f61642674706c3d312669643d34303135313637aa52&crversion=1]]></download_url>
+				<icon><![CDATA[http://cdn00.baidu-img.cn/timg?vsapp&size=b800_800&quality=100&imgtype=3&sec=1386922822&di=bf4f11105b554194cbe3e7e11612358f&src=http%3A%2F%2Fa.hiphotos.bdimg.com%2Fwisegame%2Fpic%2Fitem%2Fd01c8701a18b87d667dfef02050828381f30fd0a.jpg]]></icon>
+				<versionname>5.0.3.1</versionname>
+				<updatetime>2013-11-12</updatetime>
+			</app>
+			<app>
+				<sname><![CDATA[淘宝]]></sname>
+				<docid>4980335</docid>
+				<catename><![CDATA[理财购物]]></catename>
+				<size>22273248</size>
+				<download_url><![CDATA[http://m.baidu.com/api?action=redirect&token=tianyida&from=1001816u&type=app&dltype=new&tj=soft_4980335_1766075084_%E6%B7%98%E5%AE%9D&blink=46c3687474703a2f2f67646f776e2e62616964752e636f6d2f646174612f7769736567616d652f646134303461376537323333316665312f74616f62616f5f39302e61706baa52&crversion=1]]></download_url>
+				<icon><![CDATA[http://cdn00.baidu-img.cn/timg?vsapp&size=b800_800&quality=100&imgtype=3&sec=1386922822&di=6767416e7352e21d046bbbd36d5b1727&src=http%3A%2F%2Fe.hiphotos.bdimg.com%2Fwisegame%2Fpic%2Fitem%2Fe2cb39dbb6fd526644dded1fa918972bd50736c3.jpg]]></icon>
+				<versionname>3.9.5</versionname>
+				<updatetime>2013-11-28</updatetime>
+			</app>
+		</apps>
+	</result>
+</response>
