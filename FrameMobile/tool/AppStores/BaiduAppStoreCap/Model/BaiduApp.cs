@@ -13,61 +13,61 @@ namespace BaiduAppStoreCap.Model
         /// <summary>
         /// 应用唯一Id
         /// </summary>
-        [XmlAttribute("docid")]
+        [XmlElement("docid")]
         public string Id { get; set; }
 
         /// <summary>
         /// 应用名称
         /// </summary>
-        [XmlAttribute("sname")]
+        [XmlElement("sname")]
         public string Name { get; set; }
 
         /// <summary>
         /// 应用分类Id
         /// </summary>
-        [XmlAttribute("cateid")]
+        [XmlElement("cateid")]
         public string CategoryId { get; set; }
 
         /// <summary>
         /// 应用分类名
         /// </summary>
-        [XmlAttribute("catename")]
+        [XmlElement("catename")]
         public string CategoryName { get; set; }
 
         /// <summary>
         /// 包名称
         /// </summary>
-        [XmlAttribute("package")]
+        [XmlElement("package")]
         public string PackageName { get; set; }
 
         /// <summary>
         /// 资源包大小
         /// </summary>
-        [XmlAttribute("packagesize")]
+        [XmlElement("packagesize")]
         public string Size { get; set; }
 
         /// <summary>
         /// 更新时间
         /// </summary>
-        [XmlAttribute("realsedate")]
+        [XmlElement("realsedate")]
         public string UpdateTime { get; set; }
 
         /// <summary>
         /// 资源包的下载地址
         /// </summary>
-        [XmlAttribute("url")]
+        [XmlElement("url")]
         public string DownloadUrl { get; set; }
 
         /// <summary>
         /// 应用图标
         /// </summary>
-        [XmlAttribute("icon")]
+        [XmlElement("icon")]
         public string IconUrl { get; set; }
 
         /// <summary>
         /// 资源包的版本号
         /// </summary>
-        [XmlAttribute("versioncode")]
+        [XmlElement("versioncode")]
         public string VersionCode { get; set; }
     }
 }

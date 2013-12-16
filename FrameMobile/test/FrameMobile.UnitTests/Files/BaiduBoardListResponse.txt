@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<response>
+	<statuscode>0</statuscode>
+	<statusmessage>ok</statusmessage>
+	<boards>
+		<board>
+			<id>1</id>
+			<name><![CDATA[最热]]></name>
+		</board>
+		<board>
+			<id>2</id>
+			<name><![CDATA[最新]]></name>
+		</board>
+		<board>
+			<id>3</id>
+			<name><![CDATA[软件最热]]></name>
+		</board>
+		<board>
+			<id>4</id>
+			<name><![CDATA[游戏最热]]></name>
+		</board>
+		<board>
+			<id>5</id>
+			<name><![CDATA[软件最新]]></name>
+		</board>
+		<board>
+			<id>6</id>
+			<name><![CDATA[游戏最新]]></name>
+		</board>
+	</boards>
+</response>

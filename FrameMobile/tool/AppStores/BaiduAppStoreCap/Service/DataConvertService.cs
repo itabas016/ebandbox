@@ -16,7 +16,7 @@ namespace BaiduAppStoreCap.Service
         /// <param name="xmlDoc">XmlDocument类型</param>
         /// <param name="t">对象</param>
         /// <returns></returns>
-        public static T Deserialize<T>(XmlDocument xmlDoc)
+        public T Deserialize<T>(XmlDocument xmlDoc)
         {
             StringReader reader = new StringReader(xmlDoc.OuterXml);
             XmlSerializer serializer = new XmlSerializer(typeof(T));
@@ -29,12 +29,26 @@ namespace BaiduAppStoreCap.Service
         /// <param name="xmlNode">XmlDocument类型</param>
         /// <param name="t">对象</param>
         /// <returns></returns>
-        public static T Deserialize<T>(XmlNode xmlNode)
+        public T Deserialize<T>(XmlNode xmlNode)
         {
             StringReader reader = new StringReader(xmlNode.OuterXml);
             XmlSerializer serializer = new XmlSerializer(typeof(T));
             T t = (T)serializer.Deserialize(reader);
             return t;
+        }
+
+        public XmlDocument GetXmlDocument(string input)
+        {
+            var doc = new XmlDocument();
+            try
+            {
+                doc.LoadXml(input);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return doc;
         }
     }
 }

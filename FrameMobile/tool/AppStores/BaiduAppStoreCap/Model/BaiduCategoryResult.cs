@@ -7,7 +7,7 @@ using System.Xml.Serialization;
 namespace BaiduAppStoreCap.Model
 {
     [Serializable]
-    [XmlType("cate")]
+    [XmlRoot("response")]
     public class BaiduCategoryResult : BaiduBoardResult
     {
     }

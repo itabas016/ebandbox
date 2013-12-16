@@ -76,6 +76,7 @@
     <Compile Include="Domain\Service\TestSelect.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestBase.cs" />
+    <Compile Include="Tool\AppStores\BaiduAppStoreCapTest.cs" />
     <Compile Include="Tool\AppStores\QihooAppStoreCapTest.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -103,6 +104,10 @@
       <Project>{451fc1b1-e472-46a9-bb21-6d619f162f75}</Project>
       <Name>FrameMobile.Model</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\tool\AppStores\BaiduAppStoreCap\BaiduAppStoreCap.csproj">
+      <Project>{864d43bc-894d-4a64-993d-ac75474bffef}</Project>
+      <Name>BaiduAppStoreCap</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\tool\AppStores\QihooAppStoreCap\QihooAppStoreCap.csproj">
       <Project>{68b479c9-d262-44af-b000-9db0c5df0d6e}</Project>
       <Name>QihooAppStoreCap</Name>
@@ -111,6 +116,12 @@
   <ItemGroup>
     <Content Include="aapt.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Files\BaiduAppResponse.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Files\BaiduBoardListResponse.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Files\QihoogetAppResponse.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
