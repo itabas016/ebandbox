@@ -30,8 +30,32 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="NCore">
+      <HintPath>..\..\..\..\lib\NCore\NCore.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\..\..\lib\Newtonsoft.Json.4.5.8\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog">
+      <HintPath>..\..\..\..\lib\NLog.2.0.0.2000\lib\net40\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="RedisMapper">
+      <HintPath>..\..\..\..\lib\RedisMapper\RedisMapper.dll</HintPath>
+    </Reference>
     <Reference Include="RestSharp">
       <HintPath>..\..\..\..\..\..\Arthor\Instructure\lib\Restsharp\RestSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Common">
+      <HintPath>..\..\..\..\lib\ServiceStack\ServiceStack.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Interfaces">
+      <HintPath>..\..\..\..\lib\ServiceStack\ServiceStack.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Redis">
+      <HintPath>..\..\..\..\lib\ServiceStack\ServiceStack.Redis.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Text">
+      <HintPath>..\..\..\..\lib\ServiceStack\ServiceStack.Text.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -40,8 +64,24 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="TYD.Mobile.Core">
+      <HintPath>..\..\..\..\lib\infra\TYD.Mobile.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="TYD.Mobile.Infrastructure.AppStore.Models">
+      <HintPath>..\..\..\..\lib\infra\TYD.Mobile.Infrastructure.AppStore.Models.dll</HintPath>
+    </Reference>
+    <Reference Include="TYD.Mobile.Infrastructure.Common">
+      <HintPath>..\..\..\..\lib\infra\TYD.Mobile.Infrastructure.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="TYD.Mobile.Infrastructure.Domain">
+      <HintPath>..\..\..\..\lib\infra\TYD.Mobile.Infrastructure.Domain.dll</HintPath>
+    </Reference>
+    <Reference Include="TYD.Mobile.Infrastructure.Models">
+      <HintPath>..\..\..\..\lib\infra\TYD.Mobile.Infrastructure.Models.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppConfigKey.cs" />
     <Compile Include="AppItemCap.cs" />
     <Compile Include="Invocation\Board.cs" />
     <Compile Include="Invocation\BoardList.cs" />
@@ -52,6 +92,7 @@
     <Compile Include="Invocation\Search.cs" />
     <Compile Include="Invocation\Suggest.cs" />
     <Compile Include="Invocation\Update.cs" />
+    <Compile Include="LogHelper.cs" />
     <Compile Include="Model\BaiduApp.cs" />
     <Compile Include="Model\BaiduAppListResult.cs" />
     <Compile Include="Model\BaiduBoard.cs" />
@@ -61,9 +102,9 @@
     <Compile Include="Model\BaiduCategoryListResult.cs" />
     <Compile Include="Model\BaiduCategoryResult.cs" />
     <Compile Include="Model\BaiduResultBase.cs" />
+    <Compile Include="Model\ReformApp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\DataConvertService.cs" />
-    <Compile Include="Service\MD5Service.cs" />
     <Compile Include="Service\ServiceProxy.cs" />
   </ItemGroup>
   <ItemGroup />

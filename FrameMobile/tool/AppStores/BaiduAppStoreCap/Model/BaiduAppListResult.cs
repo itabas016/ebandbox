@@ -19,30 +19,30 @@ namespace BaiduAppStoreCap.Model
         /// 榜单记录总数
         /// </summary>
         [XmlElement("disp_num")]
-        public string Total { get; set; }
+        public int Total { get; set; }
 
         /// <summary>
         /// 当前页记录数
         /// </summary>
         [XmlElement("ret_num")]
-        public string Count { get; set; }
+        public int Count { get; set; }
 
         /// <summary>
         /// 每页显示结果数 最大值20
         /// </summary>
         [XmlElement("rn")]
-        public string PageSize { get; set; }
+        public int PageSize { get; set; }
 
         /// <summary>
         /// 搜索偏移量 为rn的整数倍
         /// </summary>
         [XmlElement("pn")]
-        public string PageNum { get; set; }
+        public int PageNum { get; set; }
 
         /// <summary>
         /// 应用列表结果
         /// </summary>
-        [XmlArray("apps")]
+        [XmlArray("apps"), XmlArrayItem("app")]
         public List<BaiduApp> AppList { get; set; }
     }
 }

@@ -44,9 +44,9 @@ namespace BaiduAppStoreCap.Service
             {
                 doc.LoadXml(input);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                LogHelper.WriteError(ex.Message + ex.StackTrace);
             }
             return doc;
         }

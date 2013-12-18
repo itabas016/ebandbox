@@ -7,7 +7,7 @@ using System.Xml.Serialization;
 namespace BaiduAppStoreCap.Model
 {
     [Serializable]
-    [XmlType("app")]
+    [XmlRoot("app")]
     public class BaiduApp
     {
         /// <summary>
@@ -67,7 +67,7 @@ namespace BaiduAppStoreCap.Model
         /// <summary>
         /// 资源包的版本号
         /// </summary>
-        [XmlElement("versioncode")]
-        public string VersionCode { get; set; }
+        [XmlElement("versionname")]
+        public string VersionName { get; set; }
     }
 }
