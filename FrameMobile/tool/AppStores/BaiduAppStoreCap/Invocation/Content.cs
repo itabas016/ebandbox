@@ -6,21 +6,26 @@ using NCore;
 
 namespace BaiduAppStoreCap
 {
-    public class Recommend : InvocationBase
+    public class Content : InvocationBase
     {
         public int AppId { get; set; }
 
         public string PackageName { get; set; }
 
+        public int VersionCode { get; set; }
+
+        public string Sign { get; set; }
+
         protected override string MethodName
         {
-            get { return "rec"; }
+            get { return "search"; }
         }
 
         public override void AddAdditionalParams(Dictionary<string, string> parameters)
         {
             this.NameValues["action"] = this.MethodName;
             this.NameValues["apilevel"] = "4";
+            NecessaryParams();
             base.AddAdditionalParams(parameters);
         }
 
@@ -29,6 +34,8 @@ namespace BaiduAppStoreCap
             if (this.AppId <= 0)
             {
                 this.NameValues["package"] = this.PackageName.MakeSureNotNull();
+                this.NameValues["versioncode"] = this.VersionCode.ToString();
+                //this.NameValues["signmd5"] = this.Sign;
             }
             else
             {

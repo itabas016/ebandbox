@@ -23,22 +23,10 @@ namespace BaiduAppStoreCap.Model
         public string Name { get; set; }
 
         /// <summary>
-        /// 应用分类Id
-        /// </summary>
-        [XmlElement("cateid")]
-        public string CategoryId { get; set; }
-
-        /// <summary>
         /// 应用分类名
         /// </summary>
         [XmlElement("catename")]
         public string CategoryName { get; set; }
-
-        /// <summary>
-        /// 包名称
-        /// </summary>
-        [XmlElement("package")]
-        public string PackageName { get; set; }
 
         /// <summary>
         /// 资源包大小
@@ -56,7 +44,7 @@ namespace BaiduAppStoreCap.Model
         /// 资源包的下载地址
         /// </summary>
         [XmlElement("url")]
-        public string DownloadUrl { get; set; }
+        public virtual string DownloadUrl { get; set; }
 
         /// <summary>
         /// 应用图标

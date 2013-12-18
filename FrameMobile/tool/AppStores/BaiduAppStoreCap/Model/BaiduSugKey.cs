@@ -7,12 +7,13 @@ using System.Xml.Serialization;
 namespace BaiduAppStoreCap.Model
 {
     [Serializable]
-    public class BaiduAppListResult : BaiduAppListResultBase
+    [XmlRoot("sug")]
+    public class BaiduSugKey
     {
         /// <summary>
-        /// 应用列表结果
+        /// Suggest key
         /// </summary>
-        [XmlArray("apps"), XmlArrayItem("app")]
-        public List<BaiduApp> AppList { get; set; }
+        [XmlElement("sug")]
+        public string Key { get; set; }
     }
 }

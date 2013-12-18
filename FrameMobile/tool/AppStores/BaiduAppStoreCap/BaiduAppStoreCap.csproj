@@ -87,6 +87,7 @@
     <Compile Include="Invocation\BoardList.cs" />
     <Compile Include="Invocation\Category.cs" />
     <Compile Include="Invocation\CategoryList.cs" />
+    <Compile Include="Invocation\Content.cs" />
     <Compile Include="Invocation\InvocationBase.cs" />
     <Compile Include="Invocation\Recommend.cs" />
     <Compile Include="Invocation\Search.cs" />
@@ -94,6 +95,7 @@
     <Compile Include="Invocation\Update.cs" />
     <Compile Include="LogHelper.cs" />
     <Compile Include="Model\BaiduApp.cs" />
+    <Compile Include="Model\BaiduAppDetail.cs" />
     <Compile Include="Model\BaiduAppListResult.cs" />
     <Compile Include="Model\BaiduBoard.cs" />
     <Compile Include="Model\BaiduBoardListResult.cs" />
@@ -101,7 +103,11 @@
     <Compile Include="Model\BaiduCategory.cs" />
     <Compile Include="Model\BaiduCategoryListResult.cs" />
     <Compile Include="Model\BaiduCategoryResult.cs" />
+    <Compile Include="Model\BaiduContentResult.cs" />
     <Compile Include="Model\BaiduResultBase.cs" />
+    <Compile Include="Model\BaiduSearchResult.cs" />
+    <Compile Include="Model\BaiduAppListResultBase.cs" />
+    <Compile Include="Model\BaiduAppDetailListResult.cs" />
     <Compile Include="Model\ReformApp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\DataConvertService.cs" />

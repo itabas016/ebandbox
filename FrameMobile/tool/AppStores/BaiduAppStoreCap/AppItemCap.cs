@@ -76,7 +76,7 @@ namespace BaiduAppStoreCap
 
         #region Get Item
 
-        public List<BaiduApp> GetAllAppItem()
+        public List<BaiduAppDetail> GetAllAppItem()
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
 
@@ -179,7 +179,7 @@ namespace BaiduAppStoreCap
 
         #region Build
 
-        public void BuildAppProject(ReformApp reformApp, BaiduApp appItem)
+        public void BuildAppProject(ReformApp reformApp, BaiduAppDetail appItem)
         {
             var appProject = AppStoreUIService.GetAppProjectByPKGName(appItem.PackageName);
 
@@ -213,7 +213,7 @@ namespace BaiduAppStoreCap
             }
         }
 
-        public AppProject AddNewApp(BaiduApp appItem, AppProject appProject)
+        public AppProject AddNewApp(BaiduAppDetail appItem, AppProject appProject)
         {
             try
             {
@@ -233,7 +233,7 @@ namespace BaiduAppStoreCap
             return appProject;
         }
 
-        public void AddNewVersionApp(ReformApp reformApp, BaiduApp appItem, AppProject appProject)
+        public void AddNewVersionApp(ReformApp reformApp, BaiduAppDetail appItem, AppProject appProject)
         {
             try
             {
@@ -241,7 +241,7 @@ namespace BaiduAppStoreCap
                 foreach (var a in appitems)
                 {
                     var versions = RedisService.GetAllSubModelIdsByType<App, AppVersion>(a.Id).ToIdsWithNoPrefix<AppVersion>();
-                    /*
+
                     if (!versions.Contains(appItem.VersionCode))
                     {
                         reformApp.NewVersionCount = AddNewVersionForApp(reformApp.NewVersionCount, appItem, a);
@@ -251,7 +251,6 @@ namespace BaiduAppStoreCap
                         reformApp.DupVersionCount++;
                         LogHelper.WriteInfo(string.Format("Already has version {1} for app name {0}", appItem.Name, appItem.VersionCode), ConsoleColor.DarkYellow);
                     }
-                     */
                 }
             }
             catch (Exception ex)
@@ -260,7 +259,7 @@ namespace BaiduAppStoreCap
             }
         }
 
-        private int AddNewVersionForApp(int newVersionCount, BaiduApp appItem, App app)
+        private int AddNewVersionForApp(int newVersionCount, BaiduAppDetail appItem, App app)
         {
             newVersionCount++;
 
@@ -297,7 +296,7 @@ namespace BaiduAppStoreCap
                 {
                     DownloadFile(img, Path.Combine(Screenshots_Folder_Base, GetFileNameFromUri(img)));
                 }
-                DownloadFile(appItem.DownloadUrl, Path.Combine(APK_Folder_Base, GetFileNameFromUri( appItem.DownloadUrl)));
+                DownloadFile(appItem.DownloadUrl, Path.Combine(APK_Folder_Base, GetFileNameFromUri(appItem.DownloadUrl)));
             }
         }
 
@@ -338,12 +337,12 @@ namespace BaiduAppStoreCap
             return appProject;
         }
 
-        public AppProject SetupAppProject(BaiduApp appItem, AppProject appProject)
+        public AppProject SetupAppProject(BaiduAppDetail appItem, AppProject appProject)
         {
             var originalAppProject = CloneHelper.DeepClone<AppProject>(appProject);
 
-            appProject.AppNo = "qh360_" + appItem.Id;
-            //appProject.Creator = appItem.Developer;
+            appProject.AppNo = "baidu_" + appItem.Id;
+            appProject.Creator = appItem.SourceName;
             appProject.LogoFile = GetFileNameFromUri(appItem.IconUrl);
             appProject.Name = appItem.Name;
             appProject.PackageName = appItem.PackageName;
@@ -353,7 +352,7 @@ namespace BaiduAppStoreCap
             return appProject;
         }
 
-        public App SetupApp(BaiduApp appItem, AppProject appProject, App app)
+        public App SetupApp(BaiduAppDetail appItem, AppProject appProject, App app)
         {
             var originalApp = CloneHelper.DeepClone<App>(app);
             var originalApp2 = RedisService.Get<App>(app.Id);
@@ -382,8 +381,8 @@ namespace BaiduAppStoreCap
             app.Logo = lg2;
 
             app.Name = appItem.Name;
-            //app.OrderNumber = appItem.DownloadTimes.ToInt32();
-            //app.DownloadTimes = appItem.DownloadTimes.ToInt32();
+            app.OrderNumber = appItem.Score;
+            app.DownloadTimes = appItem.Score;
             app.Status = 1;
             var screenShotlist = GetScreenShotlist(appItem);
             foreach (var s in screenShotlist)
@@ -397,13 +396,15 @@ namespace BaiduAppStoreCap
                 app.ScreenShot.Add(ss);
             }
             app.PlatformType = AppConfigKey.PLATFORM_TYPE_ID.ConfigValue().ToInt32();
-            //app.Summary = appItem.Description.Replace("<br/>", string.Empty).Replace("<br>", string.Empty);
+            app.Summary = appItem.Summary.Replace("<br/>", string.Empty).Replace("<br>", string.Empty);
+            var changeLog = appItem.ChangeLog.Replace("<br/>", string.Empty).Replace("<br>", string.Empty);
+            app.Summary = string.Format("{0}\r\n{1}", app.Summary, changeLog);
             RedisService.UpdateWithRebuildIndex<App>(originalApp2, app);
 
             return app;
         }
 
-        public void SetupAppVersion(BaiduApp appItem, App app)
+        public void SetupAppVersion(BaiduAppDetail appItem, App app)
         {
             if (!string.IsNullOrEmpty(appItem.DownloadUrl))
             {
@@ -415,10 +416,10 @@ namespace BaiduAppStoreCap
                     {
                         FileSize = (int)fi.Length,
                         FileUrl = GetFileNameFromUri(appItem.DownloadUrl),
-                        PublishDateTime = appItem.UpdateTime.ToExactDateTime("yyyy-MM-dd"),
+                        PublishDateTime = appItem.UpdateTime,
                         Status = 1,
                         VersionName = appItem.VersionName,
-                        //Id = appItem.VersionCode
+                        Id = appItem.VersionCode
                     };
 
                     AndroidPackageView apkInfo = FileService.GetAndroidPackageInfomation(fi.FullName);
@@ -439,22 +440,23 @@ namespace BaiduAppStoreCap
             }
         }
 
-        public void SetupTags(BaiduApp appItem, AppProject appProject, App app)
+        public void SetupTags(BaiduAppDetail appItem, AppProject appProject, App app)
         {
-            if (!string.IsNullOrEmpty(appItem.CategoryName))
+            if (!string.IsNullOrEmpty(appItem.Type))
             {
-                /*
-                if (appItem.CategoryName)
+                switch (appItem.Type)
                 {
-                    AppStoreUIService.AddTagForAppProject(AppConfigKey.TAG_SOFTWARE, appProject.Id);
-                    AppStoreUIService.AddTagForAppProject(AppConfigKey.TAG_TOT_10_SOFTWARE, appProject.Id);
+                    case "soft":
+                        AppStoreUIService.AddTagForAppProject(AppConfigKey.TAG_SOFTWARE, appProject.Id);
+                        AppStoreUIService.AddTagForAppProject(AppConfigKey.TAG_TOT_10_SOFTWARE, appProject.Id);
+                        break;
+                    case "game":
+                        AppStoreUIService.AddTagForAppProject(AppConfigKey.TAG_GAME, appProject.Id);
+                        AppStoreUIService.AddTagForAppProject(AppConfigKey.TAG_TOT_10_GAMES, appProject.Id);
+                        break;
+                    default:
+                        break;
                 }
-                else
-                {
-                    AppStoreUIService.AddTagForAppProject(AppConfigKey.TAG_GAME, appProject.Id);
-                    AppStoreUIService.AddTagForAppProject(AppConfigKey.TAG_TOT_10_GAMES, appProject.Id);
-                }
-                */
 
                 AppStoreUIService.AddTagForAppProject(AppConfigKey.TAG_LATEST, appProject.Id);
                 AppStoreUIService.AddTagForAppProject(appItem.CategoryName, appProject.Id);
