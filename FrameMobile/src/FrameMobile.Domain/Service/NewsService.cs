@@ -191,7 +191,7 @@ namespace FrameMobile.Domain.Service
             var categorycontentlist = (from l in
                                            dbContextService.Find<NewsContent>(x => x.Status == 1 && x.PublishTime >= stampTime)
                                        where categoryIds.Contains(l.CategoryId)
-                                       orderby l.PublishTime descending
+                                       orderby l.PublishTime ascending
                                        select new NewsContentView
                                        {
                                            Id = l.Id,
