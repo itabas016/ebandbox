@@ -23,6 +23,7 @@ namespace BaiduAppStoreCap.Service
             T t = (T)serializer.Deserialize(reader);
             return t;
         }
+
         /// <summary>
         /// 反序列化为对象
         /// </summary>

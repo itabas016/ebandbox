@@ -398,7 +398,7 @@ namespace BaiduAppStoreCap
 
         #region Download
 
-        public void DownloadResources(BaiduApp appItem)
+        public void DownloadResources(BaiduAppDetail appItem)
         {
             if (appItem != null)
             {
@@ -413,7 +413,7 @@ namespace BaiduAppStoreCap
                 {
                     DownloadFile(img, Path.Combine(Screenshots_Folder_Base, GetFileNameFromUri(img)));
                 }
-                DownloadFile(appItem.DownloadUrl, Path.Combine(APK_Folder_Base, GetFileNameFromUri(appItem.DownloadUrl)));
+                DownloadFile(appItem.DownloadUrl, Path.Combine(APK_Folder_Base, GetFileNameFromUri(appItem.DownloadUrlDetail)));
             }
         }
 
@@ -704,10 +704,15 @@ namespace BaiduAppStoreCap
                     return;
                 }
 
-                if (retryTimes > 0)
+                string redirectUrl;
+                HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(fileUrl);
+                request.Referer = fileUrl;
+                request.AllowAutoRedirect = false;
+                using (WebResponse response = request.GetResponse())
                 {
-                    //LogHelper.WriteInfo("Retry to download path: " + fileUrl, ConsoleColor.Magenta);
+                    redirectUrl = response.Headers["Location"];
                 }
+
                 using (WebClient webClient = new WebClient())
                 {
                     Console.WriteLine(fileUrl);
@@ -846,7 +851,7 @@ namespace BaiduAppStoreCap
             }
         }
 
-        public bool CheckTYDApp(BaiduApp appItem, App app)
+        public bool CheckTYDApp(BaiduAppDetail appItem, App app)
         {
             var tags = AppStoreUIService.GetTagsByApp(app.Id);
 
@@ -859,7 +864,7 @@ namespace BaiduAppStoreCap
             return false;
         }
 
-        public bool CheckTencentApp(BaiduApp appItem, App app)
+        public bool CheckTencentApp(BaiduAppDetail appItem, App app)
         {
             var tags = AppStoreUIService.GetTagsByApp(app.Id);
 
@@ -880,10 +885,10 @@ namespace BaiduAppStoreCap
             }
         }
 
-        public string[] GetScreenShotlist(BaiduApp appItem)
+        public string[] GetScreenShotlist(BaiduAppDetail appItem)
         {
-            //var imagelist = appItem.ScreenHotsURL.Split(new string[] { separator }, StringSplitOptions.RemoveEmptyEntries);
-            return null;
+            var imagelist = appItem.ScreenShot.Split(new string[] { ";" }, StringSplitOptions.RemoveEmptyEntries);
+            return imagelist;
         }
 
         #endregion
