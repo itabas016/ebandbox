@@ -7,6 +7,7 @@ using System.Xml.Serialization;
 namespace BaiduAppStoreCap.Model
 {
     [Serializable]
+    [XmlRoot("result")]
     public class BaiduAppDetailListResult : BaiduAppListResultBase
     {
         /// <summary>
