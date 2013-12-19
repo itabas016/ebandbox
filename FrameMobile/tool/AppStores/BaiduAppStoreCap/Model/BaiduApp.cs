@@ -14,7 +14,7 @@ namespace BaiduAppStoreCap.Model
         /// 应用唯一Id
         /// </summary>
         [XmlElement("docid")]
-        public string Id { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// 应用名称

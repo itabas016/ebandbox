@@ -14,7 +14,7 @@ namespace BaiduAppStoreCap.Model
         /// 分类Id
         /// </summary>
         [XmlElement("id")]
-        public string Id { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// 分类Type

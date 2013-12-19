@@ -8,12 +8,12 @@ namespace BaiduAppStoreCap.Model
 {
     [Serializable]
     [XmlType("response")]
-    public class BaiduContentResult : BaiduResultBase
+    public class BaiduContentListResult : BaiduResultBase
     {
         /// <summary>
         /// 结果
         /// </summary>
         [XmlElement("result")]
-        public BaiduAppDetailResult Result { get; set; }
+        public BaiduAppDetailListResult Result { get; set; }
     }
 }

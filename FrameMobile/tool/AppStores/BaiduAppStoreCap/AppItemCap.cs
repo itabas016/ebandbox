@@ -28,6 +28,8 @@ namespace BaiduAppStoreCap
         private CategoryList _categorylist;
         private Category _category;
 
+        private Content _content;
+
         private DataConvertService _service;
 
         public IFileService FileService { get; set; }
@@ -51,12 +53,24 @@ namespace BaiduAppStoreCap
 
         public AppItemCap()
         {
+            _board = new Board();
+            _boardlist = new BoardList();
+
+            _category = new Category();
+            _categorylist = new CategoryList();
+
+            _content = new Content();
+
+            _service = new DataConvertService();
+
             FileService = new FileService();
             RedisService = new RedisService();
             AppStoreUIService = new AppStoreUIService(FileService, RedisService);
         }
 
         #endregion
+
+        #region Method
 
         public void AppItemCompleteCap()
         {
@@ -74,14 +88,49 @@ namespace BaiduAppStoreCap
             LogHelper.WriteInfo("已有重复应用apk数：" + reformApp.DupVersionCount);
         }
 
-        #region Get Item
+        #endregion
+
+        #region Get AppItem
 
         public List<BaiduAppDetail> GetAllAppItem()
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var categorylist = GetAllCategory();
+            var applist = GetAllAppItemByCategory(categorylist);
+            var appDetaillist = GetAllAppItemByAppId(applist);
 
-            return null;
+            return appDetaillist;
         }
+
+        public List<BaiduAppDetail> GetAllAppItemByAppId(List<BaiduApp> applist)
+        {
+            var appDetailList = new List<BaiduAppDetail>();
+
+            if (applist != null && applist.Count > 0)
+            {
+                foreach (var item in applist)
+                {
+                    var app = GetAppDetail(item.Id);
+                    appDetailList.Add(app);
+                }
+            }
+            return appDetailList;
+        }
+
+        public BaiduAppDetail GetAppDetail(int appId)
+        {
+            _content.AppId = appId;
+            var ret = _content.GetData(null);
+
+            var appXml = _service.GetXmlDocument(ret);
+
+            var appResult = _service.Deserialize<BaiduContentResult>(appXml);
+
+            var app = appResult.Result.AppDetail;
+
+            return app;
+        }
+
+        #region Get BoardAppItem
 
         public List<BaiduApp> GetAllAppItemByBoard(List<BaiduBoard> boardlist)
         {
@@ -92,46 +141,26 @@ namespace BaiduAppStoreCap
                 int total = 0;
                 var applist = GetApplistByBoardId(item.Id, out total);
 
-                LogHelper.WriteInfo(string.Format("Category {0} has {1} apps", item.Name, total), ConsoleColor.Yellow);
+                LogHelper.WriteInfo(string.Format("Board {0} has {1} apps", item.Name, total), ConsoleColor.Yellow);
                 result = result.Union(applist).ToList();
             }
             return result;
         }
 
-        public List<BaiduApp> GetApplistByBoardId(int itemId, out int total)
+        public List<BaiduApp> GetApplistByBoardId(int boardId, out int total)
         {
-            var applistResult = GetApplistByBoardId(itemId);
+            var applistResult = GetApplistByBoardId(boardId);
 
             var applist = applistResult.AppList;
             total = applistResult.Total;
 
-            var pageApplist = GetApplistByPaged(applistResult, itemId);
+            var pageApplist = GetBoardApplistByPaged(applistResult, boardId);
             applist = applist.Union(pageApplist).ToList();
 
             return applist;
         }
 
-        public BaiduAppListResult GetApplistByBoardId(int itemId)
-        {
-            _board.BoardId = itemId;
-            var ret = _board.GetData(null);
-            var boardXml = _service.GetXmlDocument(ret);
-            var boardResult = _service.Deserialize<BaiduBoardResult>(boardXml);
-
-            return boardResult.Result;
-
-        }
-
-        public bool IsPaged(BaiduAppListResult applistResult)
-        {
-            var total = applistResult.Total;
-            var pagenum = applistResult.PageNum;
-            var count = applistResult.Count;
-            var flag = total > pagenum + count ? true : false;
-            return flag;
-        }
-
-        public List<BaiduApp> GetApplistByPaged(BaiduAppListResult applistResult, int boardId)
+        public List<BaiduApp> GetBoardApplistByPaged(BaiduAppListResult applistResult, int boardId)
         {
             var applist = new List<BaiduApp>();
 
@@ -155,6 +184,17 @@ namespace BaiduAppStoreCap
             return applist;
         }
 
+        public BaiduAppListResult GetApplistByBoardId(int boardId)
+        {
+            _board.BoardId = boardId;
+            var ret = _board.GetData(null);
+            var boardXml = _service.GetXmlDocument(ret);
+            var boardResult = _service.Deserialize<BaiduBoardResult>(boardXml);
+
+            return boardResult.Result;
+
+        }
+
         public List<BaiduBoard> GetAllBoard()
         {
             var ret = _boardlist.GetData(null);
@@ -163,6 +203,73 @@ namespace BaiduAppStoreCap
             var boardlistResult = _service.Deserialize<BaiduBoardListResult>(boardXml);
 
             return boardlistResult.BoardList;
+        }
+
+        #endregion
+
+        #region Get CategoryAppItem
+
+        public List<BaiduApp> GetAllAppItemByCategory(List<BaiduCategory> categorylist)
+        {
+            var result = new List<BaiduApp>();
+
+            foreach (var item in categorylist)
+            {
+                int total = 0;
+                var applist = GetApplistByCategoryId(item.Id, out total);
+
+                LogHelper.WriteInfo(string.Format("Category {0} has {1} apps", item.Name, total), ConsoleColor.Yellow);
+                result = result.Union(applist).ToList();
+            }
+            return result;
+
+        }
+
+        public List<BaiduApp> GetApplistByCategoryId(int categoryId, out int total)
+        {
+            var applistResult = GetApplistByCategoryId(categoryId);
+
+            var applist = applistResult.AppList;
+            total = applistResult.Total;
+
+            var pageApplist = GetCategoryApplistByPaged(applistResult, categoryId);
+            applist = applist.Union(pageApplist).ToList();
+
+            return applist;
+        }
+
+        public List<BaiduApp> GetCategoryApplistByPaged(BaiduAppListResult applistResult, int categoryId)
+        {
+            var applist = new List<BaiduApp>();
+
+            var total = applistResult.Total;
+            var page = total / 500;
+            if (page >= 1)
+            {
+                for (int i = 1; i < total / 100 + 1; i++)
+                {
+                    _category.PageNum = 500 * i;
+                    var data = _category.GetData(null);
+
+                    var pageApplistResult = GetApplistByCategoryId(categoryId);
+
+                    if (pageApplistResult.AppList != null && pageApplistResult.AppList.Count > 0)
+                    {
+                        applist = applist.Union(pageApplistResult.AppList).ToList();
+                    }
+                }
+            }
+            return applist;
+        }
+
+        public BaiduAppListResult GetApplistByCategoryId(int categoryId)
+        {
+            _category.CategoryId = categoryId;
+            var ret = _category.GetData(null);
+            var categoryXml = _service.GetXmlDocument(ret);
+            var categoryResult = _service.Deserialize<BaiduCategoryResult>(categoryXml);
+
+            return categoryResult.Result;
         }
 
         public List<BaiduCategory> GetAllCategory()
@@ -174,6 +281,17 @@ namespace BaiduAppStoreCap
 
             return categorylistResult.CategoryList;
         }
+
+        public bool IsPaged(BaiduAppListResult applistResult)
+        {
+            var total = applistResult.Total;
+            var pagenum = applistResult.PageNum;
+            var count = applistResult.Count;
+            var flag = total > pagenum + count ? true : false;
+            return flag;
+        }
+
+        #endregion
 
         #endregion
 

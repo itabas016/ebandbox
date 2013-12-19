@@ -104,10 +104,15 @@
     <Compile Include="Model\BaiduCategoryListResult.cs" />
     <Compile Include="Model\BaiduCategoryResult.cs" />
     <Compile Include="Model\BaiduContentResult.cs" />
+    <Compile Include="Model\BaiduRecommendResult.cs" />
     <Compile Include="Model\BaiduResultBase.cs" />
     <Compile Include="Model\BaiduSearchResult.cs" />
     <Compile Include="Model\BaiduAppListResultBase.cs" />
     <Compile Include="Model\BaiduAppDetailListResult.cs" />
+    <Compile Include="Model\BaiduSuggestResult.cs" />
+    <Compile Include="Model\BaiduSugKey.cs" />
+    <Compile Include="Model\BaiduAppDetailResult.cs" />
+    <Compile Include="Model\BaiduContentListResult.cs" />
     <Compile Include="Model\ReformApp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\DataConvertService.cs" />
