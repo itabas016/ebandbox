@@ -14,7 +14,7 @@ namespace BaiduAppStoreCap.Model
         /// 应用唯一Id
         /// </summary>
         [XmlElement("docid")]
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         /// <summary>
         /// 应用名称
@@ -44,7 +44,7 @@ namespace BaiduAppStoreCap.Model
         /// 资源包的下载地址
         /// </summary>
         [XmlElement("url")]
-        public virtual string DownloadUrl { get; set; }
+        public string DownloadUrl { get; set; }
 
         /// <summary>
         /// 应用图标

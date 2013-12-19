@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<response>
+	<statuscode>0</statuscode>
+	<statusmessage>done</statusmessage>
+	<result>
+		<app>
+			<versioncode>4</versioncode>
+			<packageid>858852</packageid>
+			<cateid>401</cateid>
+			<brief><![CDATA[《疯狂捕鱼2》是一款海底捕鱼游戏。以下概述了该游戏机的特点以及它的高质量的画面,以及游戏的操作手法,技巧分析,注意问题,以及游戏本身存在的精彩分析。从宽大的液晶显示屏里,首先映入眼帘的是精致的游戏画面,栩栩如生的海洋生物尽收眼底,如梦幻般真实的场景,给人以视觉的感受。自由自在的鱼儿在大海中畅游,让玩家真正感受到些许捕鱼时的悠闲。面对大自然的魅力,人人都会着迷！！！]]></brief>
+			<size>4955570</size>
+			<sourcename><![CDATA[百度多酷]]></sourcename>
+			<adapi>n</adapi>
+			<aladdin_flag>y</aladdin_flag>
+			<package>com.qukongdk.fishsister</package>
+			<docid>4865301</docid>
+			<versionname>1.3.9</versionname>
+			<screenshot>http://cdn00.baidu-img.cn/timg?vsapp&amp;size=b800_800&amp;quality=100&amp;imgtype=3&amp;sec=1387443428&amp;di=15c3826aff706c38a95e2330cdd3608b&amp;src=http%3A%2F%2Fh.hiphotos.bdimg.com%2Fwisegame%2Fpic%2Fitem%2F3aee3d6d55fbb2fb8c7d6e0c4d4a20a44623dc5e.jpg;http://cdn00.baidu-img.cn/timg?vsapp&amp;size=b800_800&amp;quality=100&amp;imgtype=3&amp;sec=1387443428&amp;di=28bd6e215c92a64d8219c8f6fa23da2c&amp;src=http%3A%2F%2Fc.hiphotos.bdimg.com%2Fwisegame%2Fpic%2Fitem%2Fbaf9d72a6059252d3e412b1a369b033b5bb5b95e.jpg;http://cdn00.baidu-img.cn/timg?vsapp&amp;size=b800_800&amp;quality=100&amp;imgtype=3&amp;sec=1387443428&amp;di=d1e38b1372d7c4e05a616497c0a3c532&amp;src=http%3A%2F%2Fh.hiphotos.bdimg.com%2Fwisegame%2Fpic%2Fitem%2Ff4dda144ad345982b5dbd38c0ef431adcbef845e.jpg;http://cdn00.baidu-img.cn/timg?vsapp&amp;size=b800_800&amp;quality=100&amp;imgtype=3&amp;sec=1387443428&amp;di=6c7ed63dd8583dc0e543dfe0558c384a&amp;src=http%3A%2F%2Fc.hiphotos.bdimg.com%2Fwisegame%2Fpic%2Fitem%2Fb6628535e5dde711b28375e8a5efce1b9d16615e.jpg</screenshot>
+			<permission_cn><![CDATA[ 网络通信 : 允许应用程序访问各种网络功能 | 存储 : 访问SD卡 | 手机通话 : 读取手机状态和身份 | 需要您付费的服务 : 允许应用程序执行可能需要您付费的操作 | 系统工具 : 装载和卸载文件系统 | 系统工具 : 读取系统日志文件 ]]></permission_cn>
+			<buildtime>2013-11-18 19:13:43</buildtime>
+			<changelog><![CDATA[NULL]]></changelog>
+			<catename><![CDATA[休闲益智]]></catename>
+			<screenshot2><![CDATA[http://cdn00.baidu-img.cn/timg?vsapp&size=b800_800&quality=100&imgtype=3&sec=1387443428&di=28bd6e215c92a64d8219c8f6fa23da2c&src=http%3A%2F%2Fc.hiphotos.bdimg.com%2Fwisegame%2Fpic%2Fitem%2Fbaf9d72a6059252d3e412b1a369b033b5bb5b95e.jpg]]></screenshot2>
+			<iconhdpi><![CDATA[http://cdn00.baidu-img.cn/timg?vsapp&size=b800_800&quality=100&imgtype=3&sec=1387443428&di=68f6e5f34e2a7aa009918a4f427bed52&src=http%3A%2F%2Fc.hiphotos.bdimg.com%2Fwisegame%2Fpic%2Fitem%2Fb9b44aed2e738bd41977842fa38b87d6277ff95e.jpg]]></iconhdpi>
+			<type>game</type>
+			<screenshot1><![CDATA[http://cdn00.baidu-img.cn/timg?vsapp&size=b800_800&quality=100&imgtype=3&sec=1387443428&di=15c3826aff706c38a95e2330cdd3608b&src=http%3A%2F%2Fh.hiphotos.bdimg.com%2Fwisegame%2Fpic%2Fitem%2F3aee3d6d55fbb2fb8c7d6e0c4d4a20a44623dc5e.jpg]]></screenshot1>
+			<md5>5f4b3b1d4d91cdff7ca62946fab91f9a</md5>
+			<icon><![CDATA[http://cdn00.baidu-img.cn/timg?vsapp&size=b800_800&quality=100&imgtype=3&sec=1387443428&di=2d9eff68e7dbd4aba48cab96bdcdff27&src=http%3A%2F%2Fc.hiphotos.bdimg.com%2Fwisegame%2Fpic%2Fitem%2F108da9773912b31b123afb378418367adab4e15e.jpg]]></icon>
+			<sname><![CDATA[疯狂捕鱼2]]></sname>
+			<download_url><![CDATA[http://m.baidu.com/api?action=redirect&token=tianyida&from=1001816u&type=app&dltype=new&tj=game_4865301_858852_%E7%96%AF%E7%8B%82%E6%8D%95%E9%B1%BC2&blink=e4b4687474703a2f2f67646f776e2e62616964752e636f6d2f646174612f7769736567616d652f346439316364666637636136323934362f66656e676b75616e67627579753264756f6b7562616e5f342e61706bb252&crversion=1]]></download_url>
+			<updatetime>2013-11-20</updatetime>
+			<score>94</score>
+		</app>
+	</result>
+</response>

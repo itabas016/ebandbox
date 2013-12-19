@@ -39,20 +39,39 @@ namespace FrameMobile.UnitTests.Tool.AppStores
             Assert.NotEqual(true, string.IsNullOrEmpty(model2.Result.AppList[0].Name));
         }
 
+        [Fact]
+        public void AppDetailDeserializeTest()
+        {
+            var doc = _service.GetXmlDocument(MockAppDetailResponse());
+
+            var model = _service.Deserialize<BaiduContentResult>(doc);
+
+            Assert.Equal(0, model.StatusCode);
+            Assert.Equal("疯狂捕鱼2", model.Result.AppDetail.Name);
+        }
+
+        private string MockAppDetailResponse()
+        {
+            var response = MockResponseBase("Files\\BaiduAppDetailResponse.txt");
+            return response;
+        }
+
         private string MockAppResponse()
         {
-            var response = string.Empty;
-            using (var sr = new StreamReader("Files\\BaiduAppResponse.txt"))
-            {
-                response = sr.ReadToEnd();
-            }
+            var response = MockResponseBase("Files\\BaiduAppResponse.txt");
             return response;
         }
 
         private string MockBoardListResponse()
         {
+            var response = MockResponseBase("Files\\BaiduBoardListResponse.txt");
+            return response;
+        }
+
+        private string MockResponseBase(string path)
+        {
             var response = string.Empty;
-            using (var sr = new StreamReader("Files\\BaiduBoardListResponse.txt"))
+            using (var sr = new StreamReader(path))
             {
                 response = sr.ReadToEnd();
             }

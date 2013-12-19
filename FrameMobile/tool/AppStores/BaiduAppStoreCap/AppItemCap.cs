@@ -116,7 +116,7 @@ namespace BaiduAppStoreCap
             return appDetailList;
         }
 
-        public BaiduAppDetail GetAppDetail(int appId)
+        public BaiduAppDetail GetAppDetail(long appId)
         {
             _content.AppId = appId;
             var ret = _content.GetData(null);
@@ -514,7 +514,7 @@ namespace BaiduAppStoreCap
             }
             app.PlatformType = AppConfigKey.PLATFORM_TYPE_ID.ConfigValue().ToInt32();
             app.Summary = appItem.Summary.Replace("<br/>", string.Empty).Replace("<br>", string.Empty);
-            var changeLog = appItem.ChangeLog.Replace("<br/>", string.Empty).Replace("<br>", string.Empty);
+            var changeLog = appItem.ChangeLog.Replace("<br/>", string.Empty).Replace("<br>", string.Empty).Replace("NULL", string.Empty);
             app.Summary = string.Format("{0}\r\n{1}", app.Summary, changeLog);
             RedisService.UpdateWithRebuildIndex<App>(originalApp2, app);
 
@@ -533,7 +533,7 @@ namespace BaiduAppStoreCap
                     {
                         FileSize = (int)fi.Length,
                         FileUrl = GetFileNameFromUri(appItem.DownloadUrl),
-                        PublishDateTime = appItem.UpdateTime,
+                        PublishDateTime = appItem.UpdateTimeDetail.ToExactDateTime("yyyy-MM-dd"),
                         Status = 1,
                         VersionName = appItem.VersionName,
                         Id = appItem.VersionCode

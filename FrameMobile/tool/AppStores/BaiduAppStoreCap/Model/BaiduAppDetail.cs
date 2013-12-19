@@ -32,7 +32,7 @@ namespace BaiduAppStoreCap.Model
         /// 资源包的下载地址
         /// </summary>
         [XmlElement("download_url")]
-        public override string DownloadUrl { get; set; }
+        public string DownloadUrlDetail { get; set; }
 
         /// <summary>
         /// HDicon
@@ -116,12 +116,12 @@ namespace BaiduAppStoreCap.Model
         /// 更新时间
         /// </summary>
         [XmlElement("updatetime")]
-        public DateTime UpdateTime { get; set; }
+        public string UpdateTimeDetail { get; set; }
 
         /// <summary>
         /// 创建时间
         /// </summary>
         [XmlElement("buildtime")]
-        public DateTime BuildTime { get; set; }
+        public string BuildTime { get; set; }
     }
 }

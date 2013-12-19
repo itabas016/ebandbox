@@ -18,8 +18,8 @@ namespace BaiduAppStoreCap.Runner
             catch (Exception ex)
             {
                 LogHelper.WriteError(ex.Message + ex.StackTrace);
+                LogHelper.WriteError(ex.InnerException.Message);
             }
-            
         }
     }
 }

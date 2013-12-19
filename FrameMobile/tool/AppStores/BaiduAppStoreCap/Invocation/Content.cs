@@ -8,7 +8,7 @@ namespace BaiduAppStoreCap
 {
     public class Content : InvocationBase
     {
-        public int AppId { get; set; }
+        public long AppId { get; set; }
 
         public string PackageName { get; set; }
 
