@@ -165,12 +165,12 @@ namespace BaiduAppStoreCap
             var applist = new List<BaiduApp>();
 
             var total = applistResult.Total;
-            var page = total / 500;
+            var page = total / 50;
             if (page >= 1)
             {
                 for (int i = 1; i < total / 100 + 1; i++)
                 {
-                    _board.PageNum = 500 * i;
+                    _board.PageNum = 50 * i;
                     var data = _board.GetData(null);
 
                     var pageApplistResult = GetApplistByBoardId(boardId);
@@ -243,13 +243,12 @@ namespace BaiduAppStoreCap
             var applist = new List<BaiduApp>();
 
             var total = applistResult.Total;
-            var page = total / 500;
+            var page = total / 50;
             if (page >= 1)
             {
                 for (int i = 1; i < total / 100 + 1; i++)
                 {
-                    _category.PageNum = 500 * i;
-                    var data = _category.GetData(null);
+                    _category.PageNum = 50 * i;
 
                     var pageApplistResult = GetApplistByCategoryId(categoryId);
 
