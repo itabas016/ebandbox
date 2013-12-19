@@ -13,7 +13,7 @@ namespace BaiduAppStoreCap.Model
         /// <summary>
         /// 请求结果
         /// </summary>
-        [XmlElement("categories"), XmlArrayItem("category")]
+        [XmlArray("categories"), XmlArrayItem("category")]
         public List<BaiduCategory> CategoryList { get; set; }
     }
 }
