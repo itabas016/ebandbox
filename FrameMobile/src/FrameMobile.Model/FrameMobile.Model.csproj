@@ -65,6 +65,7 @@
     <Compile Include="News\NewsContent.cs" />
     <Compile Include="News\NewsConfig.cs" />
     <Compile Include="News\NewsExtraApp.cs" />
+    <Compile Include="News\NewsInfAddress.cs" />
     <Compile Include="News\NewsSource.cs" />
     <Compile Include="Account\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -87,6 +88,7 @@
     <Compile Include="ViewModels\News\NewsCategoryView.cs" />
     <Compile Include="ViewModels\News\NewsConfigView.cs" />
     <Compile Include="ViewModels\News\NewsExtraAppView.cs" />
+    <Compile Include="ViewModels\News\NewsInfAddressView.cs" />
     <Compile Include="ViewModels\News\NewsSourceView.cs" />
     <Compile Include="ViewModels\News\NewsSubCategoryView.cs" />
     <Compile Include="ViewModels\News\NewsContentView.cs" />

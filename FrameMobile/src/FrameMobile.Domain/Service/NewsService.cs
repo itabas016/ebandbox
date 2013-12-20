@@ -35,6 +35,13 @@ namespace FrameMobile.Domain.Service
         }
 
         [ServiceCache]
+        public IList<NewsInfAddressView> GetInfAddressViewList(MobileParam mobileParams, int cver, out int sver)
+        {
+            var infAddressList = new NewsInfAddress().GetResultByVer<NewsInfAddress>(cver, out sver);
+            return infAddressList.To<IList<NewsInfAddressView>>();
+        }
+
+        [ServiceCache]
         public IList<NewsCategoryView> GetCategoryViewList(MobileParam mobileParams, int cver, out int sver)
         {
             var categorylist = new NewsCategory().GetResultByVer<NewsCategory>(cver, out sver);

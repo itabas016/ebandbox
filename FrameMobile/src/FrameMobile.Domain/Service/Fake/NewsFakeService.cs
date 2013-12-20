@@ -160,6 +160,45 @@ namespace FrameMobile.Domain.Service
         }
 
         [ServiceCache]
+        public IList<NewsInfAddressView> GetInfAddressViewList(MobileParam mobileParams, int cver, out int sver)
+        {
+            #region instance
+
+            var mode1 = new NewsInfAddress()
+            {
+                Id = 1,
+                Name = "腾讯热门",
+                SourceId = 2,
+                CategoryId = 1,
+                SubCategoryId =0,
+                IsStamp = 0,
+                InfAddress= "http://openapi.inews.qq.com/getNewsByChlidVerify?chlid=news&refer=openapi_for_tianyida&appkey=3XfMefMGRHJMpKZHKbKxFWvsFgO4FV&n=10",
+                Status = 1,
+                CreateDateTime = DateTime.Now
+            };
+
+            var mode2 = new NewsInfAddress()
+            {
+                Id = 2,
+                Name = "腾讯科技",
+                SourceId = 2,
+                CategoryId = 2,
+                SubCategoryId = 0,
+                IsStamp = 0,
+                InfAddress = "http://openapi.inews.qq.com/getNewsByChlidVerify?chlid=tech&refer=openapi_for_tianyida&appkey=3XfMefMGRHJMpKZHKbKxFWvsFgO4FV&n=10",
+                Status = 1,
+                CreateDateTime = DateTime.Now
+            };
+            #endregion
+
+            var modelist = new List<NewsInfAddress>() { mode1, mode2 };
+            sver = 1;
+            var result = modelist.To<IList<NewsInfAddressView>>();
+
+            return result;
+        }
+
+        [ServiceCache]
         public IList<NewsCategoryView> GetCategoryViewList(MobileParam mobileParams, int cver, out int sver)
         {
             #region instance

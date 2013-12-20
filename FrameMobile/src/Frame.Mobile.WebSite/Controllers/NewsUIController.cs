@@ -549,6 +549,96 @@ namespace Frame.Mobile.WebSite.Controllers
 
         #endregion
 
+        #region NewsInfAddress
+
+        public ActionResult InfAddressList()
+        {
+            var infaddresslist = dbContextService.All<NewsInfAddress>().ToList();
+            ViewData["infaddresslist"] = infaddresslist;
+            ViewData["TotalCount"] = infaddresslist.Count;
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult InfAddressAdd()
+        {
+            var sourcelist = NewsUIService.GetNewsSourceList().ToList();
+            var categorylist = NewsUIService.GetNewsCategoryList().ToList();
+            var subcategorylist = NewsUIService.GetNewsSubCategoryList().ToList();
+
+            ViewData["Sourcelist"] = sourcelist.GetSelectList();
+            ViewData["Categorylist"] = categorylist.GetSelectList();
+            ViewData["SubCategorylist"] = subcategorylist.GetSelectList();
+            return View();
+        }
+
+        [AdminAuthorize]
+        [HttpPost]
+        public ActionResult InfAddressAdd(NewsInfAddress model)
+        {
+            var exist = dbContextService.Exists<NewsInfAddress>(x => x.InfAddress == model.InfAddress);
+            if (exist)
+            {
+                TempData["errorMsg"] = "该接口地址已存在！";
+                return View();
+            }
+            var ret = dbContextService.Add<NewsInfAddress>(model);
+
+            NewsUIService.UpdateServerVersion<NewsInfAddress>();
+
+            return RedirectToAction("InfAddressList");
+        }
+
+        public ActionResult InfAddressDelete(int infAddressId)
+        {
+            var ret = dbContextService.Delete<NewsInfAddress>(infAddressId);
+
+            NewsUIService.UpdateServerVersion<NewsInfAddress>();
+
+            return RedirectToAction("InfAddressList");
+        }
+
+        [HttpGet]
+        public ActionResult InfAddressEdit(int infAddressId)
+        {
+            var extraApp = dbContextService.Single<NewsInfAddress>(infAddressId);
+
+            var sourcelist = NewsUIService.GetNewsSourceList().ToList();
+            var categorylist = NewsUIService.GetNewsCategoryList().ToList();
+            var subcategorylist = NewsUIService.GetNewsSubCategoryList().ToList();
+
+            ViewData["Sourcelist"] = sourcelist.GetSelectList();
+            ViewData["Categorylist"] = categorylist.GetSelectList();
+            ViewData["SubCategorylist"] = subcategorylist.GetSelectList();
+
+            ViewData["IsUpdate"] = true;
+            return View("InfAddressAdd", extraApp);
+        }
+
+        [AdminAuthorize]
+        [HttpPost]
+        public ActionResult InfAddressEdit(NewsInfAddress model)
+        {
+            var infAddress = dbContextService.Single<NewsInfAddress>(model.Id);
+
+            infAddress.Name = model.Name;
+            infAddress.SourceId = model.SourceId;
+            infAddress.CategoryId = model.CategoryId;
+            infAddress.SubCategoryId = model.SubCategoryId;
+            infAddress.IsStamp = model.IsStamp;
+            infAddress.InfAddress = model.InfAddress;
+            infAddress.Status = model.Status;
+            infAddress.CreateDateTime = DateTime.Now;
+
+            var ret = dbContextService.Update<NewsInfAddress>(infAddress);
+
+            NewsUIService.UpdateServerVersion<NewsInfAddress>();
+
+            return RedirectToAction("InfAddressList");
+        }
+
+        #endregion
+
         #region Helper
 
         [HttpGet]

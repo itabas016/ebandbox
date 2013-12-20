@@ -367,6 +367,8 @@
     <Content Include="Views\Account\LackOfPermission.cshtml" />
     <Content Include="Views\NewsUI\LackOfPermission.cshtml" />
     <Content Include="Views\NewsUI\TimeConvert.cshtml" />
+    <Content Include="Views\NewsUI\InfAddressAdd.cshtml" />
+    <Content Include="Views\NewsUI\InfAddressList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

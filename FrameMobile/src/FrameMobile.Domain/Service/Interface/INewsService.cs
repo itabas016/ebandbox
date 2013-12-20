@@ -14,6 +14,8 @@ namespace FrameMobile.Domain.Service
 
         IList<NewsExtraAppView> GetExtraAppViewList(MobileParam mobileParams, int cver, out int sver);
 
+        IList<NewsInfAddressView> GetInfAddressViewList(MobileParam mobileParams, int cver, out int sver);
+
         IList<NewsCategoryView> GetCategoryViewList(MobileParam mobileParams, int cver, out int sver);
 
         IList<NewsSubCategoryView> GetSubCategoryViewList(MobileParam mobileParams);
