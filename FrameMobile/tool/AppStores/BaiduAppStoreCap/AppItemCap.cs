@@ -15,6 +15,7 @@ using System.Threading;
 using TYD.Mobile.Infrastructure.Models.ViewModels.AppStores;
 using TYD.Mobile.Core.Helpers;
 using Newtonsoft.Json.Linq;
+using RestSharp.Contrib;
 
 namespace BaiduAppStoreCap
 {
@@ -406,14 +407,14 @@ namespace BaiduAppStoreCap
                 MakeSureDIRExist(Screenshots_Folder_Base);
                 MakeSureDIRExist(Logo_Folder_Base);
 
-                DownloadFile(appItem.IconUrl, Path.Combine(Logo_Folder_Base, GetFileNameFromUri(appItem.IconUrl)));
+                DownloadFile(appItem.IconUrl, Path.Combine(Logo_Folder_Base, GetFileNameFromUri(GetDownloadUrl(appItem.IconUrl))));
 
                 var screenshotlist = GetScreenShotlist(appItem);
                 foreach (var img in screenshotlist)
                 {
-                    DownloadFile(img, Path.Combine(Screenshots_Folder_Base, GetFileNameFromUri(img)));
+                    DownloadFile(img, Path.Combine(Screenshots_Folder_Base, GetFileNameFromUri(GetDownloadUrl(img))));
                 }
-                DownloadFile(appItem.DownloadUrl, Path.Combine(APK_Folder_Base, GetFileNameFromUri(appItem.DownloadUrlDetail)));
+                DownloadFile(appItem.DownloadUrl, Path.Combine(APK_Folder_Base, GetFileNameFromUri(GetRedirectUrl(appItem.DownloadUrlDetail))));
             }
         }
 
@@ -703,20 +704,20 @@ namespace BaiduAppStoreCap
 
                     return;
                 }
-
-                string redirectUrl;
-                HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(fileUrl);
-                request.Referer = fileUrl;
-                request.AllowAutoRedirect = false;
-                using (WebResponse response = request.GetResponse())
-                {
-                    redirectUrl = response.Headers["Location"];
-                }
+                var redirectUrl = GetRedirectUrl(fileUrl);
 
                 using (WebClient webClient = new WebClient())
                 {
-                    Console.WriteLine(fileUrl);
-                    webClient.DownloadFile(fileUrl, path);
+                    if (string.IsNullOrEmpty(redirectUrl))
+                    {
+                        Console.WriteLine(fileUrl);
+                        webClient.DownloadFile(fileUrl, path);
+                    }
+                    else
+                    {
+                        Console.WriteLine(redirectUrl);
+                        webClient.DownloadFile(redirectUrl, path);
+                    }
                 }
                 LogHelper.WriteInfo("Downloaded file: " + path, ConsoleColor.DarkGreen);
                 retryTimes = 0;
@@ -731,6 +732,141 @@ namespace BaiduAppStoreCap
                     goto Label_0002;
                 }
             }
+        }
+
+        public string GetRedirectUrl(string originalUrl)
+        {
+            var redirectUrl = string.Empty;
+
+            HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(originalUrl);
+            request.Referer = originalUrl;
+            request.AllowAutoRedirect = false;
+
+            using (WebResponse response = request.GetResponse())
+            {
+                redirectUrl = response.Headers["Location"];
+            }
+            return redirectUrl;
+        }
+
+        public string GetDownloadUrl(string fullDownloadUrl)
+        {
+            var collectionKey = AppConfigKey.PARAMETER_DOWNLOADURL;
+
+            Uri uri = new Uri(fullDownloadUrl);
+
+            var queryString = uri.Query;
+
+            NameValueCollection collection = GetQueryString(queryString);
+
+            return collection[collectionKey];
+        }
+
+        public NameValueCollection GetQueryString(string queryString)
+        {
+            return GetQueryString(queryString, Encoding.UTF8);
+        }
+
+        public NameValueCollection GetQueryString(string queryString, Encoding encoding)
+        {
+            queryString = queryString.Replace("?", "");
+            NameValueCollection result = new NameValueCollection(StringComparer.OrdinalIgnoreCase);
+            if (!string.IsNullOrEmpty(queryString))
+            {
+                int count = queryString.Length;
+                for (int i = 0; i < count; i++)
+                {
+                    int startIndex = i;
+                    int index = -1;
+                    while (i < count)
+                    {
+                        char item = queryString[i];
+                        if (item == '=')
+                        {
+                            if (index < 0)
+                            {
+                                index = i;
+                            }
+                        }
+                        else if (item == '&')
+                        {
+                            break;
+                        }
+                        i++;
+                    }
+                    string key = null;
+                    string value = null;
+                    if (index >= 0)
+                    {
+                        key = queryString.Substring(startIndex, index - startIndex);
+                        value = queryString.Substring(index + 1, (i - index) - 1);
+                    }
+                    else
+                    {
+                        key = queryString.Substring(startIndex, i - startIndex);
+                    }
+                    result[UrlDeCode(key, encoding)] = UrlDeCode(value, encoding);
+                    if ((i == (count - 1)) && (queryString[i] == '&'))
+                    {
+                        result[key] = string.Empty;
+                    }
+                }
+            }
+            return result;
+        }
+
+        public string UrlDeCode(string str, Encoding encoding)
+        {
+            if (encoding == null)
+            {
+                Encoding utf8 = Encoding.UTF8;
+                string code = HttpUtility.UrlDecode(str.ToUpper(), utf8);
+                string encode = HttpUtility.UrlEncode(code, utf8).ToUpper();
+                if (str == encode)
+                    encoding = Encoding.UTF8;
+                else
+                    encoding = Encoding.GetEncoding("gb2312");
+            }
+            return HttpUtility.UrlDecode(str, encoding);
+        }
+
+        public void Download(string url)
+        {
+            string redirectUrl;
+            HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(url);
+            request.Referer = url;
+            request.AllowAutoRedirect = false;
+
+            using (WebResponse response = request.GetResponse())
+            {
+                long fileLength = response.ContentLength;
+                Stream stream = response.GetResponseStream();
+                StreamReader sr = new StreamReader(stream);
+                byte[] bufferbyte = new byte[fileLength];
+                redirectUrl = response.Headers["Location"];
+
+                int MaxPro = (int)bufferbyte.Length;
+                int Currentvalue = 0;
+                while (fileLength > 0)
+                {
+                    int downByte = stream.Read(bufferbyte, Currentvalue, MaxPro);
+                    if (downByte == 0) { break; };
+                    Currentvalue += downByte;
+                    MaxPro -= downByte;
+                }
+
+                var fileName = string.IsNullOrEmpty(redirectUrl) ? GetFileNameBySplit(response.ResponseUri.AbsoluteUri) : GetFileNameBySplit(redirectUrl);
+
+                FileStream fs = new FileStream(string.Format("@D:\\temp\\{1}",fileName.MakeSureNotNull()), FileMode.OpenOrCreate, FileAccess.Write);
+                fs.Write(bufferbyte, 0, bufferbyte.Length);
+            }
+        }
+
+        public string GetFileNameBySplit(string urlPath)
+        {
+            var fileArray = urlPath.Split(new string[] { "/" }, StringSplitOptions.RemoveEmptyEntries);
+            var fileName = fileArray[fileArray.Length - 1];
+            return fileName;
         }
 
         public string GetFileNameFromUri(string uriPath)

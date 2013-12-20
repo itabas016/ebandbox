@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml;
+using BaiduAppStoreCap;
 using BaiduAppStoreCap.Model;
 using BaiduAppStoreCap.Service;
 using Xunit;
@@ -13,10 +14,12 @@ namespace FrameMobile.UnitTests.Tool.AppStores
     public class BaiduAppStoreCapTest
     {
         private DataConvertService _service;
+        private AppItemCap _cap;
 
         public BaiduAppStoreCapTest()
         {
             _service = new DataConvertService();
+            _cap = new AppItemCap();
         }
 
         [Fact]
@@ -50,6 +53,22 @@ namespace FrameMobile.UnitTests.Tool.AppStores
             Assert.Equal("疯狂捕鱼2", model.Result.AppDetail.Name);
         }
 
+        [Fact]
+        public void DownloadResourceTest()
+        {
+            var url = "http://cdn00.baidu-img.cn/timg?vsapp&size=b800_800&quality=100&imgtype=3&sec=1387443428&di=6c7ed63dd8583dc0e543dfe0558c384a&src=http%3A%2F%2Fc.hiphotos.bdimg.com%2Fwisegame%2Fpic%2Fitem%2Fb6628535e5dde711b28375e8a5efce1b9d16615e.jpg";
+
+            var ret = _cap.GetDownloadUrl(url);
+            Console.WriteLine(ret);
+            var imageName = GetUrlName(ret);
+            Console.WriteLine(imageName);
+            //_cap.Download(url);
+            //_cap.Download(redrict_url);
+            var redirectUrl = "http://gdown.baidu.com/data/wisegame/4d91cdff7ca62946/fengkuangbuyu2duokuban_4.apk";
+            var fileName = GetUrlName(redirectUrl);
+            Console.WriteLine(fileName);
+        }
+
         private string MockAppDetailResponse()
         {
             var response = MockResponseBase("Files\\BaiduAppDetailResponse.txt");
@@ -76,6 +95,12 @@ namespace FrameMobile.UnitTests.Tool.AppStores
                 response = sr.ReadToEnd();
             }
             return response;
+        }
+
+        private string GetUrlName(string url)
+        {
+            Uri uri = new Uri(url);
+            return uri.AbsolutePath.Replace("/", "_");
         }
     }
 }

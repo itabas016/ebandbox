@@ -26,5 +26,6 @@ namespace BaiduAppStoreCap
         public const string TAG_VALID = "Valid";
         public const string TAG_FROM_BAIDU = "From_Baidu";
         public const string TAG_FROM_TENCENT = "From_tencent";
+        public const string PARAMETER_DOWNLOADURL = "src";
     }
 }
