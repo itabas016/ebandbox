@@ -155,16 +155,14 @@ namespace BaiduAppStoreCap
             var applist = applistResult.AppList;
             total = applistResult.Total;
 
-            var pageApplist = GetBoardApplistByPaged(applistResult, boardId);
+            var pageApplist = GetBoardApplistByPaged(applist, applistResult, boardId);
             applist = applist.Union(pageApplist).ToList();
 
             return applist;
         }
 
-        public List<BaiduApp> GetBoardApplistByPaged(BaiduAppListResult applistResult, int boardId)
+        public List<BaiduApp> GetBoardApplistByPaged(List<BaiduApp> applist, BaiduAppListResult applistResult, int boardId)
         {
-            var applist = new List<BaiduApp>();
-
             var total = applistResult.Total;
             var page = total / 50;
             if (page >= 1)
@@ -233,16 +231,14 @@ namespace BaiduAppStoreCap
             var applist = applistResult.AppList;
             total = applistResult.Total;
 
-            var pageApplist = GetCategoryApplistByPaged(applistResult, categoryId);
+            var pageApplist = GetCategoryApplistByPaged(applist, applistResult, categoryId);
             applist = applist.Union(pageApplist).ToList();
 
             return applist;
         }
 
-        public List<BaiduApp> GetCategoryApplistByPaged(BaiduAppListResult applistResult, int categoryId)
+        public List<BaiduApp> GetCategoryApplistByPaged(List<BaiduApp> applist ,BaiduAppListResult applistResult, int categoryId)
         {
-            var applist = new List<BaiduApp>();
-
             var total = applistResult.Total;
             var page = total / 50;
             if (page >= 1)
@@ -407,14 +403,21 @@ namespace BaiduAppStoreCap
                 MakeSureDIRExist(Screenshots_Folder_Base);
                 MakeSureDIRExist(Logo_Folder_Base);
 
-                DownloadFile(appItem.IconUrl, Path.Combine(Logo_Folder_Base, GetFileNameFromUri(GetDownloadUrl(appItem.IconUrl))));
+                var iconFileName = GetFileNameFromUri(GetDownloadUrl(appItem.IconUrl));
+                var iconFilePath = Path.Combine(Logo_Folder_Base, iconFileName);
+                DownloadFile(appItem.IconUrl, iconFilePath);
 
                 var screenshotlist = GetScreenShotlist(appItem);
                 foreach (var img in screenshotlist)
                 {
-                    DownloadFile(img, Path.Combine(Screenshots_Folder_Base, GetFileNameFromUri(GetDownloadUrl(img))));
+                    var screenshotFileName = GetFileNameFromUri(GetDownloadUrl(img));
+                    var screenshotFilePath = Path.Combine(Screenshots_Folder_Base, screenshotFileName);
+                    DownloadFile(img, screenshotFilePath);
                 }
-                DownloadFile(appItem.DownloadUrl, Path.Combine(APK_Folder_Base, GetFileNameFromUri(GetRedirectUrl(appItem.DownloadUrlDetail))));
+
+                var apkFileName = GetFileNameFromUri(GetRedirectUrl(appItem.DownloadUrlDetail));
+                var apkFilePath = Path.Combine(APK_Folder_Base, apkFileName);
+                DownloadFile(appItem.DownloadUrl, apkFilePath);
             }
         }
 
@@ -704,14 +707,15 @@ namespace BaiduAppStoreCap
 
                     return;
                 }
-                var redirectUrl = GetRedirectUrl(fileUrl);
+                var contentType = string.Empty;
+                var redirectUrl = GetRedirectUrl(fileUrl, out contentType);
 
                 using (WebClient webClient = new WebClient())
                 {
                     if (string.IsNullOrEmpty(redirectUrl))
                     {
                         Console.WriteLine(fileUrl);
-                        webClient.DownloadFile(fileUrl, path);
+                        webClient.DownloadFile(fileUrl, string.Format("{0}{1}", path.TrimEnd('.'), GetExtensionType(contentType)));
                     }
                     else
                     {
@@ -737,7 +741,6 @@ namespace BaiduAppStoreCap
         public string GetRedirectUrl(string originalUrl)
         {
             var redirectUrl = string.Empty;
-
             HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(originalUrl);
             request.Referer = originalUrl;
             request.AllowAutoRedirect = false;
@@ -747,6 +750,59 @@ namespace BaiduAppStoreCap
                 redirectUrl = response.Headers["Location"];
             }
             return redirectUrl;
+        }
+
+        public string GetRedirectUrl(string originalUrl, out string contentType)
+        {
+            var redirectUrl = string.Empty;
+            contentType = string.Empty;
+            HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(originalUrl);
+            request.Referer = originalUrl;
+            request.AllowAutoRedirect = false;
+
+            using (WebResponse response = request.GetResponse())
+            {
+                redirectUrl = response.Headers["Location"];
+                contentType = response.ContentType;
+            }
+            return redirectUrl;
+        }
+
+        private string GetExtensionType(string contentType)
+        {
+            var type = string.Empty;
+            switch (contentType)
+            {
+                case "image/jpeg":
+                case "image/pjpeg":
+                    type = ".jpg";
+                    break;
+                case "image/gif":
+                    type = ".gif";
+                    break;
+                case "image/png":
+                case "image/x-png":
+                    type = ".png";
+                    break;
+                case "image/x-ms-bmp":
+                    type = ".bmp";
+                    break;
+                case "text/plain":
+                case "text/richtext":
+                case "text/html":
+                    type = ".txt";
+                    break;
+                case "application/zip":
+                case "application/x-zip-compressed":
+                    type = ".zip";
+                    break;
+                case "application/x-rar-compressed":
+                    type = ".rar";
+                    break;
+                default:
+                    break;
+            }
+            return type;
         }
 
         public string GetDownloadUrl(string fullDownloadUrl)
@@ -857,7 +913,7 @@ namespace BaiduAppStoreCap
 
                 var fileName = string.IsNullOrEmpty(redirectUrl) ? GetFileNameBySplit(response.ResponseUri.AbsoluteUri) : GetFileNameBySplit(redirectUrl);
 
-                FileStream fs = new FileStream(string.Format("@D:\\temp\\{1}",fileName.MakeSureNotNull()), FileMode.OpenOrCreate, FileAccess.Write);
+                FileStream fs = new FileStream(string.Format("@D:\\temp\\{1}", fileName.MakeSureNotNull()), FileMode.OpenOrCreate, FileAccess.Write);
                 fs.Write(bufferbyte, 0, bufferbyte.Length);
             }
         }
