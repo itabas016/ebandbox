@@ -52,7 +52,7 @@ namespace FrameMobile.Domain
                 var dbContextService = ObjectFactory.GetInstance<IDbContextService>();
                 sver = version;
                 var type = typeof(T);
-                var flag = (type == typeof(NewsCategory));
+                var flag = (type == typeof(NewsCategory) || type == typeof(NewsSource) || type == typeof(NewsInfAddress));
                 result = flag ?
                     dbContextService.All<T>().ToList() : dbContextService.Find<T>(x => x.Status == 1).ToList();
                 return result;

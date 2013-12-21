@@ -54,6 +54,19 @@ namespace Frame.Mobile.WebSite.Controllers
             return Content(actionResult.ToString());
         }
 
+        public ActionResult InfAddressList(string imsi, int cver = 0)
+        {
+            var mobileParams = GetMobileParam();
+            int sver = 0;
+
+            Func<IList<NewsInfAddressView>> getinfaddresslist = () => NewsService.GetInfAddressViewList(mobileParams, cver, out sver);
+
+            var actionResult = BuildResult(this.CheckRequiredParams(imsi), getinfaddresslist);
+
+            actionResult.ServerVerison = sver;
+            return Content(actionResult.ToString());
+        }
+
         public ActionResult CategoryList(string imsi, int cver = 0)
         {
             var mobileParams = GetMobileParam();

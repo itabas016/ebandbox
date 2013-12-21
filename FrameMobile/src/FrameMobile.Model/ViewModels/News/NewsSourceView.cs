@@ -22,5 +22,8 @@ namespace FrameMobile.Model
         
         [JsonProperty("pkgname")]
         public string PackageName { get; set; }
+
+        [JsonProperty("status")]
+        public int Status { get; set; }
     }
 }
