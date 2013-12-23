@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using FrameMobile.Core;
 using NCore;
 
@@ -77,6 +78,20 @@ namespace FrameMobile.Domain
             var lcdArray = resolution.ToLower().Split('x');
             var width = lcdArray[0].ToInt32();
             return width;
+        }
+
+        public static long TruncLong(this string input)
+        {
+            long result = 0;
+            if (!string.IsNullOrEmpty(input))
+            {
+                input = Regex.Replace(input, @"[^\d]", "");
+                if (Regex.IsMatch(input, @"^[+-]?\d*$"))
+                {
+                    result = Int64.Parse(input);
+                }
+            }
+            return result;
         }
     }
 }

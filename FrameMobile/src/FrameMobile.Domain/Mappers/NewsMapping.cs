@@ -28,6 +28,15 @@ namespace FrameMobile.Domain
             Mapper.CreateMap<TouTiaoImageInfo, NewsImageInfo>()
                 .IgnoreAllNonExisting();
 
+            Mapper.CreateMap<TencentContent, NewsContent>()
+                .ForMember(dest => dest.NewsId, opt => opt.MapFrom(ori => ori.NewsId.TruncLong()))
+                .ForMember(dest => dest.Site, opt => opt.MapFrom(ori => ori.Source.DefaultValue()))
+                .ForMember(dest => dest.Title, opt => opt.MapFrom(ori => ori.Title.DefaultValue()))
+                .ForMember(dest => dest.Summary, opt => opt.MapFrom(ori => ori.Summary.DefaultValue()))
+                .ForMember(dest => dest.PublishTime, opt => opt.MapFrom(ori => ori.Stamp.UTCStamp()))
+                .IgnoreAllNonExisting();
+
+
             #endregion
 
             #region ViewModel
