@@ -28,11 +28,11 @@ namespace FrameMobile.UnitTests.Domain
         }
         private IDbContextService _dbContextService;
 
-        protected FetchTouTiaoService dataService;
+        protected TouTiaoService dataService;
 
         public FetchTouTiaoServiceTest()
         {
-            dataService = new FetchTouTiaoService(_dbContextService);
+            dataService = new TouTiaoService(_dbContextService);
         }
 
         [Fact]

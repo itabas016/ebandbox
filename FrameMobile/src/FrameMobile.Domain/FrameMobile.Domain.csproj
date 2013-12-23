@@ -107,7 +107,7 @@
     <Compile Include="Service\AccountService.cs" />
     <Compile Include="Service\CookieService.cs" />
     <Compile Include="Service\Fake\NewsFakeService.cs" />
-    <Compile Include="Service\FetchTouTiaoService.cs" />
+    <Compile Include="Service\TouTiaoService.cs" />
     <Compile Include="Service\Interface\IAccountService.cs" />
     <Compile Include="Service\Interface\ICookieService.cs" />
     <Compile Include="Service\Interface\IDbContextService.cs" />

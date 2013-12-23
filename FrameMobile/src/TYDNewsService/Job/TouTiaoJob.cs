@@ -12,7 +12,7 @@ namespace TYDNewsService
     {
         public void Execute(JobExecutionContext context)
         {
-            FetchTouTiaoService service = new FetchTouTiaoService(dbContextService);
+            TouTiaoService service = new TouTiaoService(dbContextService);
 
             service.Capture();
         }

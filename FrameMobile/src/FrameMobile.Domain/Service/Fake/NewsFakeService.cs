@@ -30,7 +30,7 @@ namespace FrameMobile.Domain.Service
             }
         }
 
-        FetchTouTiaoService service;
+        TouTiaoService service;
 
         public string DIR_PREFIX = ConfigKeys.DEMO_TOUTIAO_FILE_PATH_ROOT.ConfigValue();
 
@@ -38,7 +38,7 @@ namespace FrameMobile.Domain.Service
 
         public NewsFakeService()
         {
-            service = new FetchTouTiaoService(dbContextService);
+            service = new TouTiaoService(dbContextService);
         }
 
         public string TimeConvert(string timeformat, long stamp)
