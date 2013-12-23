@@ -13,7 +13,7 @@ using FrameMobile.Model.News;
 
 namespace FrameMobile.UnitTests.Domain
 {
-    public class FetchTouTiaoServiceTest : TestBase
+    public class TouTiaoServiceTest : TestBase
     {
         public IDbContextService dbContextService
         {
@@ -30,7 +30,7 @@ namespace FrameMobile.UnitTests.Domain
 
         protected TouTiaoService dataService;
 
-        public FetchTouTiaoServiceTest()
+        public TouTiaoServiceTest()
         {
             dataService = new TouTiaoService(_dbContextService);
         }
