@@ -5,7 +5,7 @@
 	[		
 		{
 			"id":"NEW2013122001007400",
-			"from":"\u817e\u8baf\u65b0\u95fb\u5ba2\u6237\u7aef",
+			"from":"\u817e\u8baf\u65b0\u95fb\u5ba2\u6237\u7aef\u817e\u8baf\u65b0\u95fb",
 			"qqnews_download_url":"http:\/\/inews.qq.com\/m?refer=openapi_for_tianyida",
 			"articletype":"1",
 			"title":"\u7f57\u5fb7\u66fc\u6307\u5bfc\u671d\u9c9c\u7537\u7bee\u7167\u7247\u66dd\u5149",

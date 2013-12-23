@@ -29,6 +29,15 @@ namespace FrameMobile.Common
 
         public const string TYD_NEWS_APP_DOWNLOAD_PREFIX_URL = "TYD_News_App_Download_Prefix_URL";
 
+        //Tencent
+
+        public const string TYD_NEWS_TENCENT_REQUEST_URL = "TYD_News_Tencent_Request_URL";
+
+        public const string TYD_NEWS_TENCENT_APP_KEY = "TYD_News_Tencent_App_Key";
+
+        //当前只为10
+        public const string TYD_NEWS_TENCENT_REQUEST_COUNT = "TYD_News_Tencent_Request_Count";
+
         //Clean
 
         public const string CLEANUP_NEWS_CONTENT_DAYS_AGO_VALUE = "Cleanup_News_Content_Days_Ago_Value";

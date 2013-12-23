@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading;
+using RestSharp;
 
 namespace FrameMobile.Core
 {
@@ -181,6 +182,16 @@ namespace FrameMobile.Core
                 LogHelper.Error("GetPostData" + ex.Message);
             }
             return postData;
+        }
+
+        public static string GetData(string url)
+        {
+            var client = new RestClient(url);
+            var request = new RestRequest(Method.GET);
+            var response = client.Execute(request);
+
+            var content = response.Content;
+            return content;
         }
     }
 }

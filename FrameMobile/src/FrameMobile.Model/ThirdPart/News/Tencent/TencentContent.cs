@@ -13,13 +13,13 @@ namespace FrameMobile.Model.ThirdPart
         [JsonProperty(PropertyName = "id")]
         public string NewsId { get; set; }
 
-        //新闻来源
+        //新闻标识
         [JsonProperty(PropertyName = "from")]
-        public string Source { get; set; }
+        public string Client { get; set; }
 
         //请求地址
         [JsonProperty(PropertyName = "qqnews_download_url")]
-        public string RequestUrl { get; set; }
+        public string NewsClientDownloadUrl { get; set; }
 
         //新闻类型
         [JsonProperty(PropertyName = "articletype")]
@@ -29,9 +29,9 @@ namespace FrameMobile.Model.ThirdPart
         [JsonProperty(PropertyName = "title")]
         public string Title { get; set; }
 
-        //
+        //来源
         [JsonProperty(PropertyName = "src")]
-        public string Src { get; set; }
+        public string Source { get; set; }
 
         //新闻缩略图
         [JsonProperty(PropertyName = "thumbnails_qqnews")]

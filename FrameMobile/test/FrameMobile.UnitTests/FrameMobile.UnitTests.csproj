@@ -73,6 +73,7 @@
     <Compile Include="Domain\Service\DbContextServiceTest.cs" />
     <Compile Include="Domain\Service\FetchTouTiaoServiceTest.cs" />
     <Compile Include="Domain\Service\NewsServiceTest.cs" />
+    <Compile Include="Domain\Service\TencentServiceTest.cs" />
     <Compile Include="Domain\Service\TestSelect.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestBase.cs" />
