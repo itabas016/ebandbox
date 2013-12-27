@@ -71,7 +71,7 @@
     <Compile Include="Domain\Mappers\ContentMapperTest.cs" />
     <Compile Include="Domain\Service\CommonServiceTest.cs" />
     <Compile Include="Domain\Service\DbContextServiceTest.cs" />
-    <Compile Include="Domain\Service\FetchTouTiaoServiceTest.cs" />
+    <Compile Include="Domain\Service\TouTiaoServiceTest.cs" />
     <Compile Include="Domain\Service\NewsServiceTest.cs" />
     <Compile Include="Domain\Service\TencentServiceTest.cs" />
     <Compile Include="Domain\Service\TestSelect.cs" />
