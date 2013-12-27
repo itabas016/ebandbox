@@ -98,7 +98,15 @@
     <Compile Include="ViewModels\News\NewsSubCategoryView.cs" />
     <Compile Include="ViewModels\News\NewsContentView.cs" />
     <Compile Include="ViewModels\ResultBuilder.cs" />
+    <Compile Include="ViewModels\Theme\WallPaper\WallPaperCategoryView.cs" />
+    <Compile Include="ViewModels\Theme\WallPaper\WallPaperDetailView.cs" />
+    <Compile Include="ViewModels\Theme\WallPaper\WallPaperSubCategoryView.cs" />
+    <Compile Include="ViewModels\Theme\WallPaper\WallPaperView.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
+    <Compile Include="Theme\WallPaper\WallPaper.cs" />
+    <Compile Include="Theme\WallPaper\WallPaperCategory.cs" />
+    <Compile Include="Theme\WallPaper\WallPaperDetail.cs" />
+    <Compile Include="Theme\WallPaper\WallPaperSubCategory.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FrameMobile.Common\FrameMobile.Common.csproj">
