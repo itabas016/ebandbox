@@ -8,7 +8,7 @@ using Quartz;
 
 namespace TYDNewsService
 {
-    public class TouTiaoJob : JobBase, IJob
+    public class TouTiaoJob : NewsJobBase, IJob
     {
         public void Execute(JobExecutionContext context)
         {

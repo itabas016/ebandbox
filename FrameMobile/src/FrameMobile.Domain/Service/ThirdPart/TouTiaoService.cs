@@ -14,7 +14,7 @@ using System.Web;
 
 namespace FrameMobile.Domain.Service
 {
-    public class TouTiaoService : NewsServiceBase
+    public class TouTiaoService : NewsDbContextService
     {
         #region Prop
 
@@ -39,7 +39,7 @@ namespace FrameMobile.Domain.Service
         #endregion
 
         #region Ctor
-        public TouTiaoService(IDbContextService dbContextService)
+        public TouTiaoService(INewsDbContextService dbContextService)
         {
             this.dbContextService = dbContextService;
         }

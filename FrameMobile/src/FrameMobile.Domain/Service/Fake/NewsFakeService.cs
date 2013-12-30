@@ -13,14 +13,14 @@ namespace FrameMobile.Domain.Service
 {
     public class NewsFakeService : INewsService
     {
-        private IDbContextService _dbContextService;
-        public IDbContextService dbContextService
+        private INewsDbContextService _dbContextService;
+        public INewsDbContextService dbContextService
         {
             get
             {
                 if (_dbContextService == null)
                 {
-                    _dbContextService = ObjectFactory.GetInstance<IDbContextService>();
+                    _dbContextService = ObjectFactory.GetInstance<INewsDbContextService>();
                 }
                 return _dbContextService;
             }

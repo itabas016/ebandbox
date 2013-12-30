@@ -10,7 +10,7 @@ using Newtonsoft.Json;
 
 namespace FrameMobile.Domain.Service
 {
-    public class TencentService : NewsServiceBase
+    public class TencentService : NewsDbContextService
     {
         #region Prop
 
@@ -30,7 +30,7 @@ namespace FrameMobile.Domain.Service
 
         #region Ctor
 
-        public TencentService(IDbContextService dbContextService)
+        public TencentService(INewsDbContextService dbContextService)
         {
             this.dbContextService = dbContextService;
         }

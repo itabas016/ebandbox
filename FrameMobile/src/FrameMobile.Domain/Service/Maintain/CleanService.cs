@@ -8,7 +8,7 @@ using FrameMobile.Model.News;
 
 namespace FrameMobile.Domain.Service
 {
-    public class CleanService : NewsServiceBase
+    public class CleanService : NewsDbContextService
     {
         public void CleanNewsContent(int days)
         {

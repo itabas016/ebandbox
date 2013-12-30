@@ -13,7 +13,7 @@ namespace FrameMobile.Domain
     {
         protected override int ResolveCore(NewsContent source)
         {
-            var dbContextService = ObjectFactory.GetInstance<IDbContextService>();
+            var dbContextService = ObjectFactory.GetInstance<INewsDbContextService>();
 #if DEBUG
             return 1;
 #else

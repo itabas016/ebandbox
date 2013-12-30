@@ -11,7 +11,7 @@ using NCore;
 
 namespace FrameMobile.Domain.Service
 {
-    public class NewsUIService : NewsServiceBase, INewsUIService
+    public class NewsUIService : NewsDbContextService, INewsUIService
     {
         public IList<NewsSource> GetNewsSourceList()
         {

@@ -22,7 +22,7 @@ namespace FrameMobile.Domain
         private void RegistyCommonService()
         {
             For<IRequestRepository>().Use<RequestRepository>();
-            For<IDbContextService>().Use<DbContextService>();
+            For<INewsDbContextService>().Use<NewsDbContextService>();
             For<ICacheManagerHelper>().Use<RedisCacheHelper>();
             For<IAccountService>().Use<AccountService>();
             For<ICookieService>().Use<CookieService>();

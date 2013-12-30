@@ -9,7 +9,7 @@ using NCore;
 
 namespace FrameMobile.Domain.Service
 {
-    public class CommonService : NewsServiceBase
+    public class CommonService : NewsDbContextService
     {
         public void UpdateNews(DateTime startTime, DateTime endTime)
         {

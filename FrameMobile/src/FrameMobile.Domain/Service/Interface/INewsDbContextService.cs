@@ -9,7 +9,7 @@ using StructureMap;
 
 namespace FrameMobile.Domain.Service
 {
-    public interface IDbContextService : IDbContext
+    public interface INewsDbContextService : IDbContext
     {
     }
 }

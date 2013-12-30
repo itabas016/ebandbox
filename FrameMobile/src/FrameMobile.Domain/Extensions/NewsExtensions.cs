@@ -37,7 +37,7 @@ namespace FrameMobile.Domain
         {
             if (source == null) return 0;
 
-            var dbContextService = ObjectFactory.GetInstance<IDbContextService>();
+            var dbContextService = ObjectFactory.GetInstance<INewsDbContextService>();
             var result = dbContextService.Single<NewsConfig>(x => x.NameLowCase == source.GetType().Name.ToLower() && x.Status == 1);
             return result != null ? result.Version : 0;
         }
@@ -49,7 +49,7 @@ namespace FrameMobile.Domain
             var version = CheckVersion(source);
             if (version != cver)
             {
-                var dbContextService = ObjectFactory.GetInstance<IDbContextService>();
+                var dbContextService = ObjectFactory.GetInstance<INewsDbContextService>();
                 sver = version;
                 var type = typeof(T);
                 var flag = (type == typeof(NewsCategory) || type == typeof(NewsSource) || type == typeof(NewsInfAddress));

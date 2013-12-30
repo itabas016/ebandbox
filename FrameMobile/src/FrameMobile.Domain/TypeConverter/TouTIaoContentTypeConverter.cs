@@ -18,14 +18,14 @@ namespace FrameMobile.Domain
 
             if (context.SourceValue == null) return null;
 
-            var dbContextService = ObjectFactory.GetInstance<IDbContextService>();
+            var dbContextService = ObjectFactory.GetInstance<INewsDbContextService>();
 
             var dest = this.Convert(source, dbContextService);
 
             return dest;
         }
 
-        public NewsContentView Convert(NewsContent model, IDbContextService service)
+        public NewsContentView Convert(NewsContent model, INewsDbContextService service)
         {
 
             var loadmodelist = service.Find<NewsExtraApp>(x => x.Status == 1);

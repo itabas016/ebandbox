@@ -11,7 +11,7 @@ using NCore;
 
 namespace FrameMobile.Domain.Service
 {
-    public class NewsService : NewsServiceBase, INewsService
+    public class NewsService : NewsDbContextService, INewsService
     {
         [ServiceCache]
         public IList<NewsConfigView> GetConfigViewList(MobileParam mobileParams)

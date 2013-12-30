@@ -13,7 +13,7 @@ using SubSonic.Query;
 
 namespace FrameMobile.Domain.Service
 {
-    public class AccountService : NewsServiceBase, IAccountService
+    public class AccountService : NewsDbContextService, IAccountService
     {
         IDataProvider provider = ProviderFactory.GetProvider(ConnectionStrings.NEWS_MYSQL_CONNECTSTRING);
 
