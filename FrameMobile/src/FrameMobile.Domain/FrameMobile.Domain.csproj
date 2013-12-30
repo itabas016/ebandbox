@@ -103,6 +103,7 @@
     <Compile Include="Mappers\AccountMapping.cs" />
     <Compile Include="Mappers\EntityMapping.cs" />
     <Compile Include="Mappers\NewsMapping.cs" />
+    <Compile Include="Mappers\ThemeMapping.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\Common\AccountService.cs" />
     <Compile Include="Service\Common\CookieService.cs" />

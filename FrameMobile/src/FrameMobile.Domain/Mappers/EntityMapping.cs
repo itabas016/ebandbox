@@ -12,6 +12,8 @@ namespace FrameMobile.Domain
         {
             NewsMapping.CreateMap();
 
+            ThemeMapping.CreateMap();
+
             AccountMapping.CreateMap();
 
             Mapper.AssertConfigurationIsValid();
