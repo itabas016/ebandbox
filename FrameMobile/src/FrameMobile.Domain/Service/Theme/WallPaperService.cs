@@ -6,7 +6,7 @@ using FrameMobile.Model;
 
 namespace FrameMobile.Domain.Service
 {
-    public class WallPaperFakeService : ThemeDbContextService, IWallPaperService
+    public class WallPaperService : ThemeDbContextService, IWallPaperService
     {
         public IList<WallPaperCategoryView> GetCategoryViewList(MobileParam mobileParams)
         {

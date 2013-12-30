@@ -17,12 +17,15 @@ namespace FrameMobile.Domain
             RegistyCommonService();
 
             RegistyNewsService();
+
+            RegistyThemeService();
         }
 
         private void RegistyCommonService()
         {
             For<IRequestRepository>().Use<RequestRepository>();
             For<INewsDbContextService>().Use<NewsDbContextService>();
+            For<IThemeDbContextService>().Use<ThemeDbContextService>();
             For<ICacheManagerHelper>().Use<RedisCacheHelper>();
             For<IAccountService>().Use<AccountService>();
             For<ICookieService>().Use<CookieService>();
@@ -36,6 +39,17 @@ namespace FrameMobile.Domain
             For<INewsService>().Use<NewsFakeService>();
 #else
             For<INewsService>().Use<NewsService>();
+#endif
+        }
+
+        private void RegistyThemeService()
+        {
+            For<IWallPaperService>().Use<WallPaperService>();
+
+#if DEBUG
+            For<IWallPaperService>().Use<WallPaperFakeService>();
+#else
+            For<IWallPaperService>().Use<WallPaperService>();
 #endif
         }
     }
