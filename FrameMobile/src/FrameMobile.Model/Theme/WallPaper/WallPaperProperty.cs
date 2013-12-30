@@ -8,12 +8,10 @@ namespace FrameMobile.Model.Theme
 {
     [Serializable]
     [SubSonicTableNameOverride("wallpaperproperty")]
-    public class WallPaperProperty : MySQLModel
+    public class WallPaperProperty : MySQLModelBase
     {
-        public int BrandId { get; set; }
+        public int WallPaperId { get; set; }
 
-        public int HardwareId { get; set; }
-
-        public int ResoulutionId { get; set; }
+        public int MobilePropertyId { get; set; }
     }
 }
