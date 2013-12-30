@@ -37,6 +37,17 @@ namespace FrameMobile.Model
         [JsonProperty("ordernumber")]
         public int OrderNumber { get; set; }
 
+        [JsonProperty("originalurl")]
+        public string OriginalUrl { get; set; }
+
+        [JsonProperty("modifiedtime")]
+        [JsonIgnore]
+        public DateTime ModifiedTime { get; set; }
+
+        [JsonProperty("comment")]
+        [JsonIgnore]
+        public string Comment { get; set; }
+
         [JsonProperty("status")]
         public int Status { get; set; }
     }

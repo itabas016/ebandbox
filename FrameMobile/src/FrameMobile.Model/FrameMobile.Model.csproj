@@ -60,7 +60,11 @@
   <ItemGroup>
     <Compile Include="Account\InvitationCode.cs" />
     <Compile Include="Account\UserGroup.cs" />
+    <Compile Include="Common\MobileBrand.cs" />
+    <Compile Include="Common\MobileHardware.cs" />
     <Compile Include="Common\MobileParam.cs" />
+    <Compile Include="Common\MobilePropertyBase.cs" />
+    <Compile Include="Common\MobileResolution.cs" />
     <Compile Include="Common\TimeStamp.cs" />
     <Compile Include="News\NewsContent.cs" />
     <Compile Include="News\NewsConfig.cs" />
@@ -73,6 +77,7 @@
     <Compile Include="Support\MySQLModel.cs" />
     <Compile Include="Support\MySQLModelBase.cs" />
     <Compile Include="Support\RedisModelBase.cs" />
+    <Compile Include="Theme\WallPaper\WallPaperProperty.cs" />
     <Compile Include="ThirdPart\News\Tencent\TencentCategory.cs" />
     <Compile Include="ThirdPart\News\Tencent\TencentContentSection.cs" />
     <Compile Include="ThirdPart\News\Tencent\TencentContent.cs" />
@@ -99,13 +104,11 @@
     <Compile Include="ViewModels\News\NewsContentView.cs" />
     <Compile Include="ViewModels\ResultBuilder.cs" />
     <Compile Include="ViewModels\Theme\WallPaper\WallPaperCategoryView.cs" />
-    <Compile Include="ViewModels\Theme\WallPaper\WallPaperDetailView.cs" />
     <Compile Include="ViewModels\Theme\WallPaper\WallPaperSubCategoryView.cs" />
     <Compile Include="ViewModels\Theme\WallPaper\WallPaperView.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Theme\WallPaper\WallPaper.cs" />
     <Compile Include="Theme\WallPaper\WallPaperCategory.cs" />
-    <Compile Include="Theme\WallPaper\WallPaperDetail.cs" />
     <Compile Include="Theme\WallPaper\WallPaperSubCategory.cs" />
   </ItemGroup>
   <ItemGroup>
