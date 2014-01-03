@@ -15,8 +15,8 @@ namespace FrameMobile.Domain.Service
             var cate1 = new WallPaperCategory()
                 {
                     Id = 1,
-                    Name = "风景",
-                    CategoryLogoUrl = "",
+                    Name = "美女",
+                    CategoryLogoUrl = "http://theme.kk874.com/ThemeResources/Thumbnail/th1123.jpg",
                     OrderNumber = 1,
                     CreateDateTime = DateTime.Now,
                     Comment = "",
@@ -26,8 +26,8 @@ namespace FrameMobile.Domain.Service
             var cate2 = new WallPaperCategory()
             {
                 Id = 2,
-                Name = "卡通",
-                CategoryLogoUrl = "",
+                Name = "动漫",
+                CategoryLogoUrl = "http://theme.kk874.com/ThemeResources/Thumbnail/th1111.jpg",
                 OrderNumber = 2,
                 CreateDateTime = DateTime.Now,
                 Comment = "",
@@ -48,9 +48,9 @@ namespace FrameMobile.Domain.Service
             var subcate1 = new WallPaperSubCategory()
             {
                 Id = 1,
-                Name = "大好河山",
+                Name = "美女之家",
                 CategoryId = 1,
-                SubCategoryLogoUrl = "",
+                SubCategoryLogoUrl = "http://theme.kk874.com/ThemeResources/Thumbnail/th1123.jpg",
                 OrderNumber = 1,
                 CreateDateTime = DateTime.Now,
                 Comment = "",
@@ -60,9 +60,9 @@ namespace FrameMobile.Domain.Service
             var subcate2 = new WallPaperSubCategory()
             {
                 Id = 2,
-                Name = "旖旎风光",
+                Name = "模特",
                 CategoryId = 1,
-                SubCategoryLogoUrl = "",
+                SubCategoryLogoUrl = "http://theme.kk874.com/ThemeResources/Thumbnail/th1124.jpg",
                 OrderNumber = 3,
                 CreateDateTime = DateTime.Now,
                 Comment = "",
@@ -72,9 +72,9 @@ namespace FrameMobile.Domain.Service
             var subcate3 = new WallPaperSubCategory()
             {
                 Id = 3,
-                Name = "日本动漫",
+                Name = "动漫1",
                 CategoryId = 2,
-                SubCategoryLogoUrl = "",
+                SubCategoryLogoUrl = "http://theme.kk874.com/ThemeResources/Thumbnail/th1112.jpg",
                 OrderNumber = 2,
                 CreateDateTime = DateTime.Now,
                 Comment = "",
@@ -117,12 +117,29 @@ namespace FrameMobile.Domain.Service
             var wall1 = new WallPaper()
             {
                 Id = 1,
-                Titile = "杭州西湖",
+                Titile = "美女01",
                 CategoryId = 1,
                 SubCategoryId = 1,
                 Rating = 1,
-                ThumbnailUrl = "",
-                OriginalUrl = "",
+                ThumbnailUrl = "http://theme.kk874.com/ThemeResources/Thumbnail/th04.jpg",
+                OriginalUrl = "http://theme.kk874.com/ThemeResources/Original/th04.jpg",
+                PublishTime = DateTime.Now,
+                ModifiedTime = DateTime.Now,
+                DownloadNumber = 1000,
+                OrderNumber = 12,
+                CreateDateTime = DateTime.Now,
+                Status = 1
+            };
+
+            var wall01 = new WallPaper()
+            {
+                Id = 1,
+                Titile = "美女01",
+                CategoryId = 1,
+                SubCategoryId = 1,
+                Rating = 1,
+                ThumbnailUrl = "http://theme.kk874.com/ThemeResources/Thumbnail/th05.jpg",
+                OriginalUrl = "http://theme.kk874.com/ThemeResources/Original/th05.jpg",
                 PublishTime = DateTime.Now,
                 ModifiedTime = DateTime.Now,
                 DownloadNumber = 1000,
@@ -134,12 +151,29 @@ namespace FrameMobile.Domain.Service
             var wall2 = new WallPaper()
             {
                 Id = 2,
-                Titile = "安徽黄山",
+                Titile = "模特01",
                 CategoryId = 1,
                 SubCategoryId = 2,
                 Rating = 1,
-                ThumbnailUrl = "",
-                OriginalUrl = "",
+                ThumbnailUrl = "http://theme.kk874.com/ThemeResources/Thumbnail/th06.jpg",
+                OriginalUrl = "http://theme.kk874.com/ThemeResources/Original/th06.jpg",
+                PublishTime = DateTime.Now,
+                ModifiedTime = DateTime.Now,
+                DownloadNumber = 100,
+                OrderNumber = 15,
+                CreateDateTime = DateTime.Now,
+                Status = 1
+            };
+
+            var wall02 = new WallPaper()
+            {
+                Id = 2,
+                Titile = "模特02",
+                CategoryId = 1,
+                SubCategoryId = 2,
+                Rating = 1,
+                ThumbnailUrl = "http://theme.kk874.com/ThemeResources/Thumbnail/th07.jpg",
+                OriginalUrl = "http://theme.kk874.com/ThemeResources/Original/th07.jpg",
                 PublishTime = DateTime.Now,
                 ModifiedTime = DateTime.Now,
                 DownloadNumber = 100,
@@ -151,12 +185,12 @@ namespace FrameMobile.Domain.Service
             var wall3 = new WallPaper()
             {
                 Id = 3,
-                Titile = "进击的巨人",
+                Titile = "动漫01",
                 CategoryId = 2,
                 SubCategoryId = 3,
                 Rating = 3,
-                ThumbnailUrl = "",
-                OriginalUrl = "",
+                ThumbnailUrl = "http://theme.kk874.com/ThemeResources/Thumbnail/th01.jpg",
+                OriginalUrl = "http://theme.kk874.com/ThemeResources/Original/th01.jpg",
                 PublishTime = DateTime.Now,
                 ModifiedTime = DateTime.Now,
                 DownloadNumber = 100,
@@ -172,8 +206,8 @@ namespace FrameMobile.Domain.Service
                 CategoryId = 2,
                 SubCategoryId = 3,
                 Rating = 3,
-                ThumbnailUrl = "",
-                OriginalUrl = "",
+                ThumbnailUrl = "http://theme.kk874.com/ThemeResources/Thumbnail/th02.jpg",
+                OriginalUrl = "http://theme.kk874.com/ThemeResources/Original/th02.jpg",
                 PublishTime = DateTime.Now,
                 ModifiedTime = DateTime.Now,
                 DownloadNumber = 100,
@@ -183,7 +217,7 @@ namespace FrameMobile.Domain.Service
             };
             #endregion
 
-            var wallpaperlist = new List<WallPaper>() { wall1, wall2, wall3, wall4 };
+            var wallpaperlist = new List<WallPaper>() { wall1, wall01, wall02, wall2, wall3, wall4 };
 
             return wallpaperlist;
         }
