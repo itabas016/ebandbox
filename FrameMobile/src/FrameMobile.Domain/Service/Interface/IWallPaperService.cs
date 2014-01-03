@@ -12,7 +12,9 @@ namespace FrameMobile.Domain.Service
 
         IList<WallPaperSubCategoryView> GetSubCategoryViewList(MobileParam mobileParams);
 
-        IList<WallPaperView> GetWallPaperViewList(MobileParam mobileParams, int categoryId, int subcategoryId, int sort, int startnum, int num, out int totalCount);
+        IList<WallPaperTopicView> GetTopicViewList(MobileParam mobileParams);
+
+        IList<WallPaperView> GetWallPaperViewList(MobileParam mobileParams, int categoryId, int topicId, int subcategoryId, int sort, int startnum, int num, out int totalCount);
 
         WallPaperView GetWallPaperViewDetail(MobileParam mobileParams, int wallPaperId);
     }

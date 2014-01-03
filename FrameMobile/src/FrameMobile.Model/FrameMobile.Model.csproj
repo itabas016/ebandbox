@@ -79,6 +79,7 @@
     <Compile Include="Support\RedisModelBase.cs" />
     <Compile Include="Theme\ThemeConfig.cs" />
     <Compile Include="Theme\WallPaper\WallPaperProperty.cs" />
+    <Compile Include="Theme\WallPaper\WallPaperTopic.cs" />
     <Compile Include="ThirdPart\News\Tencent\TencentCategory.cs" />
     <Compile Include="ThirdPart\News\Tencent\TencentContentSection.cs" />
     <Compile Include="ThirdPart\News\Tencent\TencentContent.cs" />
@@ -106,6 +107,7 @@
     <Compile Include="ViewModels\ResultBuilder.cs" />
     <Compile Include="ViewModels\Theme\WallPaper\WallPaperCategoryView.cs" />
     <Compile Include="ViewModels\Theme\WallPaper\WallPaperSubCategoryView.cs" />
+    <Compile Include="ViewModels\Theme\WallPaper\WallPaperTopicView.cs" />
     <Compile Include="ViewModels\Theme\WallPaper\WallPaperView.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Theme\WallPaper\WallPaper.cs" />

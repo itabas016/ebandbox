@@ -89,7 +89,40 @@ namespace FrameMobile.Domain.Service
             return result;
         }
 
-        public IList<WallPaperView> GetWallPaperViewList(MobileParam mobileParams, int categoryId, int subcategoryId, int sort, int startnum, int num, out int totalCount)
+        public IList<WallPaperTopicView> GetTopicViewList(MobileParam mobileParams)
+        {
+            #region instance
+            var topic1 = new WallPaperTopic()
+            {
+                Id = 1,
+                Name = "新年快乐",
+                TopicLogoUrl = "http://theme.kk874.com/ThemeResources/Logo/p1.jpg",
+                OrderNumber = 1,
+                CreateDateTime = DateTime.Now,
+                Comment = "",
+                Status = 1
+            };
+
+            var topic2 = new WallPaperTopic()
+            {
+                Id = 2,
+                Name = "元旦快乐",
+                TopicLogoUrl = "http://theme.kk874.com/ThemeResources/Logo/p2.jpg",
+                OrderNumber = 2,
+                CreateDateTime = DateTime.Now,
+                Comment = "",
+                Status = 1
+            };
+            #endregion
+
+            var topiclist = new List<WallPaperTopic>() { topic1, topic2, topic2, topic1 };
+
+            var result = topiclist.To<IList<WallPaperTopicView>>();
+
+            return result;
+        }
+
+        public IList<WallPaperView> GetWallPaperViewList(MobileParam mobileParams, int categoryId, int topicId, int subcategoryId, int sort, int startnum, int num, out int totalCount)
         {
             var result = new List<WallPaperView>();
 
