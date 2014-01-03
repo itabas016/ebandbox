@@ -3,24 +3,34 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using FrameMobile.Model;
+using FrameMobile.Model.Theme;
 
 namespace FrameMobile.Domain.Service
 {
     public class WallPaperService : ThemeDbContextService, IWallPaperService
     {
-        public IList<WallPaperCategoryView> GetCategoryViewList(MobileParam mobileParams)
+        public IList<ThemeConfigView> GetConfigViewList(MobileParam mobileParams, int type)
         {
-            throw new NotImplementedException();
+            var configlist = dbContextService.Find<ThemeConfig>(x => x.Status == 1 && x.Type == type);
+            return configlist.To<IList<ThemeConfigView>>();
         }
 
-        public IList<WallPaperSubCategoryView> GetSubCategoryViewList(MobileParam mobileParams)
+        public IList<WallPaperCategoryView> GetCategoryViewList(MobileParam mobileParams, int cver, out int sver)
         {
-            throw new NotImplementedException();
+            var categorylist = new WallPaperCategory().ReturnThemeInstance<WallPaperCategory>(cver, out sver);
+            return categorylist.To<IList<WallPaperCategoryView>>();
         }
 
-        public IList<WallPaperTopicView> GetTopicViewList(MobileParam mobileParams)
+        public IList<WallPaperSubCategoryView> GetSubCategoryViewList(MobileParam mobileParams, int cver, out int sver)
         {
-            throw new NotImplementedException();
+            var subcategorylist = new WallPaperSubCategory().ReturnThemeInstance<WallPaperSubCategory>(cver, out sver);
+            return subcategorylist.To<IList<WallPaperSubCategoryView>>();
+        }
+
+        public IList<WallPaperTopicView> GetTopicViewList(MobileParam mobileParams, int cver, out int sver)
+        {
+            var topiclist = new WallPaperTopic().ReturnThemeInstance<WallPaperTopic>(cver, out sver);
+            return topiclist.To<IList<WallPaperTopicView>>();
         }
 
         public IList<WallPaperView> GetWallPaperViewList(MobileParam mobileParams, int categoryId, int topicId, int subcategoryId, int sort, int startnum, int num, out int totalCount)

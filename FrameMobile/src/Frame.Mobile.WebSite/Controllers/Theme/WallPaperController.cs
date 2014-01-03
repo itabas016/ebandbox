@@ -28,36 +28,42 @@ namespace Frame.Mobile.WebSite.Controllers
         }
         private IWallPaperService _wallPaperService;
 
-        public ActionResult CategoryList(string imsi)
+        public ActionResult CategoryList(string imsi, int cver)
         {
             var mobileParams = GetMobileParam();
+            int sver = 0;
 
-            Func<IList<WallPaperCategoryView>> getcategorylist = () => WallPaperService.GetCategoryViewList(mobileParams);
+            Func<IList<WallPaperCategoryView>> getcategorylist = () => WallPaperService.GetCategoryViewList(mobileParams, cver, out sver);
 
             var actionResult = BuildResult(this.CheckRequiredParams(imsi), getcategorylist);
 
+            actionResult.ServerVerison = sver;
             return Content(actionResult.ToString());
         }
 
-        public ActionResult SubCategoryList(string imsi)
+        public ActionResult SubCategoryList(string imsi, int cver)
         {
             var mobileParams = GetMobileParam();
+            int sver = 0;
 
-            Func<IList<WallPaperSubCategoryView>> getsubcategorylist = () => WallPaperService.GetSubCategoryViewList(mobileParams);
+            Func<IList<WallPaperSubCategoryView>> getsubcategorylist = () => WallPaperService.GetSubCategoryViewList(mobileParams, cver, out sver);
 
             var actionResult = BuildResult(this.CheckRequiredParams(imsi), getsubcategorylist);
 
+            actionResult.ServerVerison = sver;
             return Content(actionResult.ToString());
         }
 
-        public ActionResult TopicList(string imsi)
+        public ActionResult TopicList(string imsi, int cver)
         {
             var mobileParams = GetMobileParam();
+            int sver = 0;
 
-            Func<IList<WallPaperTopicView>> gettopiclist = () => WallPaperService.GetTopicViewList(mobileParams);
+            Func<IList<WallPaperTopicView>> gettopiclist = () => WallPaperService.GetTopicViewList(mobileParams, cver, out sver);
 
             var actionResult = BuildResult(this.CheckRequiredParams(imsi), gettopiclist);
 
+            actionResult.ServerVerison = sver;
             return Content(actionResult.ToString());
         }
 

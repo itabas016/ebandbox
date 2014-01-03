@@ -9,7 +9,51 @@ namespace FrameMobile.Domain.Service
 {
     public class WallPaperFakeService : ThemeDbContextService, IWallPaperService
     {
-        public IList<WallPaperCategoryView> GetCategoryViewList(MobileParam mobileParams)
+        public IList<ThemeConfigView> GetConfigViewList(MobileParam mobileParams, int type)
+        {
+            #region instance
+            var config = new ThemeConfig()
+            {
+                Id = 1,
+                Name = "壁纸分类",
+                NameLowCase = "themecategory",
+                Type = 1,
+                Version = 1,
+                Status = 1,
+                CreateDateTime = DateTime.Now
+            };
+
+            var config2 = new ThemeConfig()
+            {
+                Id = 2,
+                Name = "壁纸子分类",
+                NameLowCase = "themesubcategory",
+                Type = 1,
+                Version = 2,
+                Status = 0,
+                CreateDateTime = DateTime.Now
+            };
+
+            var config3 = new ThemeConfig()
+            {
+                Id = 3,
+                Name = "壁纸专题",
+                NameLowCase = "themetopic",
+                Version = 1,
+                Type = 1,
+                Status = 1,
+                CreateDateTime = DateTime.Now
+            };
+            #endregion
+
+            var configlist = new List<ThemeConfig>() { config, config2, config3 };
+
+            var result = configlist.To<IList<ThemeConfigView>>();
+
+            return result;
+        }
+
+        public IList<WallPaperCategoryView> GetCategoryViewList(MobileParam mobileParams, int cver, out int sver)
         {
             #region instance
             var cate1 = new WallPaperCategory()
@@ -39,10 +83,11 @@ namespace FrameMobile.Domain.Service
 
             var result = categorylist.To<IList<WallPaperCategoryView>>();
 
+            sver = 1;
             return result;
         }
 
-        public IList<WallPaperSubCategoryView> GetSubCategoryViewList(MobileParam mobileParams)
+        public IList<WallPaperSubCategoryView> GetSubCategoryViewList(MobileParam mobileParams, int cver, out int sver)
         {
             #region instance
             var subcate1 = new WallPaperSubCategory()
@@ -86,10 +131,11 @@ namespace FrameMobile.Domain.Service
 
             var result = subcategorylist.To<IList<WallPaperSubCategoryView>>();
 
+            sver = 1;
             return result;
         }
 
-        public IList<WallPaperTopicView> GetTopicViewList(MobileParam mobileParams)
+        public IList<WallPaperTopicView> GetTopicViewList(MobileParam mobileParams, int cver, out int sver)
         {
             #region instance
             var topic1 = new WallPaperTopic()
@@ -119,6 +165,7 @@ namespace FrameMobile.Domain.Service
 
             var result = topiclist.To<IList<WallPaperTopicView>>();
 
+            sver = 1;
             return result;
         }
 

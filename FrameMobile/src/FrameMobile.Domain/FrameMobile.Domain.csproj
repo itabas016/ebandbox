@@ -111,6 +111,7 @@
     <Compile Include="Service\Common\CookieService.cs" />
     <Compile Include="Service\Fake\NewsFakeService.cs" />
     <Compile Include="Service\Fake\WallPaperFakeService.cs" />
+    <Compile Include="Service\Interface\IThemeServiceBase.cs" />
     <Compile Include="Service\Interface\IThemeDbContextService.cs" />
     <Compile Include="Service\Interface\IWallPaperService.cs" />
     <Compile Include="Service\ServiceBase\ThemeDbContextService.cs" />

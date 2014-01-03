@@ -14,6 +14,17 @@ namespace FrameMobile.Domain
         {
             #region ViewModel
 
+            #region Config
+
+            Mapper.CreateMap<ThemeConfig, ThemeConfigView>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(ori => ori.Id))
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(ori => ori.Name))
+                .ForMember(dest => dest.NameLowCase, opt => opt.MapFrom(ori => ori.NameLowCase))
+                .ForMember(dest => dest.Type, opt => opt.MapFrom(ori => ori.Type))
+                .ForMember(dest => dest.Version, opt => opt.MapFrom(ori => ori.Version));
+
+            #endregion
+
             #region WallPaper
 
             Mapper.CreateMap<WallPaper, WallPaperView>()

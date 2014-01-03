@@ -13,6 +13,9 @@ namespace FrameMobile.Model.Theme
         [SubSonicStringLength(64)]
         public string NameLowCase { get; set; }
 
+        //1 代表壁纸、2 代表铃声
+        public int Type { get; set; }
+
         [SubSonicStringLength(64)]
         public int Version { get; set; }
     }

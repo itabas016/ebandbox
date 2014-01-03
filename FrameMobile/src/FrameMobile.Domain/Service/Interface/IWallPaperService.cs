@@ -6,13 +6,13 @@ using FrameMobile.Model;
 
 namespace FrameMobile.Domain.Service
 {
-    public interface IWallPaperService
+    public interface IWallPaperService : IThemeServiceBase
     {
-        IList<WallPaperCategoryView> GetCategoryViewList(MobileParam mobileParams);
+        IList<WallPaperCategoryView> GetCategoryViewList(MobileParam mobileParams,int cver, out int sver);
 
-        IList<WallPaperSubCategoryView> GetSubCategoryViewList(MobileParam mobileParams);
+        IList<WallPaperSubCategoryView> GetSubCategoryViewList(MobileParam mobileParams, int cver, out int sver);
 
-        IList<WallPaperTopicView> GetTopicViewList(MobileParam mobileParams);
+        IList<WallPaperTopicView> GetTopicViewList(MobileParam mobileParams, int cver, out int sver);
 
         IList<WallPaperView> GetWallPaperViewList(MobileParam mobileParams, int categoryId, int topicId, int subcategoryId, int sort, int startnum, int num, out int totalCount);
 
