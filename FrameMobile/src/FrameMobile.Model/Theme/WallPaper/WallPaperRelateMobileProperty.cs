@@ -7,8 +7,8 @@ using SubSonic.SqlGeneration.Schema;
 namespace FrameMobile.Model.Theme
 {
     [Serializable]
-    [SubSonicTableNameOverride("wallpaperproperty")]
-    public class WallPaperProperty : MySQLModelBase
+    [SubSonicTableNameOverride("wallpaperrelatemobileproperty")]
+    public class WallPaperRelateMobileProperty : MySQLModelBase
     {
         public int WallPaperId { get; set; }
 
