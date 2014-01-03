@@ -13,7 +13,7 @@ namespace FrameMobile.UnitTests.Domain.Extension
         [Fact]
         public void CheckVersionTest()
         {
-            var ret = NewsExtensions.CheckVersion(new NewsSource());
+            var ret = NewsExtensions.GetNewsConfsver(new NewsSource());
             Console.WriteLine(ret);
         }
 
@@ -23,7 +23,7 @@ namespace FrameMobile.UnitTests.Domain.Extension
             var list = new List<string>() { "1", "2" ,"3"};
             for (int i = 0; i < 50; i++)
             {
-                var ret = NewsExtensions.RandomInt(list);
+                var ret = ServiceExtensions.RandomInt(list);
                 Console.WriteLine(ret);
             }
         }

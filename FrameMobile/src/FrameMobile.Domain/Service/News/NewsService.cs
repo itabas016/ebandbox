@@ -23,28 +23,28 @@ namespace FrameMobile.Domain.Service
         [ServiceCache]
         public IList<NewsSourceView> GetSourceViewList(MobileParam mobileParams, int cver, out int sver)
         {
-            var sourcelist = new NewsSource().GetResultByVer<NewsSource>(cver, out sver);
+            var sourcelist = new NewsSource().ReturnNewsInstance<NewsSource>(cver, out sver);
             return sourcelist.To<IList<NewsSourceView>>();
         }
 
         [ServiceCache]
         public IList<NewsExtraAppView> GetExtraAppViewList(MobileParam mobileParams, int cver, out int sver)
         {
-            var extraAppList = new NewsExtraApp().GetResultByVer<NewsExtraApp>(cver, out sver);
+            var extraAppList = new NewsExtraApp().ReturnNewsInstance<NewsExtraApp>(cver, out sver);
             return extraAppList.To<IList<NewsExtraAppView>>();
         }
 
         [ServiceCache]
         public IList<NewsInfAddressView> GetInfAddressViewList(MobileParam mobileParams, int cver, out int sver)
         {
-            var infAddressList = new NewsInfAddress().GetResultByVer<NewsInfAddress>(cver, out sver);
+            var infAddressList = new NewsInfAddress().ReturnNewsInstance<NewsInfAddress>(cver, out sver);
             return infAddressList.To<IList<NewsInfAddressView>>();
         }
 
         [ServiceCache]
         public IList<NewsCategoryView> GetCategoryViewList(MobileParam mobileParams, int cver, out int sver)
         {
-            var categorylist = new NewsCategory().GetResultByVer<NewsCategory>(cver, out sver);
+            var categorylist = new NewsCategory().ReturnNewsInstance<NewsCategory>(cver, out sver);
             return categorylist.To<IList<NewsCategoryView>>();
         }
 

@@ -97,7 +97,9 @@
     <Compile Include="Extensions\IDbContext.cs" />
     <Compile Include="Extensions\MappingExtensions.cs" />
     <Compile Include="Extensions\NewsExtensions.cs" />
+    <Compile Include="Extensions\ServiceExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Extensions\ThemeExtensions.cs" />
     <Compile Include="Interceptor\CacheDecoratorBase.cs" />
     <Compile Include="Interceptor\ServiceCacheInterceptor.cs" />
     <Compile Include="Mappers\AccountMapping.cs" />
