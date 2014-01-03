@@ -18,7 +18,7 @@ namespace FrameMobile.Domain.Service
             throw new NotImplementedException();
         }
 
-        public IList<WallPaperView> GetWallPaperViewList(MobileParam mobileParams, string categoryIds, string subcategoryIds, int startnum, int num, out int totalCount)
+        public IList<WallPaperView> GetWallPaperViewList(MobileParam mobileParams, int categoryId, int subcategoryId, int sort, int startnum, int num, out int totalCount)
         {
             throw new NotImplementedException();
         }

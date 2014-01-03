@@ -19,6 +19,7 @@ namespace FrameMobile.Model
         [JsonProperty("categoryid")]
         public int CategoryId { get; set; }
 
+        [JsonIgnore]
         [JsonProperty("subcategoryid")]
         public int SubCategoryId { get; set; }
 
@@ -34,6 +35,7 @@ namespace FrameMobile.Model
         [JsonProperty("downloadnumber")]
         public int DownloadNumber { get; set; }
 
+        [JsonIgnore]
         [JsonProperty("ordernumber")]
         public int OrderNumber { get; set; }
 
