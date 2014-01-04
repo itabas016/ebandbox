@@ -9,5 +9,7 @@ namespace FrameMobile.Domain.Service
     public interface IThemeServiceBase
     {
         IList<ThemeConfigView> GetConfigViewList(MobileParam mobileParams, int type);
+
+        MobileProperty GetMobileProperty(MobileParam mobileParams);
     }
 }

@@ -9,6 +9,11 @@ namespace FrameMobile.Domain.Service
 {
     public class WallPaperFakeService : ThemeDbContextService, IWallPaperService
     {
+        public MobileProperty GetMobileProperty(MobileParam mobileParams)
+        {
+            return null;
+        }
+
         public IList<ThemeConfigView> GetConfigViewList(MobileParam mobileParams, int type)
         {
             #region instance
