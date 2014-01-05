@@ -67,8 +67,8 @@ namespace FrameMobile.Domain.Service
                                 {
                                     Id = p.Id,
                                     Titile = p.Titile,
-                                    ThumbnailUrl = p.ThumbnailUrl,
-                                    OriginalUrl = p.OriginalUrl,
+                                    ThumbnailName = p.ThumbnailName,
+                                    OriginalName = p.OriginalName,
                                     DownloadNumber = p.DownloadNumber,
                                     Rating = p.Status,
                                     PublishTime = p.PublishTime
@@ -88,8 +88,8 @@ namespace FrameMobile.Domain.Service
                             {
                                 Id = p.Id,
                                 Titile = p.Titile,
-                                ThumbnailUrl = p.ThumbnailUrl,
-                                OriginalUrl = p.OriginalUrl,
+                                ThumbnailName = p.ThumbnailName,
+                                OriginalName = p.OriginalName,
                                 DownloadNumber = p.DownloadNumber,
                                 Rating = p.Status,
                                 PublishTime = p.PublishTime

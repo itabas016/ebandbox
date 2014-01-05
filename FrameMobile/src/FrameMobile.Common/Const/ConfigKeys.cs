@@ -7,11 +7,15 @@ namespace FrameMobile.Common
 {
     public class ConfigKeys
     {
+        #region System
+
         public const string ENABLE_SNAP = "EnableSNAP";
 
         public const string SERVICE_CACHE_TIMEOUT_SECONDS = "ServiceCacheTimeOutSeconds";
 
-        //TouTiao
+        #endregion
+
+        #region TouTiao
 
         public const string TYD_NEWS_RESOURCES_DIR_ROOT = "TYD_News_Resources_Dir_Root";
 
@@ -29,6 +33,19 @@ namespace FrameMobile.Common
 
         public const string TYD_NEWS_APP_DOWNLOAD_PREFIX_URL = "TYD_News_App_Download_Prefix_URL";
 
+        #endregion
+
+        #region Theme
+
+        public const string TYD_THEME_RESOURCES_DIR_ROOT = "TYD_Theme_Resources_Dir_Root";
+
+        public const string TYD_WALLPAPER_THUMBNAIL_IMAGE_PREFIX = "TYD_WallPaper_Thumbnail_Image_Prefix";
+
+        public const string TYD_WALLPAPER_ORIGINAL_IMAGE_PREFIX = "TYD_WallPaper_Original_Image_Prefix";
+
+        #endregion
+
+        #region Tencent
         //Tencent
 
         public const string TYD_NEWS_TENCENT_REQUEST_URL = "TYD_News_Tencent_Request_URL";
@@ -37,6 +54,10 @@ namespace FrameMobile.Common
 
         //当前只为10
         public const string TYD_NEWS_TENCENT_REQUEST_COUNT = "TYD_News_Tencent_Request_Count";
+
+        #endregion
+
+        #region MainTain
 
         //Clean
 
@@ -47,5 +68,7 @@ namespace FrameMobile.Common
         public const string UPDATE_NEWS_SAME_PUBLISH_TIME_LIMIT = "Update_News_Same_PublishTime_Limit";
 
         public const string UPDATE_NEWS_START_PUBLISH_TIME_HOUR = "Update_News_Start_PublishTime_Hour";
+
+        #endregion
     }
 }

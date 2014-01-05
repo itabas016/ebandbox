@@ -13,23 +13,19 @@ namespace FrameMobile.Model.Theme
         [SubSonicStringLength(64)]
         public string Titile { get; set; }
 
-        public int CategoryId { get; set; }
-
-        public int SubCategoryId { get; set; }
-
         public DateTime PublishTime { get; set; }
 
         public int Rating { get; set; }
 
         [SubSonicStringLength(512)]
-        public string ThumbnailUrl { get; set; }
+        public string ThumbnailName { get; set; }
 
         public int DownloadNumber { get; set; }
 
         public int OrderNumber { get; set; }
 
         [SubSonicStringLength(512)]
-        public string OriginalUrl { get; set; }
+        public string OriginalName { get; set; }
 
         public DateTime ModifiedTime
         {

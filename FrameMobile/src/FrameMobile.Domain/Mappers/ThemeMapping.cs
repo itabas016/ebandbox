@@ -30,17 +30,16 @@ namespace FrameMobile.Domain
             Mapper.CreateMap<WallPaper, WallPaperView>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(ori => ori.Id))
                 .ForMember(dest => dest.Title, opt => opt.MapFrom(ori => ori.Titile))
-                .ForMember(dest => dest.CategoryId, opt => opt.MapFrom(ori => ori.CategoryId))
-                .ForMember(dest => dest.SubCategoryId, opt => opt.MapFrom(ori => ori.SubCategoryId))
-                .ForMember(dest => dest.ThumbnailUrl, opt => opt.MapFrom(ori => ori.ThumbnailUrl))
-                .ForMember(dest => dest.OriginalUrl, opt => opt.MapFrom(ori => ori.OriginalUrl))
+                .ForMember(dest => dest.ThumbnailUrl, opt => opt.MapFrom(ori => ori.ThumbnailName))
+                .ForMember(dest => dest.OriginalUrl, opt => opt.MapFrom(ori => ori.OriginalName))
                 .ForMember(dest => dest.Rating, opt => opt.MapFrom(ori => ori.Rating))
                 .ForMember(dest => dest.DownloadNumber, opt => opt.MapFrom(ori => ori.DownloadNumber))
                 .ForMember(dest => dest.PublishTime, opt => opt.MapFrom(ori => ori.PublishTime))
                 .ForMember(dest => dest.ModifiedTime, opt => opt.MapFrom(ori => ori.ModifiedTime))
                 .ForMember(dest => dest.OrderNumber, opt => opt.MapFrom(ori => ori.OrderNumber))
                 .ForMember(dest => dest.Comment, opt => opt.MapFrom(ori => ori.Comment))
-                .ForMember(dest => dest.Status, opt => opt.MapFrom(ori => ori.Status));
+                .ForMember(dest => dest.Status, opt => opt.MapFrom(ori => ori.Status))
+                .IgnoreAllNonExisting();
 
             Mapper.CreateMap<WallPaperCategory, WallPaperCategoryView>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(ori => ori.Id))
