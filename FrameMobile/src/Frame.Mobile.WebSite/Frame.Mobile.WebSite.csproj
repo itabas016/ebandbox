@@ -184,10 +184,11 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\CacheController.cs" />
-    <Compile Include="Controllers\NewsController.cs" />
-    <Compile Include="Controllers\NewsUIController.cs" />
+    <Compile Include="Controllers\Common\AccountController.cs" />
+    <Compile Include="Controllers\Common\CacheController.cs" />
+    <Compile Include="Controllers\Common\MobileController.cs" />
+    <Compile Include="Controllers\News\NewsController.cs" />
+    <Compile Include="Controllers\News\NewsUIController.cs" />
     <Compile Include="Controllers\Theme\ThemeBaseController.cs" />
     <Compile Include="Controllers\Theme\WallPaperController.cs" />
     <Compile Include="Controllers\Theme\WallPaperUIController.cs" />
@@ -372,10 +373,14 @@
     <Content Include="Views\NewsUI\TimeConvert.cshtml" />
     <Content Include="Views\NewsUI\InfAddressAdd.cshtml" />
     <Content Include="Views\NewsUI\InfAddressList.cshtml" />
+    <Content Include="Views\Shared\_ThemeLayout.cshtml" />
+    <Content Include="Views\Shared\_WallPaperLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\Common\" />
+    <Folder Include="Views\Theme\WallPaper\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
