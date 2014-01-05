@@ -48,10 +48,10 @@ namespace FrameMobile.Domain
 
             switch (fileType)
             {
-                case "thumbnail":
+                case Const.WALLPAPER_THUMBNAIL:
                     fileNamePrefix = thumbnailPrefix;
                     break;
-                case "original":
+                case Const.WALLPAPER_ORIGINAL:
                     fileNamePrefix = originalPrefix;
                     break;
                 default:
