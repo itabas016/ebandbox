@@ -1,0 +1,61 @@
+﻿@model List<MobileResolution>
+@using FrameMobile.Model.Mobile;
+@{
+    ViewBag.Title = "分辨率列表";
+    Layout = "~/Views/Shared/_ThemeLayout.cshtml";
+
+    List<MobileResolution> resolutionlist = ViewData["Resolutionlist"] as List<MobileResolution>;
+    resolutionlist = resolutionlist != null ? resolutionlist : new List<MobileResolution>();
+    var totalCount = ViewData["TotalCount"] as int?;
+    totalCount = totalCount != null ? totalCount : 0;
+}
+
+<div class="contentHeader">
+    <div class="contentHeaderInfo">
+        <button class="btn btn-large btn-blue addapp" onclick="window.open('ResolutionAdd','_self');">
+            分辨率添加</button>
+    </div>
+    <div class="apphead">
+        <div class="title">
+            <b>@ViewBag.Title</b>
+        </div>
+        <div>
+            <button class="btn btn-quaternary btn-large" onclick="history.back();">
+                返 回</button>
+        </div>
+    </div>
+</div>
+<div class="content">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>序号</th>
+                <th>名称</th>
+                <th>值</th>
+                <th>备注</th>
+                <th>状态</th>
+                <th>&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody class="prolist">
+            @foreach (var item in brandlist)
+            {
+                <tr class="odd gradeX">
+                    <td><strong>@item.Id</strong></td>
+                    <td><strong>@item.Name</strong></td>
+                    <td>@item.Value</td>
+                    <td>@item.Comment</td>
+                    <td>@item.Status</td>
+                    <td class="center">
+                        <button type="button" class="btn btn-large btn-gray"  onclick="window.open('ResolutionEdit?resolutionId=@item.Id','_self');">修 改</button>
+                    </td>
+                    <td class="center">
+                        <button type="button" class="btn btn-large btn-gray"  onclick="var c=confirm('确定要删除?'); if(c==true){window.open('ResolutionDelete?resolutionId=@item.Id','_self');}">
+                            删 除</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

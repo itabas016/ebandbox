@@ -27,5 +27,22 @@ namespace Frame.Mobile.WebSite.Controllers
         }
         private IWallPaperService _wallPaperService;
 
+        private IThemeDbContextService _dbContextService;
+        public IThemeDbContextService dbContextService
+        {
+            get
+            {
+                if (_dbContextService == null)
+                {
+                    _dbContextService = ObjectFactory.GetInstance<IThemeDbContextService>();
+                }
+                return _dbContextService;
+            }
+            set
+            {
+                _dbContextService = value;
+            }
+        }
+
     }
 }

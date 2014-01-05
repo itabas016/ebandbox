@@ -375,11 +375,18 @@
     <Content Include="Views\NewsUI\InfAddressList.cshtml" />
     <Content Include="Views\Shared\_ThemeLayout.cshtml" />
     <Content Include="Views\Shared\_WallPaperLayout.cshtml" />
+    <Content Include="Views\Mobile\PropertyList.cshtml" />
+    <Content Include="Views\Mobile\BrandAdd.cshtml" />
+    <Content Include="Views\Mobile\PropertyAdd.cshtml" />
+    <Content Include="Views\Mobile\BrandList.cshtml" />
+    <Content Include="Views\Mobile\HardwareAdd.cshtml" />
+    <Content Include="Views\Mobile\HardwareList.cshtml" />
+    <Content Include="Views\Mobile\ResolutionAdd.cshtml" />
+    <Content Include="Views\Mobile\ResolutionList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\Common\" />
     <Folder Include="Views\Theme\WallPaper\" />
   </ItemGroup>
   <ItemGroup>
