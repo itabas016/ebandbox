@@ -60,12 +60,12 @@
   <ItemGroup>
     <Compile Include="Account\InvitationCode.cs" />
     <Compile Include="Account\UserGroup.cs" />
-    <Compile Include="Common\MobileBrand.cs" />
-    <Compile Include="Common\MobileHardware.cs" />
+    <Compile Include="Common\Mobile\MobileBrand.cs" />
+    <Compile Include="Common\Mobile\MobileHardware.cs" />
     <Compile Include="Common\MobileParam.cs" />
-    <Compile Include="Common\MobileProperty.cs" />
+    <Compile Include="Common\Mobile\MobileProperty.cs" />
     <Compile Include="Common\MobilePropertyBase.cs" />
-    <Compile Include="Common\MobileResolution.cs" />
+    <Compile Include="Common\Mobile\MobileResolution.cs" />
     <Compile Include="Common\TimeStamp.cs" />
     <Compile Include="News\NewsContent.cs" />
     <Compile Include="News\NewsConfig.cs" />
@@ -100,6 +100,7 @@
     <Compile Include="ViewModels\Account\LocalPasswordView.cs" />
     <Compile Include="ViewModels\Account\LoginView.cs" />
     <Compile Include="ViewModels\Account\RegisterView.cs" />
+    <Compile Include="ViewModels\Common\MobilePropertyView.cs" />
     <Compile Include="ViewModels\News\NewsCategoryView.cs" />
     <Compile Include="ViewModels\News\NewsConfigView.cs" />
     <Compile Include="ViewModels\News\NewsExtraAppView.cs" />

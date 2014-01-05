@@ -188,7 +188,9 @@
     <Compile Include="Controllers\CacheController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\NewsUIController.cs" />
+    <Compile Include="Controllers\Theme\ThemeBaseController.cs" />
     <Compile Include="Controllers\Theme\WallPaperController.cs" />
+    <Compile Include="Controllers\Theme\WallPaperUIController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
