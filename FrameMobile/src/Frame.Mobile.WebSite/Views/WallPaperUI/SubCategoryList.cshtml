@@ -1,0 +1,64 @@
+﻿@model List<NewsSubCategory>
+@using FrameMobile.Model.News;
+@{
+    ViewBag.Title = "子分类管理";
+    Layout = "~/Views/Shared/_NewsLayout.cshtml";
+
+    List<NewsSubCategory> subcategorylist = ViewData["SubCategorylist"] as List<NewsSubCategory>;
+    subcategorylist = subcategorylist != null ? subcategorylist : new List<NewsSubCategory>();
+    var totalCount = ViewData["TotalCount"] as int?;
+    totalCount = totalCount != null ? totalCount : 0;
+}
+
+<div class="contentHeader">
+    <div class="contentHeaderInfo">
+        <button class="btn btn-large btn-blue addapp" onclick="window.open('SubCategoryAdd','_self');">
+            子分类添加</button>
+    </div>
+    <div class="apphead">
+        <div class="title">
+            <b>@ViewBag.Title (总数:@totalCount)</b>
+        </div>
+        <div>
+            <button class="btn btn-quaternary btn-large" onclick="history.back();">
+                返 回</button>
+        </div>
+    </div>
+</div>
+<div class="content">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>序号</th>
+                <th>名称</th>
+                <th>缩写</th>
+                <th>提供商</th>
+                <th>主分类</th>
+                <th>当前游标值</th>
+                <th>状态</th>
+                <th>&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody class="prolist">
+            @foreach (var item in subcategorylist)
+            {
+                <tr class="odd gradeX">
+                    <td><strong>@item.Id</strong></td>
+                    <td><strong>@item.Name</strong></td>
+                    <td><strong>@item.NameLowCase</strong></td>
+                    <td>@item.SourceId</td>
+                    <td>@item.CategoryId</td>
+                    <td>@item.Cursor</td>
+                    <td>@item.Status</td>
+                    <td class="center">
+                        <button type="button" class="btn btn-large btn-gray"  onclick="window.open('SubCategoryEdit?subcategoryId=@item.Id','_self');">修 改</button>
+                    </td>
+                    <td class="center">
+                        <button type="button" class="btn btn-large btn-gray"  onclick="var c=confirm('确定要删除?'); if(c==true){window.open('SubCategoryDelete?subcategoryId=@item.Id','_self');}">
+                            删 除</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

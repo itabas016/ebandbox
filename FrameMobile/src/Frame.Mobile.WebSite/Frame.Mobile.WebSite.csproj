@@ -383,11 +383,19 @@
     <Content Include="Views\Mobile\HardwareList.cshtml" />
     <Content Include="Views\Mobile\ResolutionAdd.cshtml" />
     <Content Include="Views\Mobile\ResolutionList.cshtml" />
+    <Content Include="Views\WallPaperUI\CategoryAdd.cshtml" />
+    <Content Include="Views\WallPaperUI\CategoryList.cshtml" />
+    <Content Include="Views\WallPaperUI\SubCategoryList.cshtml" />
+    <Content Include="Views\WallPaperUI\SubCategoryAdd.cshtml" />
+    <Content Include="Views\WallPaperUI\TopicAdd.cshtml" />
+    <Content Include="Views\WallPaperUI\TopicList.cshtml" />
+    <Content Include="Views\WallPaperUI\WallPaperAdd.cshtml" />
+    <Content Include="Views\WallPaperUI\WallPaperList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\Theme\WallPaper\" />
+    <Folder Include="Views\Theme\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
