@@ -2,7 +2,7 @@
 @using FrameMobile.Model.Mobile;
 @{
     ViewBag.Title = "分辨率列表";
-    Layout = "~/Views/Shared/_ThemeLayout.cshtml";
+    Layout = "~/Views/Shared/_MobileLayout.cshtml";
 
     List<MobileResolution> resolutionlist = ViewData["Resolutionlist"] as List<MobileResolution>;
     resolutionlist = resolutionlist != null ? resolutionlist : new List<MobileResolution>();

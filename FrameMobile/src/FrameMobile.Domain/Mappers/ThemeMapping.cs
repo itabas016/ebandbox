@@ -21,7 +21,8 @@ namespace FrameMobile.Domain
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(ori => ori.Name))
                 .ForMember(dest => dest.NameLowCase, opt => opt.MapFrom(ori => ori.NameLowCase))
                 .ForMember(dest => dest.Type, opt => opt.MapFrom(ori => ori.Type))
-                .ForMember(dest => dest.Version, opt => opt.MapFrom(ori => ori.Version));
+                .ForMember(dest => dest.Version, opt => opt.MapFrom(ori => ori.Version))
+                .IgnoreAllNonExisting();
 
             #endregion
 

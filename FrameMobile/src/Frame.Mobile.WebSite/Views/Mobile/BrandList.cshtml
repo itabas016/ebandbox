@@ -2,7 +2,7 @@
 @using FrameMobile.Model.Mobile;
 @{
     ViewBag.Title = "品牌列表";
-    Layout = "~/Views/Shared/_ThemeLayout.cshtml";
+    Layout = "~/Views/Shared/_MobileLayout.cshtml";
 
     List<MobileBrand> brandlist = ViewData["Brandlist"] as List<MobileBrand>;
     brandlist = brandlist != null ? brandlist : new List<MobileBrand>();

@@ -3,7 +3,7 @@
 @{
     bool isUpdateMode = ViewData["IsUpdate"] != null;
     ViewBag.Title = isUpdateMode ? "修改手机属性关联" : "添加手机属性关联";
-    Layout = "~/Views/Shared/_ThemeLayout.cshtml";
+    Layout = "~/Views/Shared/_MobileLayout.cshtml";
 
     var brandlist = ViewData["Brandlist"] as SelectList;
     var hardwarelist = ViewData["Hardwarelist"] as SelectList;

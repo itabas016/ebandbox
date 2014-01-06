@@ -2,7 +2,7 @@
 @using FrameMobile.Model.Mobile;
 @{
     ViewBag.Title = "手机属性关联配置列表";
-    Layout = "~/Views/Shared/_ThemeLayout.cshtml";
+    Layout = "~/Views/Shared/_MobileLayout.cshtml";
 
     List<MobileProperty> propertylist = ViewData["Propertylist"] as List<MobileProperty>;
     propertylist = propertylist != null ? propertylist : new List<MobileProperty>();

@@ -2,7 +2,7 @@
 @using FrameMobile.Model.Mobile;
 @{
     ViewBag.Title = "项目列表";
-    Layout = "~/Views/Shared/_ThemeLayout.cshtml";
+    Layout = "~/Views/Shared/_MobileLayout.cshtml";
 
     List<MobileHardware> hardwarelist = ViewData["Hardwarelist"] as List<MobileHardware>;
     hardwarelist = hardwarelist != null ? hardwarelist : new List<MobileHardware>();

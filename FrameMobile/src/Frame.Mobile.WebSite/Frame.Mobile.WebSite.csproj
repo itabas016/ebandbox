@@ -190,6 +190,7 @@
     <Compile Include="Controllers\News\NewsController.cs" />
     <Compile Include="Controllers\News\NewsUIController.cs" />
     <Compile Include="Controllers\Theme\ThemeBaseController.cs" />
+    <Compile Include="Controllers\Theme\ThemeUIController.cs" />
     <Compile Include="Controllers\Theme\WallPaperController.cs" />
     <Compile Include="Controllers\Theme\WallPaperUIController.cs" />
     <Compile Include="Global.asax.cs">
@@ -373,7 +374,7 @@
     <Content Include="Views\NewsUI\TimeConvert.cshtml" />
     <Content Include="Views\NewsUI\InfAddressAdd.cshtml" />
     <Content Include="Views\NewsUI\InfAddressList.cshtml" />
-    <Content Include="Views\Shared\_ThemeLayout.cshtml" />
+    <Content Include="Views\Shared\_MobileLayout.cshtml" />
     <Content Include="Views\Shared\_WallPaperLayout.cshtml" />
     <Content Include="Views\Mobile\PropertyList.cshtml" />
     <Content Include="Views\Mobile\BrandAdd.cshtml" />
@@ -391,11 +392,13 @@
     <Content Include="Views\WallPaperUI\TopicList.cshtml" />
     <Content Include="Views\WallPaperUI\WallPaperAdd.cshtml" />
     <Content Include="Views\WallPaperUI\WallPaperList.cshtml" />
+    <Content Include="Views\ThemeUI\ConfigAdd.cshtml" />
+    <Content Include="Views\ThemeUI\ConfigList.cshtml" />
+    <Content Include="Views\Shared\_ThemeLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\Theme\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
