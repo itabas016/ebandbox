@@ -114,8 +114,10 @@
     <Compile Include="Service\Interface\IThemeServiceBase.cs" />
     <Compile Include="Service\Interface\IThemeDbContextService.cs" />
     <Compile Include="Service\Interface\IWallPaperService.cs" />
+    <Compile Include="Service\Interface\IWallPaperUIService.cs" />
     <Compile Include="Service\ServiceBase\ThemeDbContextService.cs" />
     <Compile Include="Service\Theme\WallPaperService.cs" />
+    <Compile Include="Service\Theme\WallPaperUIService.cs" />
     <Compile Include="Service\ThirdPart\TencentService.cs" />
     <Compile Include="Service\ThirdPart\TouTiaoService.cs" />
     <Compile Include="Service\Interface\IAccountService.cs" />

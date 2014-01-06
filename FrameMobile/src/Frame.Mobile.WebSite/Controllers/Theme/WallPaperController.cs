@@ -10,24 +10,8 @@ using StructureMap;
 
 namespace Frame.Mobile.WebSite.Controllers
 {
-    public class WallPaperController : MvcControllerBase
+    public class WallPaperController : ThemeBaseController
     {
-        public IWallPaperService WallPaperService
-        {
-            get
-            {
-                if (_wallPaperService == null)
-                    _wallPaperService = ObjectFactory.GetInstance<IWallPaperService>();
-
-                return _wallPaperService;
-            }
-            set
-            {
-                _wallPaperService = value;
-            }
-        }
-        private IWallPaperService _wallPaperService;
-
         public ActionResult CategoryList(string imsi, int cver)
         {
             var mobileParams = GetMobileParam();
