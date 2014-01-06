@@ -2,7 +2,7 @@
 @using FrameMobile.Model.News;
 @{
     ViewBag.Title = "子分类管理";
-    Layout = "~/Views/Shared/_NewsLayout.cshtml";
+    Layout = "~/Views/Shared/_WallPaperLayout.cshtml";
 
     List<NewsSubCategory> subcategorylist = ViewData["SubCategorylist"] as List<NewsSubCategory>;
     subcategorylist = subcategorylist != null ? subcategorylist : new List<NewsSubCategory>();
