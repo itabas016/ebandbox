@@ -90,6 +90,7 @@
     <Compile Include="Attribute\UserAuthorizeAttribute.cs" />
     <Compile Include="DI\Bootstrapper.cs" />
     <Compile Include="DI\ControllerRegistry.cs" />
+    <Compile Include="DI\DBModelstrapper.cs" />
     <Compile Include="DI\StructureMapDependencyResolver.cs" />
     <Compile Include="DI\StructureMapScope.cs" />
     <Compile Include="Extensions\DbContextExtension.cs" />

@@ -29,5 +29,10 @@ namespace FrameMobile.Common
 
         #endregion
 
+        #region System
+
+        public const string FRAME_MODEL_MASTER = "FrameMobile.Model";
+
+        #endregion
     }
 }

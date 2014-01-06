@@ -15,13 +15,6 @@ namespace FrameMobile.Domain.Service
 {
     public class AccountService : NewsDbContextService, IAccountService
     {
-        IDataProvider provider = ProviderFactory.GetProvider(ConnectionStrings.NEWS_MYSQL_CONNECTSTRING);
-
-        public AccountService()
-        {
-            UserDBInitialize();
-        }
-
         #region Register Login
 
         public int CreateUser(RegisterView model)
@@ -261,22 +254,6 @@ namespace FrameMobile.Domain.Service
             if (_user == null) return 1;
             else if (_user.Password != password) return 2;
             else return 0;
-        }
-
-        private void UserDBInitialize()
-        {
-            BatchQuery query = new BatchQuery(provider);
-            Assembly assembly = Assembly.Load("FrameMobile.Model");
-            string spacename = "FrameMobile.Model.Account";
-
-            var migrator = new SubSonic.Schema.Migrator(assembly);
-            string[] commands = migrator.MigrateFromModel(spacename, provider);
-
-            foreach (var s in commands)
-            {
-                query.QueueForTransaction(new QueryCommand(s.Trim(), provider));
-            }
-            query.ExecuteTransaction();
         }
 
         #endregion
