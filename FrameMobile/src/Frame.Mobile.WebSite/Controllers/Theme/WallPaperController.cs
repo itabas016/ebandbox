@@ -28,7 +28,7 @@ namespace Frame.Mobile.WebSite.Controllers
         }
         private IWallPaperService _wallPaperService;
 
-        public ActionResult CategoryList(string imsi, int cver)
+        public ActionResult CategoryList(string imsi, int cver = 0)
         {
             var mobileParams = GetMobileParam();
             int sver = 0;
@@ -41,7 +41,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return Content(actionResult.ToString());
         }
 
-        public ActionResult SubCategoryList(string imsi, int cver)
+        public ActionResult SubCategoryList(string imsi, int cver = 0)
         {
             var mobileParams = GetMobileParam();
             int sver = 0;
@@ -54,7 +54,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return Content(actionResult.ToString());
         }
 
-        public ActionResult TopicList(string imsi, int cver)
+        public ActionResult TopicList(string imsi, int cver = 0)
         {
             var mobileParams = GetMobileParam();
             int sver = 0;
