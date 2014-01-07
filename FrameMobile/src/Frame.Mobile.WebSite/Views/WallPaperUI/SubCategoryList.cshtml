@@ -1,11 +1,11 @@
-﻿@model List<NewsSubCategory>
-@using FrameMobile.Model.News;
+﻿@model List<WallPaperSubCategory>
+@using FrameMobile.Model.Theme;
 @{
     ViewBag.Title = "子分类管理";
     Layout = "~/Views/Shared/_WallPaperLayout.cshtml";
 
-    List<NewsSubCategory> subcategorylist = ViewData["SubCategorylist"] as List<NewsSubCategory>;
-    subcategorylist = subcategorylist != null ? subcategorylist : new List<NewsSubCategory>();
+    List<WallPaperSubCategory> subcategorylist = ViewData["SubCategorylist"] as List<WallPaperSubCategory>;
+    subcategorylist = subcategorylist != null ? subcategorylist : new List<WallPaperSubCategory>();
     var totalCount = ViewData["TotalCount"] as int?;
     totalCount = totalCount != null ? totalCount : 0;
 }
@@ -31,10 +31,7 @@
             <tr>
                 <th>序号</th>
                 <th>名称</th>
-                <th>缩写</th>
-                <th>提供商</th>
                 <th>主分类</th>
-                <th>当前游标值</th>
                 <th>状态</th>
                 <th>&nbsp;</th>
             </tr>
@@ -45,10 +42,7 @@
                 <tr class="odd gradeX">
                     <td><strong>@item.Id</strong></td>
                     <td><strong>@item.Name</strong></td>
-                    <td><strong>@item.NameLowCase</strong></td>
-                    <td>@item.SourceId</td>
-                    <td>@item.CategoryId</td>
-                    <td>@item.Cursor</td>
+                    <td><strong>@item.CategoryId</strong></td>
                     <td>@item.Status</td>
                     <td class="center">
                         <button type="button" class="btn btn-large btn-gray"  onclick="window.open('SubCategoryEdit?subcategoryId=@item.Id','_self');">修 改</button>
