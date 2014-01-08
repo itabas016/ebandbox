@@ -53,7 +53,7 @@ namespace Frame.Mobile.WebSite.Controllers
         }
 
         [HttpPost]
-        public ActionResult CategoryEdit(WallPaperCategory model)
+        public ActionResult CategoryEdit(WallPaperCategory model, HttpPostedFileBase logoFile)
         {
             var category = dbContextService.Single<WallPaperCategory>(model.Id);
 
@@ -90,6 +90,9 @@ namespace Frame.Mobile.WebSite.Controllers
         [HttpGet]
         public ActionResult SubCategoryAdd()
         {
+            var categorylist = WallPaperUIService.GetWallPaperCategoryList();
+            ViewData["Categorylist"] = categorylist.GetSelectList();
+
             return View();
         }
 
@@ -110,13 +113,16 @@ namespace Frame.Mobile.WebSite.Controllers
         [HttpGet]
         public ActionResult SubCategoryEdit(int subcategoryId)
         {
+            var categorylist = WallPaperUIService.GetWallPaperCategoryList();
+            ViewData["Categorylist"] = categorylist.GetSelectList();
+
             var subcategory = dbContextService.Single<WallPaperSubCategory>(subcategoryId);
             ViewData["IsUpdate"] = true;
             return View("SubCategoryAdd", subcategory);
         }
 
         [HttpPost]
-        public ActionResult SubCategoryEdit(WallPaperSubCategory model)
+        public ActionResult SubCategoryEdit(WallPaperSubCategory model, HttpPostedFileBase logoFile)
         {
             var subcategory = dbContextService.Single<WallPaperSubCategory>(model.Id);
 
@@ -179,7 +185,7 @@ namespace Frame.Mobile.WebSite.Controllers
         }
 
         [HttpPost]
-        public ActionResult TopicEdit(WallPaperTopic model)
+        public ActionResult TopicEdit(WallPaperTopic model, HttpPostedFileBase logoFile)
         {
             var topic = dbContextService.Single<WallPaperTopic>(model.Id);
 

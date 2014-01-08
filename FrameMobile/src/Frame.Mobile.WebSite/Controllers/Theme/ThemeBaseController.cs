@@ -27,6 +27,22 @@ namespace Frame.Mobile.WebSite.Controllers
         }
         private IWallPaperService _wallPaperService;
 
+        public IWallPaperUIService WallPaperUIService
+        {
+            get
+            {
+                if (_wallPaperUIService == null)
+                    _wallPaperUIService = ObjectFactory.GetInstance<IWallPaperUIService>();
+
+                return _wallPaperUIService;
+            }
+            set
+            {
+                _wallPaperUIService = value;
+            }
+        }
+        private IWallPaperUIService _wallPaperUIService;
+
         private IThemeDbContextService _dbContextService;
         public IThemeDbContextService dbContextService
         {

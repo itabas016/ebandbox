@@ -45,7 +45,7 @@ namespace FrameMobile.Domain
 
         private void RegistyThemeService()
         {
-            For<IWallPaperService>().Use<WallPaperService>();
+            For<IWallPaperUIService>().Use<WallPaperUIService>();
 
 #if DEBUG
             For<IWallPaperService>().Use<WallPaperFakeService>();
