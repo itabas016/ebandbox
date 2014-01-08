@@ -110,8 +110,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\Common\AccountService.cs" />
     <Compile Include="Service\Common\CookieService.cs" />
+    <Compile Include="Service\Common\MobileUIService.cs" />
     <Compile Include="Service\Fake\NewsFakeService.cs" />
     <Compile Include="Service\Fake\WallPaperFakeService.cs" />
+    <Compile Include="Service\Interface\IMobileUIService.cs" />
     <Compile Include="Service\Interface\IThemeServiceBase.cs" />
     <Compile Include="Service\Interface\IThemeDbContextService.cs" />
     <Compile Include="Service\Interface\IWallPaperService.cs" />

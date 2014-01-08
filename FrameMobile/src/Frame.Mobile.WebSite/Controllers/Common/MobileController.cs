@@ -6,18 +6,36 @@ using System.Web;
 using System.Web.Mvc;
 using FrameMobile.Domain;
 using FrameMobile.Model.Mobile;
+using StructureMap;
+using FrameMobile.Domain.Service;
 
 namespace Frame.Mobile.WebSite.Controllers
 {
     public class MobileController : ThemeBaseController
     {
+        public IMobileUIService MobileUIService
+        {
+            get
+            {
+                if (_mobileUIService == null)
+                    _mobileUIService = ObjectFactory.GetInstance<IMobileUIService>();
+
+                return _mobileUIService;
+            }
+            set
+            {
+                _mobileUIService = value;
+            }
+        }
+        private IMobileUIService _mobileUIService;
+
         protected override bool IsMobileInterface { get { return false; } }
 
         #region Property
 
         public ActionResult PropertyList()
         {
-            var propertylist = dbContextService.All<MobileProperty>().ToList();
+            var propertylist = MobileUIService.GetMobilePropertyList();
             ViewData["Propertylist"] = propertylist;
             ViewData["TotalCount"] = propertylist.Count;
 
@@ -27,6 +45,13 @@ namespace Frame.Mobile.WebSite.Controllers
         [HttpGet]
         public ActionResult PropertyAdd()
         {
+            var brandlist = MobileUIService.GetMobileBrandList();
+            var hardwarelist = MobileUIService.GetMobileHardwareList();
+            var resolutionlist = MobileUIService.GetMobileResolutionList();
+            ViewData["Brandlist"] = brandlist.GetSelectList();
+            ViewData["Hardwarelist"] = hardwarelist.GetSelectList();
+            ViewData["Resolutionlist"] = resolutionlist.GetSelectList();
+
             return View();
         }
 
@@ -46,6 +71,13 @@ namespace Frame.Mobile.WebSite.Controllers
         [HttpGet]
         public ActionResult PropertyEdit(int propertyId)
         {
+            var brandlist = MobileUIService.GetMobileBrandList();
+            var hardwarelist = MobileUIService.GetMobileHardwareList();
+            var resolutionlist = MobileUIService.GetMobileResolutionList();
+            ViewData["Brandlist"] = brandlist.GetSelectList();
+            ViewData["Hardwarelist"] = hardwarelist.GetSelectList();
+            ViewData["Resolutionlist"] = resolutionlist.GetSelectList();
+
             var property = dbContextService.Single<MobileProperty>(propertyId);
             ViewData["IsUpdate"] = true;
             return View("PropertyAdd", property);
