@@ -61,6 +61,17 @@ namespace FrameMobile.Domain.Service
         public IList<WallPaperCategoryView> GetCategoryViewList(MobileParam mobileParams, int cver, out int sver)
         {
             #region instance
+            var cate0 = new WallPaperCategory()
+            {
+                Id = 0,
+                Name = "全部",
+                CategoryLogoUrl = "",
+                OrderNumber = 0,
+                CreateDateTime = DateTime.Now,
+                Comment = "",
+                Status = 1
+            };
+
             var cate1 = new WallPaperCategory()
                 {
                     Id = 1,
@@ -84,7 +95,7 @@ namespace FrameMobile.Domain.Service
             };
             #endregion
 
-            var categorylist = new List<WallPaperCategory>() { cate1, cate2 };
+            var categorylist = new List<WallPaperCategory>() { cate0, cate1, cate2 };
 
             var result = categorylist.To<IList<WallPaperCategoryView>>();
 
@@ -180,13 +191,29 @@ namespace FrameMobile.Domain.Service
 
             if (sort == 0)
             {
-                var hotwallpaperlist = FakeWallPaperList().Where(x => x.CategoryId == categoryId).OrderByDescending(x => x.DownloadNumber);
-                result = hotwallpaperlist.To<IList<WallPaperView>>().ToList();
+                if (categoryId == 0)
+                {
+                    result = FakeWallPaperList().To<IList<WallPaperView>>().ToList();
+                    result = FakeWallPaperList().To<IList<WallPaperView>>().OrderByDescending(x => x.DownloadNumber).ToList();
+                }
+                else
+                {
+                    var hotwallpaperlist = FakeWallPaperList().Where(x => x.CategoryId == categoryId).OrderByDescending(x => x.DownloadNumber);
+                    result = hotwallpaperlist.To<IList<WallPaperView>>().ToList();
+                }
             }
             else if (sort == 1)
             {
-                var latestwallpaperlist = FakeWallPaperList().Where(x => x.CategoryId == categoryId).OrderByDescending(x => x.PublishTime);
-                result = latestwallpaperlist.To<IList<WallPaperView>>().ToList();
+                if (categoryId == 0)
+                {
+                    result = FakeWallPaperList().To<IList<WallPaperView>>().ToList();
+                    result = FakeWallPaperList().To<IList<WallPaperView>>().OrderByDescending(x => x.PublishTime).ToList();
+                }
+                else
+                {
+                    var latestwallpaperlist = FakeWallPaperList().Where(x => x.CategoryId == categoryId).OrderByDescending(x => x.PublishTime);
+                    result = latestwallpaperlist.To<IList<WallPaperView>>().ToList();
+                }
             }
 
             totalCount = result.Count;
