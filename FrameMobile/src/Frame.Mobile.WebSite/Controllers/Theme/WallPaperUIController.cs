@@ -318,5 +318,27 @@ namespace Frame.Mobile.WebSite.Controllers
         }
 
         #endregion
+
+        #region Related
+
+        [HttpGet]
+        public ActionResult WallPaperManage(int wallpaperId)
+        {
+            var categorylist = WallPaperUIService.GetWallPaperCategoryList();
+            var subcategorylist = WallPaperUIService.GetWallPaperSubCategoryList();
+            var topiclist = WallPaperUIService.GetWallPaperTopicList();
+            var propertylist = MobileUIService.GetMobilePropertyList();
+
+            ViewData["Categorylist"] = categorylist.GetSelectList();
+            ViewData["SubCategorylist"] = subcategorylist.GetSelectList();
+            ViewData["Topiclist"] = topiclist.GetSelectList();
+            ViewData["Propertylist"] = propertylist.GetSelectList();
+
+            var wallpaper = dbContextService.Single<WallPaper>(wallpaperId);
+
+            return View(wallpaper);
+        }
+
+        #endregion
     }
 }

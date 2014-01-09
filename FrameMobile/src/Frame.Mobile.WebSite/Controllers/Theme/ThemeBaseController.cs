@@ -48,6 +48,22 @@ namespace Frame.Mobile.WebSite.Controllers
         }
         private IWallPaperUIService _wallPaperUIService;
 
+        public IMobileUIService MobileUIService
+        {
+            get
+            {
+                if (_mobileUIService == null)
+                    _mobileUIService = ObjectFactory.GetInstance<IMobileUIService>();
+
+                return _mobileUIService;
+            }
+            set
+            {
+                _mobileUIService = value;
+            }
+        }
+        private IMobileUIService _mobileUIService;
+
         private IThemeDbContextService _dbContextService;
         public IThemeDbContextService dbContextService
         {

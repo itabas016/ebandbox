@@ -1,0 +1,71 @@
+﻿@using FrameMobile.Model.Theme;
+@model WallPaper
+@{
+    bool isUpdateMode = ViewData["IsUpdate"] != null;
+    ViewBag.Title = "壁纸管理";
+    Layout = "~/Views/Shared/_WallPaperLayout.cshtml";
+
+    var actionName = "WallPaperManage";
+    var categorylist = ViewData["Categorylist"] as SelectList;
+    var subcategorylist = ViewData["SubCategorylist"] as SelectList;
+    var topiclist = ViewData["Topiclist"] as SelectList;
+    var propertylist = ViewData["Propertylist"] as SelectList;
+}
+
+<div class="contentHeader">
+    <div class="contentHeaderInfo">
+        <button class="btn btn-quaternary btn-large addapp" onclick="history.back();">
+            返 回</button>
+    </div>
+    <div class="apphead">
+        <div class="title">
+            <b>@ViewBag.Title </b>
+        </div>
+    </div>
+</div>
+<div class="content">
+    <div class="windows">
+        @using (Html.BeginForm(actionName, "WallPaperUI", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+
+            <p>
+                <div class="title">
+                    <h1>
+                        @ViewBag.Title</h1>
+                </div>
+            </p>
+
+            <div style="clear: both">
+
+                <div>
+                    <strong>所属分类: </strong>
+                    @foreach (var category in categorylist)
+                    {
+                        <input type="checkbox" name="category" value="@category.Text" />@category.Text
+                    }
+                </div>
+                <div>
+                    <strong>所属子分类: </strong>
+                    @foreach (var subcategory in subcategorylist)
+                    {
+                        <input type="checkbox" name="subcategory" value="@subcategory.Text" />@subcategory.Text
+                    }
+                </div>
+                <div>
+                    <strong>所属专题: </strong>
+                    @foreach (var topic in topiclist)
+                    {
+                        <input type="checkbox" name="topic" value="@topic.Text" />@topic.Text
+                    }
+                </div>
+                <div>
+                    <strong>适配手机属性: </strong>
+                    @foreach (var item in propertylist)
+                    {
+                        <input type="checkbox" name="property" value="@item.Text" />@item.Text
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</div>
