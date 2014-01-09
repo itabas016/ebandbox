@@ -295,6 +295,7 @@ namespace FrameMobile.Web
             }
             else
             {
+                MakeSureDirExist(dirPath);
                 filePath = Path.Combine(dirPath, fileName);
             }
 

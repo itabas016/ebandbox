@@ -8,6 +8,7 @@ using FrameMobile.Model.Theme;
 using FrameMobile.Domain;
 using System.IO;
 using FrameMobile.Common;
+using NCore;
 
 namespace Frame.Mobile.WebSite.Controllers
 {
@@ -44,7 +45,8 @@ namespace Frame.Mobile.WebSite.Controllers
 
             var logoFile = Request.Files[Request.Files.Keys.Count - 1];
             var logoFilePath = GetThemeLogoFilePath<WallPaperCategory>(model, logoFile);
-            model.CategoryLogoUrl = string.Format("{0}{1}", ConfigKeys.TYD_WALLPAPER_LOGO_IMAGE_PREFIX, Path.GetFileName(logoFilePath));
+            var logo_Image_Prefix = ConfigKeys.TYD_WALLPAPER_LOGO_IMAGE_PREFIX.ConfigValue();
+            model.CategoryLogoUrl = string.Format("{0}{1}", logo_Image_Prefix, Path.GetFileName(logoFilePath));
 
             var ret = dbContextService.Add<WallPaperCategory>(model);
 
@@ -71,7 +73,8 @@ namespace Frame.Mobile.WebSite.Controllers
             category.CreateDateTime = DateTime.Now;
 
             var logoFilePath = GetThemeLogoFilePath<WallPaperCategory>(model, logoFile);
-            model.CategoryLogoUrl = string.Format("{0}{1}", ConfigKeys.TYD_WALLPAPER_LOGO_IMAGE_PREFIX, Path.GetFileName(logoFilePath));
+            var logo_Image_Prefix = ConfigKeys.TYD_WALLPAPER_LOGO_IMAGE_PREFIX.ConfigValue();
+            category.CategoryLogoUrl = string.Format("{0}{1}", logo_Image_Prefix, Path.GetFileName(logoFilePath));
 
             dbContextService.Update<WallPaperCategory>(category);
             return RedirectToAction("CategoryList");
@@ -117,7 +120,8 @@ namespace Frame.Mobile.WebSite.Controllers
 
             var logoFile = Request.Files[Request.Files.Keys.Count - 1];
             var logoFilePath = GetThemeLogoFilePath<WallPaperSubCategory>(model, logoFile);
-            model.SubCategoryLogoUrl = string.Format("{0}{1}", ConfigKeys.TYD_WALLPAPER_LOGO_IMAGE_PREFIX, Path.GetFileName(logoFilePath));
+            var logo_Image_Prefix = ConfigKeys.TYD_WALLPAPER_LOGO_IMAGE_PREFIX.ConfigValue();
+            model.SubCategoryLogoUrl = string.Format("{0}{1}", logo_Image_Prefix, Path.GetFileName(logoFilePath));
 
             var ret = dbContextService.Add<WallPaperSubCategory>(model);
 
@@ -147,7 +151,8 @@ namespace Frame.Mobile.WebSite.Controllers
             subcategory.CreateDateTime = DateTime.Now;
 
             var logoFilePath = GetThemeLogoFilePath<WallPaperSubCategory>(model, logoFile);
-            model.SubCategoryLogoUrl = string.Format("{0}{1}", ConfigKeys.TYD_WALLPAPER_LOGO_IMAGE_PREFIX, Path.GetFileName(logoFilePath));
+            var logo_Image_Prefix = ConfigKeys.TYD_WALLPAPER_LOGO_IMAGE_PREFIX.ConfigValue();
+            subcategory.SubCategoryLogoUrl = string.Format("{0}{1}", logo_Image_Prefix, Path.GetFileName(logoFilePath));
 
             dbContextService.Update<WallPaperSubCategory>(subcategory);
             return RedirectToAction("SubCategoryList");
@@ -190,7 +195,8 @@ namespace Frame.Mobile.WebSite.Controllers
 
             var logoFile = Request.Files[Request.Files.Keys.Count - 1];
             var logoFilePath = GetThemeLogoFilePath<WallPaperTopic>(model, logoFile);
-            model.TopicLogoUrl = string.Format("{0}{1}", ConfigKeys.TYD_WALLPAPER_LOGO_IMAGE_PREFIX, Path.GetFileName(logoFilePath));
+            var logo_Image_Prefix = ConfigKeys.TYD_WALLPAPER_LOGO_IMAGE_PREFIX.ConfigValue();
+            model.TopicLogoUrl = string.Format("{0}{1}", logo_Image_Prefix, Path.GetFileName(logoFilePath));
 
             var ret = dbContextService.Add<WallPaperTopic>(model);
 
@@ -217,7 +223,8 @@ namespace Frame.Mobile.WebSite.Controllers
             topic.CreateDateTime = DateTime.Now;
 
             var logoFilePath = GetThemeLogoFilePath<WallPaperTopic>(model, logoFile);
-            model.TopicLogoUrl = string.Format("{0}{1}", ConfigKeys.TYD_WALLPAPER_LOGO_IMAGE_PREFIX, Path.GetFileName(logoFilePath));
+            var logo_Image_Prefix = ConfigKeys.TYD_WALLPAPER_LOGO_IMAGE_PREFIX.ConfigValue();
+            topic.TopicLogoUrl = string.Format("{0}{1}", logo_Image_Prefix, Path.GetFileName(logoFilePath));
 
             dbContextService.Update<WallPaperTopic>(topic);
             return RedirectToAction("TopicList");
