@@ -10,6 +10,7 @@ using FrameMobile.Common;
 using FrameMobile.Domain;
 using System.IO;
 using FrameMobile.Model;
+using FrameMobile.Model.Theme;
 
 namespace Frame.Mobile.WebSite.Controllers
 {
@@ -71,6 +72,28 @@ namespace Frame.Mobile.WebSite.Controllers
                 var logoFilePath = SaveResourceFile(Const.THEME_LOGOS_FOLDER_NAME, ResourcesFilePathHelper.ThemeLogoPath, logoFile, string.Format("{0}_{1}_{2}", model.Name, Guid.NewGuid().ToString(), Path.GetExtension(logoFile.FileName)).NormalzieFileName());
 
                 return logoFilePath;
+            }
+            return string.Empty;
+        }
+
+        protected string GetThemeThumbnailFilePath(WallPaper model, HttpPostedFileBase thumbnailFile)
+        {
+            if (thumbnailFile != null && !string.IsNullOrWhiteSpace(thumbnailFile.FileName))
+            {
+                var thumbnailFilePath = SaveResourceFile(Const.THEME_THUMBNAILS_FOLDER_NAME, ResourcesFilePathHelper.ThemeLogoPath, thumbnailFile, string.Format("{0}_{1}_{2}", model.Titile, Guid.NewGuid().ToString(), Path.GetExtension(thumbnailFile.FileName)).NormalzieFileName());
+
+                return thumbnailFilePath;
+            }
+            return string.Empty;
+        }
+
+        protected string GetThemeOriginalFilePath(WallPaper model, HttpPostedFileBase originailFile)
+        {
+            if (originailFile != null && !string.IsNullOrWhiteSpace(originailFile.FileName))
+            {
+                var originailFilePath = SaveResourceFile(Const.THEME_ORIGINALS_FOLDER_NAME, ResourcesFilePathHelper.ThemeLogoPath, originailFile, string.Format("{0}_{1}_{2}", model.Titile, Guid.NewGuid().ToString(), Path.GetExtension(originailFile.FileName)).NormalzieFileName());
+
+                return originailFilePath;
             }
             return string.Empty;
         }

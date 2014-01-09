@@ -264,6 +264,15 @@ namespace Frame.Mobile.WebSite.Controllers
                 TempData["errorMsg"] = "该分类已经存在！";
                 return View();
             }
+
+            var thumbnailFile = Request.Files[Request.Files.Keys[0]];
+            var thumbnailFilePath = GetThemeThumbnailFilePath(model, thumbnailFile);
+            model.ThumbnailName = Path.GetFileName(thumbnailFilePath);
+
+            var originalFile = Request.Files[Request.Files.Keys[1]];
+            var originalFilePath = GetThemeOriginalFilePath(model, originalFile);
+            model.OriginalName = Path.GetFileName(originalFilePath);
+
             var ret = dbContextService.Add<WallPaper>(model);
 
             return RedirectToAction("WallPaperList");
@@ -278,14 +287,12 @@ namespace Frame.Mobile.WebSite.Controllers
         }
 
         [HttpPost]
-        public ActionResult WallPaperEdit(WallPaper model)
+        public ActionResult WallPaperEdit(WallPaper model, HttpPostedFileBase thumbnailFile, HttpPostedFileBase originalFile)
         {
             var wallpaper = dbContextService.Single<WallPaper>(model.Id);
 
             wallpaper.Titile = model.Titile;
-            wallpaper.ThumbnailName = wallpaper.ThumbnailName;
             wallpaper.Status = model.Status;
-            wallpaper.OriginalName = model.OriginalName;
             wallpaper.PublishTime = model.PublishTime;
             wallpaper.ModifiedTime = DateTime.Now;
             wallpaper.Rating = model.Rating;
@@ -293,6 +300,12 @@ namespace Frame.Mobile.WebSite.Controllers
             wallpaper.OrderNumber = model.OrderNumber;
             wallpaper.Comment = model.Comment;
             wallpaper.CreateDateTime = DateTime.Now;
+
+            var thumbnailFilePath = GetThemeThumbnailFilePath(model, thumbnailFile);
+            wallpaper.ThumbnailName = Path.GetFileName(thumbnailFilePath);
+
+            var originalFilePath = GetThemeOriginalFilePath(model, originalFile);
+            wallpaper.OriginalName = Path.GetFileName(originalFilePath);
 
             dbContextService.Update<WallPaper>(wallpaper);
             return RedirectToAction("WallPaperList");
