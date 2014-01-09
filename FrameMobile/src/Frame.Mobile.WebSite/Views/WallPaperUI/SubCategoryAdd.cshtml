@@ -59,14 +59,17 @@
                             <input type="file" name="logoFile" accept="bmp|gif|jpg|jpeg|png|tiff|abm" /></td>
                     </tr>
                     <tr>
-                        <td>
-                            <label>@logoUrl</label>
-                        <td>
-                            @if (@logoUrl != string.Empty)
-                            {
-                                <img src="@Model.SubCategoryLogoUrl" />
-                            }</td>
+                        <td colspan="2">
+                            <label>@logoUrl</label></td>
                     </tr>
+                    @if (@logoUrl != string.Empty)
+                    {
+                        <tr>
+                            <td colspan="2">
+                                <img src="@Model.SubCategoryLogoUrl" />
+                            </td>
+                        </tr>
+                    }
                     <tr>
                         <td><strong>排序号: </strong></td>
                         <td>@Html.TextBoxFor(m => m.OrderNumber)</td>

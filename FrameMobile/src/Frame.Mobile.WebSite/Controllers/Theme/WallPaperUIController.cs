@@ -42,7 +42,7 @@ namespace Frame.Mobile.WebSite.Controllers
                 return View();
             }
 
-            var logoFile = Request.Files[(Request.Files.Keys.Count - 1).ToString()];
+            var logoFile = Request.Files[Request.Files.Keys.Count - 1];
             var logoFilePath = GetThemeLogoFilePath<WallPaperCategory>(model, logoFile);
             model.CategoryLogoUrl = string.Format("{0}{1}", ConfigKeys.TYD_WALLPAPER_LOGO_IMAGE_PREFIX, Path.GetFileName(logoFilePath));
 
