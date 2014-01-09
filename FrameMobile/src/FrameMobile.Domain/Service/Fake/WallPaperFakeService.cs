@@ -62,6 +62,18 @@ namespace FrameMobile.Domain.Service
         public IList<WallPaperCategoryView> GetCategoryViewList(MobileParam mobileParams, int cver, out int sver)
         {
             #region instance
+
+            var cate0 = new WallPaperCategory()
+            {
+                Id = 0,
+                Name = "全部",
+                CategoryLogoUrl = "",
+                OrderNumber = 0,
+                CreateDateTime = DateTime.Now,
+                Comment = "",
+                Status = 1
+            };
+
             var cate1 = new WallPaperCategory()
                 {
                     Id = 1,
@@ -85,7 +97,7 @@ namespace FrameMobile.Domain.Service
             };
             #endregion
 
-            var categorylist = new List<WallPaperCategory>() { cate1, cate2 };
+            var categorylist = new List<WallPaperCategory>() { cate0, cate1, cate2 };
 
             var result = categorylist.To<IList<WallPaperCategoryView>>();
 
@@ -181,40 +193,54 @@ namespace FrameMobile.Domain.Service
 
             if (sort == 0)
             {
-                var hotwallpaperlist = from l in FakeWallPaperList()
-                                       join r in FakeWallPaperRelateCategoryList() on l.Id equals r.WallPaperId
-                                       where r.CategoryId == categoryId
-                                       orderby l.DownloadNumber descending
-                                       select new WallPaper
-                                       {
-                                           Id = l.Id,
-                                           Titile = l.Titile,
-                                           ThumbnailName = l.ThumbnailName,
-                                           OriginalName = l.OriginalName,
-                                           DownloadNumber = l.DownloadNumber,
-                                           Rating = l.Status,
-                                           PublishTime = l.PublishTime
-                                       };
-                    
-                result = hotwallpaperlist.To<IList<WallPaperView>>().ToList();
+                if (categoryId == 0)
+                {
+                    result = FakeWallPaperList().To<IList<WallPaperView>>().OrderByDescending(x => x.DownloadNumber).ToList();
+                }
+                else
+                {
+                    var hotwallpaperlist = from l in FakeWallPaperList()
+                                           join r in FakeWallPaperRelateCategoryList() on l.Id equals r.WallPaperId
+                                           where r.CategoryId == categoryId
+                                           orderby l.DownloadNumber descending
+                                           select new WallPaper
+                                           {
+                                               Id = l.Id,
+                                               Titile = l.Titile,
+                                               ThumbnailName = l.ThumbnailName,
+                                               OriginalName = l.OriginalName,
+                                               DownloadNumber = l.DownloadNumber,
+                                               Rating = l.Status,
+                                               PublishTime = l.PublishTime
+                                           };
+
+                    result = hotwallpaperlist.To<IList<WallPaperView>>().ToList();
+                }
             }
             else if (sort == 1)
             {
-                var latestwallpaperlist = from l in FakeWallPaperList()
-                                          join r in FakeWallPaperRelateCategoryList() on l.Id equals r.WallPaperId
-                                          where r.CategoryId == categoryId
-                                          orderby l.PublishTime descending
-                                          select new WallPaper
-                                          {
-                                              Id = l.Id,
-                                              Titile = l.Titile,
-                                              ThumbnailName = l.ThumbnailName,
-                                              OriginalName = l.OriginalName,
-                                              DownloadNumber = l.DownloadNumber,
-                                              Rating = l.Status,
-                                              PublishTime = l.PublishTime
-                                          };
-                result = latestwallpaperlist.To<IList<WallPaperView>>().ToList();
+                if (categoryId == 0)
+                {
+                    result = FakeWallPaperList().To<IList<WallPaperView>>().OrderByDescending(x => x.PublishTime).ToList();
+                }
+                else
+                {
+                    var latestwallpaperlist = from l in FakeWallPaperList()
+                                              join r in FakeWallPaperRelateCategoryList() on l.Id equals r.WallPaperId
+                                              where r.CategoryId == categoryId
+                                              orderby l.PublishTime descending
+                                              select new WallPaper
+                                              {
+                                                  Id = l.Id,
+                                                  Titile = l.Titile,
+                                                  ThumbnailName = l.ThumbnailName,
+                                                  OriginalName = l.OriginalName,
+                                                  DownloadNumber = l.DownloadNumber,
+                                                  Rating = l.Status,
+                                                  PublishTime = l.PublishTime
+                                              };
+                    result = latestwallpaperlist.To<IList<WallPaperView>>().ToList();
+                }
             }
 
             totalCount = result.Count;
