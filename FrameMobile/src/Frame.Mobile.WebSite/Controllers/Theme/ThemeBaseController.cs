@@ -6,6 +6,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using FrameMobile.Common;
+using FrameMobile.Domain;
+using System.IO;
+using FrameMobile.Model;
 
 namespace Frame.Mobile.WebSite.Controllers
 {
@@ -58,6 +62,17 @@ namespace Frame.Mobile.WebSite.Controllers
             {
                 _dbContextService = value;
             }
+        }
+
+        protected string GetThemeLogoFilePath<T>(T model, HttpPostedFileBase logoFile) where T : MySQLModel
+        {
+            if (logoFile != null && !string.IsNullOrWhiteSpace(logoFile.FileName))
+            {
+                var logoFilePath = SaveResourceFile(Const.THEME_LOGOS_FOLDER_NAME, ResourcesFilePathHelper.ThemeLogoPath, logoFile, string.Format("{0}_{1}_{2}", model.Name, Guid.NewGuid().ToString(), Path.GetExtension(logoFile.FileName)).NormalzieFileName());
+
+                return logoFilePath;
+            }
+            return string.Empty;
         }
 
     }

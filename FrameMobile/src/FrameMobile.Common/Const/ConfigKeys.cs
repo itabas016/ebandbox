@@ -13,6 +13,8 @@ namespace FrameMobile.Common
 
         public const string SERVICE_CACHE_TIMEOUT_SECONDS = "ServiceCacheTimeOutSeconds";
 
+        public const string USING_SHARED_RESOURCE_FOLDER = "UsingSharedResourceFolder";
+
         #endregion
 
         #region TouTiao
@@ -38,6 +40,8 @@ namespace FrameMobile.Common
         #region Theme
 
         public const string TYD_THEME_RESOURCES_DIR_ROOT = "TYD_Theme_Resources_Dir_Root";
+
+        public const string TYD_WALLPAPER_LOGO_IMAGE_PREFIX = "TYD_WallPaper_Logo_Image_Prefix";
 
         public const string TYD_WALLPAPER_THUMBNAIL_IMAGE_PREFIX = "TYD_WallPaper_Thumbnail_Image_Prefix";
 

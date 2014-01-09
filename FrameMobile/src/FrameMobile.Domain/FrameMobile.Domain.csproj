@@ -93,6 +93,7 @@
     <Compile Include="DI\DBModelstrapper.cs" />
     <Compile Include="DI\StructureMapDependencyResolver.cs" />
     <Compile Include="DI\StructureMapScope.cs" />
+    <Compile Include="Extensions\CommonExtensions.cs" />
     <Compile Include="Extensions\DbContextExtension.cs" />
     <Compile Include="Extensions\EnumExtension.cs" />
     <Compile Include="Extensions\IDbContext.cs" />
@@ -101,6 +102,7 @@
     <Compile Include="Extensions\ServiceExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\ThemeExtensions.cs" />
+    <Compile Include="Helper\ResourcesFilePathHelper.cs" />
     <Compile Include="Interceptor\CacheDecoratorBase.cs" />
     <Compile Include="Interceptor\ServiceCacheInterceptor.cs" />
     <Compile Include="Mappers\AccountMapping.cs" />

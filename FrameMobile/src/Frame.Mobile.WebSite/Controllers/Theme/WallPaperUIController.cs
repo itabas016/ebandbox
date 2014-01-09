@@ -6,6 +6,8 @@ using System.Web;
 using System.Web.Mvc;
 using FrameMobile.Model.Theme;
 using FrameMobile.Domain;
+using System.IO;
+using FrameMobile.Common;
 
 namespace Frame.Mobile.WebSite.Controllers
 {
@@ -39,6 +41,11 @@ namespace Frame.Mobile.WebSite.Controllers
                 TempData["errorMsg"] = "该分类已经存在！";
                 return View();
             }
+
+            var logoFile = Request.Files[(Request.Files.Keys.Count - 1).ToString()];
+            var logoFilePath = GetThemeLogoFilePath<WallPaperCategory>(model, logoFile);
+            model.CategoryLogoUrl = string.Format("{0}{1}", ConfigKeys.TYD_WALLPAPER_LOGO_IMAGE_PREFIX, Path.GetFileName(logoFilePath));
+
             var ret = dbContextService.Add<WallPaperCategory>(model);
 
             return RedirectToAction("CategoryList");
@@ -58,11 +65,13 @@ namespace Frame.Mobile.WebSite.Controllers
             var category = dbContextService.Single<WallPaperCategory>(model.Id);
 
             category.Name = model.Name;
-            category.CategoryLogoUrl = category.CategoryLogoUrl;
             category.Status = model.Status;
             category.OrderNumber = model.OrderNumber;
             category.Comment = model.Comment;
             category.CreateDateTime = DateTime.Now;
+
+            var logoFilePath = GetThemeLogoFilePath<WallPaperCategory>(model, logoFile);
+            model.CategoryLogoUrl = string.Format("{0}{1}", ConfigKeys.TYD_WALLPAPER_LOGO_IMAGE_PREFIX, Path.GetFileName(logoFilePath));
 
             dbContextService.Update<WallPaperCategory>(category);
             return RedirectToAction("CategoryList");
@@ -105,6 +114,11 @@ namespace Frame.Mobile.WebSite.Controllers
                 TempData["errorMsg"] = "该分类已经存在！";
                 return View();
             }
+
+            var logoFile = Request.Files[Request.Files.Keys.Count - 1];
+            var logoFilePath = GetThemeLogoFilePath<WallPaperSubCategory>(model, logoFile);
+            model.SubCategoryLogoUrl = string.Format("{0}{1}", ConfigKeys.TYD_WALLPAPER_LOGO_IMAGE_PREFIX, Path.GetFileName(logoFilePath));
+
             var ret = dbContextService.Add<WallPaperSubCategory>(model);
 
             return RedirectToAction("SubCategoryList");
@@ -127,11 +141,13 @@ namespace Frame.Mobile.WebSite.Controllers
             var subcategory = dbContextService.Single<WallPaperSubCategory>(model.Id);
 
             subcategory.Name = model.Name;
-            subcategory.SubCategoryLogoUrl = subcategory.SubCategoryLogoUrl;
             subcategory.Status = model.Status;
             subcategory.OrderNumber = model.OrderNumber;
             subcategory.Comment = model.Comment;
             subcategory.CreateDateTime = DateTime.Now;
+
+            var logoFilePath = GetThemeLogoFilePath<WallPaperSubCategory>(model, logoFile);
+            model.SubCategoryLogoUrl = string.Format("{0}{1}", ConfigKeys.TYD_WALLPAPER_LOGO_IMAGE_PREFIX, Path.GetFileName(logoFilePath));
 
             dbContextService.Update<WallPaperSubCategory>(subcategory);
             return RedirectToAction("SubCategoryList");
@@ -171,6 +187,11 @@ namespace Frame.Mobile.WebSite.Controllers
                 TempData["errorMsg"] = "该分类已经存在！";
                 return View();
             }
+
+            var logoFile = Request.Files[Request.Files.Keys.Count - 1];
+            var logoFilePath = GetThemeLogoFilePath<WallPaperTopic>(model, logoFile);
+            model.TopicLogoUrl = string.Format("{0}{1}", ConfigKeys.TYD_WALLPAPER_LOGO_IMAGE_PREFIX, Path.GetFileName(logoFilePath));
+
             var ret = dbContextService.Add<WallPaperTopic>(model);
 
             return RedirectToAction("TopicList");
@@ -190,11 +211,13 @@ namespace Frame.Mobile.WebSite.Controllers
             var topic = dbContextService.Single<WallPaperTopic>(model.Id);
 
             topic.Name = model.Name;
-            topic.TopicLogoUrl = topic.TopicLogoUrl;
             topic.Status = model.Status;
             topic.OrderNumber = model.OrderNumber;
             topic.Comment = model.Comment;
             topic.CreateDateTime = DateTime.Now;
+
+            var logoFilePath = GetThemeLogoFilePath<WallPaperTopic>(model, logoFile);
+            model.TopicLogoUrl = string.Format("{0}{1}", ConfigKeys.TYD_WALLPAPER_LOGO_IMAGE_PREFIX, Path.GetFileName(logoFilePath));
 
             dbContextService.Update<WallPaperTopic>(topic);
             return RedirectToAction("TopicList");

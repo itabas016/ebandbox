@@ -19,6 +19,8 @@ namespace FrameMobile.Common
 
         public const int NEWS_NORMAL_RESOLUTION_WIDTH = 480;
 
+        public const string NEWS_RESOURCES_FOLDER_NAME = "NewsResources";
+
         #endregion
 
         #region Theme
@@ -26,6 +28,14 @@ namespace FrameMobile.Common
         public const string WALLPAPER_THUMBNAIL = "thumbnail";
 
         public const string WALLPAPER_ORIGINAL = "original";
+
+        public const string THEME_RESOURCES_FOLDER_NAME = "ThemeResources";
+
+        public const string THEME_LOGOS_FOLDER_NAME = "Logos";
+
+        public const string THEME_THUMBNAILS_FOLDER_NAME = "Thumbnails";
+
+        public const string THEME_ORIGINALS_FOLDER_NAME = "Originals";
 
         #endregion
 
