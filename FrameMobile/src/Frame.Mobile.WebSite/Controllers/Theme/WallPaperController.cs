@@ -67,7 +67,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return Content(actionResult.ToString());
         }
 
-        public ActionResult WallPaperList(string imsi, int categoryId, int topicId = 0, int subcategoryId = 0, int sort = 0, int startnum = 1, int num = 10)
+        public ActionResult WallPaperList(string imsi, int categoryId = 0, int topicId = 0, int subcategoryId = 0, int sort = 0, int startnum = 1, int num = 10)
         {
             var mobileParams = GetMobileParam();
             int totalCount = 0;
