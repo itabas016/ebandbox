@@ -50,6 +50,9 @@
                         <button type="button" class="btn btn-large btn-gray"  onclick="window.open('WallPaperEdit?wallpaperId=@item.Id','_self');">修 改</button>
                     </td>
                     <td class="center">
+                        <button type="button" class="btn btn-large btn-gray"  onclick="window.open('WallPaperConfig?wallpaperId=@item.Id','_self');">配置</button>
+                    </td>
+                    <td class="center">
                         <button type="button" class="btn btn-large btn-gray"  onclick="var c=confirm('确定要删除?'); if(c==true){window.open('WallPaperDelete?wallpaperId=@item.Id','_self');}">
                             删 除</button>
                     </td>

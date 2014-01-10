@@ -9,6 +9,8 @@ using FrameMobile.Domain;
 using System.IO;
 using FrameMobile.Common;
 using NCore;
+using FrameMobile.Model;
+using FrameMobile.Model.Mobile;
 
 namespace Frame.Mobile.WebSite.Controllers
 {
@@ -322,21 +324,70 @@ namespace Frame.Mobile.WebSite.Controllers
         #region Related
 
         [HttpGet]
-        public ActionResult WallPaperManage(int wallpaperId)
+        public ActionResult WallPaperConfig(int wallpaperId)
         {
             var categorylist = WallPaperUIService.GetWallPaperCategoryList();
             var subcategorylist = WallPaperUIService.GetWallPaperSubCategoryList();
             var topiclist = WallPaperUIService.GetWallPaperTopicList();
             var propertylist = MobileUIService.GetMobilePropertyList();
+            var wallpaper = dbContextService.Single<WallPaper>(wallpaperId);
 
             ViewData["Categorylist"] = categorylist.GetSelectList();
             ViewData["SubCategorylist"] = subcategorylist.GetSelectList();
             ViewData["Topiclist"] = topiclist.GetSelectList();
             ViewData["Propertylist"] = propertylist.GetSelectList();
+            ViewData["WallPaper"] = wallpaper;
 
-            var wallpaper = dbContextService.Single<WallPaper>(wallpaperId);
+            return View();
+        }
 
-            return View(wallpaper);
+        [HttpPost]
+        public ActionResult WallPaperConfig(WallPaperConfigView model)
+        {
+            var wallpaper = model.WallPaper;
+            if (model.RelateCategorylist!= null && model.RelateCategorylist.Count > 0)
+            {
+            }
+            return RedirectToAction("WallPaperList");
+        }
+
+        #endregion
+
+        #region Helper
+
+        private void AddRelateCategory(WallPaperCategory category, WallPaperSubCategory subcategory, WallPaper wallpaper)
+        {
+            var exist = dbContextService.Exists<WallPaperRelateCategory>(x => x.CategoryId == category.Id && x.SubCategoryId == subcategory.Id && x.WallPaperId == wallpaper.Id);
+            if (exist)
+            {
+                TempData["errorMsg"] = "该配置已经存在！";
+            }
+            else
+            {
+                var model = new WallPaperRelateCategory();
+                model.WallPaperId = wallpaper.Id;
+                model.CategoryId = category.Id;
+                model.SubCategoryId = subcategory.Id;
+                dbContextService.Add<WallPaperRelateCategory>(model);
+            }
+        }
+
+        private void AddRelateTopic(WallPaperTopic topic, WallPaper wallpaper)
+        {
+            var exist = dbContextService.Exists<WallPaperRelateTopic>(x => x.TopicId == topic.Id && x.WallPaperId == wallpaper.Id);
+            if (exist)
+            {
+                TempData["errorMsg"] = "该配置已经存在！";
+            }
+        }
+
+        private void AddRelateMobileProperty(MobileProperty mobileproperty, WallPaper wallpaper)
+        {
+            var exist = dbContextService.Exists<WallPaperRelateMobileProperty>(x => x.MobilePropertyId == mobileproperty.Id && x.WallPaperId == wallpaper.Id);
+            if (exist)
+            {
+                TempData["errorMsg"] = "该配置已经存在！";
+            }
         }
 
         #endregion

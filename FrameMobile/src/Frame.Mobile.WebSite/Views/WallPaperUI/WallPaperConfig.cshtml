@@ -1,0 +1,88 @@
+﻿@using FrameMobile.Model;
+@using FrameMobile.Model.Theme;
+@using FrameMobile.Model.Mobile;
+@using FrameMobile.Common;
+@using NCore;
+@model WallPaperConfigView
+@{
+    bool isUpdateMode = ViewData["IsUpdate"] != null;
+    ViewBag.Title = "壁纸配置";
+    Layout = "~/Views/Shared/_WallPaperLayout.cshtml";
+
+    var actionName = "WallPaperManage";
+    var imagePrefix = ConfigKeys.TYD_WALLPAPER_THUMBNAIL_IMAGE_PREFIX.ConfigValue();
+    var categorylist = ViewData["Categorylist"] as SelectList;
+    var subcategorylist = ViewData["SubCategorylist"] as SelectList;
+    var topiclist = ViewData["Topiclist"] as SelectList;
+    var propertylist = ViewData["Propertylist"] as SelectList;
+    var wallpaper = ViewData["WallPaper"] as WallPaper;
+    
+    var checked_category = new List<WallPaperCategory>();
+    var checked_subcategory = new List<WallPaperSubCategory>();
+    var checked_topic = new List<WallPaperTopic>();
+    var checked_property = new List<MobileProperty>();
+}
+
+<div class="contentHeader">
+    <div class="contentHeaderInfo">
+        <button class="btn btn-quaternary btn-large addapp" onclick="history.back();">
+            返 回</button>
+    </div>
+    <div class="apphead">
+        <div class="title">
+            <b>@ViewBag.Title </b>
+        </div>
+    </div>
+</div>
+<div class="content">
+    <div class="windows">
+        @using (Html.BeginForm(actionName, "WallPaperUI", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+
+            <p>
+                <div class="title">
+                    <h1>
+                        @ViewBag.Title</h1>
+                </div>
+            </p>
+
+            <div style="clear: both">
+                @if (wallpaper.ThumbnailName != string.Empty)
+                {
+                    <img src="@imagePrefix + @wallpaper.ThumbnailName" />
+                }
+                <br />
+                <strong>所属类别: </strong>
+                @foreach (var category in categorylist)
+                {
+                    <input type="checkbox" name="category" value="@category.Value" />@category.Text
+                    if (category.Selected)
+                    {
+                    //    checked_category.Add(category);
+                    }
+                }
+                @*@Html.HiddenFor(m=>m.RelateCategorylist, checked_category)*@
+                <br />
+                <strong>所属子分类: </strong>
+                @foreach (var subcategory in subcategorylist)
+                {
+                    <input type="checkbox" name="subcategory" value="@subcategory.Text" />@subcategory.Text
+                }
+                <br />
+                <strong>所属专题: </strong>
+                @foreach (var topic in topiclist)
+                {
+                    <input type="checkbox" name="topic" value="@topic.Text" />@topic.Text
+                }
+                <br />
+                <strong>适配手机属性: </strong>
+                @foreach (var item in propertylist)
+                {
+                    <input type="checkbox" name="property" value="@item.Text" />@item.Text
+                }
+                <br />
+                <button class="btn btn-large btn-blue addapp" style="margin-left: 50px">@ViewBag.Title</button>
+            </div>
+        }
+    </div>
+</div>
