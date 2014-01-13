@@ -7,11 +7,13 @@ using SubSonic.SqlGeneration.Schema;
 namespace FrameMobile.Model.Theme
 {
     [Serializable]
-    [SubSonicTableNameOverride("wallpaperrelatecategory")]
-    public class WallPaperRelateCategory : MySQLModelBase
+    [SubSonicTableNameOverride("wallpaperrelatesubcategory")]
+    public class WallPaperRelateSubCategory : MySQLModelBase
     {
         public int WallPaperId { get; set; }
 
         public int CategoryId { get; set; }
+
+        public int SubCategoryId { get; set; }
     }
 }

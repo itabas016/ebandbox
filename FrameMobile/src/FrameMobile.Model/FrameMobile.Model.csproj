@@ -79,6 +79,7 @@
     <Compile Include="Support\MySQLModelBase.cs" />
     <Compile Include="Support\RedisModelBase.cs" />
     <Compile Include="Theme\ThemeConfig.cs" />
+    <Compile Include="Theme\WallPaper\WallPaperRelateSubCategory.cs" />
     <Compile Include="Theme\WallPaper\WallPaperRelateCategory.cs" />
     <Compile Include="Theme\WallPaper\WallPaperRelateMobileProperty.cs" />
     <Compile Include="Theme\WallPaper\WallPaperRelateTopic.cs" />

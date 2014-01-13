@@ -93,5 +93,15 @@ namespace FrameMobile.Domain
             }
             return result;
         }
+
+        public static string[] GetIds(this string input)
+        {
+            if (!string.IsNullOrEmpty(input))
+            {
+                var ret = input.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+                return ret;
+            }
+            return new string[1] { "0" };
+        }
     }
 }

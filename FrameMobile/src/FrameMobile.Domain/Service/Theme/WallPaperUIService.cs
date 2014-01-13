@@ -56,5 +56,85 @@ namespace FrameMobile.Domain.Service
         {
             throw new NotImplementedException();
         }
+
+        public IList<WallPaperRelateCategory> GetWallRelateCategoryList(int wallpaperId)
+        {
+            var relatecategorylist = dbContextService.Find<WallPaperRelateCategory>(x => x.WallPaperId == wallpaperId).ToList();
+            return relatecategorylist;
+        }
+
+        public IList<WallPaperRelateSubCategory> GetWallRelateSubCategoryList(int wallpaperId)
+        {
+            var relatecategorylist = dbContextService.Find<WallPaperRelateSubCategory>(x => x.WallPaperId == wallpaperId).ToList();
+            return relatecategorylist;
+        }
+
+        public IList<WallPaperRelateTopic> GetWallRelateTopicList(int wallpaperId)
+        {
+            var relatetopiclist = dbContextService.Find<WallPaperRelateTopic>(x => x.WallPaperId == wallpaperId).ToList();
+            return relatetopiclist;
+        }
+
+        public IList<WallPaperRelateMobileProperty> GetWallRelateMobilePropertyList(int wallpaperId)
+        {
+            var relatemobilepropertylist = dbContextService.Find<WallPaperRelateMobileProperty>(x => x.WallPaperId == wallpaperId).ToList();
+            return relatemobilepropertylist;
+        }
+
+        public IList<int> GetRelateCategoryIds(int wallpaperId)
+        {
+            var categoryIds = new List<int>();
+            var relatecategorylist = GetWallRelateCategoryList(wallpaperId);
+            if (relatecategorylist!= null && relatecategorylist.Count > 0)
+            {
+                foreach (var item in relatecategorylist)
+                {
+                    categoryIds.Add(item.CategoryId);
+                }
+            }
+            return categoryIds;
+        }
+
+        public IList<int> GetRelateSubCategoryIds(int wallpaperId)
+        {
+            var subcategoryIds = new List<int>();
+            var relatecategorylist = GetWallRelateSubCategoryList(wallpaperId);
+            if (relatecategorylist != null && relatecategorylist.Count > 0)
+            {
+                foreach (var item in relatecategorylist)
+                {
+                    subcategoryIds.Add(item.SubCategoryId);
+                }
+            }
+            return subcategoryIds;
+        }
+
+        public IList<int> GetRelateTopicIds(int wallpaperId)
+        {
+            var topicIds = new List<int>();
+            var relatetopiclist = GetWallRelateTopicList(wallpaperId);
+            if (relatetopiclist != null && relatetopiclist.Count > 0)
+            {
+                foreach (var item in relatetopiclist)
+                {
+                    topicIds.Add(item.TopicId);
+                }
+            }
+            return topicIds;
+        }
+
+        public IList<int> GetRelateMobilePropertyIds(int wallpaperId)
+        {
+            var propertyIds = new List<int>();
+            var relatepropertylist = GetWallRelateMobilePropertyList(wallpaperId);
+            if (relatepropertylist != null && relatepropertylist.Count > 0)
+            {
+                foreach (var item in relatepropertylist)
+                {
+                    propertyIds.Add(item.MobilePropertyId);
+                }
+            }
+            return propertyIds;
+        }
     }
 }

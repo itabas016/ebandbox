@@ -321,7 +321,7 @@ namespace Frame.Mobile.WebSite.Controllers
 
         #endregion
 
-        #region Related
+        #region Config
 
         [HttpGet]
         public ActionResult WallPaperConfig(int wallpaperId)
@@ -332,22 +332,36 @@ namespace Frame.Mobile.WebSite.Controllers
             var propertylist = MobileUIService.GetMobilePropertyList();
             var wallpaper = dbContextService.Single<WallPaper>(wallpaperId);
 
+            var relatecategoryIds = WallPaperUIService.GetRelateCategoryIds(wallpaperId);
+            var relatesubcategoryIds = WallPaperUIService.GetRelateSubCategoryIds(wallpaperId);
+            var relatetopicIds = WallPaperUIService.GetRelateTopicIds(wallpaperId);
+            var relatepropertyIds = WallPaperUIService.GetRelateMobilePropertyIds(wallpaperId);
+
             ViewData["Categorylist"] = categorylist.GetSelectList();
             ViewData["SubCategorylist"] = subcategorylist.GetSelectList();
             ViewData["Topiclist"] = topiclist.GetSelectList();
             ViewData["Propertylist"] = propertylist.GetSelectList();
             ViewData["WallPaper"] = wallpaper;
 
-            return View();
+            ViewData["RelateCategoryIds"] = relatecategoryIds;
+            ViewData["RelateSubCategoryIds"] = relatesubcategoryIds;
+            ViewData["RelateTopicIds"] = relatetopicIds;
+            ViewData["RelatePropertyIds"] = relatepropertyIds;
+
+            return View(wallpaper);
         }
 
         [HttpPost]
-        public ActionResult WallPaperConfig(WallPaperConfigView model)
+        public ActionResult WallPaperConfig(WallPaper model, FormCollection parameters)
         {
-            var wallpaper = model.WallPaper;
-            if (model.RelateCategorylist!= null && model.RelateCategorylist.Count > 0)
-            {
-            }
+            var categoryIds = parameters["category"].GetIds();
+            var subcategoryIds = parameters["subcategory"].GetIds();
+            var topicIds = parameters["topic"].GetIds();
+            var propertyIds = parameters["property"].GetIds();
+            AddRelateCategory(categoryIds, model.Id);
+            AddRelateTopic(topicIds, model.Id);
+            AddRelateMobileProperty(propertyIds, model.Id);
+
             return RedirectToAction("WallPaperList");
         }
 
@@ -355,38 +369,90 @@ namespace Frame.Mobile.WebSite.Controllers
 
         #region Helper
 
-        private void AddRelateCategory(WallPaperCategory category, WallPaperSubCategory subcategory, WallPaper wallpaper)
+        private void AddRelateCategory(string[] categoryIds, int wallpaperId)
         {
-            var exist = dbContextService.Exists<WallPaperRelateCategory>(x => x.CategoryId == category.Id && x.SubCategoryId == subcategory.Id && x.WallPaperId == wallpaper.Id);
-            if (exist)
+            foreach (var item in categoryIds)
             {
-                TempData["errorMsg"] = "该配置已经存在！";
-            }
-            else
-            {
-                var model = new WallPaperRelateCategory();
-                model.WallPaperId = wallpaper.Id;
-                model.CategoryId = category.Id;
-                model.SubCategoryId = subcategory.Id;
-                dbContextService.Add<WallPaperRelateCategory>(model);
+                var categoryId = item.ToInt32();
+
+                var exist = dbContextService.Exists<WallPaperRelateCategory>(x => x.CategoryId == categoryId && x.WallPaperId == wallpaperId);
+                if (exist)
+                {
+                    break;
+                    //TempData["errorMsg"] = "该记录已经存在！";
+                }
+                else
+                {
+                    var model = new WallPaperRelateCategory();
+                    model.WallPaperId = wallpaperId;
+                    model.CategoryId = categoryId;
+                    dbContextService.Add<WallPaperRelateCategory>(model);
+                }
             }
         }
 
-        private void AddRelateTopic(WallPaperTopic topic, WallPaper wallpaper)
+        private void AddRelateSubCategory(string[] subcategoryIds, int wallpaperId)
         {
-            var exist = dbContextService.Exists<WallPaperRelateTopic>(x => x.TopicId == topic.Id && x.WallPaperId == wallpaper.Id);
-            if (exist)
+            foreach (var item_sub in subcategoryIds)
             {
-                TempData["errorMsg"] = "该配置已经存在！";
+                var subcategoryId = item_sub.ToInt32();
+
+                var exist = dbContextService.Exists<WallPaperRelateSubCategory>(x => x.SubCategoryId == subcategoryId && x.WallPaperId == wallpaperId);
+                if (exist)
+                {
+                    break;
+                    //TempData["errorMsg"] = "该记录已经存在！";
+                }
+                else
+                {
+                    var model = new WallPaperRelateSubCategory();
+                    model.WallPaperId = wallpaperId;
+                    model.CategoryId = 0;
+                    model.SubCategoryId = subcategoryId;
+                    dbContextService.Add<WallPaperRelateSubCategory>(model);
+                }
             }
         }
 
-        private void AddRelateMobileProperty(MobileProperty mobileproperty, WallPaper wallpaper)
+        private void AddRelateTopic(string[] topicIds, int wallpaperId)
         {
-            var exist = dbContextService.Exists<WallPaperRelateMobileProperty>(x => x.MobilePropertyId == mobileproperty.Id && x.WallPaperId == wallpaper.Id);
-            if (exist)
+            foreach (var item in topicIds)
             {
-                TempData["errorMsg"] = "该配置已经存在！";
+                var topicId = item.ToInt32();
+                var exist = dbContextService.Exists<WallPaperRelateTopic>(x => x.TopicId == topicId && x.WallPaperId == wallpaperId);
+                if (exist)
+                {
+                    break;
+                    //TempData["errorMsg"] = "该记录已经存在！";
+                }
+                else
+                {
+                    var model = new WallPaperRelateTopic();
+                    model.WallPaperId = wallpaperId;
+                    model.TopicId = topicId;
+                    dbContextService.Add<WallPaperRelateTopic>(model);
+                }
+            }
+        }
+
+        private void AddRelateMobileProperty(string[] propertyIds, int wallpaperId)
+        {
+            foreach (var item in propertyIds)
+            {
+                var propertyId = item.ToInt32();
+                var exist = dbContextService.Exists<WallPaperRelateMobileProperty>(x => x.MobilePropertyId == propertyId && x.WallPaperId == wallpaperId);
+                if (exist)
+                {
+                    break;
+                    //TempData["errorMsg"] = "该记录已经存在！";
+                }
+                else
+                {
+                    var model = new WallPaperRelateMobileProperty();
+                    model.WallPaperId = wallpaperId;
+                    model.MobilePropertyId = propertyId;
+                    dbContextService.Add<WallPaperRelateMobileProperty>(model);
+                }
             }
         }
 

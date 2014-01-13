@@ -3,24 +3,24 @@
 @using FrameMobile.Model.Mobile;
 @using FrameMobile.Common;
 @using NCore;
-@model WallPaperConfigView
+@model WallPaper
 @{
     bool isUpdateMode = ViewData["IsUpdate"] != null;
     ViewBag.Title = "壁纸配置";
     Layout = "~/Views/Shared/_WallPaperLayout.cshtml";
 
-    var actionName = "WallPaperManage";
+    var actionName = "WallPaperConfig";
     var imagePrefix = ConfigKeys.TYD_WALLPAPER_THUMBNAIL_IMAGE_PREFIX.ConfigValue();
     var categorylist = ViewData["Categorylist"] as SelectList;
     var subcategorylist = ViewData["SubCategorylist"] as SelectList;
     var topiclist = ViewData["Topiclist"] as SelectList;
     var propertylist = ViewData["Propertylist"] as SelectList;
     var wallpaper = ViewData["WallPaper"] as WallPaper;
-    
-    var checked_category = new List<WallPaperCategory>();
-    var checked_subcategory = new List<WallPaperSubCategory>();
-    var checked_topic = new List<WallPaperTopic>();
-    var checked_property = new List<MobileProperty>();
+
+    var categoryIds = ViewData["RelateCategoryIds"] as List<int>;
+    var subcategoryIds = ViewData["RelateSubCategoryIds"] as List<int>;
+    var topicIds = ViewData["RelateTopicIds"] as List<int>;
+    var propertyIds = ViewData["RelatePropertyIds"] as List<int>;
 }
 
 <div class="contentHeader">
@@ -47,6 +47,7 @@
             </p>
 
             <div style="clear: both">
+                @Html.HiddenFor(m => m.Id);
                 @if (wallpaper.ThumbnailName != string.Empty)
                 {
                     <img src="@imagePrefix + @wallpaper.ThumbnailName" />
@@ -55,30 +56,31 @@
                 <strong>所属类别: </strong>
                 @foreach (var category in categorylist)
                 {
-                    <input type="checkbox" name="category" value="@category.Value" />@category.Text
-                    if (category.Selected)
+                    var ischecked = categoryIds.Contains(category.Value.ToInt32()) ? "checked='checked'" : string.Empty;
+                    <input type="checkbox" name="category" value="@category.Value" @ischecked />@category.Text
+                }
+                <br />
+                <div hidden="hidden">
+                    <strong>所属子分类: </strong>
+                    @foreach (var subcategory in subcategorylist)
                     {
-                    //    checked_category.Add(category);
+                        var ischecked = subcategoryIds.Contains(subcategory.Value.ToInt32()) ? "checked='checked'" : string.Empty;
+                        <input type="checkbox" name="subcategory" value="@subcategory.Value" @ischecked />@subcategory.Text
                     }
-                }
-                @*@Html.HiddenFor(m=>m.RelateCategorylist, checked_category)*@
-                <br />
-                <strong>所属子分类: </strong>
-                @foreach (var subcategory in subcategorylist)
-                {
-                    <input type="checkbox" name="subcategory" value="@subcategory.Text" />@subcategory.Text
-                }
-                <br />
+                    <br />
+                </div>
                 <strong>所属专题: </strong>
                 @foreach (var topic in topiclist)
                 {
-                    <input type="checkbox" name="topic" value="@topic.Text" />@topic.Text
+                    var ischecked = topicIds.Contains(topic.Value.ToInt32()) ? "checked='checked'" : string.Empty;
+                    <input type="checkbox" name="topic" value="@topic.Value" @ischecked />@topic.Text
                 }
                 <br />
                 <strong>适配手机属性: </strong>
-                @foreach (var item in propertylist)
+                @foreach (var property in propertylist)
                 {
-                    <input type="checkbox" name="property" value="@item.Text" />@item.Text
+                    var ischecked = propertyIds.Contains(property.Value.ToInt32()) ? "checked='checked'" : string.Empty;
+                    <input type="checkbox" name="property" value="@property.Value" @ischecked />@property.Text
                 }
                 <br />
                 <button class="btn btn-large btn-blue addapp" style="margin-left: 50px">@ViewBag.Title</button>
