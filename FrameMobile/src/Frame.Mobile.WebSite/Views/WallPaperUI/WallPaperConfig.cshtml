@@ -3,7 +3,7 @@
 @using FrameMobile.Model.Mobile;
 @using FrameMobile.Common;
 @using NCore;
-@model WallPaper
+@model WallPaperConfigView
 @{
     bool isUpdateMode = ViewData["IsUpdate"] != null;
     ViewBag.Title = "壁纸配置";
@@ -21,6 +21,10 @@
     var subcategoryIds = ViewData["RelateSubCategoryIds"] as List<int>;
     var topicIds = ViewData["RelateTopicIds"] as List<int>;
     var propertyIds = ViewData["RelatePropertyIds"] as List<int>;
+    int i = 0;
+    int j = 0;
+    int k = 0;
+    int l = 0;
 }
 
 <div class="contentHeader">
@@ -47,7 +51,29 @@
             </p>
 
             <div style="clear: both">
-                @Html.HiddenFor(m => m.Id);
+                <div hidden="hidden">
+                    @Html.HiddenFor(m => m.WallPaper.Id)
+                    @foreach (var c in Model.RelateCategoryIds)
+                    {
+                        @Html.HiddenFor(m => m.RelateCategoryIds[i])
+                        ++i;
+                    }
+                    @foreach (var c in Model.RelateSubCategoryIds)
+                    {
+                        @Html.HiddenFor(m => m.RelateSubCategoryIds[j])
+                        ++j;
+                    }
+                    @foreach (var c in Model.RelateTopicIds)
+                    {
+                        @Html.HiddenFor(m => m.RelateTopicIds[k])
+                        ++k;
+                    }
+                    @foreach (var c in Model.RelateMobilePropertyIds)
+                    {
+                        @Html.HiddenFor(m => m.RelateMobilePropertyIds[l])
+                        ++l;
+                    }
+                </div>
                 @if (wallpaper.ThumbnailName != string.Empty)
                 {
                     <img src="@imagePrefix + @wallpaper.ThumbnailName" />

@@ -11,12 +11,12 @@ namespace FrameMobile.Model
     {
         public WallPaper WallPaper { get; set; }
 
-        public List<WallPaperCategory> RelateCategorylist { get; set; }
+        public List<int> RelateCategoryIds { get; set; }
 
-        public List<WallPaperSubCategory> RelateSubCategorylist { get; set; }
+        public List<int> RelateSubCategoryIds { get; set; }
 
-        public List<WallPaperTopic> RelateTopiclist { get; set; }
+        public List<int> RelateTopicIds { get; set; }
 
-        public List<MobileProperty> RelateMobilePropertylist { get; set; }
+        public List<int> RelateMobilePropertyIds { get; set; }
     }
 }

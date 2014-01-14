@@ -11,5 +11,11 @@ namespace FrameMobile.Domain
         {
             return fileName.Replace("*", string.Empty).Replace(@"\", string.Empty).Replace("/", string.Empty).Replace(":", string.Empty).Replace("?", string.Empty).Replace("\"", string.Empty).Replace("<", string.Empty).Replace(">", string.Empty).Replace("|", string.Empty);
         }
+
+        public static object MakeSureNotNull(this object instance)
+        {
+            var ret = instance == null ? new object() : instance;
+            return ret;
+        }
     }
 }

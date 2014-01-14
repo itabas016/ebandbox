@@ -332,10 +332,10 @@ namespace Frame.Mobile.WebSite.Controllers
             var propertylist = MobileUIService.GetMobilePropertyList();
             var wallpaper = dbContextService.Single<WallPaper>(wallpaperId);
 
-            var relatecategoryIds = WallPaperUIService.GetRelateCategoryIds(wallpaperId);
-            var relatesubcategoryIds = WallPaperUIService.GetRelateSubCategoryIds(wallpaperId);
-            var relatetopicIds = WallPaperUIService.GetRelateTopicIds(wallpaperId);
-            var relatepropertyIds = WallPaperUIService.GetRelateMobilePropertyIds(wallpaperId);
+            var relatecategoryIds = WallPaperUIService.GetRelateCategoryIds(wallpaperId).ToList();
+            var relatesubcategoryIds = WallPaperUIService.GetRelateSubCategoryIds(wallpaperId).ToList();
+            var relatetopicIds = WallPaperUIService.GetRelateTopicIds(wallpaperId).ToList();
+            var relatepropertyIds = WallPaperUIService.GetRelateMobilePropertyIds(wallpaperId).ToList();
 
             ViewData["Categorylist"] = categorylist.GetSelectList();
             ViewData["SubCategorylist"] = subcategorylist.GetSelectList();
@@ -348,19 +348,45 @@ namespace Frame.Mobile.WebSite.Controllers
             ViewData["RelateTopicIds"] = relatetopicIds;
             ViewData["RelatePropertyIds"] = relatepropertyIds;
 
-            return View(wallpaper);
+            var config = new WallPaperConfigView()
+            {
+                WallPaper = wallpaper,
+                RelateCategoryIds = relatecategoryIds,
+                RelateSubCategoryIds = relatesubcategoryIds,
+                RelateTopicIds = relatetopicIds,
+                RelateMobilePropertyIds = relatepropertyIds
+            };
+
+            return View(config);
         }
 
         [HttpPost]
-        public ActionResult WallPaperConfig(WallPaper model, FormCollection parameters)
+        public ActionResult WallPaperConfig(WallPaperConfigView model, FormCollection parameters)
         {
+            var wallpaper = model.WallPaper.MakeSureNotNull() as WallPaper;
             var categoryIds = parameters["category"].GetIds();
             var subcategoryIds = parameters["subcategory"].GetIds();
             var topicIds = parameters["topic"].GetIds();
             var propertyIds = parameters["property"].GetIds();
-            AddRelateCategory(categoryIds, model.Id);
-            AddRelateTopic(topicIds, model.Id);
-            AddRelateMobileProperty(propertyIds, model.Id);
+
+            var outcategoryIds = new List<int>();
+            var outsubcategoryIds = new List<int>();
+            var outtopicIds = new List<int>();
+            var outpropertyIds = new List<int>();
+
+            var incategoryIds = InIds(model.RelateCategoryIds, categoryIds, out outcategoryIds);
+            var insubcategoryIds = InIds(model.RelateCategoryIds, categoryIds, out outsubcategoryIds);
+            var intopicIds = InIds(model.RelateCategoryIds, categoryIds, out outtopicIds);
+            var inpropertyIds = InIds(model.RelateCategoryIds, categoryIds, out outpropertyIds);
+
+            AddRelateCategory(incategoryIds, wallpaper.Id);
+            AddRelateTopic(intopicIds, wallpaper.Id);
+            AddRelateMobileProperty(inpropertyIds, wallpaper.Id);
+
+            UpdateRelateCategory(outcategoryIds, wallpaper.Id);
+            UpdateRelateSubCategory(outsubcategoryIds, wallpaper.Id);
+            UpdateRelateTopic(outtopicIds, wallpaper.Id);
+            UpdateRelateMobileProperty(outpropertyIds, wallpaper.Id);
 
             return RedirectToAction("WallPaperList");
         }
@@ -369,91 +395,210 @@ namespace Frame.Mobile.WebSite.Controllers
 
         #region Helper
 
-        private void AddRelateCategory(string[] categoryIds, int wallpaperId)
+        private List<int> InIds(List<int> originalIds, List<int> currentIds, out List<int> outIds)
         {
-            foreach (var item in categoryIds)
+            var inIds = new List<int>();
+            outIds = new List<int>();
+            if (currentIds != null && originalIds != null)
             {
-                var categoryId = item.ToInt32();
-
-                var exist = dbContextService.Exists<WallPaperRelateCategory>(x => x.CategoryId == categoryId && x.WallPaperId == wallpaperId);
-                if (exist)
+                foreach (var currentId in currentIds)
                 {
-                    break;
-                    //TempData["errorMsg"] = "该记录已经存在！";
+                    if (!originalIds.Contains(currentId))
+                    {
+                        inIds.Add(currentId);
+                    }
                 }
-                else
+                foreach (var originalId in originalIds)
                 {
-                    var model = new WallPaperRelateCategory();
-                    model.WallPaperId = wallpaperId;
-                    model.CategoryId = categoryId;
-                    dbContextService.Add<WallPaperRelateCategory>(model);
+                    if (!currentIds.Contains(originalId))
+                    {
+                        outIds.Add(originalId);
+                    }
+                }
+            }
+            else
+            {
+                inIds = currentIds;
+            }
+            return inIds;
+        }
+
+        private void AddRelateCategory(List<int> categoryIds, int wallpaperId)
+        {
+            if (categoryIds != null && categoryIds.Count > 0)
+            {
+                foreach (var item in categoryIds)
+                {
+                    var categoryId = item;
+
+                    var flag = UpdateRelateCategory(categoryId, wallpaperId, 1);
+                    if (!flag)
+                    {
+                        var model = new WallPaperRelateCategory();
+                        model.WallPaperId = wallpaperId;
+                        model.CategoryId = categoryId;
+                        dbContextService.Add<WallPaperRelateCategory>(model);
+                    }
                 }
             }
         }
 
-        private void AddRelateSubCategory(string[] subcategoryIds, int wallpaperId)
+        private void AddRelateSubCategory(List<int> subcategoryIds, int wallpaperId)
         {
-            foreach (var item_sub in subcategoryIds)
+            if (subcategoryIds != null && subcategoryIds.Count > 0)
             {
-                var subcategoryId = item_sub.ToInt32();
+                foreach (var item_sub in subcategoryIds)
+                {
+                    var subcategoryId = item_sub;
 
-                var exist = dbContextService.Exists<WallPaperRelateSubCategory>(x => x.SubCategoryId == subcategoryId && x.WallPaperId == wallpaperId);
-                if (exist)
-                {
-                    break;
-                    //TempData["errorMsg"] = "该记录已经存在！";
-                }
-                else
-                {
-                    var model = new WallPaperRelateSubCategory();
-                    model.WallPaperId = wallpaperId;
-                    model.CategoryId = 0;
-                    model.SubCategoryId = subcategoryId;
-                    dbContextService.Add<WallPaperRelateSubCategory>(model);
+                    var flag = UpdateRelateSubCategory(subcategoryId, wallpaperId, 1);
+                    if (!flag)
+                    {
+                        var model = new WallPaperRelateSubCategory();
+                        model.WallPaperId = wallpaperId;
+                        model.SubCategoryId = subcategoryId;
+                        dbContextService.Add<WallPaperRelateSubCategory>(model);
+                    }
                 }
             }
         }
 
-        private void AddRelateTopic(string[] topicIds, int wallpaperId)
+        private void AddRelateTopic(List<int> topicIds, int wallpaperId)
         {
-            foreach (var item in topicIds)
+            if (topicIds != null && topicIds.Count > 0)
             {
-                var topicId = item.ToInt32();
-                var exist = dbContextService.Exists<WallPaperRelateTopic>(x => x.TopicId == topicId && x.WallPaperId == wallpaperId);
-                if (exist)
+                foreach (var item in topicIds)
                 {
-                    break;
-                    //TempData["errorMsg"] = "该记录已经存在！";
-                }
-                else
-                {
-                    var model = new WallPaperRelateTopic();
-                    model.WallPaperId = wallpaperId;
-                    model.TopicId = topicId;
-                    dbContextService.Add<WallPaperRelateTopic>(model);
+                    var topicId = item;
+                    var flag = UpdateRelateTopic(topicId, wallpaperId, 1);
+                    if (!flag)
+                    {
+                        var model = new WallPaperRelateTopic();
+                        model.WallPaperId = wallpaperId;
+                        model.TopicId = topicId;
+                        dbContextService.Add<WallPaperRelateTopic>(model);
+                    }
                 }
             }
         }
 
-        private void AddRelateMobileProperty(string[] propertyIds, int wallpaperId)
+        private void AddRelateMobileProperty(List<int> propertyIds, int wallpaperId)
         {
-            foreach (var item in propertyIds)
+            if (propertyIds != null && propertyIds.Count > 0)
             {
-                var propertyId = item.ToInt32();
-                var exist = dbContextService.Exists<WallPaperRelateMobileProperty>(x => x.MobilePropertyId == propertyId && x.WallPaperId == wallpaperId);
-                if (exist)
+                foreach (var item in propertyIds)
                 {
-                    break;
-                    //TempData["errorMsg"] = "该记录已经存在！";
-                }
-                else
-                {
-                    var model = new WallPaperRelateMobileProperty();
-                    model.WallPaperId = wallpaperId;
-                    model.MobilePropertyId = propertyId;
-                    dbContextService.Add<WallPaperRelateMobileProperty>(model);
+                    var propertyId = item;
+                    var flag = UpdateRelateMobileProperty(propertyId, wallpaperId, 1);
+                    if (!flag)
+                    {
+                        var model = new WallPaperRelateMobileProperty();
+                        model.WallPaperId = wallpaperId;
+                        model.MobilePropertyId = propertyId;
+                        dbContextService.Add<WallPaperRelateMobileProperty>(model);
+                    }
                 }
             }
+        }
+
+        private void UpdateRelateCategory(List<int> categoryIds, int wallpaperId)
+        {
+            if (categoryIds != null && categoryIds.Count > 0)
+            {
+                foreach (var item in categoryIds)
+                {
+                    var categoryId = item;
+                    var flag = UpdateRelateCategory(categoryId, wallpaperId, 0);
+                }
+            }
+        }
+
+        private void UpdateRelateSubCategory(List<int> subcategoryIds, int wallpaperId)
+        {
+            if (subcategoryIds != null && subcategoryIds.Count > 0)
+            {
+                foreach (var item in subcategoryIds)
+                {
+                    var subcategoryId = item;
+                    var flag = UpdateRelateSubCategory(subcategoryId, wallpaperId, 0);
+                }
+            }
+        }
+
+        private void UpdateRelateTopic(List<int> topicIds, int wallpaperId)
+        {
+            if (topicIds != null && topicIds.Count > 0)
+            {
+                foreach (var item in topicIds)
+                {
+                    var topicId = item;
+                    var flag = UpdateRelateTopic(topicId, wallpaperId, 0);
+                }
+            }
+        }
+
+        private void UpdateRelateMobileProperty(List<int> propertyIds, int wallpaperId)
+        {
+            if (propertyIds != null && propertyIds.Count > 0)
+            {
+                foreach (var item in propertyIds)
+                {
+                    var propertyId = item;
+                    var flag = UpdateRelateMobileProperty(propertyId, wallpaperId, 0);
+                }
+            }
+        }
+
+        private bool UpdateRelateCategory(int categoryId, int wallpaperId, int status)
+        {
+            var flag = false;
+            var instance = dbContextService.Single<WallPaperRelateCategory>(x => x.CategoryId == categoryId && x.WallPaperId == wallpaperId);
+            if (instance != null)
+            {
+                instance.Status = status;
+                dbContextService.Update<WallPaperRelateCategory>(instance);
+                flag = true;
+            }
+            return flag;
+        }
+
+        private bool UpdateRelateSubCategory(int subcategoryId, int wallpaperId, int status)
+        {
+            var flag = false;
+            var instance = dbContextService.Single<WallPaperRelateSubCategory>(x => x.SubCategoryId == subcategoryId && x.WallPaperId == wallpaperId);
+            if (instance != null)
+            {
+                instance.Status = status;
+                dbContextService.Update<WallPaperRelateSubCategory>(instance);
+                flag = true;
+            }
+            return flag;
+        }
+
+        private bool UpdateRelateTopic(int topicId, int wallpaperId, int status)
+        {
+            var flag = false;
+            var instance = dbContextService.Single<WallPaperRelateTopic>(x => x.TopicId == topicId && x.WallPaperId == wallpaperId);
+            if (instance != null)
+            {
+                instance.Status = status;
+                dbContextService.Update<WallPaperRelateTopic>(instance);
+                flag = true;
+            }
+            return flag;
+        }
+
+        private bool UpdateRelateMobileProperty(int propertyId, int wallpaperId, int status)
+        {
+            var flag = false;
+            var instance = dbContextService.Single<WallPaperRelateMobileProperty>(x => x.MobilePropertyId == propertyId && x.WallPaperId == wallpaperId);
+            if (instance != null)
+            {
+                instance.Status = status;
+                dbContextService.Update<WallPaperRelateMobileProperty>(instance);
+                flag = true;
+            }
+            return flag;
         }
 
         #endregion

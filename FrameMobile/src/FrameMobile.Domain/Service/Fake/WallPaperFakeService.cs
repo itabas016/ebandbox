@@ -357,55 +357,55 @@ namespace FrameMobile.Domain.Service
             return wallpaperlist;
         }
 
-        private IList<WallPaperRelateSubCategory> FakeWallPaperRelateCategoryList()
+        private IList<WallPaperRelateCategory> FakeWallPaperRelateCategoryList()
         {
             #region instance
 
-            var r1 = new WallPaperRelateSubCategory()
+            var r1 = new WallPaperRelateCategory()
             {
                 Id = 1,
                 CategoryId = 1,
-                SubCategoryId = 1,
+                //SubCategoryId = 1,
                 WallPaperId = 1,
                 Status = 1
             };
-            var r2 = new WallPaperRelateSubCategory()
+            var r2 = new WallPaperRelateCategory()
             {
                 Id = 2,
                 CategoryId = 1,
-                SubCategoryId = 2,
+                //SubCategoryId = 2,
                 WallPaperId = 2,
                 Status = 1
             };
-            var r3 = new WallPaperRelateSubCategory()
+            var r3 = new WallPaperRelateCategory()
             {
                 Id = 3,
                 CategoryId = 1,
-                SubCategoryId = 2,
+                //SubCategoryId = 2,
                 WallPaperId = 3,
                 Status = 1
             };
-            var r4 = new WallPaperRelateSubCategory()
+            var r4 = new WallPaperRelateCategory()
             {
                 Id = 4,
                 CategoryId = 1,
-                SubCategoryId = 2,
+                //SubCategoryId = 2,
                 WallPaperId = 4,
                 Status = 1
             };
-            var r5 = new WallPaperRelateSubCategory()
+            var r5 = new WallPaperRelateCategory()
             {
                 Id = 5,
                 CategoryId = 2,
-                SubCategoryId = 3,
+                //SubCategoryId = 3,
                 WallPaperId = 5,
                 Status = 1
             };
-            var r6 = new WallPaperRelateSubCategory()
+            var r6 = new WallPaperRelateCategory()
             {
                 Id = 6,
                 CategoryId = 2,
-                SubCategoryId = 3,
+                //SubCategoryId = 3,
                 WallPaperId = 6,
                 Status = 1
             };
@@ -413,7 +413,7 @@ namespace FrameMobile.Domain.Service
 
             #endregion
 
-            var list = new List<WallPaperRelateSubCategory>() { r1, r2, r3, r4, r5, r6 };
+            var list = new List<WallPaperRelateCategory>() { r1, r2, r3, r4, r5, r6 };
             return list;
         }
     }
