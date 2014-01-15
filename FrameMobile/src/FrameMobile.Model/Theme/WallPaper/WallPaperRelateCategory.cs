@@ -13,7 +13,5 @@ namespace FrameMobile.Model.Theme
         public int WallPaperId { get; set; }
 
         public int CategoryId { get; set; }
-
-        public int SubCategoryId { get; set; }
     }
 }

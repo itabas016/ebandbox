@@ -29,6 +29,7 @@ namespace FrameMobile.Domain
             For<ICacheManagerHelper>().Use<RedisCacheHelper>();
             For<IAccountService>().Use<AccountService>();
             For<ICookieService>().Use<CookieService>();
+            For<IMobileUIService>().Use<MobileUIService>();
         }
 
         private void RegistyNewsService()
@@ -44,7 +45,7 @@ namespace FrameMobile.Domain
 
         private void RegistyThemeService()
         {
-            For<IWallPaperService>().Use<WallPaperService>();
+            For<IWallPaperUIService>().Use<WallPaperUIService>();
 
 #if DEBUG
             For<IWallPaperService>().Use<WallPaperFakeService>();

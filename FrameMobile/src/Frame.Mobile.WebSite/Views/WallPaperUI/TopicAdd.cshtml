@@ -1,0 +1,87 @@
+﻿@using FrameMobile.Model.Theme;
+@model WallPaperTopic
+@{
+    bool isUpdateMode = ViewData["IsUpdate"] != null;
+    ViewBag.Title = isUpdateMode ? "修改专题" : "添加专题";
+    Layout = "~/Views/Shared/_WallPaperLayout.cshtml";
+
+    var actionName = isUpdateMode ? "TopicEdit" : "TopicAdd";
+    
+    var logoUrl = string.Empty;
+    if (isUpdateMode)
+    {
+        var t = string.IsNullOrEmpty(@Model.TopicLogoUrl) ? null : @Model.TopicLogoUrl.Split('/').ToList();
+        logoUrl = string.IsNullOrEmpty(@Model.TopicLogoUrl) ? string.Empty : t[t.Count - 1];
+    }
+}
+
+<div class="contentHeader">
+    <div class="contentHeaderInfo">
+        <button class="btn btn-quaternary btn-large addapp" onclick="history.back();">
+            返 回</button>
+    </div>
+    <div class="apphead">
+        <div class="title">
+            <b>@ViewBag.Title </b>
+        </div>
+    </div>
+</div>
+<div class="content">
+    <div class="windows">
+        @using (Html.BeginForm(actionName, "WallPaperUI", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+
+            <p>
+                <div class="title">
+                    <h1>
+                        @ViewBag.Title</h1>
+                </div>
+            </p>
+
+            <div style="clear: both">
+                <table>
+                    <tr>
+                        @Html.ValidationSummary(true)
+                        @Html.HiddenFor(m => m.Id)
+                        <td><strong>名称: </strong></td>
+                        <td>@Html.TextBoxFor(m => m.Name)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>图片地址: </strong></td>
+                        <td>
+                            <input type="file" name="logoFile" accept="bmp|gif|jpg|jpeg|png|tiff|abm" /></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <label>@logoUrl</label></td>
+                    </tr>
+                    @if (@logoUrl != string.Empty)
+                    {
+                        <tr>
+                            <td colspan="2">
+                                <img src="@Model.TopicLogoUrl" />
+                            </td>
+                        </tr>
+                    }
+                    <tr>
+                        <td><strong>排序号: </strong></td>
+                        <td>@Html.TextBoxFor(m => m.OrderNumber)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>备注: </strong></td>
+                        <td>@Html.TextAreaFor(m => m.Comment)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>状态: </strong></td>
+                        <td>@Html.RadioButtonFor(m => m.Status, 1) 有效 @Html.RadioButtonFor(m => m.Status, 0) 无效</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <button class="btn btn-large btn-blue addapp" style="margin-left: 50px">@ViewBag.Title</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        }
+    </div>
+</div>

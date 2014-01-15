@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using FrameMobile.Model;
 using FrameMobile.Model.Theme;
+using FrameMobile.Model.Mobile;
 
 namespace FrameMobile.Domain.Service
 {
@@ -67,8 +68,8 @@ namespace FrameMobile.Domain.Service
                                 {
                                     Id = p.Id,
                                     Titile = p.Titile,
-                                    ThumbnailUrl = p.ThumbnailUrl,
-                                    OriginalUrl = p.OriginalUrl,
+                                    ThumbnailName = p.ThumbnailName,
+                                    OriginalName = p.OriginalName,
                                     DownloadNumber = p.DownloadNumber,
                                     Rating = p.Status,
                                     PublishTime = p.PublishTime
@@ -88,8 +89,8 @@ namespace FrameMobile.Domain.Service
                             {
                                 Id = p.Id,
                                 Titile = p.Titile,
-                                ThumbnailUrl = p.ThumbnailUrl,
-                                OriginalUrl = p.OriginalUrl,
+                                ThumbnailName = p.ThumbnailName,
+                                OriginalName = p.OriginalName,
                                 DownloadNumber = p.DownloadNumber,
                                 Rating = p.Status,
                                 PublishTime = p.PublishTime

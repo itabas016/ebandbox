@@ -6,6 +6,8 @@ using FrameMobile.Domain.Service;
 using FrameMobile.Model;
 using FrameMobile.Model.Theme;
 using StructureMap;
+using FrameMobile.Common;
+using NCore;
 
 namespace FrameMobile.Domain
 {
@@ -35,6 +37,28 @@ namespace FrameMobile.Domain
                     dbContextService.All<T>().ToList() : dbContextService.Find<T>(x => x.Status == 1).ToList();
                 return result;
             }
+            return result;
+        }
+
+        public static string GetCompletePath(this string fileName, string fileType, string resolution)
+        {
+            var fileNamePrefix = string.Empty;
+            var thumbnailPrefix = ConfigKeys.TYD_WALLPAPER_THUMBNAIL_IMAGE_PREFIX.ConfigValue();
+            var originalPrefix = ConfigKeys.TYD_WALLPAPER_ORIGINAL_IMAGE_PREFIX.ConfigValue();
+
+            switch (fileType)
+            {
+                case Const.WALLPAPER_THUMBNAIL:
+                    fileNamePrefix = thumbnailPrefix;
+                    break;
+                case Const.WALLPAPER_ORIGINAL:
+                    fileNamePrefix = originalPrefix;
+                    break;
+                default:
+                    break;
+            }
+
+            var result = string.Format("{0}_{1}_{2}", fileNamePrefix, resolution, fileName);
             return result;
         }
     }

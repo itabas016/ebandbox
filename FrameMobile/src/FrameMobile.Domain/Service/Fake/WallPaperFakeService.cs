@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using FrameMobile.Model;
 using FrameMobile.Model.Theme;
+using FrameMobile.Model.Mobile;
 
 namespace FrameMobile.Domain.Service
 {
@@ -61,6 +62,7 @@ namespace FrameMobile.Domain.Service
         public IList<WallPaperCategoryView> GetCategoryViewList(MobileParam mobileParams, int cver, out int sver)
         {
             #region instance
+
             var cate0 = new WallPaperCategory()
             {
                 Id = 0,
@@ -193,12 +195,25 @@ namespace FrameMobile.Domain.Service
             {
                 if (categoryId == 0)
                 {
-                    result = FakeWallPaperList().To<IList<WallPaperView>>().ToList();
                     result = FakeWallPaperList().To<IList<WallPaperView>>().OrderByDescending(x => x.DownloadNumber).ToList();
                 }
                 else
                 {
-                    var hotwallpaperlist = FakeWallPaperList().Where(x => x.CategoryId == categoryId).OrderByDescending(x => x.DownloadNumber);
+                    var hotwallpaperlist = from l in FakeWallPaperList()
+                                           join r in FakeWallPaperRelateCategoryList() on l.Id equals r.WallPaperId
+                                           where r.CategoryId == categoryId
+                                           orderby l.DownloadNumber descending
+                                           select new WallPaper
+                                           {
+                                               Id = l.Id,
+                                               Titile = l.Titile,
+                                               ThumbnailName = l.ThumbnailName,
+                                               OriginalName = l.OriginalName,
+                                               DownloadNumber = l.DownloadNumber,
+                                               Rating = l.Status,
+                                               PublishTime = l.PublishTime
+                                           };
+
                     result = hotwallpaperlist.To<IList<WallPaperView>>().ToList();
                 }
             }
@@ -206,13 +221,26 @@ namespace FrameMobile.Domain.Service
             {
                 if (categoryId == 0)
                 {
-                    result = FakeWallPaperList().To<IList<WallPaperView>>().ToList();
                     result = FakeWallPaperList().To<IList<WallPaperView>>().OrderByDescending(x => x.PublishTime).ToList();
                 }
                 else
                 {
-                    var latestwallpaperlist = FakeWallPaperList().Where(x => x.CategoryId == categoryId).OrderByDescending(x => x.PublishTime);
+                    var latestwallpaperlist = from l in FakeWallPaperList()
+                                              join r in FakeWallPaperRelateCategoryList() on l.Id equals r.WallPaperId
+                                              where r.CategoryId == categoryId
+                                              orderby l.PublishTime descending
+                                              select new WallPaper
+                                              {
+                                                  Id = l.Id,
+                                                  Titile = l.Titile,
+                                                  ThumbnailName = l.ThumbnailName,
+                                                  OriginalName = l.OriginalName,
+                                                  DownloadNumber = l.DownloadNumber,
+                                                  Rating = l.Status,
+                                                  PublishTime = l.PublishTime
+                                              };
                     result = latestwallpaperlist.To<IList<WallPaperView>>().ToList();
+                }
                 }
             }
 
@@ -238,11 +266,9 @@ namespace FrameMobile.Domain.Service
             {
                 Id = 1,
                 Titile = "美女01",
-                CategoryId = 1,
-                SubCategoryId = 1,
                 Rating = 1,
-                ThumbnailUrl = "http://theme.kk874.com/ThemeResources/Thumbnail/th04.jpg",
-                OriginalUrl = "http://theme.kk874.com/ThemeResources/Original/th04.jpg",
+                ThumbnailName = "http://theme.kk874.com/ThemeResources/Thumbnail/th04.jpg",
+                OriginalName = "http://theme.kk874.com/ThemeResources/Original/th04.jpg",
                 PublishTime = DateTime.Now.AddHours(-1),
                 ModifiedTime = DateTime.Now,
                 DownloadNumber = 23,
@@ -255,11 +281,9 @@ namespace FrameMobile.Domain.Service
             {
                 Id = 2,
                 Titile = "美女01",
-                CategoryId = 1,
-                SubCategoryId = 1,
                 Rating = 1,
-                ThumbnailUrl = "http://theme.kk874.com/ThemeResources/Thumbnail/th05.jpg",
-                OriginalUrl = "http://theme.kk874.com/ThemeResources/Original/th05.jpg",
+                ThumbnailName = "http://theme.kk874.com/ThemeResources/Thumbnail/th05.jpg",
+                OriginalName = "http://theme.kk874.com/ThemeResources/Original/th05.jpg",
                 PublishTime = DateTime.Now.AddHours(-5),
                 ModifiedTime = DateTime.Now,
                 DownloadNumber = 56,
@@ -272,11 +296,9 @@ namespace FrameMobile.Domain.Service
             {
                 Id = 3,
                 Titile = "模特01",
-                CategoryId = 1,
-                SubCategoryId = 2,
                 Rating = 1,
-                ThumbnailUrl = "http://theme.kk874.com/ThemeResources/Thumbnail/th06.jpg",
-                OriginalUrl = "http://theme.kk874.com/ThemeResources/Original/th06.jpg",
+                ThumbnailName = "http://theme.kk874.com/ThemeResources/Thumbnail/th06.jpg",
+                OriginalName = "http://theme.kk874.com/ThemeResources/Original/th06.jpg",
                 PublishTime = DateTime.Now.AddDays(-1),
                 ModifiedTime = DateTime.Now,
                 DownloadNumber = 10,
@@ -289,11 +311,9 @@ namespace FrameMobile.Domain.Service
             {
                 Id = 4,
                 Titile = "模特02",
-                CategoryId = 1,
-                SubCategoryId = 2,
                 Rating = 1,
-                ThumbnailUrl = "http://theme.kk874.com/ThemeResources/Thumbnail/th07.jpg",
-                OriginalUrl = "http://theme.kk874.com/ThemeResources/Original/th07.jpg",
+                ThumbnailName = "http://theme.kk874.com/ThemeResources/Thumbnail/th07.jpg",
+                OriginalName = "http://theme.kk874.com/ThemeResources/Original/th07.jpg",
                 PublishTime = DateTime.Now.AddHours(-17),
                 ModifiedTime = DateTime.Now,
                 DownloadNumber = 40,
@@ -306,11 +326,9 @@ namespace FrameMobile.Domain.Service
             {
                 Id = 5,
                 Titile = "动漫01",
-                CategoryId = 2,
-                SubCategoryId = 3,
                 Rating = 3,
-                ThumbnailUrl = "http://theme.kk874.com/ThemeResources/Thumbnail/th01.jpg",
-                OriginalUrl = "http://theme.kk874.com/ThemeResources/Original/th01.jpg",
+                ThumbnailName = "http://theme.kk874.com/ThemeResources/Thumbnail/th01.jpg",
+                OriginalName = "http://theme.kk874.com/ThemeResources/Original/th01.jpg",
                 PublishTime = DateTime.Now.AddMinutes(-2),
                 ModifiedTime = DateTime.Now,
                 DownloadNumber = 5,
@@ -323,11 +341,9 @@ namespace FrameMobile.Domain.Service
             {
                 Id = 6,
                 Titile = "哆啦A梦",
-                CategoryId = 2,
-                SubCategoryId = 3,
                 Rating = 3,
-                ThumbnailUrl = "http://theme.kk874.com/ThemeResources/Thumbnail/th02.jpg",
-                OriginalUrl = "http://theme.kk874.com/ThemeResources/Original/th02.jpg",
+                ThumbnailName = "http://theme.kk874.com/ThemeResources/Thumbnail/th02.jpg",
+                OriginalName = "http://theme.kk874.com/ThemeResources/Original/th02.jpg",
                 PublishTime = DateTime.Now.AddMinutes(-13),
                 ModifiedTime = DateTime.Now,
                 DownloadNumber = 6,
@@ -340,6 +356,66 @@ namespace FrameMobile.Domain.Service
             var wallpaperlist = new List<WallPaper>() { wall1, wall01, wall02, wall2, wall3, wall4 };
 
             return wallpaperlist;
+        }
+
+        private IList<WallPaperRelateCategory> FakeWallPaperRelateCategoryList()
+        {
+            #region instance
+
+            var r1 = new WallPaperRelateCategory()
+            {
+                Id = 1,
+                CategoryId = 1,
+                //SubCategoryId = 1,
+                WallPaperId = 1,
+                Status = 1
+            };
+            var r2 = new WallPaperRelateCategory()
+            {
+                Id = 2,
+                CategoryId = 1,
+                //SubCategoryId = 2,
+                WallPaperId = 2,
+                Status = 1
+            };
+            var r3 = new WallPaperRelateCategory()
+            {
+                Id = 3,
+                CategoryId = 1,
+                //SubCategoryId = 2,
+                WallPaperId = 3,
+                Status = 1
+            };
+            var r4 = new WallPaperRelateCategory()
+            {
+                Id = 4,
+                CategoryId = 1,
+                //SubCategoryId = 2,
+                WallPaperId = 4,
+                Status = 1
+            };
+            var r5 = new WallPaperRelateCategory()
+            {
+                Id = 5,
+                CategoryId = 2,
+                //SubCategoryId = 3,
+                WallPaperId = 5,
+                Status = 1
+            };
+            var r6 = new WallPaperRelateCategory()
+            {
+                Id = 6,
+                CategoryId = 2,
+                //SubCategoryId = 3,
+                WallPaperId = 6,
+                Status = 1
+            };
+
+
+            #endregion
+
+            var list = new List<WallPaperRelateCategory>() { r1, r2, r3, r4, r5, r6 };
+            return list;
         }
     }
 }

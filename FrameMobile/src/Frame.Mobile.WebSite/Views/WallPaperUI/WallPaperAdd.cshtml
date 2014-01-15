@@ -1,0 +1,131 @@
+﻿@using FrameMobile.Model.Theme;
+@model WallPaper
+@{
+    bool isUpdateMode = ViewData["IsUpdate"] != null;
+    ViewBag.Title = isUpdateMode ? "修改壁纸" : "添加壁纸";
+    Layout = "~/Views/Shared/_WallPaperLayout.cshtml";
+
+    var actionName = isUpdateMode ? "WallPaperEdit" : "WallPaperAdd";
+    
+    var thumbnailName = string.Empty;
+    var originalName = string.Empty;
+    var publishTime = DateTime.Now;
+    var modifiedTime = DateTime.Now;
+    if (isUpdateMode)
+    {
+        thumbnailName = string.IsNullOrEmpty(@Model.ThumbnailName) ? string.Empty : @Model.ThumbnailName;
+        originalName = string.IsNullOrEmpty(@Model.OriginalName) ? string.Empty : @Model.OriginalName;
+        publishTime = @Model.PublishTime;
+        modifiedTime = @Model.ModifiedTime;
+    }
+}
+
+<div class="contentHeader">
+    <div class="contentHeaderInfo">
+        <button class="btn btn-quaternary btn-large addapp" onclick="history.back();">
+            返 回</button>
+    </div>
+    <div class="apphead">
+        <div class="title">
+            <b>@ViewBag.Title </b>
+        </div>
+    </div>
+</div>
+<div class="content">
+    <div class="windows">
+        @using (Html.BeginForm(actionName, "WallPaperUI", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+
+            <p>
+                <div class="title">
+                    <h1>
+                        @ViewBag.Title</h1>
+                </div>
+            </p>
+
+            <div style="clear: both">
+                <table>
+                    <tr>
+                        @Html.ValidationSummary(true)
+                        @Html.HiddenFor(m => m.Id)
+                        <td><strong>标题: </strong></td>
+                        <td>@Html.TextBoxFor(m => m.Titile)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>星级: </strong></td>
+                        <td>@Html.TextBoxFor(m => m.Rating, new { type = "number", min = "0", max = "99999999" })</td>
+                    </tr>
+                    <tr>
+                        <td><strong>发布时间: </strong></td>
+                        <td>
+                            @Html.TextBoxFor(m => m.PublishTime, new { @class = "Wdate", Value = @publishTime.ToString("yyyy-MM-dd HH:mm:ss"), onclick = "WdatePicker({ dateFmt: 'yyyy-MM-dd HH:mm:ss' })" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>下载次数: </strong></td>
+                        <td>@Html.TextBoxFor(m => m.DownloadNumber, new { type = "number", min = "0", max = "99999999" })</td>
+                    </tr>
+                    <tr>
+                        <td><strong>排序号: </strong></td>
+                        <td>@Html.TextBoxFor(m => m.OrderNumber, new { type = "number", min = "0", max = "99999999" })</td>
+                    </tr>
+                    @if (isUpdateMode)
+                    {
+                        <tr>
+                            <td><strong>修改时间: </strong></td>
+                            <td>
+                                @Html.TextBoxFor(m => m.ModifiedTime, new { @readonly = true, Class = "txt-readonly" })
+                            </td>
+                        </tr>}
+                    <tr>
+                        <td><strong>缩略图地址: </strong></td>
+                        <td>
+                            <input type="file" name="thumbnailFile" accept="bmp|gif|jpg|jpeg|png|tiff|abm" /></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <label>@thumbnailName</label></td>
+                    </tr>
+                    @if (@thumbnailName != string.Empty)
+                    {
+                        <tr>
+                            <td colspan="2">
+                                <img src="@Model.ThumbnailName" />
+                            </td>
+                        </tr>
+                    }
+                    <tr>
+                        <td><strong>原图地址: </strong></td>
+                        <td>
+                            <input type="file" name="originalFile" accept="bmp|gif|jpg|jpeg|png|tiff|abm" /></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <label>@originalName</label></td>
+                    </tr>
+                    @if (@originalName != string.Empty)
+                    {
+                        <tr>
+                            <td colspan="2">
+                                <img src="@Model.OriginalName" />
+                            </td>
+                        </tr>
+                    }
+                    <tr>
+                        <td><strong>备注: </strong></td>
+                        <td>@Html.TextAreaFor(m => m.Comment)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>状态: </strong></td>
+                        <td>@Html.RadioButtonFor(m => m.Status, 1) 有效 @Html.RadioButtonFor(m => m.Status, 0) 无效</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <button class="btn btn-large btn-blue addapp" style="margin-left: 50px">@ViewBag.Title</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        }
+    </div>
+</div>

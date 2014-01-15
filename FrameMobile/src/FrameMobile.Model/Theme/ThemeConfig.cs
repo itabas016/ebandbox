@@ -16,7 +16,9 @@ namespace FrameMobile.Model.Theme
         //1 代表壁纸、2 代表铃声
         public int Type { get; set; }
 
-        [SubSonicStringLength(64)]
         public int Version { get; set; }
+
+        [SubSonicStringLength(256)]
+        public string Comment { get; set; }
     }
 }
