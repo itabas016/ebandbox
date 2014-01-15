@@ -103,13 +103,13 @@ namespace Frame.Mobile.WebSite.Controllers
             return string.Empty;
         }
 
-        protected string GetThemeOriginalFilePath(WallPaper model, HttpPostedFileBase originailFile)
+        protected string GetThemeOriginalFilePath(WallPaper model, HttpPostedFileBase originalFile)
         {
-            if (originailFile != null && !string.IsNullOrWhiteSpace(originailFile.FileName))
+            if (originalFile != null && !string.IsNullOrWhiteSpace(originalFile.FileName))
             {
-                var originailFilePath = SaveResourceFile(Const.THEME_ORIGINALS_FOLDER_NAME, ResourcesFilePathHelper.ThemeLogoPath, originailFile, string.Format("{0}_{1}_{2}", model.Titile, Guid.NewGuid().ToString(), Path.GetExtension(originailFile.FileName)).NormalzieFileName());
+                var originalFilePath = SaveResourceFile(Const.THEME_ORIGINALS_FOLDER_NAME, ResourcesFilePathHelper.ThemeLogoPath, originalFile, string.Format("{0}_{1}_{2}", model.Titile, Guid.NewGuid().ToString(), Path.GetExtension(originalFile.FileName)).NormalzieFileName());
 
-                return originailFilePath;
+                return originalFilePath;
             }
             return string.Empty;
         }
