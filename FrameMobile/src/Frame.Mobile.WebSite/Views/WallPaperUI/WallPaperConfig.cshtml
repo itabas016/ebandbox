@@ -53,6 +53,8 @@
             <div style="clear: both">
                 <div hidden="hidden">
                     @Html.HiddenFor(m => m.WallPaper.Id)
+                    @Html.HiddenFor(m => m.WallPaper.ThumbnailName)
+                    @Html.HiddenFor(m => m.WallPaper.OriginalName)
                     @foreach (var c in Model.RelateCategoryIds)
                     {
                         @Html.HiddenFor(m => m.RelateCategoryIds[i])
@@ -108,6 +110,12 @@
                     var ischecked = propertyIds.Contains(property.Value.ToInt32()) ? "checked='checked'" : string.Empty;
                     <input type="checkbox" name="property" value="@property.Value" @ischecked />@property.Text
                 }
+                <br />
+                <strong>适配的缩略图文件: </strong>
+                <input type="file" name="thumbnailfile" id="thumbnailfile" multiple="multiple" class="multi" accept="bmp|gif|jpg|jpeg|png|tiff|abm" />
+                <br />
+                <strong>适配的原图文件: </strong>
+                <input type="file" name="originalfile" id="originalfile" multiple="multiple" class="multi" accept="bmp|gif|jpg|jpeg|png|tiff|abm" />
                 <br />
                 <button class="btn btn-large btn-blue addapp" style="margin-left: 50px">@ViewBag.Title</button>
             </div>

@@ -363,11 +363,25 @@ namespace Frame.Mobile.WebSite.Controllers
         [HttpPost]
         public ActionResult WallPaperConfig(WallPaperConfigView model, FormCollection parameters)
         {
-            var wallpaper = model.WallPaper.MakeSureNotNull() as WallPaper;
             var categoryIds = parameters["category"].GetIds();
             var subcategoryIds = parameters["subcategory"].GetIds();
             var topicIds = parameters["topic"].GetIds();
             var propertyIds = parameters["property"].GetIds();
+
+            WallPaperConfig(model, categoryIds, subcategoryIds, topicIds, propertyIds);
+
+            return RedirectToAction("WallPaperList");
+        }
+
+        #endregion
+
+        #region Helper
+
+        #region Connect mysql
+
+        private void WallPaperConfig(WallPaperConfigView model, List<int> categoryIds, List<int> subcategoryIds, List<int> topicIds, List<int> propertyIds)
+        {
+            var wallpaper = model.WallPaper.MakeSureNotNull() as WallPaper;
 
             var outcategoryIds = new List<int>();
             var outsubcategoryIds = new List<int>();
@@ -388,12 +402,8 @@ namespace Frame.Mobile.WebSite.Controllers
             UpdateRelateTopic(outtopicIds, wallpaper.Id);
             UpdateRelateMobileProperty(outpropertyIds, wallpaper.Id);
 
-            return RedirectToAction("WallPaperList");
+            Upload(wallpaper, inpropertyIds);
         }
-
-        #endregion
-
-        #region Helper
 
         private List<int> InIds(List<int> originalIds, List<int> currentIds, out List<int> outIds)
         {
@@ -599,6 +609,31 @@ namespace Frame.Mobile.WebSite.Controllers
                 flag = true;
             }
             return flag;
+        }
+
+        #endregion
+
+        public void Upload(WallPaper wallpaper, List<int> propertyIds)
+        {
+            var files = Request.Files;
+            if (propertyIds != null && propertyIds.Count > 0 && files.Count > 0 && !string.IsNullOrEmpty(wallpaper.ThumbnailName) && !string.IsNullOrEmpty(wallpaper.OriginalName))
+            {
+                for (int i = 0; i < files.Count; i++)
+                {
+                    if (files.AllKeys[i].EqualsOrdinalIgnoreCase("thumbnailfile")
+                        && !string.IsNullOrWhiteSpace(Request.Files[i].FileName))
+                    {
+                        var thumbnailFilePath = SaveResourceFile(Const.THEME_THUMBNAILS_FOLDER_NAME, ResourcesFilePathHelper.ThemeThumbnailPath, files[i], string.Format("{0}_{1}{2}", files[i].GetFileNamePrefix(), wallpaper.ThumbnailName.GetFileNamePrefix(), files[i].GetFileType()).NormalzieFileName());
+                        continue;
+                    }
+                    if (files.AllKeys[i].EqualsOrdinalIgnoreCase("originalfile")
+                        && !string.IsNullOrWhiteSpace(Request.Files[i].FileName))
+                    {
+                        var originalFilePath = SaveResourceFile(Const.THEME_ORIGINALS_FOLDER_NAME, ResourcesFilePathHelper.ThemeOriginalPath, files[i], string.Format("{0}_{1}{2}", files[i].GetFileNamePrefix(), wallpaper.OriginalName.GetFileNamePrefix(), files[i].GetFileType()).NormalzieFileName());
+                        continue;
+                    }
+                }
+            }
         }
 
         #endregion
