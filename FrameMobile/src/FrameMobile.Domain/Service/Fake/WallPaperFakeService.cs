@@ -241,7 +241,6 @@ namespace FrameMobile.Domain.Service
                                               };
                     result = latestwallpaperlist.To<IList<WallPaperView>>().ToList();
                 }
-                }
             }
 
             totalCount = result.Count;
