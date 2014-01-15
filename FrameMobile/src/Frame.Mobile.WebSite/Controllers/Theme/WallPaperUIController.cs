@@ -375,9 +375,9 @@ namespace Frame.Mobile.WebSite.Controllers
             var outpropertyIds = new List<int>();
 
             var incategoryIds = InIds(model.RelateCategoryIds, categoryIds, out outcategoryIds);
-            var insubcategoryIds = InIds(model.RelateCategoryIds, categoryIds, out outsubcategoryIds);
-            var intopicIds = InIds(model.RelateCategoryIds, categoryIds, out outtopicIds);
-            var inpropertyIds = InIds(model.RelateCategoryIds, categoryIds, out outpropertyIds);
+            var insubcategoryIds = InIds(model.RelateSubCategoryIds, subcategoryIds, out outsubcategoryIds);
+            var intopicIds = InIds(model.RelateTopicIds, topicIds, out outtopicIds);
+            var inpropertyIds = InIds(model.RelateMobilePropertyIds, propertyIds, out outpropertyIds);
 
             AddRelateCategory(incategoryIds, wallpaper.Id);
             AddRelateTopic(intopicIds, wallpaper.Id);

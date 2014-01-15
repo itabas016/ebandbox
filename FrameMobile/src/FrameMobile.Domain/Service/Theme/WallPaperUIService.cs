@@ -59,25 +59,25 @@ namespace FrameMobile.Domain.Service
 
         public IList<WallPaperRelateCategory> GetWallRelateCategoryList(int wallpaperId)
         {
-            var relatecategorylist = dbContextService.Find<WallPaperRelateCategory>(x => x.WallPaperId == wallpaperId).ToList();
+            var relatecategorylist = dbContextService.Find<WallPaperRelateCategory>(x => x.WallPaperId == wallpaperId && x.Status == 1).ToList();
             return relatecategorylist;
         }
 
         public IList<WallPaperRelateSubCategory> GetWallRelateSubCategoryList(int wallpaperId)
         {
-            var relatecategorylist = dbContextService.Find<WallPaperRelateSubCategory>(x => x.WallPaperId == wallpaperId).ToList();
+            var relatecategorylist = dbContextService.Find<WallPaperRelateSubCategory>(x => x.WallPaperId == wallpaperId && x.Status == 1).ToList();
             return relatecategorylist;
         }
 
         public IList<WallPaperRelateTopic> GetWallRelateTopicList(int wallpaperId)
         {
-            var relatetopiclist = dbContextService.Find<WallPaperRelateTopic>(x => x.WallPaperId == wallpaperId).ToList();
+            var relatetopiclist = dbContextService.Find<WallPaperRelateTopic>(x => x.WallPaperId == wallpaperId && x.Status == 1).ToList();
             return relatetopiclist;
         }
 
         public IList<WallPaperRelateMobileProperty> GetWallRelateMobilePropertyList(int wallpaperId)
         {
-            var relatemobilepropertylist = dbContextService.Find<WallPaperRelateMobileProperty>(x => x.WallPaperId == wallpaperId).ToList();
+            var relatemobilepropertylist = dbContextService.Find<WallPaperRelateMobileProperty>(x => x.WallPaperId == wallpaperId && x.Status == 1).ToList();
             return relatemobilepropertylist;
         }
 
@@ -85,7 +85,7 @@ namespace FrameMobile.Domain.Service
         {
             var categoryIds = new List<int>();
             var relatecategorylist = GetWallRelateCategoryList(wallpaperId);
-            if (relatecategorylist!= null && relatecategorylist.Count > 0)
+            if (relatecategorylist != null && relatecategorylist.Count > 0)
             {
                 foreach (var item in relatecategorylist)
                 {
