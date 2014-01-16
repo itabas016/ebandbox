@@ -65,6 +65,11 @@ namespace FrameMobile.Domain
                 case Const.NEWS_METHOD_NAME_GETNEWSCONTENTVIEWLIST:
                     paramSb = NewsContentCacheKey(paramSb, args, parameters);
                     break;
+                case Const.WALLPAPER_METHOD_NAME_GETMOBILEPROPERTY:
+                case Const.WALLPAPER_METHOD_NAME_GETWALLPAPERVIEWLIST:
+                case Const.WALLPAPER_METHOD_NAME_GETWALLPAPERVIEWDETAIL:
+                    paramSb = MobilePropertyCacheKey(paramSb, args, parameters);
+                    break;
                 default:
                     paramSb = CommonCacheKey(paramSb, args, parameters);
                     break;
@@ -106,6 +111,27 @@ namespace FrameMobile.Domain
                     continue;
                 }
 
+                paramSb.AppendFormat("{0}[{1}]", parameters[i].Name, args[i] == null ? string.Empty : args[i].ToString());
+            }
+            return paramSb;
+        }
+
+        private StringBuilder MobilePropertyCacheKey(StringBuilder paramSb, object[] args, ParameterInfo[] parameters)
+        {
+            for (int i = 0; i < parameters.Length; i++)
+            {
+                if (parameters[i].ParameterType.Equals(typeof(MobileParam)))
+                {
+                    var mobileParam = args[i] as MobileParam;
+                    if (mobileParam != null)
+                    {
+                        var brand = mobileParam.Manufacturer.ToLower();
+                        var resolution = mobileParam.Resolution.ToLower();
+                        paramSb.AppendFormat("{0}[{1}]", MobileParam.Key_Manufacturer, brand);
+                        paramSb.AppendFormat("{0}[{1}]", MobileParam.Key_Resolution, resolution);
+                    }
+                    continue;
+                }
                 paramSb.AppendFormat("{0}[{1}]", parameters[i].Name, args[i] == null ? string.Empty : args[i].ToString());
             }
             return paramSb;

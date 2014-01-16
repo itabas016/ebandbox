@@ -10,6 +10,7 @@ namespace FrameMobile.Domain.Service
 {
     public class WallPaperService : ThemeDbContextService, IWallPaperService
     {
+        [ServiceCache]
         public MobileProperty GetMobileProperty(MobileParam mobileParams)
         {
             var brand = mobileParams.Manufacturer.ToLower();
@@ -31,30 +32,35 @@ namespace FrameMobile.Domain.Service
             return mobileproperty.SingleOrDefault<MobileProperty>();
         }
 
+        [ServiceCache]
         public IList<ThemeConfigView> GetConfigViewList(MobileParam mobileParams, int type)
         {
             var configlist = dbContextService.Find<ThemeConfig>(x => x.Status == 1 && x.Type == type);
             return configlist.To<IList<ThemeConfigView>>();
         }
 
+        [ServiceCache]
         public IList<WallPaperCategoryView> GetCategoryViewList(MobileParam mobileParams, int cver, out int sver)
         {
             var categorylist = new WallPaperCategory().ReturnThemeInstance<WallPaperCategory>(cver, out sver);
             return categorylist.To<IList<WallPaperCategoryView>>();
         }
 
+        [ServiceCache]
         public IList<WallPaperSubCategoryView> GetSubCategoryViewList(MobileParam mobileParams, int cver, out int sver)
         {
             var subcategorylist = new WallPaperSubCategory().ReturnThemeInstance<WallPaperSubCategory>(cver, out sver);
             return subcategorylist.To<IList<WallPaperSubCategoryView>>();
         }
 
+        [ServiceCache]
         public IList<WallPaperTopicView> GetTopicViewList(MobileParam mobileParams, int cver, out int sver)
         {
             var topiclist = new WallPaperTopic().ReturnThemeInstance<WallPaperTopic>(cver, out sver);
             return topiclist.To<IList<WallPaperTopicView>>();
         }
 
+        [ServiceCache]
         public IList<WallPaperView> GetWallPaperViewList(MobileParam mobileParams, int categoryId, int topicId, int subcategoryId, int sort, int startnum, int num, out int totalCount)
         {
             var property = GetMobileProperty(mobileParams);
@@ -79,6 +85,7 @@ namespace FrameMobile.Domain.Service
             return wallpaperlist.To<IList<WallPaperView>>();
         }
 
+        [ServiceCache]
         public WallPaperView GetWallPaperViewDetail(MobileParam mobileParams, int wallPaperId)
         {
             var property = GetMobileProperty(mobileParams);
