@@ -57,6 +57,14 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\lib\RedisMapper\RedisMapper.dll</HintPath>
     </Reference>
+    <Reference Include="ServiceStack.Interfaces, Version=3.9.0.0, Culture=neutral, PublicKeyToken=2f6b00d3b7b79d4c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\ServiceStack\ServiceStack.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Redis, Version=3.9.3.0, Culture=neutral, PublicKeyToken=2f6b00d3b7b79d4c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\ServiceStack\ServiceStack.Redis.dll</HintPath>
+    </Reference>
     <Reference Include="Snap">
       <HintPath>..\..\..\lib\Snap\Snap.dll</HintPath>
     </Reference>
@@ -113,6 +121,7 @@
     <Compile Include="Service\Common\AccountService.cs" />
     <Compile Include="Service\Common\CookieService.cs" />
     <Compile Include="Service\Common\MobileUIService.cs" />
+    <Compile Include="Service\Common\RedisClientManagerRepo.cs" />
     <Compile Include="Service\Fake\NewsFakeService.cs" />
     <Compile Include="Service\Fake\WallPaperFakeService.cs" />
     <Compile Include="Service\Interface\IMobileUIService.cs" />

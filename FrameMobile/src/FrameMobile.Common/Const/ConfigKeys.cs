@@ -15,6 +15,26 @@ namespace FrameMobile.Common
 
         public const string USING_SHARED_RESOURCE_FOLDER = "UsingSharedResourceFolder";
 
+        #region Redis
+
+        public const string NEWS_REDIS_READ_WRITE_SERVERS = "news_redis_read_write_servers";
+
+        public const string NEWS_REDIS_READONLY_SERVERS = "news_redis_readonly_servers";
+
+        public const string THEME_REDIS_READ_WRITE_SERVERS = "theme_redis_read_write_servers";
+
+        public const string THEME_REDIS_READONLY_SERVERS = "theme_redis_readonly_servers";
+
+        public const string NEWS_MAX_READ_POOL_SIZE = "news_MaxReadPoolSize";
+
+        public const string NEWS_MAX_WRITE_POOL_SIZE = "news_MaxWritePoolSize";
+
+        public const string THEME_MAX_READ_POOL_SIZE = "theme_MaxReadPoolSize";
+
+        public const string THEME_MAX_WRITE_POOL_SIZE = "theme_MaxWritePoolSize";
+
+        #endregion
+
         #endregion
 
         #region TouTiao
