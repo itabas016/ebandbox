@@ -13,22 +13,6 @@ namespace Frame.Mobile.WebSite.Controllers
 {
     public class MobileController : ThemeBaseController
     {
-        public IMobileUIService MobileUIService
-        {
-            get
-            {
-                if (_mobileUIService == null)
-                    _mobileUIService = ObjectFactory.GetInstance<IMobileUIService>();
-
-                return _mobileUIService;
-            }
-            set
-            {
-                _mobileUIService = value;
-            }
-        }
-        private IMobileUIService _mobileUIService;
-
         protected override bool IsMobileInterface { get { return false; } }
 
         #region Property
