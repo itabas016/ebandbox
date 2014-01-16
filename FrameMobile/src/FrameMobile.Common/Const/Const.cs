@@ -43,6 +43,8 @@ namespace FrameMobile.Common
 
         public const string FRAME_MODEL_MASTER = "FrameMobile.Model";
 
+        public const string NEWS_METHOD_NAME_GETNEWSCONTENTVIEWLIST = "getnewscontentviewlist";
+
         #endregion
     }
 }
