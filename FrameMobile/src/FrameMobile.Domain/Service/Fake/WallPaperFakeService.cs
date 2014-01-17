@@ -193,9 +193,28 @@ namespace FrameMobile.Domain.Service
 
             if (sort == 0)
             {
-                if (categoryId == 0)
+                if (categoryId == 0 && topicId == 0)
                 {
                     result = FakeWallPaperList().To<IList<WallPaperView>>().OrderByDescending(x => x.DownloadNumber).ToList();
+                }
+                else if (categoryId == 0 && topicId > 0)
+                {
+                    var hotwallpaperlist = from l in FakeWallPaperList()
+                                           join r in FakeWallPaperRelateTopicList() on l.Id equals r.WallPaperId
+                                           where r.TopicId == topicId
+                                           orderby l.DownloadNumber descending
+                                           select new WallPaper
+                                           {
+                                               Id = l.Id,
+                                               Titile = l.Titile,
+                                               ThumbnailName = l.ThumbnailName,
+                                               OriginalName = l.OriginalName,
+                                               DownloadNumber = l.DownloadNumber,
+                                               Rating = l.Status,
+                                               PublishTime = l.PublishTime
+                                           };
+
+                    result = hotwallpaperlist.To<IList<WallPaperView>>().ToList();
                 }
                 else
                 {
@@ -219,9 +238,28 @@ namespace FrameMobile.Domain.Service
             }
             else if (sort == 1)
             {
-                if (categoryId == 0)
+                if (categoryId == 0 && topicId == 0)
                 {
                     result = FakeWallPaperList().To<IList<WallPaperView>>().OrderByDescending(x => x.PublishTime).ToList();
+                }
+                else if (categoryId == 0 && topicId > 0)
+                {
+                    var hotwallpaperlist = from l in FakeWallPaperList()
+                                           join r in FakeWallPaperRelateTopicList() on l.Id equals r.WallPaperId
+                                           where r.TopicId == topicId
+                                           orderby l.PublishTime descending
+                                           select new WallPaper
+                                           {
+                                               Id = l.Id,
+                                               Titile = l.Titile,
+                                               ThumbnailName = l.ThumbnailName,
+                                               OriginalName = l.OriginalName,
+                                               DownloadNumber = l.DownloadNumber,
+                                               Rating = l.Status,
+                                               PublishTime = l.PublishTime
+                                           };
+
+                    result = hotwallpaperlist.To<IList<WallPaperView>>().ToList();
                 }
                 else
                 {
@@ -414,6 +452,56 @@ namespace FrameMobile.Domain.Service
             #endregion
 
             var list = new List<WallPaperRelateCategory>() { r1, r2, r3, r4, r5, r6 };
+            return list;
+        }
+
+        private IList<WallPaperRelateTopic> FakeWallPaperRelateTopicList()
+        {
+            #region instance
+
+            var r1 = new WallPaperRelateTopic()
+            {
+                Id = 1,
+                TopicId = 1,
+                WallPaperId = 1,
+                Status = 1
+            };
+
+            var r2 = new WallPaperRelateTopic()
+            {
+                Id = 2,
+                TopicId = 1,
+                WallPaperId = 2,
+                Status = 1
+            };
+
+            var r3 = new WallPaperRelateTopic()
+            {
+                Id = 3,
+                TopicId = 2,
+                WallPaperId = 1,
+                Status = 1
+            };
+
+            var r4 = new WallPaperRelateTopic()
+            {
+                Id = 4,
+                TopicId = 2,
+                WallPaperId = 3,
+                Status = 1
+            };
+
+            var r5 = new WallPaperRelateTopic()
+            {
+                Id = 5,
+                TopicId = 1,
+                WallPaperId = 4,
+                Status = 1
+            };
+
+            #endregion
+
+            var list = new List<WallPaperRelateTopic>() { r1, r2, r3, r4, r5 };
             return list;
         }
     }

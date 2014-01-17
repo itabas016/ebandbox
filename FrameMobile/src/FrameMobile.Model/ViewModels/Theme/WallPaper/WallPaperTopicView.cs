@@ -19,6 +19,9 @@ namespace FrameMobile.Model
         [JsonProperty("logourl")]
         public string LogoUrl { get; set; }
 
+        [JsonProperty("summary")]
+        public string Summary { get; set; }
+
         [JsonProperty("ordernumber")]
         public int OrderNumber { get; set; }
 

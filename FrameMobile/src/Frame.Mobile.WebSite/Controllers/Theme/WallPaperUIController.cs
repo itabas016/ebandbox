@@ -221,6 +221,7 @@ namespace Frame.Mobile.WebSite.Controllers
             topic.Name = model.Name;
             topic.Status = model.Status;
             topic.OrderNumber = model.OrderNumber;
+            topic.Summary = model.Summary;
             topic.Comment = model.Comment;
             topic.CreateDateTime = DateTime.Now;
 
