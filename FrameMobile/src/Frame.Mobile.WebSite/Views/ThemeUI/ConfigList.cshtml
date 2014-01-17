@@ -4,7 +4,7 @@
     ViewBag.Title = "配置表管理";
     Layout = "~/Views/Shared/_ThemeLayout.cshtml";
 
-    List<ThemeConfig> configlist = ViewData["Categorylist"] as List<ThemeConfig>;
+    List<ThemeConfig> configlist = ViewData["Configlist"] as List<ThemeConfig>;
     configlist = configlist != null ? configlist : new List<ThemeConfig>();
     var totalCount = ViewData["TotalCount"] as int?;
     totalCount = totalCount != null ? totalCount : 0;
