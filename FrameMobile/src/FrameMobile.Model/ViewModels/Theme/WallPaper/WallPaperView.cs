@@ -13,6 +13,10 @@ namespace FrameMobile.Model
         [JsonProperty("id")]
         public int Id { get; set; }
 
+        [JsonProperty("wallpaperno")]
+        [JsonIgnore]
+        public string WallPaperNo { get; set; }
+
         [JsonProperty("title")]
         public string Title { get; set; }
 

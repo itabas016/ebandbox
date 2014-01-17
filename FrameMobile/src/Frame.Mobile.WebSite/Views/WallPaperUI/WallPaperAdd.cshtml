@@ -48,8 +48,19 @@
                     <tr>
                         @Html.ValidationSummary(true)
                         @Html.HiddenFor(m => m.Id)
+                        <td>
+                            @if (isUpdateMode)
+                            {
+                                @Html.TextBoxFor(m => m.WallPaperNo, new { @readonly = true, Class = "txt-readonly" })}
+                            else
+                            {
+                                @Html.TextBoxFor(m => m.WallPaperNo)
+                            }
+                        </td>
+                    </tr>
+                    <tr>
                         <td><strong>标题: </strong></td>
-                        <td>@Html.TextBoxFor(m => m.Titile)</td>
+                        <td>@Html.TextBoxFor(m => m.Title)</td>
                     </tr>
                     <tr>
                         <td><strong>星级: </strong></td>
@@ -76,7 +87,8 @@
                             <td>
                                 @Html.TextBoxFor(m => m.ModifiedTime, new { @readonly = true, Class = "txt-readonly" })
                             </td>
-                        </tr>}
+                        </tr>
+                    }
                     <tr>
                         <td><strong>缩略图地址: </strong></td>
                         <td>

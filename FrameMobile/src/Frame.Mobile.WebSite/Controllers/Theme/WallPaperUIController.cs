@@ -295,6 +295,7 @@ namespace Frame.Mobile.WebSite.Controllers
             var wallpaper = dbContextService.Single<WallPaper>(model.Id);
 
             wallpaper.Title = model.Title;
+            wallpaper.WallPaperNo = model.WallPaperNo;
             wallpaper.Status = model.Status;
             wallpaper.PublishTime = model.PublishTime;
             wallpaper.ModifiedTime = DateTime.Now;
