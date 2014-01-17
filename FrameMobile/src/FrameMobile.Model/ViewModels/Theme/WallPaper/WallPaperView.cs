@@ -17,6 +17,7 @@ namespace FrameMobile.Model
         public string Title { get; set; }
 
         [JsonProperty("categoryid")]
+        [JsonIgnore]
         public int CategoryId { get; set; }
 
         [JsonIgnore]
@@ -51,6 +52,7 @@ namespace FrameMobile.Model
         public string Comment { get; set; }
 
         [JsonProperty("status")]
+        [JsonIgnore]
         public int Status { get; set; }
     }
 }
