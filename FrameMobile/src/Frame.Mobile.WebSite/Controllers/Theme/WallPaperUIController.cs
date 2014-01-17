@@ -51,6 +51,7 @@ namespace Frame.Mobile.WebSite.Controllers
             model.CategoryLogoUrl = string.Format("{0}{1}", logo_Image_Prefix, Path.GetFileName(logoFilePath));
 
             var ret = dbContextService.Add<WallPaperCategory>(model);
+            WallPaperUIService.UpdateServerVersion<WallPaperCategory>();
 
             return RedirectToAction("CategoryList");
         }
@@ -79,12 +80,16 @@ namespace Frame.Mobile.WebSite.Controllers
             category.CategoryLogoUrl = string.Format("{0}{1}", logo_Image_Prefix, Path.GetFileName(logoFilePath));
 
             dbContextService.Update<WallPaperCategory>(category);
+            WallPaperUIService.UpdateServerVersion<WallPaperCategory>();
+
             return RedirectToAction("CategoryList");
         }
 
         public ActionResult CategoryDelete(int categoryId)
         {
             var ret = dbContextService.Delete<WallPaperCategory>(categoryId);
+            WallPaperUIService.UpdateServerVersion<WallPaperCategory>();
+
             return RedirectToAction("CategoryList");
         }
 
@@ -126,6 +131,7 @@ namespace Frame.Mobile.WebSite.Controllers
             model.SubCategoryLogoUrl = string.Format("{0}{1}", logo_Image_Prefix, Path.GetFileName(logoFilePath));
 
             var ret = dbContextService.Add<WallPaperSubCategory>(model);
+            WallPaperUIService.UpdateServerVersion<WallPaperSubCategory>();
 
             return RedirectToAction("SubCategoryList");
         }
@@ -157,12 +163,16 @@ namespace Frame.Mobile.WebSite.Controllers
             subcategory.SubCategoryLogoUrl = string.Format("{0}{1}", logo_Image_Prefix, Path.GetFileName(logoFilePath));
 
             dbContextService.Update<WallPaperSubCategory>(subcategory);
+            WallPaperUIService.UpdateServerVersion<WallPaperSubCategory>();
+
             return RedirectToAction("SubCategoryList");
         }
 
         public ActionResult SubCategoryDelete(int subcategoryId)
         {
             var ret = dbContextService.Delete<WallPaperSubCategory>(subcategoryId);
+            WallPaperUIService.UpdateServerVersion<WallPaperSubCategory>();
+
             return RedirectToAction("SubCategoryList");
         }
 
@@ -201,6 +211,7 @@ namespace Frame.Mobile.WebSite.Controllers
             model.TopicLogoUrl = string.Format("{0}{1}", logo_Image_Prefix, Path.GetFileName(logoFilePath));
 
             var ret = dbContextService.Add<WallPaperTopic>(model);
+            WallPaperUIService.UpdateServerVersion<WallPaperTopic>();
 
             return RedirectToAction("TopicList");
         }
@@ -230,12 +241,16 @@ namespace Frame.Mobile.WebSite.Controllers
             topic.TopicLogoUrl = string.Format("{0}{1}", logo_Image_Prefix, Path.GetFileName(logoFilePath));
 
             dbContextService.Update<WallPaperTopic>(topic);
+            WallPaperUIService.UpdateServerVersion<WallPaperTopic>();
+
             return RedirectToAction("TopicList");
         }
 
         public ActionResult TopicDelete(int topicId)
         {
             var ret = dbContextService.Delete<WallPaperTopic>(topicId);
+            WallPaperUIService.UpdateServerVersion<WallPaperTopic>();
+
             return RedirectToAction("TopicList");
         }
 
