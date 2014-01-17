@@ -97,11 +97,11 @@ namespace FrameMobile.Domain.Service
                                                  select new WallPaper
                                                  {
                                                      Id = p.Id,
-                                                     Titile = p.Titile,
+
+                                                     Title = p.Title,
                                                      ThumbnailName = p.ThumbnailName,
                                                      OriginalName = p.OriginalName,
                                                      DownloadNumber = p.DownloadNumber,
-                                                     Rating = p.Status,
                                                      PublishTime = p.PublishTime
                                                  };
                 totalCount = latestwallpaperlistbytopic.Count();
@@ -116,11 +116,10 @@ namespace FrameMobile.Domain.Service
                                                     select new WallPaper
                                                     {
                                                         Id = p.Id,
-                                                        Titile = p.Titile,
+                                                        Title = p.Title,
                                                         ThumbnailName = p.ThumbnailName,
                                                         OriginalName = p.OriginalName,
                                                         DownloadNumber = p.DownloadNumber,
-                                                        Rating = p.Status,
                                                         PublishTime = p.PublishTime
                                                     };
                 totalCount = latestwallpaperlistbycategory.Count();
@@ -141,11 +140,10 @@ namespace FrameMobile.Domain.Service
                                                  select new WallPaper
                                                  {
                                                      Id = p.Id,
-                                                     Titile = p.Titile,
+                                                     Title = p.Title,
                                                      ThumbnailName = p.ThumbnailName,
                                                      OriginalName = p.OriginalName,
                                                      DownloadNumber = p.DownloadNumber,
-                                                     Rating = p.Status,
                                                      PublishTime = p.PublishTime
                                                  };
                 totalCount = hottestwallpaperlistbytopic.Count();
@@ -160,11 +158,10 @@ namespace FrameMobile.Domain.Service
                                                     select new WallPaper
                                                     {
                                                         Id = p.Id,
-                                                        Titile = p.Titile,
+                                                        Title = p.Title,
                                                         ThumbnailName = p.ThumbnailName,
                                                         OriginalName = p.OriginalName,
                                                         DownloadNumber = p.DownloadNumber,
-                                                        Rating = p.Status,
                                                         PublishTime = p.PublishTime
                                                     };
                 totalCount = hottestwallpaperlistbycategory.Count();
@@ -219,7 +216,7 @@ namespace FrameMobile.Domain.Service
                             select new WallPaper
                             {
                                 Id = p.Id,
-                                Titile = p.Titile,
+                                Title = p.Title,
                                 ThumbnailName = p.ThumbnailName,
                                 OriginalName = p.OriginalName,
                                 DownloadNumber = p.DownloadNumber,

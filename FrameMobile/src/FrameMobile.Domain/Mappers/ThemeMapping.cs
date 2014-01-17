@@ -30,7 +30,7 @@ namespace FrameMobile.Domain
 
             Mapper.CreateMap<WallPaper, WallPaperView>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(ori => ori.Id))
-                .ForMember(dest => dest.Title, opt => opt.MapFrom(ori => ori.Titile))
+                .ForMember(dest => dest.Title, opt => opt.MapFrom(ori => ori.Title))
                 .ForMember(dest => dest.ThumbnailUrl, opt => opt.MapFrom(ori => ori.ThumbnailName))
                 .ForMember(dest => dest.OriginalUrl, opt => opt.MapFrom(ori => ori.OriginalName))
                 .ForMember(dest => dest.Rating, opt => opt.MapFrom(ori => ori.Rating))

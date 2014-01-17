@@ -206,7 +206,7 @@ namespace FrameMobile.Domain.Service
                                            select new WallPaper
                                            {
                                                Id = l.Id,
-                                               Titile = l.Titile,
+                                               Title = l.Title,
                                                ThumbnailName = l.ThumbnailName,
                                                OriginalName = l.OriginalName,
                                                DownloadNumber = l.DownloadNumber,
@@ -226,7 +226,7 @@ namespace FrameMobile.Domain.Service
                                            select new WallPaper
                                            {
                                                Id = l.Id,
-                                               Titile = l.Titile,
+                                               Title = l.Title,
                                                ThumbnailName = l.ThumbnailName,
                                                OriginalName = l.OriginalName,
                                                DownloadNumber = l.DownloadNumber,
@@ -252,7 +252,7 @@ namespace FrameMobile.Domain.Service
                                            select new WallPaper
                                            {
                                                Id = l.Id,
-                                               Titile = l.Titile,
+                                               Title = l.Title,
                                                ThumbnailName = l.ThumbnailName,
                                                OriginalName = l.OriginalName,
                                                DownloadNumber = l.DownloadNumber,
@@ -271,7 +271,7 @@ namespace FrameMobile.Domain.Service
                                               select new WallPaper
                                               {
                                                   Id = l.Id,
-                                                  Titile = l.Titile,
+                                                  Title = l.Title,
                                                   ThumbnailName = l.ThumbnailName,
                                                   OriginalName = l.OriginalName,
                                                   DownloadNumber = l.DownloadNumber,
@@ -303,7 +303,7 @@ namespace FrameMobile.Domain.Service
             var wall1 = new WallPaper()
             {
                 Id = 1,
-                Titile = "美女01",
+                Title = "美女01",
                 Rating = 1,
                 ThumbnailName = "http://theme.kk874.com/ThemeResources/Thumbnail/th04.jpg",
                 OriginalName = "http://theme.kk874.com/ThemeResources/Original/th04.jpg",
@@ -318,7 +318,7 @@ namespace FrameMobile.Domain.Service
             var wall01 = new WallPaper()
             {
                 Id = 2,
-                Titile = "美女01",
+                Title = "美女01",
                 Rating = 1,
                 ThumbnailName = "http://theme.kk874.com/ThemeResources/Thumbnail/th05.jpg",
                 OriginalName = "http://theme.kk874.com/ThemeResources/Original/th05.jpg",
@@ -333,7 +333,7 @@ namespace FrameMobile.Domain.Service
             var wall2 = new WallPaper()
             {
                 Id = 3,
-                Titile = "模特01",
+                Title = "模特01",
                 Rating = 1,
                 ThumbnailName = "http://theme.kk874.com/ThemeResources/Thumbnail/th06.jpg",
                 OriginalName = "http://theme.kk874.com/ThemeResources/Original/th06.jpg",
@@ -348,7 +348,7 @@ namespace FrameMobile.Domain.Service
             var wall02 = new WallPaper()
             {
                 Id = 4,
-                Titile = "模特02",
+                Title = "模特02",
                 Rating = 1,
                 ThumbnailName = "http://theme.kk874.com/ThemeResources/Thumbnail/th07.jpg",
                 OriginalName = "http://theme.kk874.com/ThemeResources/Original/th07.jpg",
@@ -363,7 +363,7 @@ namespace FrameMobile.Domain.Service
             var wall3 = new WallPaper()
             {
                 Id = 5,
-                Titile = "动漫01",
+                Title = "动漫01",
                 Rating = 3,
                 ThumbnailName = "http://theme.kk874.com/ThemeResources/Thumbnail/th01.jpg",
                 OriginalName = "http://theme.kk874.com/ThemeResources/Original/th01.jpg",
@@ -378,7 +378,7 @@ namespace FrameMobile.Domain.Service
             var wall4 = new WallPaper()
             {
                 Id = 6,
-                Titile = "哆啦A梦",
+                Title = "哆啦A梦",
                 Rating = 3,
                 ThumbnailName = "http://theme.kk874.com/ThemeResources/Thumbnail/th02.jpg",
                 OriginalName = "http://theme.kk874.com/ThemeResources/Original/th02.jpg",

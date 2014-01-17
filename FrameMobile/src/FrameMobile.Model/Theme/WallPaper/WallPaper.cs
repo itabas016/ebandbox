@@ -11,7 +11,7 @@ namespace FrameMobile.Model.Theme
     public class WallPaper : MySQLModelBase
     {
         [SubSonicStringLength(64)]
-        public string Titile { get; set; }
+        public string Title { get; set; }
 
         public DateTime PublishTime { get; set; }
 

@@ -261,7 +261,7 @@ namespace Frame.Mobile.WebSite.Controllers
         [HttpPost]
         public ActionResult WallPaperAdd(WallPaper model)
         {
-            var exist = dbContextService.Exists<WallPaper>(x => x.Titile == model.Titile);
+            var exist = dbContextService.Exists<WallPaper>(x => x.Title == model.Title);
             if (exist)
             {
                 TempData["errorMsg"] = "该分类已经存在！";
@@ -294,7 +294,7 @@ namespace Frame.Mobile.WebSite.Controllers
         {
             var wallpaper = dbContextService.Single<WallPaper>(model.Id);
 
-            wallpaper.Titile = model.Titile;
+            wallpaper.Title = model.Title;
             wallpaper.Status = model.Status;
             wallpaper.PublishTime = model.PublishTime;
             wallpaper.ModifiedTime = DateTime.Now;
