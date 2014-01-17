@@ -64,7 +64,7 @@ namespace FrameMobile.Domain
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(ori => ori.Name))
                 .ForMember(dest => dest.LogoUrl, opt => opt.MapFrom(ori => ori.TopicLogoUrl))
                 .ForMember(dest => dest.OrderNumber, opt => opt.MapFrom(ori => ori.OrderNumber))
-                .ForMember(dest => dest.Summary, opt => opt.MapFrom(ori => ori.Summary))
+                .ForMember(dest => dest.Summary, opt => opt.MapFrom(ori => ori.Summary.DefaultValue()))
                 .ForMember(dest => dest.Comment, opt => opt.MapFrom(ori => ori.Comment))
                 .ForMember(dest => dest.Status, opt => opt.MapFrom(ori => ori.Status));
 
