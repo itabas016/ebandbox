@@ -5,6 +5,7 @@ using System.Text;
 using FrameMobile.Model;
 using FrameMobile.Model.Theme;
 using FrameMobile.Model.Mobile;
+using FrameMobile.Common;
 
 namespace FrameMobile.Domain.Service
 {
@@ -74,10 +75,10 @@ namespace FrameMobile.Domain.Service
             switch (sort)
             {
                 case 1:
-                    result = GetLatestWallPaperViewList(property, categoryId, topicId, subcategoryId, out totalCount);
+                    result = GetLatestWallPaperViewList(mobileParams, property, categoryId, topicId, subcategoryId, out totalCount);
                     break;
                 default:
-                    result = GetHottestWallPaperViewList(property, categoryId, topicId, subcategoryId, out totalCount);
+                    result = GetHottestWallPaperViewList(mobileParams, property, categoryId, topicId, subcategoryId, out totalCount);
                     break;
             }
             return result;
@@ -85,7 +86,7 @@ namespace FrameMobile.Domain.Service
 
         #region Heleper
 
-        public List<WallPaperView> GetLatestWallPaperViewList(MobileProperty property, int categoryId, int topicId, int subcategoryId, out int totalCount)
+        public List<WallPaperView> GetLatestWallPaperViewList(MobileParam mobileParams, MobileProperty property, int categoryId, int topicId, int subcategoryId, out int totalCount)
         {
             totalCount = 0;
             if (categoryId == 0 && topicId != 0)
@@ -94,18 +95,17 @@ namespace FrameMobile.Domain.Service
                                                  join pt in GetWallPaperRelateTopicList(topicId) on p.Id equals pt.TopicId
                                                  join pm in GetWallPaperRelateMobilePropertyList(property.Id) on p.Id equals pm.WallPaperId
                                                  orderby p.PublishTime descending
-                                                 select new WallPaper
+                                                 select new WallPaperView
                                                  {
                                                      Id = p.Id,
-
                                                      Title = p.Title,
-                                                     ThumbnailName = p.ThumbnailName,
-                                                     OriginalName = p.OriginalName,
+                                                     ThumbnailUrl = p.ThumbnailName.GetCompleteThumbnailUrl(mobileParams),
+                                                     OriginalUrl = p.OriginalName.GetCompleteOriginalUrl(mobileParams),
                                                      DownloadNumber = p.DownloadNumber,
                                                      PublishTime = p.PublishTime
                                                  };
                 totalCount = latestwallpaperlistbytopic.Count();
-                return latestwallpaperlistbytopic.To<IList<WallPaperView>>().ToList();
+                return latestwallpaperlistbytopic.ToList();
             }
             if (categoryId == 0 && topicId == 0)
             {
@@ -113,59 +113,59 @@ namespace FrameMobile.Domain.Service
                                                     join pc in GetWallPaperRelateCategoryList(categoryId) on p.Id equals pc.WallPaperId
                                                     join pm in GetWallPaperRelateMobilePropertyList(property.Id) on p.Id equals pm.WallPaperId
                                                     orderby p.PublishTime descending
-                                                    select new WallPaper
+                                                    select new WallPaperView
                                                     {
                                                         Id = p.Id,
                                                         Title = p.Title,
-                                                        ThumbnailName = p.ThumbnailName,
-                                                        OriginalName = p.OriginalName,
+                                                        ThumbnailUrl = p.ThumbnailName.GetCompleteThumbnailUrl(mobileParams),
+                                                        OriginalUrl = p.OriginalName.GetCompleteOriginalUrl(mobileParams),
                                                         DownloadNumber = p.DownloadNumber,
                                                         PublishTime = p.PublishTime
                                                     };
                 totalCount = latestwallpaperlistbycategory.Count();
-                return latestwallpaperlistbycategory.To<IList<WallPaperView>>().ToList();
+                return latestwallpaperlistbycategory.ToList();
             }
             return new List<WallPaperView>();
         }
 
-        public List<WallPaperView> GetHottestWallPaperViewList(MobileProperty property, int categoryId, int topicId, int subcategoryId, out int totalCount)
+        public List<WallPaperView> GetHottestWallPaperViewList(MobileParam mobileParams, MobileProperty property, int categoryId, int topicId, int subcategoryId, out int totalCount)
         {
             totalCount = 0;
             if (categoryId == 0 && topicId != 0)
             {
                 var hottestwallpaperlistbytopic = from p in dbContextService.Find<WallPaper>(x => x.Status == 1)
-                                                 join pt in GetWallPaperRelateTopicList(topicId) on p.Id equals pt.TopicId
-                                                 join pm in GetWallPaperRelateMobilePropertyList(property.Id) on p.Id equals pm.WallPaperId
-                                                 orderby p.DownloadNumber descending
-                                                 select new WallPaper
-                                                 {
-                                                     Id = p.Id,
-                                                     Title = p.Title,
-                                                     ThumbnailName = p.ThumbnailName,
-                                                     OriginalName = p.OriginalName,
-                                                     DownloadNumber = p.DownloadNumber,
-                                                     PublishTime = p.PublishTime
-                                                 };
+                                                  join pt in GetWallPaperRelateTopicList(topicId) on p.Id equals pt.TopicId
+                                                  join pm in GetWallPaperRelateMobilePropertyList(property.Id) on p.Id equals pm.WallPaperId
+                                                  orderby p.DownloadNumber descending
+                                                  select new WallPaperView
+                                                  {
+                                                      Id = p.Id,
+                                                      Title = p.Title,
+                                                      ThumbnailUrl = p.ThumbnailName.GetCompleteThumbnailUrl(mobileParams),
+                                                      OriginalUrl = p.OriginalName.GetCompleteOriginalUrl(mobileParams),
+                                                      DownloadNumber = p.DownloadNumber,
+                                                      PublishTime = p.PublishTime
+                                                  };
                 totalCount = hottestwallpaperlistbytopic.Count();
-                return hottestwallpaperlistbytopic.To<IList<WallPaperView>>().ToList();
+                return hottestwallpaperlistbytopic.ToList();
             }
             if (categoryId == 0 && topicId == 0)
             {
                 var hottestwallpaperlistbycategory = from p in dbContextService.Find<WallPaper>(x => x.Status == 1)
-                                                    join pc in GetWallPaperRelateCategoryList(categoryId) on p.Id equals pc.WallPaperId
-                                                    join pm in GetWallPaperRelateMobilePropertyList(property.Id) on p.Id equals pm.WallPaperId
-                                                    orderby p.DownloadNumber descending
-                                                    select new WallPaper
-                                                    {
-                                                        Id = p.Id,
-                                                        Title = p.Title,
-                                                        ThumbnailName = p.ThumbnailName,
-                                                        OriginalName = p.OriginalName,
-                                                        DownloadNumber = p.DownloadNumber,
-                                                        PublishTime = p.PublishTime
-                                                    };
+                                                     join pc in GetWallPaperRelateCategoryList(categoryId) on p.Id equals pc.WallPaperId
+                                                     join pm in GetWallPaperRelateMobilePropertyList(property.Id) on p.Id equals pm.WallPaperId
+                                                     orderby p.DownloadNumber descending
+                                                     select new WallPaperView
+                                                     {
+                                                         Id = p.Id,
+                                                         Title = p.Title,
+                                                         ThumbnailUrl = p.ThumbnailName.GetCompleteThumbnailUrl(mobileParams),
+                                                         OriginalUrl = p.OriginalName.GetCompleteOriginalUrl(mobileParams),
+                                                         DownloadNumber = p.DownloadNumber,
+                                                         PublishTime = p.PublishTime
+                                                     };
                 totalCount = hottestwallpaperlistbycategory.Count();
-                return hottestwallpaperlistbycategory.To<IList<WallPaperView>>().ToList();
+                return hottestwallpaperlistbycategory.ToList();
             }
             return new List<WallPaperView>();
         }
