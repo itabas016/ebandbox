@@ -28,6 +28,7 @@ namespace FrameMobile.Model
         public DateTime PublishTime { get; set; }
 
         [JsonProperty("rating")]
+        [JsonIgnore]
         public int Rating { get; set; }
 
         [JsonProperty("thumbnailurl")]
