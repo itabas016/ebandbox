@@ -197,7 +197,7 @@ namespace FrameMobile.Domain.Service
                 {
                     result = FakeWallPaperList().To<IList<WallPaperView>>().OrderByDescending(x => x.DownloadNumber).ToList();
                 }
-                else if (categoryId == 0 && topicId > 0)
+                if (categoryId == 0 && topicId != 0)
                 {
                     var hotwallpaperlist = from l in FakeWallPaperList()
                                            join r in FakeWallPaperRelateTopicList() on l.Id equals r.WallPaperId
@@ -216,7 +216,8 @@ namespace FrameMobile.Domain.Service
 
                     result = hotwallpaperlist.To<IList<WallPaperView>>().ToList();
                 }
-                else
+                    
+                if (categoryId != 0)
                 {
                     var hotwallpaperlist = from l in FakeWallPaperList()
                                            join r in FakeWallPaperRelateCategoryList() on l.Id equals r.WallPaperId
@@ -242,7 +243,7 @@ namespace FrameMobile.Domain.Service
                 {
                     result = FakeWallPaperList().To<IList<WallPaperView>>().OrderByDescending(x => x.PublishTime).ToList();
                 }
-                else if (categoryId == 0 && topicId > 0)
+                if (categoryId == 0 && topicId != 0)
                 {
                     var hotwallpaperlist = from l in FakeWallPaperList()
                                            join r in FakeWallPaperRelateTopicList() on l.Id equals r.WallPaperId
@@ -261,7 +262,7 @@ namespace FrameMobile.Domain.Service
 
                     result = hotwallpaperlist.To<IList<WallPaperView>>().ToList();
                 }
-                else
+                if (categoryId != 0)
                 {
                     var latestwallpaperlist = from l in FakeWallPaperList()
                                               join r in FakeWallPaperRelateCategoryList() on l.Id equals r.WallPaperId
