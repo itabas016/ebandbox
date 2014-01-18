@@ -47,6 +47,7 @@ namespace FrameMobile.Domain
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(ori => ori.Id))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(ori => ori.Name))
                 .ForMember(dest => dest.LogoUrl, opt => opt.MapFrom(ori => ori.CategoryLogoUrl))
+                .ForMember(dest => dest.Summary, opt => opt.MapFrom(ori => ori.Summary.DefaultValue()))
                 .ForMember(dest => dest.OrderNumber, opt => opt.MapFrom(ori => ori.OrderNumber))
                 .ForMember(dest => dest.Comment, opt => opt.MapFrom(ori => ori.Comment))
                 .ForMember(dest => dest.Status, opt => opt.MapFrom(ori => ori.Status));
@@ -56,6 +57,7 @@ namespace FrameMobile.Domain
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(ori => ori.Name))
                 .ForMember(dest => dest.CategoryId, opt => opt.MapFrom(ori => ori.CategoryId))
                 .ForMember(dest => dest.LogoUrl, opt => opt.MapFrom(ori => ori.SubCategoryLogoUrl))
+                .ForMember(dest => dest.Summary, opt => opt.MapFrom(ori => ori.Summary.DefaultValue()))
                 .ForMember(dest => dest.OrderNumber, opt => opt.MapFrom(ori => ori.OrderNumber))
                 .ForMember(dest => dest.Comment, opt => opt.MapFrom(ori => ori.Comment))
                 .ForMember(dest => dest.Status, opt => opt.MapFrom(ori => ori.Status));
