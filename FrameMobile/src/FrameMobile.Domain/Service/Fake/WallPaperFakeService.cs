@@ -68,7 +68,7 @@ namespace FrameMobile.Domain.Service
                 Id = 0,
                 Name = "全部",
                 CategoryLogoUrl = "",
-                Summary=string.Empty,
+                Summary = string.Empty,
                 OrderNumber = 0,
                 CreateDateTime = DateTime.Now,
                 Comment = "",
@@ -168,7 +168,7 @@ namespace FrameMobile.Domain.Service
                 Name = "新年快乐",
                 TopicLogoUrl = "http://theme.kk874.com/ThemeResources/Logo/p1.jpg",
                 OrderNumber = 1,
-                Summary="这一季，有我最深的思念。就让风捎去满心的祝福，缀满你甜蜜的梦境，祝你拥有一个更加灿烂更加辉煌的来年。把美好的祝福，输在这条短信里，信不长情意重，我的好友愿你新年快乐！",
+                Summary = "这一季，有我最深的思念。就让风捎去满心的祝福，缀满你甜蜜的梦境，祝你拥有一个更加灿烂更加辉煌的来年。把美好的祝福，输在这条短信里，信不长情意重，我的好友愿你新年快乐！",
                 CreateDateTime = DateTime.Now,
                 Comment = "",
                 Status = 1
@@ -186,10 +186,28 @@ namespace FrameMobile.Domain.Service
                 Status = 1
             };
 
-            var topic3 = topic2;
-            var topic4 = topic1;
-            topic3.Id = 3;
-            topic4.Id = 4;
+            var topic3 = new WallPaperTopic()
+            {
+                Id = 3,
+                Name = "元旦快乐",
+                TopicLogoUrl = "http://theme.kk874.com/ThemeResources/Logo/p2.jpg",
+                OrderNumber = 2,
+                Summary = "这一季，有我最深的思念。就让风捎去满心的祝福，缀满你甜蜜的梦境，祝你拥有一个更加灿烂更加辉煌的来年。把美好的祝福，输在这条短信里，信不长情意重，我的好友愿你新年快乐！",
+                CreateDateTime = DateTime.Now,
+                Comment = "",
+                Status = 1
+            };
+            var topic4 = new WallPaperTopic()
+            {
+                Id = 4,
+                Name = "元旦快乐",
+                TopicLogoUrl = "http://theme.kk874.com/ThemeResources/Logo/p2.jpg",
+                OrderNumber = 2,
+                Summary = "这一季，有我最深的思念。就让风捎去满心的祝福，缀满你甜蜜的梦境，祝你拥有一个更加灿烂更加辉煌的来年。把美好的祝福，输在这条短信里，信不长情意重，我的好友愿你新年快乐！",
+                CreateDateTime = DateTime.Now,
+                Comment = "",
+                Status = 1
+            };
             #endregion
 
             var topiclist = new List<WallPaperTopic>() { topic1, topic2, topic3, topic4 };
@@ -229,7 +247,7 @@ namespace FrameMobile.Domain.Service
 
                     result = hotwallpaperlist.To<IList<WallPaperView>>().ToList();
                 }
-                    
+
                 if (categoryId != 0)
                 {
                     var hotwallpaperlist = from l in FakeWallPaperList()
@@ -513,9 +531,33 @@ namespace FrameMobile.Domain.Service
                 Status = 1
             };
 
+            var r6 = new WallPaperRelateTopic()
+            {
+                Id = 6,
+                TopicId = 3,
+                WallPaperId = 5,
+                Status = 1
+            };
+
+            var r7 = new WallPaperRelateTopic()
+            {
+                Id = 7,
+                TopicId = 4,
+                WallPaperId = 6,
+                Status = 1
+            };
+
+            var r8 = new WallPaperRelateTopic()
+            {
+                Id = 8,
+                TopicId = 4,
+                WallPaperId = 3,
+                Status = 1
+            };
+
             #endregion
 
-            var list = new List<WallPaperRelateTopic>() { r1, r2, r3, r4, r5 };
+            var list = new List<WallPaperRelateTopic>() { r1, r2, r3, r4, r5, r6, r7, r8 };
             return list;
         }
     }
