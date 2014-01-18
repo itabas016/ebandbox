@@ -179,9 +179,14 @@ namespace FrameMobile.Domain.Service
                 Comment = "",
                 Status = 1
             };
+
+            var topic3 = topic2;
+            var topic4 = topic1;
+            topic3.Id = 3;
+            topic4.Id = 4;
             #endregion
 
-            var topiclist = new List<WallPaperTopic>() { topic1, topic2, topic2, topic1 };
+            var topiclist = new List<WallPaperTopic>() { topic1, topic2, topic3, topic4 };
 
             var result = topiclist.To<IList<WallPaperTopicView>>();
 
