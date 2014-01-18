@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using FrameMobile.Common;
 using FrameMobile.Model;
 using FrameMobile.Model.Mobile;
 using FrameMobile.Model.Theme;
@@ -55,6 +56,20 @@ namespace FrameMobile.Domain.Service
         public MobileProperty GetMobileProperty(MobileParam mobileParams)
         {
             throw new NotImplementedException();
+        }
+
+        public IList<MobileResolution> GetMobileResolutionList(List<int> mobilePropertyIds)
+        {
+            var lcds = from r in dbContextService.Find<MobileResolution>(x => x.Status == 1)
+                       join p in dbContextService.Find<MobileProperty>(x => x.Status == 1) on r.Id equals p.ResoulutionId
+                       where mobilePropertyIds.Contains(p.Id)
+                       select new MobileResolution
+                       {
+                           Id = r.Id,
+                           Name = r.Name,
+                           Value = r.Value
+                       };
+            return lcds.ToList();
         }
 
         public IList<WallPaperRelateCategory> GetWallRelateCategoryList(int wallpaperId)
@@ -135,6 +150,36 @@ namespace FrameMobile.Domain.Service
                 }
             }
             return propertyIds;
+        }
+
+        public IList<string> GetImageNameListByMobileProperty(string type, WallPaper wallpaper, List<int> mobilepropertyIds)
+        {
+            var thumbnailName = wallpaper.ThumbnailName;
+            var originalName = wallpaper.OriginalName;
+            var thumbnailNameList = new List<string>();
+
+            var resolutionlist = GetMobileResolutionList(mobilepropertyIds);
+            if (resolutionlist != null && resolutionlist.Count > 0)
+            {
+                switch (type)
+                {
+                    case Const.WALLPAPER_THUMBNAIL:
+                        foreach (var item in resolutionlist)
+                        {
+                            thumbnailNameList.Add(string.Format("{0}_{1}", item.Value, thumbnailName));
+                        }
+                        break;
+                    case Const.WALLPAPER_ORIGINAL:
+                        foreach (var item in resolutionlist)
+                        {
+                            thumbnailNameList.Add(string.Format("{0}_{1}", item.Value, originalName));
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+            return thumbnailNameList.ToList();
         }
     }
 }
