@@ -48,6 +48,7 @@
                     <tr>
                         @Html.ValidationSummary(true)
                         @Html.HiddenFor(m => m.Id)
+                        <td><strong>编号: </strong></td>
                         <td>
                             @if (isUpdateMode)
                             {
