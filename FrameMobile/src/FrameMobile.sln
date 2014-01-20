@@ -11,6 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{261EAFE7-C
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Script", "Script", "{B7575015-CFCC-47EF-8B38-DE4D61557466}"
 	ProjectSection(SolutionItems) = preProject
+		InitilizeThemeTable.sql = InitilizeThemeTable.sql
 		InitilizeTouTiaoTable.sql = InitilizeTouTiaoTable.sql
 		InsertConfigData.sql = InsertConfigData.sql
 	EndProjectSection
