@@ -14,7 +14,7 @@ namespace FrameMobile.Model.Mobile
 
         public int HardwareId { get; set; }
 
-        public int ResoulutionId { get; set; }
+        public int ResolutionId { get; set; }
 
         [SubSonicStringLength(512)]
         [SubSonicNullString]

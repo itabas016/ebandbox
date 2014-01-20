@@ -19,14 +19,14 @@ namespace FrameMobile.Domain.Service
 
             var mobileproperty = from p in dbContextService.All<MobileProperty>()
                                  join b in dbContextService.All<MobileBrand>() on p.BrandId equals b.Id
-                                 join r in dbContextService.All<MobileResolution>() on p.ResoulutionId equals r.Id
+                                 join r in dbContextService.All<MobileResolution>() on p.ResolutionId equals r.Id
                                  where b.Value == brand && r.Value == resolution
                                  select new MobileProperty
                                  {
                                      Id = p.Id,
                                      Name = p.Name,
                                      BrandId = p.BrandId,
-                                     ResoulutionId = p.ResoulutionId,
+                                     ResolutionId = p.ResolutionId,
                                      HardwareId = p.HardwareId,
                                      Status = p.Status
                                  };

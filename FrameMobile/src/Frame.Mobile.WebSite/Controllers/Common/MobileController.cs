@@ -75,7 +75,7 @@ namespace Frame.Mobile.WebSite.Controllers
             config.Name = model.Name;
             config.BrandId = model.BrandId;
             config.HardwareId = model.HardwareId;
-            config.ResoulutionId = model.ResoulutionId;
+            config.ResolutionId = model.ResolutionId;
             config.Status = model.Status;
             config.Comment = model.Comment;
             config.CreateDateTime = DateTime.Now;
