@@ -60,6 +60,7 @@ namespace Frame.Mobile.WebSite.Controllers
 
             var actionResult = BuildResult(this.CheckRequiredParams(imsi), getwallpaperlist);
 
+            actionResult.Total = totalCount;
             return Content(actionResult.ToString());
         }
 
