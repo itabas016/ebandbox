@@ -398,6 +398,38 @@ namespace Frame.Mobile.WebSite.Controllers
             return RedirectToAction("WallPaperList");
         }
 
+        [HttpPost]
+        public ActionResult Preview(WallPaperConfigView model, string type)
+        {
+            var imageViewlist = new List<ImageView>();
+            var thumbnailImagePrefix = ConfigKeys.TYD_WALLPAPER_THUMBNAIL_IMAGE_PREFIX.ConfigValue();
+            var originalImagePrefix = ConfigKeys.TYD_WALLPAPER_ORIGINAL_IMAGE_PREFIX.ConfigValue();
+
+            switch (type)
+            {
+                case Const.WALLPAPER_THUMBNAIL:
+                    foreach (var item in model.ThumbnailNames)
+                    {
+                        var imageView = new ImageView();
+                        imageView.ImagePath = string.Format("{0}{1}", thumbnailImagePrefix, item);
+                        imageViewlist.Add(imageView);
+                    }
+                    break;
+                case Const.WALLPAPER_ORIGINAL:
+                    foreach (var item in model.OriginalNames)
+                    {
+                        var urlView = new ImageView();
+                        urlView.ImagePath = string.Format("{0}{1}", originalImagePrefix, item);
+                        imageViewlist.Add(urlView);
+                    }
+                    break;
+                default:
+                    break;
+            }
+            ViewData["Imagelist"] = imageViewlist;
+            return View();
+        }
+
         #endregion
 
         #region Helper

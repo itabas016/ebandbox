@@ -1,0 +1,27 @@
+﻿@using FrameMobile.Model;
+@model List<ImageView>
+@{
+    ViewBag.Title = "图片预览";
+    Layout = "~/Views/Shared/_WallPaperLayout.cshtml";
+
+    List<ImageView> imagelist = ViewData["Imagelist"] as List<ImageView>;
+}
+
+<div class="contentHeader">
+    <div class="contentHeaderInfo">
+        <button class="btn btn-quaternary btn-large addapp" onclick="history.back();">
+            返 回</button>
+    </div>
+    <div class="apphead">
+        <div class="title">
+            <b>@ViewBag.Title </b>
+        </div>
+    </div>
+</div>
+
+<div class="content">
+    @foreach (var item in imagelist)
+    {
+        <img src= "@item" alt="Image" />
+    }
+</div>

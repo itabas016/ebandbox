@@ -29,6 +29,8 @@
     int j = 0;
     int k = 0;
     int l = 0;
+    int p = 0;
+    int q = 0;
 }
 
 <div class="contentHeader">
@@ -121,24 +123,43 @@
                 @foreach (var s in Model.ThumbnailNames)
                 {
                     <div>
-                        <label class="filename" style="padding-left: 20px">@s</label>
+                        <a href="@string.Format("{0}{1}", thumbnailImagePrefix, s)" target="_blank" style="padding-left: 20px" >@s</a>
                         <br />
                     </div>
                 }
-                <div class="ssPreviewAction">预览缩略图</div>
                 <strong>适配的原图文件: </strong>
                 <input type="file" name="originalfile" id="originalfile" multiple="multiple" class="multi" accept="bmp|gif|jpg|jpeg|png|tiff|abm" />
                 <br />
                 @foreach (var s in Model.OriginalNames)
                 {
                     <div>
-                        <label class="filename" style="padding-left: 20px">@s</label>
+                        <a href="@string.Format("{0}{1}", originalImagePrefix, s)" target="_blank" style="padding-left: 20px" >@s</a>
                         <br />
                     </div>
                 }
-                 <div class="ssPreviewAction">预览原图</div>
+                <div hidden="hidden">
+                    @using (Html.BeginForm("Preview", "WallPaperUI", FormMethod.Post))
+                    {
+                        <div hidden="hidden">
+                            @foreach (var c in Model.ThumbnailNames)
+                            {
+                                @Html.HiddenFor(m => m.ThumbnailNames[p])
+                                ++p;
+                            }
+                            @foreach (var c in Model.OriginalNames)
+                            {
+                                @Html.HiddenFor(m => m.OriginalNames[q])
+                                ++q;
+                            }
+                        </div>
+                        @*<input type="submit" name="Preview" value="Preview" />*@
+                        @*<button type="button" name="thumbnail" onclick="window.open('Preview','_blank');">预览</button>*@
+                        <br />
+                    }
+                </div>
                 <button class="btn btn-large btn-blue addapp" style="margin-left: 50px">@ViewBag.Title</button>
             </div>
         }
     </div>
+
 </div>

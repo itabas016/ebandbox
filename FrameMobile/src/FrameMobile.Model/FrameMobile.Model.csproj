@@ -115,6 +115,7 @@
     <Compile Include="ViewModels\Theme\WallPaper\WallPaperConfigView.cs" />
     <Compile Include="ViewModels\Theme\WallPaper\WallPaperSubCategoryView.cs" />
     <Compile Include="ViewModels\Theme\WallPaper\WallPaperTopicView.cs" />
+    <Compile Include="ViewModels\Theme\WallPaper\ImageView.cs" />
     <Compile Include="ViewModels\Theme\WallPaper\WallPaperView.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Theme\WallPaper\WallPaper.cs" />

@@ -396,6 +396,7 @@
     <Content Include="Views\ThemeUI\ConfigList.cshtml" />
     <Content Include="Views\Shared\_ThemeLayout.cshtml" />
     <Content Include="Views\WallPaperUI\WallPaperConfig.cshtml" />
+    <Content Include="Views\WallPaperUI\Preview.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
