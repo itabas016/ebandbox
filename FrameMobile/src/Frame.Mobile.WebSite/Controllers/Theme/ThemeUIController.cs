@@ -14,6 +14,11 @@ namespace Frame.Mobile.WebSite.Controllers.Theme
 
         #region Config
 
+        public ActionResult ConfigManage()
+        {
+            return RedirectToAction("ConfigList");
+        }
+
         public ActionResult ConfigList()
         {
             var configlist = dbContextService.All<ThemeConfig>().ToList();

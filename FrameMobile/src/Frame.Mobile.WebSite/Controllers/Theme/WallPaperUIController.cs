@@ -18,6 +18,11 @@ namespace Frame.Mobile.WebSite.Controllers
     {
         protected override bool IsMobileInterface { get { return false; } }
 
+        public ActionResult WallPaperManage()
+        {
+            return RedirectToAction("WallPaperList");
+        }
+
         #region Category
 
         public ActionResult CategoryList()

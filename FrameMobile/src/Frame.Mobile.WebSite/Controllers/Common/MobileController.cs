@@ -15,6 +15,11 @@ namespace Frame.Mobile.WebSite.Controllers
     {
         protected override bool IsMobileInterface { get { return false; } }
 
+        public ActionResult MobileManage()
+        {
+            return RedirectToAction("PropertyList");
+        }
+
         #region Property
 
         public ActionResult PropertyList()
