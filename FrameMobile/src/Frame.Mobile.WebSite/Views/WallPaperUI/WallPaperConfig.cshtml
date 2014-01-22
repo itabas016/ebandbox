@@ -84,7 +84,7 @@
                 </div>
                 @if (wallpaper.ThumbnailName != string.Empty)
                 {
-                    <img src="@thumbnailImagePrefix + @wallpaper.ThumbnailName" />
+                    <img src="@string.Format("{0}{1}", thumbnailImagePrefix, wallpaper.ThumbnailName)" />
                 }
                 <br />
                 <strong>所属类别: </strong>
