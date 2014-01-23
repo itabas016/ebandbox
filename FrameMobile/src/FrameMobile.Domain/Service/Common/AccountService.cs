@@ -69,7 +69,6 @@ namespace FrameMobile.Domain.Service
             var user = dbContextService.Single<User>(x => x.Name == model.Name);
             if (model != null && user != null && user.Password == model.Password.GetMD5Hash())
             {
-                user.UserGroupId = model.UserGroupId;
                 user.Email = model.Email;
                 user.PostCode = model.PostCode;
                 user.QQ = model.QQ;

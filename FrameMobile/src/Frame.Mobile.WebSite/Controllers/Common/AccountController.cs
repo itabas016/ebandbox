@@ -255,21 +255,7 @@ namespace Frame.Mobile.WebSite.Controllers
         [HttpGet]
         public ActionResult ChangeInfo(int? userId)
         {
-            var userGrouplist = AccountService.GetUserGroupList();
-            ViewData["UserGrouplist"] = userGrouplist.GetSelectList();
-            var userGroupName = string.Empty;
             var currentuser = userId.HasValue ? AccountService.GetUser(userId.Value) : AccountService.GetUser(UserName);
-            var userGroup = AccountService.GetUserGroup(currentuser.UserGroupId);
-            if (userGroup != null)
-            {
-                userGroupName = userGroup.Name;
-
-                if (userGroup.Type == 1 || userGroup.Type == 2)
-                {
-                    ViewData["IsAdmin"] = true;
-                }
-            }
-            ViewData["UserGroupName"] = userGroupName;
             return View(currentuser);
         }
 

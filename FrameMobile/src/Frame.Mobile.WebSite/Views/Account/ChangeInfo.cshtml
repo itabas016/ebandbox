@@ -4,10 +4,6 @@
 @{
     ViewBag.Title = "修改资料";
     Layout = "~/Views/Shared/_AccountLayout.cshtml";
-    bool isAdmin = ViewData["IsAdmin"] != null;
-
-    var userGroupName = ViewData["UserGroupName"] == string.Empty ? "普通用户" : ViewData["UserGroupName"];
-    var userGrouplist = ViewData["UserGrouplist"] as SelectList;
 }
 
 <div class="content">
@@ -37,22 +33,6 @@
                                 @Html.Password("Password")
                                 @Html.ValidationMessageFor(model => model.Password)
                                 输入正确的密码才能修改资料。
-                            </div>
-                        </li>
-                        <li>
-                            <div class="editor-label">
-                                @Html.LabelFor(model => model.UserGroupId)
-                            </div>
-                            <div class="editor-field">
-                                @if (isAdmin)
-                                {
-                                    @Html.DropDownListFor(model => model.UserGroupId, (SelectList)userGrouplist, "请选择")
-                                }
-                                else
-                                {
-                                    @userGroupName
-                                }
-
                             </div>
                         </li>
                         <li>
