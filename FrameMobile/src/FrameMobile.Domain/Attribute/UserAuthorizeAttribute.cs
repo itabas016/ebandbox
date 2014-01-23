@@ -9,20 +9,13 @@ using StructureMap;
 
 namespace FrameMobile.Domain
 {
-    public class UserAuthorizeAttribute : AuthorizeAttribute
+    public class UserAuthorizeAttribute : AuthorizeAttributeBase
     {
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
-            IAccountService accountService = ObjectFactory.GetInstance<IAccountService>();
+            if (UserName == "" || Password == "") return false;
 
-            ICookieService cookieService = ObjectFactory.GetInstance<ICookieService>();
-
-            var userName = cookieService.TryGet("NewsUserName");
-            var password = cookieService.TryGet("NewsPassword");
-
-            if (userName == "" || password == "") return false;
-
-            if (accountService.Authentication(userName, password) == 0) return true;
+            if (accountService.Authentication(UserName, Password) == 0) return true;
 
             else return false;
         }

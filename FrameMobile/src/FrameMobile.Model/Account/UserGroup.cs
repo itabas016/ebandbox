@@ -20,6 +20,15 @@ namespace FrameMobile.Model.Account
         public override string Name { get; set; }
 
         /// <summary>
+        /// 用户组类型
+        /// 1 超级管理员 2 各组管理员（新闻管理员，壁纸管理员）
+        /// 3 普通用户 0 游客
+        /// </summary>
+        [Display(Name = "类型", Description = "数字。")]
+        [Required(ErrorMessage = "×")]
+        public int Type { get; set; }
+
+        /// <summary>
         /// 说明
         /// </summary>
         [Display(Name = "说明", Description = "最多100个字符。")]

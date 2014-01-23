@@ -12,58 +12,14 @@ using StructureMap;
 namespace FrameMobile.Domain
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = true)]
-    public class AdminAuthorizeAttribute : AuthorizeAttribute
+    public class AdminAuthorizeAttribute : AuthorizeAttributeBase
     {
-        #region Prop
-
-        private IAccountService _accountService;
-        public IAccountService accountService
-        {
-            get
-            {
-                if (_accountService == null)
-                {
-                    _accountService = ObjectFactory.GetInstance<IAccountService>();
-                }
-                return _accountService;
-            }
-            set
-            {
-                _accountService = value;
-            }
-        }
-
-        private ICookieService _cookieService;
-        public ICookieService cookieService
-        {
-            get
-            {
-                if (_cookieService == null)
-                {
-                    _cookieService = ObjectFactory.GetInstance<ICookieService>();
-                }
-                return _cookieService;
-            }
-            set
-            {
-                _cookieService = value;
-            }
-        }
-
-        public string UserName { get { return cookieService.TryGet("NewsUserName"); } }
-
-        public string Password { get { return cookieService.TryGet("NewsPassword"); } }
-
-        public User CurrentUser { get { return accountService.GetUser(UserName); } }
-
-        #endregion
-
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
             if (CurrentUser != null)
             {
                 var usergroup = accountService.GetUserGroup(CurrentUser.UserGroupId);
-                if (usergroup != null && usergroup.Name.ToLower() == "administrator")
+                if (usergroup != null && (usergroup.Type == 1 || usergroup.Type == 2))
                 {
                     return true;
                 }

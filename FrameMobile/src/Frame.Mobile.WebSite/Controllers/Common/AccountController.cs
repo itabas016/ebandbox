@@ -67,7 +67,7 @@ namespace Frame.Mobile.WebSite.Controllers
         {
             get
             {
-                return CookieService.TryGet("NewsUserName");
+                return CookieService.TryGet("UserName");
             }
         }
 
@@ -94,12 +94,12 @@ namespace Frame.Mobile.WebSite.Controllers
         [HttpPost]
         public ActionResult Login(LoginView model, string returnUrl)
         {
-            if (returnUrl.IsNullOrEmpty()) returnUrl = "/NewsUI/NewsManage";
+            if (returnUrl.IsNullOrEmpty()) returnUrl = string.Format("/Account/Manage?userName={0}", model.UserName.MakeSureNotNull());
 
             if (ModelState.IsValid && AccountService.Login(model.UserName, model.Password) && Session["VerificationCode"].ToString() == model.VerificationCode.ToUpper())
             {
-                CookieService.Set("NewsUserName", model.UserName, CookieTimeoutSeconds);
-                CookieService.Set("NewsPassword", model.Password.GetMD5Hash(), CookieTimeoutSeconds);
+                CookieService.Set("UserName", model.UserName, CookieTimeoutSeconds);
+                CookieService.Set("Password", model.Password.GetMD5Hash(), CookieTimeoutSeconds);
                 return RedirectToLocal(returnUrl);
             }
 
@@ -161,6 +161,11 @@ namespace Frame.Mobile.WebSite.Controllers
 
         public ActionResult Manage(string userName)
         {
+            if (string.IsNullOrEmpty(userName))
+            {
+                userName = UserName;
+            }
+
             var user = AccountService.GetUser(userName);
 
             return View(user);
@@ -259,7 +264,7 @@ namespace Frame.Mobile.WebSite.Controllers
             {
                 userGroupName = userGroup.Name;
 
-                if (userGroup.Name.ToLower() == "administrator")
+                if (userGroup.Type == 1 || userGroup.Type == 2)
                 {
                     ViewData["IsAdmin"] = true;
                 }
@@ -303,7 +308,7 @@ namespace Frame.Mobile.WebSite.Controllers
                 try
                 {
                     AccountService.ChangePassword(model, UserName);
-                    CookieService.Remove("NewsPassword");
+                    CookieService.Remove("Password");
                     return RedirectToAction("Manage", "Account", new { userName = UserName });
                 }
                 catch (MembershipCreateUserException e)
