@@ -16,7 +16,29 @@ namespace FrameMobile.Domain
         {
             if (UserName == "" || Password == "") return false;
 
-            if (accountService.Authentication(UserName, Password) == 0) return true;
+            if (accountService.Authentication(UserName, Password) == 0)
+            {
+                if (CurrentUser != null)
+                {
+                    var userGroupIds = CurrentUser.UserGroupIds.GetIds();
+                    foreach (var userGroupId in userGroupIds)
+                    {
+                        if (userGroupId == 1)//super admin
+                        {
+                            return true;
+                        }
+                        if (userGroupId != 0 && userGroupId != 1 && !string.IsNullOrEmpty(UserGroups))
+                        {
+                            var usergroup = accountService.GetUserGroup(userGroupId);
+                            if (usergroup != null && UserGroups.Contains(usergroup.Name))
+                            {
+                                return true;
+                            }
+                        }
+                    }
+                }
+                return false;
+            }
 
             else return false;
         }
