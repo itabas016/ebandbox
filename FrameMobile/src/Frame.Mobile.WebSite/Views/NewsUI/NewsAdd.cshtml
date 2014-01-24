@@ -12,10 +12,14 @@
     var extraapplist = ViewData["ExtraApplist"] as SelectList;
 
     var displayURL = string.Empty;
+    var publishTime = DateTime.Now;
+    var modifiedTime = DateTime.Now;
     if (isUpdateMode)
     {
         var t = string.IsNullOrEmpty(@Model.NormalURL) ? null : @Model.NormalURL.Split('/').ToList();
         displayURL = string.IsNullOrEmpty(@Model.NormalURL) ? string.Empty : t[t.Count - 1];
+        publishTime = @Model.PublishTime;
+        modifiedTime = @Model.ModifiedTime;
     }
 }
 
@@ -73,7 +77,7 @@
                         <td>@Html.TextBoxFor(m => m.Rating, new { type="number", min="0", max="99999999"})</td>
                         <td><strong>发布时间: </strong></td>
                         <td>
-                            @Html.TextBoxFor(m => m.PublishTime, new { @class = "Wdate", Value = Model.PublishTime.ToString("yyyy-MM-dd HH:mm:ss"), onclick = "WdatePicker({ dateFmt: 'yyyy-MM-dd HH:mm:ss' })" })
+                            @Html.TextBoxFor(m => m.PublishTime, new { @class = "Wdate", Value = @publishTime.ToString("yyyy-MM-dd HH:mm:ss"), onclick = "WdatePicker({ dateFmt: 'yyyy-MM-dd HH:mm:ss' })" })
                         </td>
                     </tr>
                     <tr>
