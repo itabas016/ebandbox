@@ -18,10 +18,17 @@ namespace FrameMobile.Domain
         {
             if (CurrentUser != null)
             {
-                var usergroup = accountService.GetUserGroup(CurrentUser.UserGroupId);
-                if (usergroup != null && (usergroup.Type == 1 || usergroup.Type == 2))
+                var userGroupIds = CurrentUser.UserGroupIds.GetIds();
+                foreach (var userGroupId in userGroupIds)
                 {
-                    return true;
+                    if (userGroupId != 0)
+                    {
+                        var usergroup = accountService.GetUserGroup(userGroupId);
+                        if (usergroup != null && UserGroups.Contains(usergroup.Name))
+                        {
+                            return true;
+                        }
+                    }
                 }
             }
             return false;

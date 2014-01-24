@@ -9,6 +9,7 @@ using StructureMap;
 
 namespace FrameMobile.Domain
 {
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = true)]
     public class UserAuthorizeAttribute : AuthorizeAttributeBase
     {
         protected override bool AuthorizeCore(HttpContextBase httpContext)

@@ -53,6 +53,8 @@ namespace FrameMobile.Domain
 
         public User CurrentUser { get { return accountService.GetUser(UserName); } }
 
+        public string UserGroups { get; set; }
+
         #endregion
     }
 }
