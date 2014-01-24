@@ -21,7 +21,11 @@ namespace FrameMobile.Domain
                 var userGroupIds = CurrentUser.UserGroupIds.GetIds();
                 foreach (var userGroupId in userGroupIds)
                 {
-                    if (userGroupId != 0)
+                    if (userGroupId == 1)//super admin
+                    {
+                        return true;
+                    }
+                    if (userGroupId != 0 && userGroupId != 1 && !string.IsNullOrEmpty(UserGroups))
                     {
                         var usergroup = accountService.GetUserGroup(userGroupId);
                         if (usergroup != null && UserGroups.Contains(usergroup.Name))
