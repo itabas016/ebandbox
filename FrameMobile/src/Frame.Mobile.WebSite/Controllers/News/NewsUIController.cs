@@ -173,9 +173,17 @@ namespace Frame.Mobile.WebSite.Controllers
             int pageNum = page.HasValue ? page.Value : 1;
             var searchKey = Request.QueryString["textfield"];
 
-            var newsResult = dbContextService.Find<NewsContent>(x => x.Title.Contains(searchKey)) as IQueryable<NewsContent>;
-
-            PagedList<NewsContent> newslist = new PagedList<NewsContent>(newsResult, pageNum, pageSize);
+            var newsResult = from p in dbContextService.All<NewsContent>()
+                             where p.Title.Contains(searchKey)
+                             select new NewsContent
+                             {
+                                 Id = p.Id,
+                                 Title = p.Title,
+                                 Site = p.Site,
+                                 PublishTime = p.PublishTime,
+                                 Status = p.Status
+                             };
+            var newslist = newsResult.ToPagedList<NewsContent>(pageNum, pageSize);
 
             ViewData["newslist"] = newslist;
             ViewData["pageNum"] = pageNum;
