@@ -30,7 +30,7 @@ namespace FrameMobile.Domain
                         if (userGroupId != 0 && userGroupId != 1 && !string.IsNullOrEmpty(UserGroups))
                         {
                             var usergroup = accountService.GetUserGroup(userGroupId);
-                            if (usergroup != null && UserGroups.Contains(usergroup.Name))
+                            if (usergroup != null && UserGroupTypes.Contains(usergroup.Type))
                             {
                                 return true;
                             }

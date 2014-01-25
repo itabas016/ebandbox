@@ -18,7 +18,7 @@ using FrameMobile.Model.Common;
 
 namespace Frame.Mobile.WebSite.Controllers
 {
-    [UserAuthorize(UserGroups="NewsViewer")]
+    [UserAuthorize(UserGroupTypes = "News")]
     public class NewsUIController : MvcControllerBase
     {
         #region Prop

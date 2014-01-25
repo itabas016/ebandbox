@@ -55,6 +55,8 @@ namespace FrameMobile.Domain
 
         public string UserGroups { get; set; }
 
+        public string UserGroupTypes { get; set; }
+
         #endregion
     }
 }

@@ -14,6 +14,7 @@ using FrameMobile.Model.Mobile;
 
 namespace Frame.Mobile.WebSite.Controllers
 {
+    [UserAuthorize(UserGroupTypes = "WallPaper")]
     public class WallPaperUIController : ThemeBaseController
     {
         protected override bool IsMobileInterface { get { return false; } }
@@ -40,6 +41,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return View();
         }
 
+        [AdminAuthorize(UserGroups = "WallPaperAdministrator,WallPaperOperator")]
         [HttpPost]
         public ActionResult CategoryAdd(WallPaperCategory model)
         {
@@ -69,6 +71,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return View("CategoryAdd", category);
         }
 
+        [AdminAuthorize(UserGroups = "WallPaperAdministrator,WallPaperOperator")]
         [HttpPost]
         public ActionResult CategoryEdit(WallPaperCategory model, HttpPostedFileBase logoFile)
         {
@@ -90,6 +93,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return RedirectToAction("CategoryList");
         }
 
+        [AdminAuthorize(UserGroups = "WallPaperAdministrator,WallPaperOperator")]
         public ActionResult CategoryDelete(int categoryId)
         {
             var ret = dbContextService.Delete<WallPaperCategory>(categoryId);
@@ -120,6 +124,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return View();
         }
 
+        [AdminAuthorize(UserGroups = "WallPaperAdministrator,WallPaperOperator")]
         [HttpPost]
         public ActionResult SubCategoryAdd(WallPaperSubCategory model)
         {
@@ -152,6 +157,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return View("SubCategoryAdd", subcategory);
         }
 
+        [AdminAuthorize(UserGroups = "WallPaperAdministrator,WallPaperOperator")]
         [HttpPost]
         public ActionResult SubCategoryEdit(WallPaperSubCategory model, HttpPostedFileBase logoFile)
         {
@@ -173,6 +179,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return RedirectToAction("SubCategoryList");
         }
 
+        [AdminAuthorize(UserGroups = "WallPaperAdministrator,WallPaperOperator")]
         public ActionResult SubCategoryDelete(int subcategoryId)
         {
             var ret = dbContextService.Delete<WallPaperSubCategory>(subcategoryId);
@@ -200,6 +207,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return View();
         }
 
+        [AdminAuthorize(UserGroups = "WallPaperAdministrator,WallPaperOperator")]
         [HttpPost]
         public ActionResult TopicAdd(WallPaperTopic model)
         {
@@ -229,6 +237,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return View("TopicAdd", Topic);
         }
 
+        [AdminAuthorize(UserGroups = "WallPaperAdministrator,WallPaperOperator")]
         [HttpPost]
         public ActionResult TopicEdit(WallPaperTopic model, HttpPostedFileBase logoFile)
         {
@@ -251,6 +260,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return RedirectToAction("TopicList");
         }
 
+        [AdminAuthorize(UserGroups = "WallPaperAdministrator,WallPaperOperator")]
         public ActionResult TopicDelete(int topicId)
         {
             var ret = dbContextService.Delete<WallPaperTopic>(topicId);
@@ -278,6 +288,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return View();
         }
 
+        [AdminAuthorize(UserGroups = "WallPaperAdministrator,WallPaperOperator")]
         [HttpPost]
         public ActionResult WallPaperAdd(WallPaper model)
         {
@@ -309,6 +320,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return View("WallPaperAdd", wallpaper);
         }
 
+        [AdminAuthorize(UserGroups = "WallPaperAdministrator,WallPaperOperator")]
         [HttpPost]
         public ActionResult WallPaperEdit(WallPaper model, HttpPostedFileBase thumbnailFile, HttpPostedFileBase originalFile)
         {
@@ -335,6 +347,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return RedirectToAction("WallPaperList");
         }
 
+        [AdminAuthorize(UserGroups = "WallPaperAdministrator,WallPaperOperator")]
         public ActionResult WallPaperDelete(int wallpaperId)
         {
             var ret = dbContextService.Delete<WallPaper>(wallpaperId);
@@ -390,6 +403,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return View(config);
         }
 
+        [AdminAuthorize(UserGroups = "WallPaperAdministrator,WallPaperOperator")]
         [HttpPost]
         public ActionResult WallPaperConfig(WallPaperConfigView model, FormCollection parameters)
         {

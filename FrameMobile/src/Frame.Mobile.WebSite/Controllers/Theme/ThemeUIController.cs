@@ -8,6 +8,7 @@ using FrameMobile.Domain;
 
 namespace Frame.Mobile.WebSite.Controllers.Theme
 {
+    [UserAuthorize(UserGroupTypes = "WallPaper")]
     public class ThemeUIController : ThemeBaseController
     {
         protected override bool IsMobileInterface { get { return false; } }
@@ -34,6 +35,7 @@ namespace Frame.Mobile.WebSite.Controllers.Theme
             return View();
         }
 
+        [AdminAuthorize(UserGroups = "WallPaperAdministrator")]
         [HttpPost]
         public ActionResult ConfigAdd(ThemeConfig model)
         {
@@ -56,6 +58,7 @@ namespace Frame.Mobile.WebSite.Controllers.Theme
             return View("ConfigAdd", config);
         }
 
+        [AdminAuthorize(UserGroups = "WallPaperAdministrator")]
         [HttpPost]
         public ActionResult ConfigEdit(ThemeConfig model)
         {
@@ -72,6 +75,7 @@ namespace Frame.Mobile.WebSite.Controllers.Theme
             return RedirectToAction("ConfigList");
         }
 
+        [AdminAuthorize(UserGroups = "WallPaperAdministrator")]
         public ActionResult ConfigDelete(int configId)
         {
             var ret = dbContextService.Delete<ThemeConfig>(configId);

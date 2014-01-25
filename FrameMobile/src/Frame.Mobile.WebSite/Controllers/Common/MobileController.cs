@@ -11,6 +11,7 @@ using FrameMobile.Domain.Service;
 
 namespace Frame.Mobile.WebSite.Controllers
 {
+    [UserAuthorize(UserGroupTypes = "WallPaper")]
     public class MobileController : ThemeBaseController
     {
         protected override bool IsMobileInterface { get { return false; } }
@@ -44,6 +45,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return View();
         }
 
+        [AdminAuthorize(UserGroups = "WallPaperAdministrator,WallPaperOperator")]
         [HttpPost]
         public ActionResult PropertyAdd(MobileProperty model)
         {
@@ -72,6 +74,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return View("PropertyAdd", property);
         }
 
+        [AdminAuthorize(UserGroups = "WallPaperAdministrator,WallPaperOperator")]
         [HttpPost]
         public ActionResult PropertyEdit(MobileProperty model)
         {
@@ -89,6 +92,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return RedirectToAction("PropertyList");
         }
 
+        [AdminAuthorize(UserGroups = "WallPaperAdministrator,WallPaperOperator")]
         public ActionResult PropertyDelete(int propertyId)
         {
             var ret = dbContextService.Delete<MobileProperty>(propertyId);
@@ -114,6 +118,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return View();
         }
 
+        [AdminAuthorize(UserGroups = "WallPaperAdministrator,WallPaperOperator")]
         [HttpPost]
         public ActionResult BrandAdd(MobileBrand model)
         {
@@ -136,6 +141,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return View("BrandAdd", Brand);
         }
 
+        [AdminAuthorize(UserGroups = "WallPaperAdministrator,WallPaperOperator")]
         [HttpPost]
         public ActionResult BrandEdit(MobileBrand model)
         {
@@ -151,6 +157,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return RedirectToAction("BrandList");
         }
 
+        [AdminAuthorize(UserGroups = "WallPaperAdministrator,WallPaperOperator")]
         public ActionResult BrandDelete(int brandId)
         {
             var ret = dbContextService.Delete<MobileBrand>(brandId);
@@ -176,6 +183,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return View();
         }
 
+        [AdminAuthorize(UserGroups = "WallPaperAdministrator,WallPaperOperator")]
         [HttpPost]
         public ActionResult HardwareAdd(MobileHardware model)
         {
@@ -198,6 +206,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return View("HardwareAdd", Hardware);
         }
 
+        [AdminAuthorize(UserGroups = "WallPaperAdministrator,WallPaperOperator")]
         [HttpPost]
         public ActionResult HardwareEdit(MobileHardware model)
         {
@@ -213,6 +222,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return RedirectToAction("HardwareList");
         }
 
+        [AdminAuthorize(UserGroups = "WallPaperAdministrator,WallPaperOperator")]
         public ActionResult HardwareDelete(int hardwareId)
         {
             var ret = dbContextService.Delete<MobileHardware>(hardwareId);
@@ -238,6 +248,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return View();
         }
 
+        [AdminAuthorize(UserGroups = "WallPaperAdministrator,WallPaperOperator")]
         [HttpPost]
         public ActionResult ResolutionAdd(MobileResolution model)
         {
@@ -259,6 +270,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return View("ResolutionAdd", Resolution);
         }
 
+        [AdminAuthorize(UserGroups = "WallPaperAdministrator,WallPaperOperator")]
         [HttpPost]
         public ActionResult ResolutionEdit(MobileResolution model)
         {
@@ -274,6 +286,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return RedirectToAction("ResolutionList");
         }
 
+        [AdminAuthorize(UserGroups = "WallPaperAdministrator,WallPaperOperator")]
         public ActionResult ResolutionDelete(int resolutionId)
         {
             var ret = dbContextService.Delete<MobileResolution>(resolutionId);
