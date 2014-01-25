@@ -361,17 +361,17 @@ namespace Frame.Mobile.WebSite.Controllers
             int pageNum = page.HasValue ? page.Value : 1;
             var searchKey = Request.QueryString["textfield"];
 
-            var wallpaperResult = from p in dbContextService.All<WallPaper>()
-                                  where (p.WallPaperNo == searchKey || p.Title == searchKey)
+            var wallpaperResult = (from p in dbContextService.All<WallPaper>()
+                                  where (p.WallPaperNo == searchKey || p.Title.Contains(searchKey))
                                   select new WallPaper
                                   {
                                       Id = p.Id,
-                                      WallPaperNo=p.WallPaperNo,
+                                      WallPaperNo = p.WallPaperNo,
                                       Title = p.Title,
                                       DownloadNumber = p.DownloadNumber,
                                       PublishTime = p.PublishTime,
                                       Status = p.Status
-                                  };
+                                  }).AsQueryable();
             var wallpaperlist = wallpaperResult.ToPagedList<WallPaper>(pageNum, pageSize);
 
             ViewData["WallPaperlist"] = wallpaperlist;
