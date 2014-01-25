@@ -39,6 +39,14 @@ namespace FrameMobile.Common
 
         #endregion
 
+        #region Sort Field
+
+        public const string SORT_PUBLISHTIME = "PublishTime";
+
+        public const string SORT_DOWNLOADNUMBER = "DownloadNumber";
+
+        #endregion
+
         #region System
 
         public const string FRAME_MODEL_MASTER = "FrameMobile.Model";
