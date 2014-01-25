@@ -81,6 +81,8 @@ namespace Frame.Mobile.WebSite.Controllers
             }
         }
 
+        public const int pageSize = 20;
+
         protected string GetThemeLogoFilePath<T>(T model, HttpPostedFileBase logoFile) where T : MySQLModel
         {
             if (logoFile != null && !string.IsNullOrWhiteSpace(logoFile.FileName))

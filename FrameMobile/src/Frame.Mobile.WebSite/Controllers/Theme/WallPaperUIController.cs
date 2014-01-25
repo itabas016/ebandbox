@@ -11,6 +11,7 @@ using FrameMobile.Common;
 using NCore;
 using FrameMobile.Model;
 using FrameMobile.Model.Mobile;
+using SubSonic.Schema;
 
 namespace Frame.Mobile.WebSite.Controllers
 {
@@ -273,13 +274,14 @@ namespace Frame.Mobile.WebSite.Controllers
 
         #region WallPaper
 
-        public ActionResult WallPaperList()
+        public ActionResult WallPaperList(int? page)
         {
-            var wallpaperlist = dbContextService.All<WallPaper>().ToList();
+            int pageNum = page.HasValue ? page.Value : 0;
+            PagedList<WallPaper> wallpaperlist = dbContextService.GetPaged<WallPaper>("PublishTime desc", pageNum, pageSize);
             ViewData["WallPaperlist"] = wallpaperlist;
+            ViewData["pageNum"] = pageNum;
             ViewData["TotalCount"] = wallpaperlist.Count;
-
-            return View();
+            return View(wallpaperlist);
         }
 
         [HttpGet]
@@ -352,6 +354,30 @@ namespace Frame.Mobile.WebSite.Controllers
         {
             var ret = dbContextService.Delete<WallPaper>(wallpaperId);
             return RedirectToAction("WallPaperList");
+        }
+
+        public ActionResult WallPaperSearchResult(int? page)
+        {
+            int pageNum = page.HasValue ? page.Value : 1;
+            var searchKey = Request.QueryString["textfield"];
+
+            var wallpaperResult = from p in dbContextService.All<WallPaper>()
+                                  where (p.WallPaperNo == searchKey || p.Title == searchKey)
+                                  select new WallPaper
+                                  {
+                                      Id = p.Id,
+                                      WallPaperNo=p.WallPaperNo,
+                                      Title = p.Title,
+                                      DownloadNumber = p.DownloadNumber,
+                                      PublishTime = p.PublishTime,
+                                      Status = p.Status
+                                  };
+            var wallpaperlist = wallpaperResult.ToPagedList<WallPaper>(pageNum, pageSize);
+
+            ViewData["WallPaperlist"] = wallpaperlist;
+            ViewData["pageNum"] = pageNum;
+            ViewData["TotalCount"] = wallpaperlist.Count;
+            return View("WallPaperList", wallpaperlist);
         }
 
         #endregion

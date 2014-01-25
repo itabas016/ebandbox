@@ -1,11 +1,15 @@
 ﻿@using FrameMobile.Model.Theme;
-@model List<WallPaper>
+@using SubSonic.Schema;
+@using FrameMobile.Web;
+@model PagedList<WallPaper>
 @{
     ViewBag.Title = "壁纸列表管理";
     Layout = "~/Views/Shared/_WallPaperLayout.cshtml";
 
-    List<WallPaper> wallpaperlist = ViewData["WallPaperlist"] as List<WallPaper>;
-    wallpaperlist = wallpaperlist != null ? wallpaperlist : new List<WallPaper>();
+    int? pageNum = ViewData["pageNum"] as int?;
+    PagedList<WallPaper> wallpaperlist = ViewData["WallPaperlist"] as PagedList<WallPaper>;
+    wallpaperlist = wallpaperlist != null ? wallpaperlist : new List<WallPaper>() as PagedList<WallPaper>;
+
     var totalCount = ViewData["TotalCount"] as int?;
     totalCount = totalCount != null ? totalCount : 0;
 }
@@ -14,6 +18,10 @@
     <div class="contentHeaderInfo">
         <button class="btn btn-large btn-blue addapp" onclick="window.open('WallPaperAdd','_self');">
             壁纸添加</button>
+        <label>
+            <input name="textfield" type="text" class="textbox_style" id="textfield" placeholder="请输入壁纸No或壁纸标题...""  value="@Request.QueryString["textfield"]" size="30"/>
+            <button class="btn btn-large btn-quaternary" onclick="var formPara = encodeURIComponent( $('#textfield').val().trim()) ;window.open('WallPaperSearchResult?textfield='+formPara ,'_self');">搜索壁纸</button>
+        </label>
     </div>
     <div class="apphead">
         <div class="title">
@@ -60,6 +68,11 @@
                     </td>
                 </tr>
             }
+            <tr>
+                <td colspan="8">
+                    @Html.Pager(Model, new PagerOptions() { PageIndexParameterName = "page" })
+                </td>
+            </tr>
         </tbody>
     </table>
 </div>
