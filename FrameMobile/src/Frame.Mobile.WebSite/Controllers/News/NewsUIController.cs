@@ -173,7 +173,7 @@ namespace Frame.Mobile.WebSite.Controllers
             int pageNum = page.HasValue ? page.Value : 1;
             var searchKey = Request.QueryString["textfield"];
 
-            var newsResult = from p in dbContextService.All<NewsContent>()
+            var newsResult = (from p in dbContextService.All<NewsContent>()
                              where p.Title.Contains(searchKey)
                              select new NewsContent
                              {
@@ -182,7 +182,7 @@ namespace Frame.Mobile.WebSite.Controllers
                                  Site = p.Site,
                                  PublishTime = p.PublishTime,
                                  Status = p.Status
-                             };
+                             }).AsQueryable();
             var newslist = newsResult.ToPagedList<NewsContent>(pageNum, pageSize);
 
             ViewData["newslist"] = newslist;
