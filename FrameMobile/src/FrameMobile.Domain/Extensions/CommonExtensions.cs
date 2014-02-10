@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Web;
+using FrameMobile.Model;
 
 namespace FrameMobile.Domain
 {
@@ -50,6 +51,15 @@ namespace FrameMobile.Domain
                 return fileNamePrefix;
             }
             return string.Empty;
+        }
+
+        public static IQueryable<T> ConvertIQueryable<T>(this IEnumerable<T> source) where T : MySQLModelBase
+        {
+            if (source is IQueryable<T>)
+            {
+                return (IQueryable<T>)source;
+            }
+            return new EnumerableQuery<T>(source);
         }
     }
 }

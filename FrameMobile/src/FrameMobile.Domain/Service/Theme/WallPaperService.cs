@@ -81,7 +81,7 @@ namespace FrameMobile.Domain.Service
                     result = GetHottestWallPaperViewList(mobileParams, property, categoryId, topicId, subcategoryId, out totalCount);
                     break;
             }
-            return result;
+            return result.Skip(startnum - 1).Take(num).ToList();
         }
 
         #region Heleper
