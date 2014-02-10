@@ -65,6 +65,9 @@ namespace FrameMobile.Domain
                 case Const.NEWS_METHOD_NAME_GETNEWSCONTENTVIEWLIST:
                     paramSb = NewsContentCacheKey(paramSb, args, parameters);
                     break;
+                case Const.NEWS_METHOD_NAME_GETIMAGETYPEBYRESOLUTION:
+                    paramSb = NewsImageTypeCacheKey(paramSb, args, parameters);
+                    break;
                 case Const.WALLPAPER_METHOD_NAME_GETMOBILEPROPERTY:
                 case Const.WALLPAPER_METHOD_NAME_GETWALLPAPERVIEWLIST:
                 case Const.WALLPAPER_METHOD_NAME_GETWALLPAPERVIEWDETAIL:
@@ -111,6 +114,24 @@ namespace FrameMobile.Domain
                     continue;
                 }
 
+                paramSb.AppendFormat("{0}[{1}]", parameters[i].Name, args[i] == null ? string.Empty : args[i].ToString());
+            }
+            return paramSb;
+        }
+
+        private StringBuilder NewsImageTypeCacheKey(StringBuilder paramSb, object[] args, ParameterInfo[] parameters)
+        {
+            for (int i = 0; i < parameters.Length; i++)
+            {
+                if (parameters[i].ParameterType.Equals(typeof(MobileParam)))
+                {
+                    var mobileParam = args[i] as MobileParam;
+                    if (mobileParam != null)
+                    {
+                        var width = mobileParam.Resolution.GetResolutionWidth();
+                        paramSb.AppendFormat("{0}[{1}]", MobileParam.Key_Resolution, width);
+                    }
+                }
                 paramSb.AppendFormat("{0}[{1}]", parameters[i].Name, args[i] == null ? string.Empty : args[i].ToString());
             }
             return paramSb;

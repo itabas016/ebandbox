@@ -72,7 +72,32 @@ namespace FrameMobile.Domain.Service
 
         #region Helper
 
-        //1 为Normal 2为HD
+        private List<NewsContentView> GetContentViewList(MobileParam mobileParams, List<int> categoryIds, long stamp, bool action)
+        {
+            var contentViewList = new List<NewsContentView>();
+
+            var extraAppList = GetNewsExtraAppList();
+            var imageType = GetImageURLTypeByResolution(mobileParams);
+
+            var stampTime = stamp.UTCStamp();
+            var endDateTime = stampTime.AddDays(-5);
+
+            switch (action)
+            {
+                case false:
+                    contentViewList = GetOldestNewsContentView(categoryIds, extraAppList, imageType, endDateTime, stampTime).ToList();
+                    break;
+                default:
+                    contentViewList = GetLatestNewsContentView(categoryIds, extraAppList, imageType, stampTime).ToList();
+                    break;
+            }
+
+            var localContentList = GetLocalContentViewList(extraAppList, imageType);
+
+            contentViewList = InsertRange(contentViewList, localContentList);
+
+            return contentViewList;
+        }
 
         [ServiceCache]
         private List<NewsExtraApp> GetNewsExtraAppList()
@@ -80,6 +105,22 @@ namespace FrameMobile.Domain.Service
             var extraAppList = dbContextService.Find<NewsExtraApp>(x => x.Status == 1);
 
             return extraAppList.ToList();
+        }
+
+        [ServiceCache]
+        private int GetImageURLTypeByResolution(MobileParam mobileParams)
+        {
+            var resolution = mobileParams.Resolution;
+
+            if (string.IsNullOrEmpty(resolution))
+            {
+                return 0;
+            }
+            var width = resolution.GetResolutionWidth();
+
+            if (width > Const.NEWS_HD_RESOLUTION_WIDTH)
+                return 2;
+            return 1;
         }
 
         [ServiceCache]
@@ -106,65 +147,6 @@ namespace FrameMobile.Domain.Service
                                    ImageURL = l.NormalURL == null ? string.Empty : GetImageURLByType(l, imageType)
                                });
             return contentlist;
-        }
-
-        private List<NewsContentView> GetContentViewList(MobileParam mobileParams, List<int> categoryIds, long stamp, bool action)
-        {
-            var contentViewList = new List<NewsContentView>();
-
-            var extraAppList = GetNewsExtraAppList();
-            var imageType = GetImageURLTypeByResolution(mobileParams);
-
-            var stampTime = stamp.UTCStamp();
-            var endDateTime = stampTime.AddDays(-5);
-
-            var categorycontentlist = action ? GetLatestNewsContentView(categoryIds, extraAppList, imageType, stampTime) :
-                GetOldestNewsContentView(categoryIds, extraAppList, imageType, endDateTime, stampTime);
-
-            var localContentList = GetLocalContentViewList(extraAppList, imageType);
-
-            contentViewList = categorycontentlist.ToList();
-
-            contentViewList = InsertRange(contentViewList, localContentList);
-
-            return contentViewList;
-        }
-
-        private List<NewsContentView> InsertRange(List<NewsContentView> contentViewList, IEnumerable<NewsContentView> localContentList)
-        {
-            var count_total = contentViewList.Count;
-            var count_local = localContentList.ToList().Count;
-
-            if (count_total == 0 || localContentList == null || count_local == 0)
-            {
-                return contentViewList;
-            }
-
-            var random = new Random(Guid.NewGuid().GetHashCode());
-            var sum_range = count_total / 10 >= 4 ? 4 : count_total / 10 + 1;
-
-            var sum = random.Next(1, sum_range);
-
-            var i = 0;
-            foreach (var item in localContentList)
-            {
-                if (i > (count_local / sum + 1) * 10) break;
-
-                for (int j = 0; j < sum; j++)
-                {
-                    var index = random.Next(1, 10);
-                    index = 10 * i + index;
-
-                    if (index > count_total)
-                    {
-                        index = count_total;
-                    }
-                    contentViewList.Insert(index, item);
-                }
-
-                i++;
-            }
-            return contentViewList;
         }
 
         private IEnumerable<NewsContentView> GetOldestNewsContentView(List<int> categoryIds, List<NewsExtraApp> extraAppList, int imageType, DateTime endDateTime, DateTime stampTime)
@@ -219,37 +201,41 @@ namespace FrameMobile.Domain.Service
             return categorycontentlist;
         }
 
-        private string GetImageURLByResolution(MobileParam mobileParams, long newsId)
+        private List<NewsContentView> InsertRange(List<NewsContentView> contentViewList, IEnumerable<NewsContentView> localContentList)
         {
-            if (string.IsNullOrEmpty(mobileParams.Resolution))
-            {
-                return string.Empty;
-            }
-            var lcdArray = mobileParams.Resolution.ToLower().Split('x');
-            var width = lcdArray[0].ToInt32();
-            var height = lcdArray[1].ToInt32();
+            var count_total = contentViewList.Count;
+            var count_local = localContentList.ToList().Count;
 
-            var newsImageInfo = dbContextService.Single<NewsImageInfo>(x => x.NewsId == newsId);
-            if (newsImageInfo != null)
+            if (count_total == 0 || localContentList == null || count_local == 0)
             {
-                if (width > Const.NEWS_HD_RESOLUTION_WIDTH)
-                    return newsImageInfo.HDURL;
-                return newsImageInfo.NormalURL;
+                return contentViewList;
             }
-            return string.Empty;
-        }
 
-        private int GetImageURLTypeByResolution(MobileParam mobileParams)
-        {
-            if (string.IsNullOrEmpty(mobileParams.Resolution))
+            var random = new Random(Guid.NewGuid().GetHashCode());
+            var sum_range = count_total / 10 >= 4 ? 4 : count_total / 10 + 1;
+
+            var sum = random.Next(1, sum_range);
+
+            var i = 0;
+            foreach (var item in localContentList)
             {
-                return 0;
-            }
-            var width = mobileParams.Resolution.GetResolutionWidth();
+                if (i > (count_local / sum + 1) * 10) break;
 
-            if (width > Const.NEWS_HD_RESOLUTION_WIDTH)
-                return 2;
-            return 1;
+                for (int j = 0; j < sum; j++)
+                {
+                    var index = random.Next(1, 10);
+                    index = 10 * i + index;
+
+                    if (index > count_total)
+                    {
+                        index = count_total;
+                    }
+                    contentViewList.Insert(index, item);
+                }
+
+                i++;
+            }
+            return contentViewList;
         }
 
         private string GetImageURLByType(NewsContent content, int imageType)
