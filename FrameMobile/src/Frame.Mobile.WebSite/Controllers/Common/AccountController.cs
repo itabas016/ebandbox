@@ -256,10 +256,11 @@ namespace Frame.Mobile.WebSite.Controllers
         [HttpGet]
         public ActionResult ChangeInfo(int? userId)
         {
-            var currentuser = userId.HasValue ? AccountService.GetUser(userId.Value) : AccountService.GetUser(UserName);
-            var isAdmin = currentuser.UserGroupIds.Contains(Const.SUPER_ADMIN_GROUPID);
+            var currentUser = AccountService.GetUser(UserName);
+            var user = userId.HasValue ? AccountService.GetUser(userId.Value) : AccountService.GetUser(UserName);
+            var isAdmin = currentUser.UserGroupIds.Contains(Const.SUPER_ADMIN_GROUPID);
             ViewData["IsAdministrator"] = isAdmin;
-            return View(currentuser);
+            return View(user);
         }
 
         [HttpPost]
