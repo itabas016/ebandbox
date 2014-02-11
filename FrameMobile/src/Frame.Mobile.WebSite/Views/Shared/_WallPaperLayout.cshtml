@@ -7,6 +7,7 @@
 }
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
+
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>@ViewBag.title</title>
@@ -17,11 +18,14 @@
     <script src="@Url.Content("~/Scripts/jquery-ui-1.8.11.min.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Scripts/Calendar/WdatePicker.js")" type="text/javascript"></script>
 </head>
+
 <body>
     <div class="top">
         <div style="float: right; line-height: 25px;">
-            <span style="float: left; display: block; padding: 15px 15px 0 0"><u>@userName</u>
-            </span><a href="/Account/LogOff" class="logout" title="退出登录"></a>
+            <span style="float: left; display: block; padding: 15px 15px 0 0">
+                <a href="/Account/Manage?userName=@userName" style="color:white"><u>@userName</u></a>
+            </span>
+            <a href="/Account/LogOff" class="logout" title="退出登录"></a>
         </div>
     </div>
     <div class="main">
@@ -33,7 +37,7 @@
                 <li><span class="ico icon-compass"></span>@Html.ActionLink("专题列表", "TopicList", "WallPaperUI", null, new { highlight = "true", style = "color:white" })</li>
                 <li><span class="ico icon-compass"></span>@Html.ActionLink("配置表管理", "ConfigManage", "ThemeUI", null, new { highlight = "true", style = "color:white" })</li>
                 <li><span class="ico icon-compass"></span>@Html.ActionLink("属性配置", "MobileManage", "Mobile", null, new { highlight = "true", style = "color:white" })</li>
-                </ul>
+            </ul>
         </div>
         <div class="right">
             <div id="errorInfo" class="error">

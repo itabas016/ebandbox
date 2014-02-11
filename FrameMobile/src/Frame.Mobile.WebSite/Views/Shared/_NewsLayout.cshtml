@@ -20,8 +20,10 @@
 <body>
     <div class="top">
         <div style="float: right; line-height: 25px;">
-            <span style="float: left; display: block; padding: 15px 15px 0 0"><u>@userName</u>
-            </span><a href="/Account/LogOff" class="logout" title="退出登录"></a>
+            <span style="float: left; display: block; padding: 15px 15px 0 0">
+                <a href="/Account/Manage?userName=@userName" style="color:white"><u>@userName</u></a>
+            </span>
+            <a href="/Account/LogOff" class="logout" title="退出登录"></a>
         </div>
     </div>
     <div class="main">
@@ -34,7 +36,6 @@
                 <li><span class="ico icon-compass"></span>@Html.ActionLink("分类管理", "CategoryList", "NewsUI", null, new { highlight = "true", style = "color:white" })</li>
                 <li><span class="ico icon-compass"></span>@Html.ActionLink("子分类管理", "SubCategoryList", "NewsUI", null, new { highlight = "true", style = "color:white" })</li>
                 <li><span class="ico icon-compass"></span>@Html.ActionLink("接口地址管理", "InfAddressList", "NewsUI", null, new { highlight = "true", style = "color:white" })</li>
-                <li><span class="ico icon-list"></span>@Html.ActionLink("用户中心", "Manage", "Account", new { userName = @userName }, new { highlight = "true" })</li>
             </ul>
         </div>
         <div class="right">
