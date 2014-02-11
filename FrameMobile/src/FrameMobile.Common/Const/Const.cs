@@ -62,5 +62,11 @@ namespace FrameMobile.Common
         public const string WALLPAPER_METHOD_NAME_GETWALLPAPERVIEWDETAIL = "getwallpaperviewdetail";
 
         #endregion
+
+        #region Account
+
+        public const string SUPER_ADMIN_GROUPID = "1";
+
+        #endregion
     }
 }

@@ -69,6 +69,10 @@ namespace FrameMobile.Domain.Service
             var user = dbContextService.Single<User>(x => x.Name == model.Name);
             if (model != null && user != null && user.Password == model.Password.GetMD5Hash())
             {
+                if (user.UserGroupIds.Contains(Const.SUPER_ADMIN_GROUPID))
+                {
+                    user.UserGroupIds = UpdateUserGroupIds(model.UserGroupIds);
+                }
                 user.Email = model.Email;
                 user.PostCode = model.PostCode;
                 user.QQ = model.QQ;
@@ -253,6 +257,15 @@ namespace FrameMobile.Domain.Service
             if (_user == null) return 1;
             else if (_user.Password != password) return 2;
             else return 0;
+        }
+
+        public string UpdateUserGroupIds(string userGroupIds)
+        {
+            if (!string.IsNullOrEmpty(userGroupIds))
+            {
+                return userGroupIds;
+            }
+            return string.Empty;
         }
 
         #endregion

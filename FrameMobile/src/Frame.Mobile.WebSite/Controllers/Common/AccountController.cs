@@ -18,6 +18,7 @@ using FrameMobile.Core;
 using System.IO;
 using FrameMobile.Domain;
 using NCore;
+using FrameMobile.Common;
 
 namespace Frame.Mobile.WebSite.Controllers
 {
@@ -256,6 +257,8 @@ namespace Frame.Mobile.WebSite.Controllers
         public ActionResult ChangeInfo(int? userId)
         {
             var currentuser = userId.HasValue ? AccountService.GetUser(userId.Value) : AccountService.GetUser(UserName);
+            var isAdmin = currentuser.UserGroupIds.Contains(Const.SUPER_ADMIN_GROUPID);
+            ViewData["IsAdministrator"] = isAdmin;
             return View(currentuser);
         }
 

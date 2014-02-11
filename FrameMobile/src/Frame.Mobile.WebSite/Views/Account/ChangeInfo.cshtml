@@ -4,6 +4,7 @@
 @{
     ViewBag.Title = "修改资料";
     Layout = "~/Views/Shared/_AccountLayout.cshtml";
+    bool isAdmin = (bool)ViewData["IsAdministrator"];
 }
 
 <div class="content">
@@ -35,6 +36,19 @@
                                 输入正确的密码才能修改资料。
                             </div>
                         </li>
+                        @if (isAdmin)
+                        {
+                            <li>
+                                <div class="editor-label">
+                                    @Html.LabelFor(model => model.UserGroupIds)
+                                </div>
+                                <div class="editor-field">
+                                    @Html.EditorFor(model => model.UserGroupIds, new { @readonly = true, Class = "txt-readonly" })
+                                    @Html.ValidationMessageFor(model => model.UserGroupIds)
+                                    数字用逗号隔开
+                                </div>
+                            </li>
+                        }
                         <li>
                             <div class="editor-label">
                                 @Html.LabelFor(model => model.Email)
