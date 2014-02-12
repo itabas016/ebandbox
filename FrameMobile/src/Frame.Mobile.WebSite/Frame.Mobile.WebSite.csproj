@@ -187,6 +187,7 @@
     <Compile Include="Controllers\Common\AccountController.cs" />
     <Compile Include="Controllers\Common\CacheController.cs" />
     <Compile Include="Controllers\Common\MobileController.cs" />
+    <Compile Include="Controllers\Common\RadarController.cs" />
     <Compile Include="Controllers\News\NewsController.cs" />
     <Compile Include="Controllers\News\NewsUIController.cs" />
     <Compile Include="Controllers\Theme\ThemeBaseController.cs" />
@@ -400,6 +401,10 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
+    <Content Include="Views\Radar\RadarAdd.cshtml" />
+    <Content Include="Views\Radar\RadarList.cshtml" />
+    <Content Include="Views\Radar\SubRadarAdd.cshtml" />
+    <Content Include="Views\Radar\SubRadarList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

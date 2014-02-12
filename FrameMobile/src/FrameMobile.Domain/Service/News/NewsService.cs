@@ -57,7 +57,7 @@ namespace FrameMobile.Domain.Service
         }
 
         [ServiceCache]
-        public IList<NewsRadarView> GetRadarViewList(MobileParam mobileParams, int cver, out int sver)
+        public IList<NewsRadarView> GetNewsRadarViewList(MobileParam mobileParams, int cver, out int sver)
         {
             var radarlist = new Radar().ReturnRadarInstance<Radar>(cver, out sver);
             var subradarlist = new SubRadar().ReturnRadarInstance<SubRadar>(cver, out sver);

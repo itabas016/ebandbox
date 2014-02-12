@@ -30,6 +30,7 @@ namespace FrameMobile.Domain
             For<IAccountService>().Use<AccountService>();
             For<ICookieService>().Use<CookieService>();
             For<IMobileUIService>().Use<MobileUIService>();
+            For<IRadarService>().Use<RadarService>();
         }
 
         private void RegistyNewsService()

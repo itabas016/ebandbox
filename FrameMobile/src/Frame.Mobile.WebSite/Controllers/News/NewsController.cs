@@ -91,12 +91,12 @@ namespace Frame.Mobile.WebSite.Controllers
             return Content(actionResult.ToString());
         }
 
-        public ActionResult RadarList(string imsi, int cver = 0)
+        public ActionResult NewsRadarList(string imsi, int cver = 0)
         {
             var mobileParams = GetMobileParam();
             int sver = 0;
 
-            Func<IList<NewsRadarView>> getradarlist = () => NewsService.GetRadarViewList(mobileParams, cver, out sver);
+            Func<IList<NewsRadarView>> getradarlist = () => NewsService.GetNewsRadarViewList(mobileParams, cver, out sver);
 
             var actionResult = BuildResult(this.CheckRequiredParams(imsi), getradarlist);
 
