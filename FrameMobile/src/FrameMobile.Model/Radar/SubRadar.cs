@@ -13,6 +13,7 @@ namespace FrameMobile.Model.Radar
         public int RadarId { get; set; }
 
         [SubSonicStringLength(256)]
+        [SubSonicNullString]
         public string Comment { get; set; }
     }
 }

@@ -11,6 +11,7 @@ namespace FrameMobile.Model.Radar
     public class Radar : MySQLModel
     {
         [SubSonicStringLength(256)]
+        [SubSonicNullString]
         public string Comment { get; set; }
     }
 }
