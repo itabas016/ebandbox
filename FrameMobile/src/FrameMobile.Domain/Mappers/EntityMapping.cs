@@ -16,6 +16,8 @@ namespace FrameMobile.Domain
 
             AccountMapping.CreateMap();
 
+            RadarMapping.CreateMap();
+
             Mapper.AssertConfigurationIsValid();
         }
 

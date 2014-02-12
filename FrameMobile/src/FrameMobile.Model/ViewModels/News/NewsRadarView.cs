@@ -19,7 +19,7 @@ namespace FrameMobile.Model
         [JsonProperty("status")]
         public int Status { get; set; }
 
-        [JsonProperty("subradar")]
+        [JsonProperty("subradardata")]
         public List<NewsSubRadarView> NewsSubRadarList { get; set; }
     }
 }

@@ -6,6 +6,7 @@ using AutoMapper;
 using FrameMobile.Model.ThirdPart;
 using FrameMobile.Model.News;
 using FrameMobile.Model;
+using FrameMobile.Model.Radar;
 
 namespace FrameMobile.Domain
 {
@@ -82,6 +83,18 @@ namespace FrameMobile.Domain
                 .ForMember(dest => dest.CategoryId, opt => opt.MapFrom(ori => ori.CategoryId))
                 .ForMember(dest => dest.SourceId, opt => opt.MapFrom(ori => ori.SourceId))
                 .ForMember(dest => dest.Cursor, opt => opt.MapFrom(ori => ori.Cursor));
+
+            Mapper.CreateMap<Radar, NewsRadarView>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(ori => ori.Id))
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(ori => ori.Name))
+                .ForMember(dest => dest.Status, opt => opt.MapFrom(ori => ori.Status))
+                .IgnoreAllNonExisting();
+
+            Mapper.CreateMap<SubRadar, NewsSubRadarView>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(ori => ori.Id))
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(ori => ori.Name))
+                .ForMember(dest => dest.RadarId, opt => opt.MapFrom(ori => ori.RadarId))
+                .ForMember(dest => dest.Status, opt => opt.MapFrom(ori => ori.Status));
 
             Mapper.CreateMap<NewsContent, NewsContentView>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(ori => ori.Id))

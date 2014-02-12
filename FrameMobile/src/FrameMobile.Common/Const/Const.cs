@@ -62,5 +62,11 @@ namespace FrameMobile.Common
         public const string WALLPAPER_METHOD_NAME_GETWALLPAPERVIEWDETAIL = "getwallpaperviewdetail";
 
         #endregion
+
+        #region Relation
+
+        public const string NEWS_RADAR_CONFIG_TABLE_NAME = "newsradar";
+
+        #endregion
     }
 }

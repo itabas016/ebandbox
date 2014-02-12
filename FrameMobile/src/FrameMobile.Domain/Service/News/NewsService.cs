@@ -8,6 +8,7 @@ using FrameMobile.Model;
 using FrameMobile.Model.News;
 using StructureMap;
 using NCore;
+using FrameMobile.Model.Radar;
 
 namespace FrameMobile.Domain.Service
 {
@@ -58,7 +59,10 @@ namespace FrameMobile.Domain.Service
         [ServiceCache]
         public IList<NewsRadarView> GetRadarViewList(MobileParam mobileParams, int cver, out int sver)
         {
-            throw new NotImplementedException();
+            var radarlist = new Radar().ReturnRadarInstance<Radar>(cver, out sver);
+            var subradarlist = new SubRadar().ReturnRadarInstance<SubRadar>(cver, out sver);
+
+            return ConvertByRadar(radarlist, subradarlist);
         }
 
         [ServiceCache]
@@ -256,6 +260,18 @@ namespace FrameMobile.Domain.Service
                     return content.HDURL;
             }
             return string.Empty;
+        }
+
+        private IList<NewsRadarView> ConvertByRadar(IList<Radar> radarlist, IList<SubRadar> subradarlist)
+        {
+            var radarviewlist = radarlist.To<IList<NewsRadarView>>();
+            var subradarviewlist = subradarlist.To<IList<NewsSubRadarView>>();
+
+            foreach (var item in radarviewlist)
+            {
+                item.NewsSubRadarList = subradarviewlist.Where(x => x.RadarId == item.Id).ToList();
+            }
+            return radarviewlist;
         }
 
         #endregion
