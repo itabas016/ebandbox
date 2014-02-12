@@ -9,7 +9,7 @@ namespace FrameMobile.Domain.Service
 {
     public interface IRadarService
     {
-        IList<Radar> GetRadarList();
+        IList<RadarCategory> GetRadarList();
         void UpdateServerVersion<T>() where T : MySQLModelBase;
     }
 }

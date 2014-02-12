@@ -401,10 +401,10 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Views\Radar\RadarAdd.cshtml" />
-    <Content Include="Views\Radar\RadarList.cshtml" />
-    <Content Include="Views\Radar\SubRadarAdd.cshtml" />
-    <Content Include="Views\Radar\SubRadarList.cshtml" />
+    <Content Include="Views\Radar\RadarCategoryAdd.cshtml" />
+    <Content Include="Views\Radar\RadarCategoryList.cshtml" />
+    <Content Include="Views\Radar\RadarElementAdd.cshtml" />
+    <Content Include="Views\Radar\RadarElementList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

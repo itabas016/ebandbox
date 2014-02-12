@@ -1,11 +1,11 @@
 ﻿@using FrameMobile.Model.Radar;
-@model SubRadar
+@model RadarElement
 @{
     bool isUpdateMode = ViewData["IsUpdate"] != null;
-    ViewBag.Title = isUpdateMode ? "修改雷达子分类" : "添加雷达子分类";
+    ViewBag.Title = isUpdateMode ? "修改雷达元素" : "添加雷达元素";
     Layout = "~/Views/Shared/_NewsLayout.cshtml";
 
-    var radarlist = ViewData["Radarlist"] as SelectList;
+    var radarcategorylist = ViewData["RadarCategorylist"] as SelectList;
 }
 
 <div class="contentHeader">
@@ -42,7 +42,7 @@
                     <tr>
                         <td><strong>雷达主分类: </strong></td>
                         <td>
-                            @Html.DropDownListFor(m => m.RadarId, (SelectList)radarlist, "请选择")
+                            @Html.DropDownListFor(m => m.RadarId, (SelectList)radarcategorylist, "请选择")
                         </td>
                     </tr>
                     <tr>

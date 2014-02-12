@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace FrameMobile.Model
 {
-    public class SubRadarView : ViewModelBase
+    public class RadarElementView : ViewModelBase
     {
         [ViewField(IsDisplay = false)]
         [JsonProperty("id")]

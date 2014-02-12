@@ -12,14 +12,14 @@ namespace FrameMobile.Domain
     {
         internal static void CreateMap()
         {
-            Mapper.CreateMap<Radar, RadarView>()
+            Mapper.CreateMap<RadarCategory, RadarCategoryView>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(ori => ori.Id))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(ori => ori.Name))
                 .ForMember(dest => dest.Comment, opt => opt.MapFrom(ori => ori.Comment))
                 .ForMember(dest => dest.Status, opt => opt.MapFrom(ori => ori.Status))
                 .IgnoreAllNonExisting();
 
-            Mapper.CreateMap<SubRadar, SubRadarView>()
+            Mapper.CreateMap<RadarElement, RadarElementView>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(ori => ori.Id))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(ori => ori.Name))
                 .ForMember(dest => dest.RadarId, opt => opt.MapFrom(ori => ori.RadarId))

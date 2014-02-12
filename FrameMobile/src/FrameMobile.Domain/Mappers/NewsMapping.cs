@@ -84,13 +84,13 @@ namespace FrameMobile.Domain
                 .ForMember(dest => dest.SourceId, opt => opt.MapFrom(ori => ori.SourceId))
                 .ForMember(dest => dest.Cursor, opt => opt.MapFrom(ori => ori.Cursor));
 
-            Mapper.CreateMap<Radar, NewsRadarView>()
+            Mapper.CreateMap<RadarCategory, NewsRadarView>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(ori => ori.Id))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(ori => ori.Name))
                 .ForMember(dest => dest.Status, opt => opt.MapFrom(ori => ori.Status))
                 .IgnoreAllNonExisting();
 
-            Mapper.CreateMap<SubRadar, NewsSubRadarView>()
+            Mapper.CreateMap<RadarElement, NewsRadarElementView>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(ori => ori.Id))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(ori => ori.Name))
                 .ForMember(dest => dest.RadarId, opt => opt.MapFrom(ori => ori.RadarId))

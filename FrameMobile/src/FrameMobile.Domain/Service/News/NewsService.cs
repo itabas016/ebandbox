@@ -59,8 +59,8 @@ namespace FrameMobile.Domain.Service
         [ServiceCache]
         public IList<NewsRadarView> GetNewsRadarViewList(MobileParam mobileParams, int cver, out int sver)
         {
-            var radarlist = new Radar().ReturnRadarInstance<Radar>(cver, out sver);
-            var subradarlist = new SubRadar().ReturnRadarInstance<SubRadar>(cver, out sver);
+            var radarlist = new RadarCategory().ReturnRadarInstance<RadarCategory>(cver, out sver);
+            var subradarlist = new RadarElement().ReturnRadarInstance<RadarElement>(cver, out sver);
 
             return ConvertByRadar(radarlist, subradarlist);
         }
@@ -262,10 +262,10 @@ namespace FrameMobile.Domain.Service
             return string.Empty;
         }
 
-        private IList<NewsRadarView> ConvertByRadar(IList<Radar> radarlist, IList<SubRadar> subradarlist)
+        private IList<NewsRadarView> ConvertByRadar(IList<RadarCategory> radarlist, IList<RadarElement> subradarlist)
         {
             var radarviewlist = radarlist.To<IList<NewsRadarView>>();
-            var subradarviewlist = subradarlist.To<IList<NewsSubRadarView>>();
+            var subradarviewlist = subradarlist.To<IList<NewsRadarElementView>>();
 
             foreach (var item in radarviewlist)
             {

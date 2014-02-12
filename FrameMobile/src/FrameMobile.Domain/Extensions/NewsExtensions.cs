@@ -20,7 +20,7 @@ namespace FrameMobile.Domain
 
             var dbContextService = ObjectFactory.GetInstance<INewsDbContextService>();
             var type = typeof(T);
-            var flag = (type == typeof(Radar) || type == typeof(SubRadar));
+            var flag = (type == typeof(RadarCategory) || type == typeof(RadarElement));
             var configTableName = flag ? Const.NEWS_RADAR_CONFIG_TABLE_NAME : source.GetType().Name.ToLower();
 
             var result = dbContextService.Single<NewsConfig>(x => x.NameLowCase == configTableName && x.Status == 1);

@@ -21,7 +21,7 @@ namespace FrameMobile.Domain
                 var dbContextService = ObjectFactory.GetInstance<INewsDbContextService>();
                 sver = version;
                 var type = typeof(T);
-                var flag = (type == typeof(Radar) || type == typeof(SubRadar));
+                var flag = (type == typeof(RadarCategory) || type == typeof(RadarElement));
                 result = flag ?
                     dbContextService.All<T>().ToList() : dbContextService.Find<T>(x => x.Status == 1).ToList();
                 return result;

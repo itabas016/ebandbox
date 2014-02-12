@@ -289,67 +289,67 @@ namespace FrameMobile.Domain.Service
         public IList<NewsRadarView> GetNewsRadarViewList(MobileParam mobileParams, int cver, out int sver)
         {
             #region SubNewsRadar
-            var newssubradar = new NewsSubRadarView
+            var newssubradar = new NewsRadarElementView
             {
                 Id = 1,
                 Name = "团购",
                 Status = 1
             };
-            var newssubradar2 = new NewsSubRadarView
+            var newssubradar2 = new NewsRadarElementView
             {
                 Id = 2,
                 Name = "美食",
                 Status = 1
             };
-            var newssubradar3 = new NewsSubRadarView
+            var newssubradar3 = new NewsRadarElementView
             {
                 Id = 3,
                 Name = "酒店",
                 Status = 1
             };
-            var newssubradar4 = new NewsSubRadarView
+            var newssubradar4 = new NewsRadarElementView
             {
                 Id = 4,
                 Name = "公交站",
                 Status = 1
             };
-            var newssubradar5 = new NewsSubRadarView
+            var newssubradar5 = new NewsRadarElementView
             {
                 Id = 5,
                 Name = "电影院",
                 Status = 1
             };
-            var newssubradar6 = new NewsSubRadarView
+            var newssubradar6 = new NewsRadarElementView
             {
                 Id = 6,
                 Name = "酒吧",
                 Status = 1
             };
-            var newssubradar7 = new NewsSubRadarView
+            var newssubradar7 = new NewsRadarElementView
             {
                 Id = 7,
                 Name = "网吧",
                 Status = 1
             };
-            var newssubradar8 = new NewsSubRadarView
+            var newssubradar8 = new NewsRadarElementView
             {
                 Id = 8,
                 Name = "洗浴",
                 Status = 1
             };
-            var newssubradar9 = new NewsSubRadarView
+            var newssubradar9 = new NewsRadarElementView
             {
                 Id = 9,
                 Name = "丽人",
                 Status = 1
             };
-            var newssubradar10 = new NewsSubRadarView
+            var newssubradar10 = new NewsRadarElementView
             {
                 Id = 10,
                 Name = "ATM",
                 Status = 1
             };
-            var newssubradar11 = new NewsSubRadarView
+            var newssubradar11 = new NewsRadarElementView
             {
                 Id = 11,
                 Name = "邮局",
@@ -363,7 +363,7 @@ namespace FrameMobile.Domain.Service
                 Id = 1,
                 Name = "热门",
                 Status = 1,
-                NewsSubRadarList = new List<NewsSubRadarView>
+                NewsSubRadarList = new List<NewsRadarElementView>
                 {
                     newssubradar,newssubradar2,newssubradar3,newssubradar4,newssubradar5,newssubradar6
                 }
@@ -374,7 +374,7 @@ namespace FrameMobile.Domain.Service
                 Id = 2,
                 Name = "休闲娱乐",
                 Status = 1,
-                NewsSubRadarList = new List<NewsSubRadarView>
+                NewsSubRadarList = new List<NewsRadarElementView>
                 {
                     newssubradar6,newssubradar7,newssubradar8,newssubradar9
                 }
@@ -385,7 +385,7 @@ namespace FrameMobile.Domain.Service
                 Id = 3,
                 Name = "生活服务",
                 Status = 1,
-                NewsSubRadarList = new List<NewsSubRadarView>
+                NewsSubRadarList = new List<NewsRadarElementView>
                 {
                     newssubradar10,newssubradar11
                 }

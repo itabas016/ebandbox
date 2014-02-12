@@ -1,19 +1,19 @@
 ﻿@using FrameMobile.Model.Radar;
-@model List<Radar>
+@model List<RadarCategory>
 @{
-    ViewBag.Title = "雷达主分类管理";
+    ViewBag.Title = "雷达分类管理";
     Layout = "~/Views/Shared/_NewsLayout.cshtml";
 
-    List<Radar> radarlist = ViewData["radarlist"] as List<Radar>;
-    radarlist = radarlist != null ? radarlist : new List<Radar>();
+    List<RadarCategory> radarcategorylist = ViewData["radarCategorylist"] as List<RadarCategory>;
+    radarcategorylist = radarcategorylist != null ? radarcategorylist : new List<RadarCategory>();
     var totalCount = ViewData["TotalCount"] as int?;
     totalCount = totalCount != null ? totalCount : 0;
 }
 
 <div class="contentHeader">
     <div class="contentHeaderInfo">
-        <button class="btn btn-large btn-blue addapp" onclick="window.open('RadarAdd','_self');">
-            雷达主分类添加</button>
+        <button class="btn btn-large btn-blue addapp" onclick="window.open('RadarCategoryAdd','_self');">
+            雷达分类添加</button>
     </div>
     <div class="apphead">
         <div class="title">
@@ -36,17 +36,17 @@
             </tr>
         </thead>
         <tbody class="prolist">
-            @foreach (var item in radarlist)
+            @foreach (var item in radarcategorylist)
             {
                 <tr class="odd gradeX">
                     <td><strong>@item.Id</strong></td>
                     <td><strong>@item.Name</strong></td>
                     <td>@item.Status</td>
                     <td class="center">
-                        <button type="button" class="btn btn-large btn-gray"  onclick="window.open('RadarEdit?radarId=@item.Id','_self');">修 改</button>
+                        <button type="button" class="btn btn-large btn-gray"  onclick="window.open('RadarCategoryEdit?radarCategoryId=@item.Id','_self');">修 改</button>
                     </td>
                     <td class="center">
-                        <button type="button" class="btn btn-large btn-gray"  onclick="var c=confirm('确定要删除?'); if(c==true){window.open('RadarDelete?radarId=@item.Id','_self');}">
+                        <button type="button" class="btn btn-large btn-gray"  onclick="var c=confirm('确定要删除?'); if(c==true){window.open('RadarCategoryDelete?radarCategoryId=@item.Id','_self');}">
                             删 除</button>
                     </td>
                 </tr>

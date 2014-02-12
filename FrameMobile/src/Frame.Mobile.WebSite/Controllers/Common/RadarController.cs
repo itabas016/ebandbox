@@ -55,151 +55,151 @@ namespace Frame.Mobile.WebSite.Controllers
 
         #endregion
 
-        #region Radar
+        #region RadarCategory
 
-        public ActionResult RadarList()
+        public ActionResult RadarCategoryList()
         {
-            var radarlist = dbContextService.All<Radar>().ToList();
-            ViewData["radarlist"] = radarlist;
-            ViewData["TotalCount"] = radarlist.Count;
+            var radarcategorylist = dbContextService.All<RadarCategory>().ToList();
+            ViewData["radarCategorylist"] = radarcategorylist;
+            ViewData["TotalCount"] = radarcategorylist.Count;
             return View();
         }
 
         [HttpGet]
-        public ActionResult RadarAdd()
+        public ActionResult RadarCategoryAdd()
         {
             return View();
         }
 
         [AdminAuthorize(UserGroups = "NewsAdministrator,NewsOperator")]
         [HttpPost]
-        public ActionResult RadarAdd(Radar model)
+        public ActionResult RadarCategoryAdd(RadarCategory model)
         {
-            var exist = dbContextService.Exists<Radar>(x => x.Name == model.Name);
+            var exist = dbContextService.Exists<RadarCategory>(x => x.Name == model.Name);
             if (exist)
             {
                 TempData["errorMsg"] = "该分类已存在！";
                 return View();
             }
-            var ret = dbContextService.Add<Radar>(model);
+            var ret = dbContextService.Add<RadarCategory>(model);
 
-            RadarService.UpdateServerVersion<Radar>();
+            RadarService.UpdateServerVersion<RadarCategory>();
 
-            return RedirectToAction("RadarList");
+            return RedirectToAction("RadarCategoryList");
         }
 
         [AdminAuthorize(UserGroups = "NewsAdministrator,NewsOperator")]
-        public ActionResult RadarDelete(int RadarId)
+        public ActionResult RadarCategoryDelete(int radarCategoryId)
         {
-            var ret = dbContextService.Delete<Radar>(RadarId);
+            var ret = dbContextService.Delete<RadarCategory>(radarCategoryId);
 
-            RadarService.UpdateServerVersion<Radar>();
+            RadarService.UpdateServerVersion<RadarCategory>();
 
-            return RedirectToAction("RadarList");
+            return RedirectToAction("RadarCategoryList");
         }
 
         [HttpGet]
-        public ActionResult RadarEdit(int RadarId)
+        public ActionResult RadarCategoryEdit(int radarCategoryId)
         {
-            var radar = dbContextService.Single<Radar>(RadarId);
+            var radarCategory = dbContextService.Single<RadarCategory>(radarCategoryId);
             ViewData["IsUpdate"] = true;
-            return View("RadarAdd", radar);
+            return View("RadarCategoryAdd", radarCategory);
         }
 
         [AdminAuthorize(UserGroups = "NewsAdministrator,NewsOperator")]
         [HttpPost]
-        public ActionResult RadarEdit(Radar model)
+        public ActionResult RadarCategoryEdit(RadarCategory model)
         {
-            var radar = dbContextService.Single<Radar>(model.Id);
+            var radarCategory = dbContextService.Single<RadarCategory>(model.Id);
 
-            radar.Name = model.Name;
-            radar.Comment = model.Comment;
-            radar.Status = model.Status;
-            radar.CreateDateTime = DateTime.Now;
+            radarCategory.Name = model.Name;
+            radarCategory.Comment = model.Comment;
+            radarCategory.Status = model.Status;
+            radarCategory.CreateDateTime = DateTime.Now;
 
-            var ret = dbContextService.Update<Radar>(radar);
+            var ret = dbContextService.Update<RadarCategory>(radarCategory);
 
-            RadarService.UpdateServerVersion<Radar>();
+            RadarService.UpdateServerVersion<RadarCategory>();
 
-            return RedirectToAction("RadarList");
+            return RedirectToAction("RadarCategoryList");
         }
 
         #endregion
 
-        #region SubRadar
+        #region RadarElement
 
-        public ActionResult SubRadarList()
+        public ActionResult RadarElementList()
         {
-            var subradarlist = dbContextService.All<SubRadar>().ToList();
-            ViewData["subradarlist"] = subradarlist;
-            ViewData["TotalCount"] = subradarlist.Count;
+            var radarelementlist = dbContextService.All<RadarElement>().ToList();
+            ViewData["radarelementlist"] = radarelementlist;
+            ViewData["TotalCount"] = radarelementlist.Count;
             return View();
         }
 
         [HttpGet]
-        public ActionResult SubRadarAdd()
+        public ActionResult RadarElementAdd()
         {
             var radarlist = RadarService.GetRadarList().ToList();
 
-            ViewData["Radarlist"] = radarlist.GetSelectList();
+            ViewData["RadarCategorylist"] = radarlist.GetSelectList();
             return View();
         }
 
         [AdminAuthorize(UserGroups = "NewsAdministrator,NewsOperator")]
         [HttpPost]
-        public ActionResult SubRadarAdd(SubRadar model)
+        public ActionResult RadarElementAdd(RadarElement model)
         {
-            var exist = dbContextService.Exists<SubRadar>(x => x.Name == model.Name);
+            var exist = dbContextService.Exists<RadarElement>(x => x.Name == model.Name);
             if (exist)
             {
-                TempData["errorMsg"] = "该分类已存在！";
+                TempData["errorMsg"] = "该元素已存在！";
                 return View();
             }
-            var ret = dbContextService.Add<SubRadar>(model);
+            var ret = dbContextService.Add<RadarElement>(model);
 
-            RadarService.UpdateServerVersion<SubRadar>();
+            RadarService.UpdateServerVersion<RadarElement>();
 
-            return RedirectToAction("SubRadarList");
+            return RedirectToAction("RadarElementList");
         }
 
         [AdminAuthorize(UserGroups = "NewsAdministrator,NewsOperator")]
-        public ActionResult SubRadarDelete(int subRadarId)
+        public ActionResult RadarElementDelete(int radarElementId)
         {
-            var ret = dbContextService.Delete<SubRadar>(subRadarId);
+            var ret = dbContextService.Delete<RadarElement>(radarElementId);
 
-            RadarService.UpdateServerVersion<SubRadar>();
+            RadarService.UpdateServerVersion<RadarElement>();
 
-            return RedirectToAction("SubRadarList");
+            return RedirectToAction("RadarElementList");
         }
 
         [HttpGet]
-        public ActionResult SubRadarEdit(int SubRadarId)
+        public ActionResult RadarElementEdit(int radarElementId)
         {
             var radarlist = RadarService.GetRadarList().ToList();
-            var subradar = dbContextService.Single<SubRadar>(SubRadarId);
+            var subradar = dbContextService.Single<RadarElement>(radarElementId);
 
-            ViewData["Radarlist"] = radarlist.GetSelectList(subradar.RadarId);
+            ViewData["RadarCategorylist"] = radarlist.GetSelectList(subradar.RadarId);
             ViewData["IsUpdate"] = true;
-            return View("SubRadarAdd", subradar);
+            return View("RadarElementAdd", subradar);
         }
 
         [AdminAuthorize(UserGroups = "NewsAdministrator,NewsOperator")]
         [HttpPost]
-        public ActionResult SubRadarEdit(SubRadar model)
+        public ActionResult RadarElementEdit(RadarElement model)
         {
-            var subradar = dbContextService.Single<SubRadar>(model.Id);
+            var radarElement = dbContextService.Single<RadarElement>(model.Id);
 
-            subradar.Name = model.Name;
-            subradar.RadarId = model.RadarId;
-            subradar.Comment = model.Comment;
-            subradar.Status = model.Status;
-            subradar.CreateDateTime = DateTime.Now;
+            radarElement.Name = model.Name;
+            radarElement.RadarId = model.RadarId;
+            radarElement.Comment = model.Comment;
+            radarElement.Status = model.Status;
+            radarElement.CreateDateTime = DateTime.Now;
 
-            var ret = dbContextService.Update<SubRadar>(subradar);
+            var ret = dbContextService.Update<RadarElement>(radarElement);
 
-            RadarService.UpdateServerVersion<SubRadar>();
+            RadarService.UpdateServerVersion<RadarElement>();
 
-            return RedirectToAction("SubRadarList");
+            return RedirectToAction("RadarElementList");
         }
 
         #endregion

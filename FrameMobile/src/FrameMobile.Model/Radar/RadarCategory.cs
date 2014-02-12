@@ -7,11 +7,9 @@ using SubSonic.SqlGeneration.Schema;
 namespace FrameMobile.Model.Radar
 {
     [Serializable]
-    [SubSonicTableNameOverride("subradar")]
-    public class SubRadar : MySQLModel
+    [SubSonicTableNameOverride("radarcategory")]
+    public class RadarCategory : MySQLModel
     {
-        public int RadarId { get; set; }
-
         [SubSonicStringLength(256)]
         [SubSonicNullString]
         public string Comment { get; set; }
