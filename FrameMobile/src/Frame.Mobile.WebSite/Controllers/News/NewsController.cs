@@ -91,7 +91,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return Content(actionResult.ToString());
         }
 
-        public ActionResult NewsRadarList(string imsi, int cver = 0)
+        public ActionResult RadarList(string imsi, int cver = 0)
         {
             var mobileParams = GetMobileParam();
             int sver = 0;
