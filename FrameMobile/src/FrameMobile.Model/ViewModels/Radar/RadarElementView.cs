@@ -13,8 +13,8 @@ namespace FrameMobile.Model
         [JsonProperty("id")]
         public int Id { get; set; }
 
-        [JsonProperty("radarid")]
-        public int RadarId { get; set; }
+        [JsonProperty("radarcategoryids")]
+        public List<int> RadarCategoryIds { get; set; }
 
         [JsonProperty("name")]
         public string Name { get; set; }

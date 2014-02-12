@@ -19,7 +19,7 @@ namespace FrameMobile.Model
 
         [JsonProperty("radarid")]
         [JsonIgnore]
-        public int RadarId { get; set; }
+        public List<int> RadarCategoryIds { get; set; }
 
         [JsonProperty("status")]
         public int Status { get; set; }

@@ -93,7 +93,7 @@ namespace FrameMobile.Domain
             Mapper.CreateMap<RadarElement, NewsRadarElementView>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(ori => ori.Id))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(ori => ori.Name))
-                .ForMember(dest => dest.RadarId, opt => opt.MapFrom(ori => ori.RadarId))
+                .ForMember(dest => dest.RadarCategoryIds, opt => opt.MapFrom(ori => ori.RadarCategoryIds.GetIds()))
                 .ForMember(dest => dest.Status, opt => opt.MapFrom(ori => ori.Status));
 
             Mapper.CreateMap<NewsContent, NewsContentView>()

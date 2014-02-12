@@ -1,11 +1,14 @@
-﻿@using FrameMobile.Model.Radar;
-@model RadarElement
+﻿@using FrameMobile.Model;
+@using NCore;
+@model RadarElementView
 @{
     bool isUpdateMode = ViewData["IsUpdate"] != null;
     ViewBag.Title = isUpdateMode ? "修改雷达元素" : "添加雷达元素";
     Layout = "~/Views/Shared/_NewsLayout.cshtml";
 
+    var actionName = isUpdateMode ? "RadarElementEdit" : "RadarElementAdd";
     var radarcategorylist = ViewData["RadarCategorylist"] as SelectList;
+    var radarcategoryIds = ViewData["RadarCategoryIds"] as List<int>;
 }
 
 <div class="contentHeader">
@@ -21,7 +24,7 @@
 </div>
 <div class="content">
     <div class="windows">
-        @using (Html.BeginForm())
+        @using (Html.BeginForm(actionName, "Radar", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
 
             <p>
@@ -40,9 +43,20 @@
                         <td>@Html.TextBoxFor(m => m.Name)</td>
                     </tr>
                     <tr>
-                        <td><strong>雷达主分类: </strong></td>
+                        <td><strong>雷达分类: </strong></td>
                         <td>
-                            @Html.DropDownListFor(m => m.RadarId, (SelectList)radarcategorylist, "请选择")
+                            @foreach (var item in radarcategorylist)
+                            {
+                                if (isUpdateMode)
+                                {
+                                    var ischecked = radarcategoryIds.Contains(item.Value.ToInt32()) ? "checked='checked'" : string.Empty;
+                                    <input type="checkbox" name="radarcategory" value="@item.Value" @ischecked />@item.Text
+                                }
+                                else
+                                {
+                                    <input type="checkbox" name="radarcategory" value="@item.Value" />@item.Text
+                                }
+                            }
                         </td>
                     </tr>
                     <tr>

@@ -10,7 +10,9 @@ namespace FrameMobile.Model.Radar
     [SubSonicTableNameOverride("radarelement")]
     public class RadarElement : MySQLModel
     {
-        public int RadarId { get; set; }
+        [SubSonicStringLength(32)]
+        [SubSonicNullString]
+        public string RadarCategoryIds { get; set; }
 
         [SubSonicStringLength(256)]
         [SubSonicNullString]

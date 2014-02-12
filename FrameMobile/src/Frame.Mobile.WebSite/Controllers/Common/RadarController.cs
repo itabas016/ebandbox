@@ -139,22 +139,25 @@ namespace Frame.Mobile.WebSite.Controllers
         [HttpGet]
         public ActionResult RadarElementAdd()
         {
-            var radarlist = RadarService.GetRadarList().ToList();
+            var radarcategorylist = RadarService.GetRadarCategoryList().ToList();
 
-            ViewData["RadarCategorylist"] = radarlist.GetSelectList();
+            ViewData["RadarCategorylist"] = radarcategorylist.GetSelectList();
             return View();
         }
 
         [AdminAuthorize(UserGroups = "NewsAdministrator,NewsOperator")]
         [HttpPost]
-        public ActionResult RadarElementAdd(RadarElement model)
+        public ActionResult RadarElementAdd(RadarElement model, FormCollection parameters)
         {
+            var radarcategoryIds = parameters["radarcategory"].GetIds();
+
             var exist = dbContextService.Exists<RadarElement>(x => x.Name == model.Name);
             if (exist)
             {
                 TempData["errorMsg"] = "该元素已存在！";
                 return View();
             }
+            model.RadarCategoryIds = radarcategoryIds.GetString();
             var ret = dbContextService.Add<RadarElement>(model);
 
             RadarService.UpdateServerVersion<RadarElement>();
@@ -175,22 +178,26 @@ namespace Frame.Mobile.WebSite.Controllers
         [HttpGet]
         public ActionResult RadarElementEdit(int radarElementId)
         {
-            var radarlist = RadarService.GetRadarList().ToList();
-            var subradar = dbContextService.Single<RadarElement>(radarElementId);
+            var allradarcategorylist = RadarService.GetRadarCategoryList().ToList();
+            var radarelement = dbContextService.Single<RadarElement>(radarElementId);
 
-            ViewData["RadarCategorylist"] = radarlist.GetSelectList(subradar.RadarId);
+            var radarelementview = radarelement.To<RadarElementView>();
+            ViewData["RadarCategorylist"] = allradarcategorylist.GetSelectList();
+            ViewData["RadarCategoryIds"] = radarelementview.RadarCategoryIds;
             ViewData["IsUpdate"] = true;
-            return View("RadarElementAdd", subradar);
+            return View("RadarElementAdd", radarelementview);
         }
 
         [AdminAuthorize(UserGroups = "NewsAdministrator,NewsOperator")]
         [HttpPost]
-        public ActionResult RadarElementEdit(RadarElement model)
+        public ActionResult RadarElementEdit(RadarElement model, FormCollection parameters)
         {
+            var radarcategoryIds = parameters["radarcategory"].GetIds();
+
             var radarElement = dbContextService.Single<RadarElement>(model.Id);
 
             radarElement.Name = model.Name;
-            radarElement.RadarId = model.RadarId;
+            radarElement.RadarCategoryIds = radarcategoryIds.GetString();
             radarElement.Comment = model.Comment;
             radarElement.Status = model.Status;
             radarElement.CreateDateTime = DateTime.Now;

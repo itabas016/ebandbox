@@ -11,7 +11,7 @@ namespace FrameMobile.Domain.Service
 {
     public class RadarService : NewsDbContextService, IRadarService
     {
-        public IList<RadarCategory> GetRadarList()
+        public IList<RadarCategory> GetRadarCategoryList()
         {
             var radarlist = dbContextService.All<RadarCategory>().ToList();
             return radarlist;

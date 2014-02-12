@@ -111,5 +111,20 @@ namespace FrameMobile.Domain
             }
             return new List<int>() { 0 };
         }
+
+        public static string GetString(this List<int> input)
+        {
+            if (input != null && input.Count > 0)
+            {
+                var sb = new StringBuilder();
+
+                foreach (var item in input)
+                {
+                    sb.AppendFormat("{0},", item);
+                }
+                return sb.ToString().TrimEnd(',');
+            }
+            return string.Empty;
+        }
     }
 }
