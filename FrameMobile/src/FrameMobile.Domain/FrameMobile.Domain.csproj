@@ -109,6 +109,7 @@
     <Compile Include="Extensions\IDbContext.cs" />
     <Compile Include="Extensions\MappingExtensions.cs" />
     <Compile Include="Extensions\NewsExtensions.cs" />
+    <Compile Include="Extensions\RadarExtensions.cs" />
     <Compile Include="Extensions\ServiceExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\ThemeExtensions.cs" />
@@ -118,6 +119,7 @@
     <Compile Include="Mappers\AccountMapping.cs" />
     <Compile Include="Mappers\EntityMapping.cs" />
     <Compile Include="Mappers\NewsMapping.cs" />
+    <Compile Include="Mappers\RadarMapping.cs" />
     <Compile Include="Mappers\ThemeMapping.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\Common\AccountService.cs" />

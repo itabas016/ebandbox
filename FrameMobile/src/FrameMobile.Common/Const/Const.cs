@@ -66,6 +66,12 @@ namespace FrameMobile.Common
         #region Account
 
         public const string SUPER_ADMIN_GROUPID = "1";
+        
+        #endregion
+        
+        #region Relation
+        
+        public const string NEWS_RADAR_CONFIG_TABLE_NAME = "newsradar";
 
         #endregion
     }

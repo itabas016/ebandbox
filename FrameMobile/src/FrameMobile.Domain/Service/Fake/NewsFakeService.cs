@@ -53,7 +53,7 @@ namespace FrameMobile.Domain.Service
             var config = new NewsConfig()
                 {
                     Id = 1,
-                    Name="提供商",
+                    Name = "提供商",
                     NameLowCase = "newssource",
                     Version = 1,
                     Status = 1,
@@ -73,7 +73,7 @@ namespace FrameMobile.Domain.Service
             var config3 = new NewsConfig()
             {
                 Id = 3,
-                Name= "外推应用",
+                Name = "外推应用",
                 NameLowCase = "newsextraapp",
                 Version = 1,
                 Status = 1,
@@ -170,9 +170,9 @@ namespace FrameMobile.Domain.Service
                 Name = "腾讯热门",
                 SourceId = 2,
                 CategoryId = 1,
-                SubCategoryId =0,
+                SubCategoryId = 0,
                 IsStamp = 0,
-                InfAddress= "http://openapi.inews.qq.com/getNewsByChlidVerify?chlid=news&refer=openapi_for_tianyida&appkey=3XfMefMGRHJMpKZHKbKxFWvsFgO4FV&n=10",
+                InfAddress = "http://openapi.inews.qq.com/getNewsByChlidVerify?chlid=news&refer=openapi_for_tianyida&appkey=3XfMefMGRHJMpKZHKbKxFWvsFgO4FV&n=10",
                 Status = 1,
                 CreateDateTime = DateTime.Now
             };
@@ -283,6 +283,119 @@ namespace FrameMobile.Domain.Service
             var restult = subcategorylist.To<IList<NewsSubCategoryView>>();
 
             return restult;
+        }
+
+        [ServiceCache]
+        public IList<NewsRadarView> GetRadarViewList(MobileParam mobileParams, int cver, out int sver)
+        {
+            #region SubNewsRadar
+            var newssubradar = new NewsSubRadarView
+            {
+                Id = 1,
+                Name = "团购",
+                Status = 1
+            };
+            var newssubradar2 = new NewsSubRadarView
+            {
+                Id = 2,
+                Name = "美食",
+                Status = 1
+            };
+            var newssubradar3 = new NewsSubRadarView
+            {
+                Id = 3,
+                Name = "酒店",
+                Status = 1
+            };
+            var newssubradar4 = new NewsSubRadarView
+            {
+                Id = 4,
+                Name = "公交站",
+                Status = 1
+            };
+            var newssubradar5 = new NewsSubRadarView
+            {
+                Id = 5,
+                Name = "电影院",
+                Status = 1
+            };
+            var newssubradar6 = new NewsSubRadarView
+            {
+                Id = 6,
+                Name = "酒吧",
+                Status = 1
+            };
+            var newssubradar7 = new NewsSubRadarView
+            {
+                Id = 7,
+                Name = "网吧",
+                Status = 1
+            };
+            var newssubradar8 = new NewsSubRadarView
+            {
+                Id = 8,
+                Name = "洗浴",
+                Status = 1
+            };
+            var newssubradar9 = new NewsSubRadarView
+            {
+                Id = 9,
+                Name = "丽人",
+                Status = 1
+            };
+            var newssubradar10 = new NewsSubRadarView
+            {
+                Id = 10,
+                Name = "ATM",
+                Status = 1
+            };
+            var newssubradar11 = new NewsSubRadarView
+            {
+                Id = 11,
+                Name = "邮局",
+                Status = 1
+            };
+            #endregion
+
+            #region instance
+            var newsradar = new NewsRadarView()
+            {
+                Id = 1,
+                Name = "热门",
+                Status = 1,
+                NewsSubRadarList = new List<NewsSubRadarView>
+                {
+                    newssubradar,newssubradar2,newssubradar3,newssubradar4,newssubradar5,newssubradar6
+                }
+            };
+
+            var newsradar2 = new NewsRadarView()
+            {
+                Id = 2,
+                Name = "休闲娱乐",
+                Status = 1,
+                NewsSubRadarList = new List<NewsSubRadarView>
+                {
+                    newssubradar6,newssubradar7,newssubradar8,newssubradar9
+                }
+            };
+
+            var newsradar3 = new NewsRadarView()
+            {
+                Id = 3,
+                Name = "生活服务",
+                Status = 1,
+                NewsSubRadarList = new List<NewsSubRadarView>
+                {
+                    newssubradar10,newssubradar11
+                }
+            };
+
+            #endregion
+
+            var newsradarlist = new List<NewsRadarView>() { newsradar, newsradar2, newsradar3 };
+            sver = 1;
+            return newsradarlist;
         }
 
         [ServiceCache]

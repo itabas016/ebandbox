@@ -20,6 +20,8 @@ namespace FrameMobile.Domain.Service
 
         IList<NewsSubCategoryView> GetSubCategoryViewList(MobileParam mobileParams);
 
+        IList<NewsRadarView> GetRadarViewList(MobileParam mobileParams, int cver, out int sver);
+
         IList<NewsContentView> GetNewsContentViewList(MobileParam mobileParams, long stamp, bool action, string categoryIds, int startnum, int num, out int totalCount);
     }
 }

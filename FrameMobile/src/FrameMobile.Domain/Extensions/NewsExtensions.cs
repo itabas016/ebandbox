@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using AutoMapper;
+using FrameMobile.Common;
 using FrameMobile.Domain.Service;
 using FrameMobile.Model;
 using FrameMobile.Model.News;
+using FrameMobile.Model.Radar;
 using StructureMap;
 
 namespace FrameMobile.Domain
@@ -17,7 +19,11 @@ namespace FrameMobile.Domain
             if (source == null) return 0;
 
             var dbContextService = ObjectFactory.GetInstance<INewsDbContextService>();
-            var result = dbContextService.Single<NewsConfig>(x => x.NameLowCase == source.GetType().Name.ToLower() && x.Status == 1);
+            var type = typeof(T);
+            var flag = (type == typeof(Radar) || type == typeof(SubRadar));
+            var configTableName = flag ? Const.NEWS_RADAR_CONFIG_TABLE_NAME : source.GetType().Name.ToLower();
+
+            var result = dbContextService.Single<NewsConfig>(x => x.NameLowCase == configTableName && x.Status == 1);
             return result != null ? result.Version : 0;
         }
 
