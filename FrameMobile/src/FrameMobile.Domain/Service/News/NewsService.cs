@@ -56,6 +56,12 @@ namespace FrameMobile.Domain.Service
         }
 
         [ServiceCache]
+        public IList<NewsRadarView> GetRadarViewList(MobileParam mobileParams, int cver, out int sver)
+        {
+            throw new NotImplementedException();
+        }
+
+        [ServiceCache]
         public IList<NewsContentView> GetNewsContentViewList(MobileParam mobileParams, long stamp, bool action, string categoryIds, int startnum, int num, out int totalCount)
         {
             var contentlist = new List<NewsContentView>();

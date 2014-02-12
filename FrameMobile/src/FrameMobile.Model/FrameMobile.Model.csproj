@@ -80,8 +80,10 @@
     <Compile Include="News\NewsConfig.cs" />
     <Compile Include="News\NewsExtraApp.cs" />
     <Compile Include="News\NewsInfAddress.cs" />
+    <Compile Include="Radar\Radar.cs" />
     <Compile Include="News\NewsSource.cs" />
     <Compile Include="Account\User.cs" />
+    <Compile Include="Radar\SubRadar.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Support\IMySQLModel.cs" />
     <Compile Include="Support\MySQLModel.cs" />
@@ -115,9 +117,13 @@
     <Compile Include="ViewModels\News\NewsConfigView.cs" />
     <Compile Include="ViewModels\News\NewsExtraAppView.cs" />
     <Compile Include="ViewModels\News\NewsInfAddressView.cs" />
+    <Compile Include="ViewModels\News\NewsRadarView.cs" />
     <Compile Include="ViewModels\News\NewsSourceView.cs" />
     <Compile Include="ViewModels\News\NewsSubCategoryView.cs" />
     <Compile Include="ViewModels\News\NewsContentView.cs" />
+    <Compile Include="ViewModels\News\NewsSubRadarView.cs" />
+    <Compile Include="ViewModels\Radar\RadarView.cs" />
+    <Compile Include="ViewModels\Radar\SubRadarView.cs" />
     <Compile Include="ViewModels\ResultBuilder.cs" />
     <Compile Include="ViewModels\Theme\ThemeConfigView.cs" />
     <Compile Include="ViewModels\Theme\WallPaper\WallPaperCategoryView.cs" />
