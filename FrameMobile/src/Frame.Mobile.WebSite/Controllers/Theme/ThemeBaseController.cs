@@ -11,6 +11,7 @@ using FrameMobile.Domain;
 using System.IO;
 using FrameMobile.Model;
 using FrameMobile.Model.Theme;
+using NCore;
 
 namespace Frame.Mobile.WebSite.Controllers
 {
@@ -82,6 +83,8 @@ namespace Frame.Mobile.WebSite.Controllers
         }
 
         public const int pageSize = 20;
+
+        public string THEME_LOGO_IMAGE_PREFIX = ConfigKeys.TYD_WALLPAPER_LOGO_IMAGE_PREFIX.ConfigValue();
 
         protected string GetThemeLogoFilePath<T>(T model, HttpPostedFileBase logoFile) where T : MySQLModel
         {

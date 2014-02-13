@@ -55,8 +55,7 @@ namespace Frame.Mobile.WebSite.Controllers
 
             var logoFile = Request.Files[Request.Files.Keys.Count - 1];
             var logoFilePath = GetThemeLogoFilePath<WallPaperCategory>(model, logoFile);
-            var logo_Image_Prefix = ConfigKeys.TYD_WALLPAPER_LOGO_IMAGE_PREFIX.ConfigValue();
-            model.CategoryLogoUrl = string.Format("{0}{1}", logo_Image_Prefix, Path.GetFileName(logoFilePath));
+            model.CategoryLogoUrl = string.IsNullOrEmpty(logoFilePath) ? string.Empty : string.Format("{0}{1}", THEME_LOGO_IMAGE_PREFIX, Path.GetFileName(logoFilePath));
 
             var ret = dbContextService.Add<WallPaperCategory>(model);
             WallPaperUIService.UpdateServerVersion<WallPaperCategory>();
@@ -85,8 +84,7 @@ namespace Frame.Mobile.WebSite.Controllers
             category.CreateDateTime = DateTime.Now;
 
             var logoFilePath = GetThemeLogoFilePath<WallPaperCategory>(model, logoFile);
-            var logo_Image_Prefix = ConfigKeys.TYD_WALLPAPER_LOGO_IMAGE_PREFIX.ConfigValue();
-            category.CategoryLogoUrl = string.Format("{0}{1}", logo_Image_Prefix, Path.GetFileName(logoFilePath));
+            category.CategoryLogoUrl = string.IsNullOrEmpty(logoFilePath) ? string.Empty : string.Format("{0}{1}", THEME_LOGO_IMAGE_PREFIX, Path.GetFileName(logoFilePath));
 
             dbContextService.Update<WallPaperCategory>(category);
             WallPaperUIService.UpdateServerVersion<WallPaperCategory>();
@@ -138,8 +136,7 @@ namespace Frame.Mobile.WebSite.Controllers
 
             var logoFile = Request.Files[Request.Files.Keys.Count - 1];
             var logoFilePath = GetThemeLogoFilePath<WallPaperSubCategory>(model, logoFile);
-            var logo_Image_Prefix = ConfigKeys.TYD_WALLPAPER_LOGO_IMAGE_PREFIX.ConfigValue();
-            model.SubCategoryLogoUrl = string.Format("{0}{1}", logo_Image_Prefix, Path.GetFileName(logoFilePath));
+            model.SubCategoryLogoUrl = string.IsNullOrEmpty(logoFilePath) ? string.Empty : string.Format("{0}{1}", THEME_LOGO_IMAGE_PREFIX, Path.GetFileName(logoFilePath));
 
             var ret = dbContextService.Add<WallPaperSubCategory>(model);
             WallPaperUIService.UpdateServerVersion<WallPaperSubCategory>();
@@ -171,8 +168,7 @@ namespace Frame.Mobile.WebSite.Controllers
             subcategory.CreateDateTime = DateTime.Now;
 
             var logoFilePath = GetThemeLogoFilePath<WallPaperSubCategory>(model, logoFile);
-            var logo_Image_Prefix = ConfigKeys.TYD_WALLPAPER_LOGO_IMAGE_PREFIX.ConfigValue();
-            subcategory.SubCategoryLogoUrl = string.Format("{0}{1}", logo_Image_Prefix, Path.GetFileName(logoFilePath));
+            subcategory.SubCategoryLogoUrl = string.IsNullOrEmpty(logoFilePath) ? string.Empty : string.Format("{0}{1}", THEME_LOGO_IMAGE_PREFIX, Path.GetFileName(logoFilePath));
 
             dbContextService.Update<WallPaperSubCategory>(subcategory);
             WallPaperUIService.UpdateServerVersion<WallPaperSubCategory>();
@@ -221,8 +217,7 @@ namespace Frame.Mobile.WebSite.Controllers
 
             var logoFile = Request.Files[Request.Files.Keys.Count - 1];
             var logoFilePath = GetThemeLogoFilePath<WallPaperTopic>(model, logoFile);
-            var logo_Image_Prefix = ConfigKeys.TYD_WALLPAPER_LOGO_IMAGE_PREFIX.ConfigValue();
-            model.TopicLogoUrl = string.Format("{0}{1}", logo_Image_Prefix, Path.GetFileName(logoFilePath));
+            model.TopicLogoUrl = string.IsNullOrEmpty(logoFilePath) ? string.Empty : string.Format("{0}{1}", THEME_LOGO_IMAGE_PREFIX, Path.GetFileName(logoFilePath));
 
             var ret = dbContextService.Add<WallPaperTopic>(model);
             WallPaperUIService.UpdateServerVersion<WallPaperTopic>();
@@ -252,8 +247,7 @@ namespace Frame.Mobile.WebSite.Controllers
             topic.CreateDateTime = DateTime.Now;
 
             var logoFilePath = GetThemeLogoFilePath<WallPaperTopic>(model, logoFile);
-            var logo_Image_Prefix = ConfigKeys.TYD_WALLPAPER_LOGO_IMAGE_PREFIX.ConfigValue();
-            topic.TopicLogoUrl = string.Format("{0}{1}", logo_Image_Prefix, Path.GetFileName(logoFilePath));
+            topic.TopicLogoUrl = string.IsNullOrEmpty(logoFilePath) ? string.Empty : string.Format("{0}{1}", THEME_LOGO_IMAGE_PREFIX, Path.GetFileName(logoFilePath));
 
             dbContextService.Update<WallPaperTopic>(topic);
             WallPaperUIService.UpdateServerVersion<WallPaperTopic>();
@@ -303,11 +297,11 @@ namespace Frame.Mobile.WebSite.Controllers
 
             var thumbnailFile = Request.Files[Request.Files.Keys[0]];
             var thumbnailFilePath = GetThemeThumbnailFilePath(model, thumbnailFile);
-            model.ThumbnailName = Path.GetFileName(thumbnailFilePath);
+            model.ThumbnailName = string.IsNullOrEmpty(thumbnailFilePath) ? string.Empty : Path.GetFileName(thumbnailFilePath);
 
             var originalFile = Request.Files[Request.Files.Keys[1]];
             var originalFilePath = GetThemeOriginalFilePath(model, originalFile);
-            model.OriginalName = Path.GetFileName(originalFilePath);
+            model.OriginalName = string.IsNullOrEmpty(originalFilePath) ? string.Empty : Path.GetFileName(originalFilePath);
 
             var ret = dbContextService.Add<WallPaper>(model);
 
@@ -340,10 +334,10 @@ namespace Frame.Mobile.WebSite.Controllers
             wallpaper.CreateDateTime = DateTime.Now;
 
             var thumbnailFilePath = GetThemeThumbnailFilePath(model, thumbnailFile);
-            wallpaper.ThumbnailName = Path.GetFileName(thumbnailFilePath);
+            wallpaper.ThumbnailName = string.IsNullOrEmpty(thumbnailFilePath) ? string.Empty : Path.GetFileName(thumbnailFilePath);
 
             var originalFilePath = GetThemeOriginalFilePath(model, originalFile);
-            wallpaper.OriginalName = Path.GetFileName(originalFilePath);
+            wallpaper.OriginalName = string.IsNullOrEmpty(originalFilePath) ? string.Empty : Path.GetFileName(originalFilePath);
 
             dbContextService.Update<WallPaper>(wallpaper);
             return RedirectToAction("WallPaperList");
@@ -362,16 +356,16 @@ namespace Frame.Mobile.WebSite.Controllers
             var searchKey = Request.QueryString["textfield"];
 
             var wallpaperResult = (from p in dbContextService.All<WallPaper>()
-                                  where (p.WallPaperNo == searchKey || p.Title.Contains(searchKey))
-                                  select new WallPaper
-                                  {
-                                      Id = p.Id,
-                                      WallPaperNo = p.WallPaperNo,
-                                      Title = p.Title,
-                                      DownloadNumber = p.DownloadNumber,
-                                      PublishTime = p.PublishTime,
-                                      Status = p.Status
-                                  }).AsQueryable();
+                                   where (p.WallPaperNo == searchKey || p.Title.Contains(searchKey))
+                                   select new WallPaper
+                                   {
+                                       Id = p.Id,
+                                       WallPaperNo = p.WallPaperNo,
+                                       Title = p.Title,
+                                       DownloadNumber = p.DownloadNumber,
+                                       PublishTime = p.PublishTime,
+                                       Status = p.Status
+                                   }).AsQueryable();
             var wallpaperlist = wallpaperResult.ToPagedList<WallPaper>(pageNum, pageSize);
 
             ViewData["WallPaperlist"] = wallpaperlist;
