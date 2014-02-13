@@ -18,7 +18,7 @@ namespace FrameMobile.Domain.Service
     {
         #region Prop
 
-        public static string NEWS_RESOURCES_DIR_ROOT = ConfigKeys.TYD_NEWS_RESOURCES_DIR_ROOT.ConfigValue();
+        public static string NEWS_RESOURCES_DIR_ROOT = ConfigKeys.TYD_NEWS_RESOURCES_DIR_ROOT_CLOSE.ConfigValue();
 
         public int NEWS_CATEGORY_REQUEST_COUNT = ConfigKeys.TYD_NEWS_TOUTIAO_REQUEST_COUNT.ConfigValue().ToInt32();
 
