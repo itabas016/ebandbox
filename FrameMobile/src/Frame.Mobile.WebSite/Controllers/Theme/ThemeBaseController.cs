@@ -90,7 +90,7 @@ namespace Frame.Mobile.WebSite.Controllers
         {
             if (logoFile != null && !string.IsNullOrWhiteSpace(logoFile.FileName))
             {
-                var logoFilePath = SaveResourceFile(Const.THEME_LOGOS_FOLDER_NAME, ResourcesFilePathHelper.ThemeLogoPath, logoFile, string.Format("{0}_{1}_{2}", model.Name, Guid.NewGuid().ToString(), Path.GetExtension(logoFile.FileName)).NormalzieFileName());
+                var logoFilePath = SaveResourceFile(Const.THEME_LOGOS_FOLDER_NAME, ResourcesFilePathHelper.ThemeLogoPath, logoFile, string.Format("{0}_{1}", Guid.NewGuid().ToString(), Path.GetExtension(logoFile.FileName)).NormalzieFileName());
 
                 return logoFilePath;
             }
