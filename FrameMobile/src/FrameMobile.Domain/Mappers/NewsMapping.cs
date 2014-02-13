@@ -58,9 +58,12 @@ namespace FrameMobile.Domain
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(ori => ori.Id))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(ori => ori.Name))
                 .ForMember(dest => dest.NameLowCase, opt => opt.MapFrom(ori => ori.NameLowCase))
+                .ForMember(dest => dest.ShowType, opt => opt.MapFrom(ori => ori.ShowType))
                 .ForMember(dest => dest.IsBrower, opt => opt.MapFrom(ori => ori.IsBrower))
                 .ForMember(dest => dest.PackageName, opt => opt.MapFrom(ori => ori.PackageName))
-                .ForMember(dest => dest.DownloadURL, opt => opt.MapFrom(ori => ori.DownloadURL));
+                .ForMember(dest => dest.ExtraAppLogoUrl, opt => opt.MapFrom(ori => ori.ExtraAppLogoUrl))
+                .ForMember(dest => dest.DownloadURL, opt => opt.MapFrom(ori => ori.DownloadURL))
+                .ForMember(dest => dest.Description, opt => opt.MapFrom(ori => ori.Description));
 
             Mapper.CreateMap<NewsInfAddress, NewsInfAddressView>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(ori => ori.Id))

@@ -493,8 +493,11 @@ namespace Frame.Mobile.WebSite.Controllers
             extraApp.Name = model.Name;
             extraApp.NameLowCase = model.NameLowCase;
             extraApp.PackageName = model.PackageName;
+            extraApp.ShowType = model.ShowType;
             extraApp.IsBrower = model.IsBrower;
             extraApp.DownloadURL = model.DownloadURL;
+            extraApp.ExtraAppLogoUrl = model.ExtraAppLogoUrl;
+            extraApp.Description = model.Description;
             extraApp.Status = model.Status;
             extraApp.CreateDateTime = DateTime.Now;
 

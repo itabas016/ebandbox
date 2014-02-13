@@ -11,10 +11,18 @@ namespace FrameMobile.Model.News
     public class NewsExtraApp : NewsSource
     {
         //0 非浏览器 1 浏览器
-        [SubSonicStringLength(64)]
         public int IsBrower { get; set; }
+
+        //
+        public int ShowType { get; set; }
+
+        [SubSonicStringLength(256)]
+        public string ExtraAppLogoUrl { get; set; }
 
         [SubSonicStringLength(256)]
         public string DownloadURL { get; set; }
+
+        [SubSonicStringLength(256)]
+        public string Description { get; set; }
     }
 }
