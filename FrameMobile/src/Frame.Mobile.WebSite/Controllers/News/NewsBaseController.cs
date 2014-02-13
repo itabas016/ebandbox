@@ -91,6 +91,8 @@ namespace Frame.Mobile.WebSite.Controllers
 
         public string NEWS_DEST_NORMAL_IMAGE_DIR_BASE = string.Format("{0}\\Images\\480\\", NEWS_RESOURCES_DIR_ROOT);
 
+        public string NEWS_RADAR_LOGOS_IMAGE_PREFIX = ConfigKeys.TYD_NEWS_RADAR_LOGO_IMAGE_PREFIX.ConfigValue();
+
         protected string GetRadarCategoryLogoFilePath<T>(T model, HttpPostedFileBase logoFile) where T : MySQLModel
         {
             if (logoFile != null && !string.IsNullOrWhiteSpace(logoFile.FileName))
