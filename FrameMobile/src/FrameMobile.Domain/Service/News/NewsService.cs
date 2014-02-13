@@ -269,7 +269,7 @@ namespace FrameMobile.Domain.Service
 
             foreach (var item in radarviewlist)
             {
-                item.NewsSubRadarList = subradarviewlist.Where(x => x.RadarCategoryIds.Contains(item.Id)).ToList();
+                item.NewsRadarElementList = subradarviewlist.Where(x => x.RadarCategoryIds.Contains(item.Id)).ToList();
             }
             return radarviewlist;
         }

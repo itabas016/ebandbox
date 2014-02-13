@@ -363,7 +363,7 @@ namespace FrameMobile.Domain.Service
                 Id = 1,
                 Name = "热门",
                 Status = 1,
-                NewsSubRadarList = new List<NewsRadarElementView>
+                NewsRadarElementList = new List<NewsRadarElementView>
                 {
                     newssubradar,newssubradar2,newssubradar3,newssubradar4,newssubradar5,newssubradar6
                 }
@@ -374,7 +374,7 @@ namespace FrameMobile.Domain.Service
                 Id = 2,
                 Name = "休闲娱乐",
                 Status = 1,
-                NewsSubRadarList = new List<NewsRadarElementView>
+                NewsRadarElementList = new List<NewsRadarElementView>
                 {
                     newssubradar6,newssubradar7,newssubradar8,newssubradar9
                 }
@@ -385,7 +385,7 @@ namespace FrameMobile.Domain.Service
                 Id = 3,
                 Name = "生活服务",
                 Status = 1,
-                NewsSubRadarList = new List<NewsRadarElementView>
+                NewsRadarElementList = new List<NewsRadarElementView>
                 {
                     newssubradar10,newssubradar11
                 }
