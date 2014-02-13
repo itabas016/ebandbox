@@ -1,55 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using FrameMobile.Common;
 using FrameMobile.Domain;
 using FrameMobile.Domain.Service;
 using FrameMobile.Model;
 using FrameMobile.Model.Radar;
 using FrameMobile.Web;
 using StructureMap;
+using NCore;
 
 namespace Frame.Mobile.WebSite.Controllers
 {
     [UserAuthorize(UserGroupTypes = "News")]
-    public class RadarController : MvcControllerBase
+    public class RadarController : NewsBaseController
     {
         #region Prop
-
-        private IRadarService _radarService;
-        public IRadarService RadarService
-        {
-            get
-            {
-                if (_radarService == null)
-                {
-                    _radarService = ObjectFactory.GetInstance<IRadarService>();
-                }
-                return _radarService;
-            }
-            set
-            {
-                _radarService = value;
-            }
-        }
-
-        private INewsDbContextService _dbContextService;
-        public INewsDbContextService dbContextService
-        {
-            get
-            {
-                if (_dbContextService == null)
-                {
-                    _dbContextService = ObjectFactory.GetInstance<INewsDbContextService>();
-                }
-                return _dbContextService;
-            }
-            set
-            {
-                _dbContextService = value;
-            }
-        }
 
         protected override bool IsMobileInterface { get { return false; } }
 
@@ -73,7 +42,7 @@ namespace Frame.Mobile.WebSite.Controllers
 
         [AdminAuthorize(UserGroups = "NewsAdministrator,NewsOperator")]
         [HttpPost]
-        public ActionResult RadarCategoryAdd(RadarCategory model)
+        public ActionResult RadarCategoryAdd(RadarCategory model, FormCollection parameters)
         {
             var exist = dbContextService.Exists<RadarCategory>(x => x.Name == model.Name);
             if (exist)
@@ -81,6 +50,17 @@ namespace Frame.Mobile.WebSite.Controllers
                 TempData["errorMsg"] = "该分类已存在！";
                 return View();
             }
+
+            var normallogoFile = Request.Files[Request.Files.Keys[0]];
+            var hdlogoFile = Request.Files[Request.Files.Keys[1]];
+
+            var normallogoFilePath = GetRadarCategoryLogoFilePath<RadarCategory>(model, normallogoFile);
+            var hdlogoFilePath = GetRadarCategoryLogoFilePath<RadarCategory>(model, hdlogoFile);
+
+            var logo_Image_Prefix = ConfigKeys.TYD_NEWS_RADAR_LOGO_IMAGE_PREFIX.ConfigValue();
+            model.NormalLogoUrl = string.Format("{0}{1}", logo_Image_Prefix, Path.GetFileName(normallogoFilePath));
+            model.HDLogoUrl = string.Format("{0}{1}", logo_Image_Prefix, Path.GetFileName(hdlogoFilePath));
+
             var ret = dbContextService.Add<RadarCategory>(model);
 
             RadarService.UpdateServerVersion<RadarCategory>();
@@ -108,14 +88,22 @@ namespace Frame.Mobile.WebSite.Controllers
 
         [AdminAuthorize(UserGroups = "NewsAdministrator,NewsOperator")]
         [HttpPost]
-        public ActionResult RadarCategoryEdit(RadarCategory model)
+        public ActionResult RadarCategoryEdit(RadarCategory model, HttpPostedFileBase normallogoFile, HttpPostedFileBase hdlogoFile)
         {
             var radarCategory = dbContextService.Single<RadarCategory>(model.Id);
 
             radarCategory.Name = model.Name;
+            
             radarCategory.Comment = model.Comment;
             radarCategory.Status = model.Status;
             radarCategory.CreateDateTime = DateTime.Now;
+
+            var normallogoFilePath = GetRadarCategoryLogoFilePath<RadarCategory>(model, normallogoFile);
+            var hdlogoFilePath = GetRadarCategoryLogoFilePath<RadarCategory>(model, hdlogoFile);
+
+            var logo_Image_Prefix = ConfigKeys.TYD_NEWS_RADAR_LOGO_IMAGE_PREFIX.ConfigValue();
+            radarCategory.NormalLogoUrl = string.Format("{0}{1}", logo_Image_Prefix, Path.GetFileName(normallogoFilePath));
+            radarCategory.HDLogoUrl = string.Format("{0}{1}", logo_Image_Prefix, Path.GetFileName(hdlogoFilePath));
 
             var ret = dbContextService.Update<RadarCategory>(radarCategory);
 

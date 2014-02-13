@@ -10,24 +10,8 @@ using StructureMap;
 
 namespace Frame.Mobile.WebSite.Controllers
 {
-    public class NewsController : MvcControllerBase
+    public class NewsController : NewsBaseController
     {
-        public INewsService NewsService
-        {
-            get
-            {
-                if (_newsService == null)
-                    _newsService = ObjectFactory.GetInstance<INewsService>();
-
-                return _newsService;
-            }
-            set
-            {
-                _newsService = value;
-            }
-        }
-        private INewsService _newsService;
-
         public ActionResult SourceList(string imsi, int cver = 0)
         {
             var mobileParams = GetMobileParam();
@@ -91,14 +75,14 @@ namespace Frame.Mobile.WebSite.Controllers
             return Content(actionResult.ToString());
         }
 
-        public ActionResult RadarList(string imsi, int cver = 0)
+        public ActionResult RadarList(string imsi, string lcd, int cver = 0)
         {
             var mobileParams = GetMobileParam();
             int sver = 0;
 
             Func<IList<NewsRadarView>> getradarlist = () => NewsService.GetNewsRadarViewList(mobileParams, cver, out sver);
 
-            var actionResult = BuildResult(this.CheckRequiredParams(imsi), getradarlist);
+            var actionResult = BuildResult(this.CheckRequiredParams(imsi, lcd), getradarlist);
 
             actionResult.ServerVerison = sver;
             return Content(actionResult.ToString());

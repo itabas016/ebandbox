@@ -19,62 +19,11 @@ using FrameMobile.Model.Common;
 namespace Frame.Mobile.WebSite.Controllers
 {
     [UserAuthorize(UserGroupTypes = "News")]
-    public class NewsUIController : MvcControllerBase
+    public class NewsUIController : NewsBaseController
     {
         #region Prop
 
-        private INewsUIService _newsUIService;
-        public INewsUIService NewsUIService
-        {
-            get
-            {
-                if (_newsUIService == null)
-                {
-                    _newsUIService = ObjectFactory.GetInstance<INewsUIService>();
-                }
-                return _newsUIService;
-            }
-            set
-            {
-                _newsUIService = value;
-            }
-        }
-
-        private INewsDbContextService _dbContextService;
-        public INewsDbContextService dbContextService
-        {
-            get
-            {
-                if (_dbContextService == null)
-                {
-                    _dbContextService = ObjectFactory.GetInstance<INewsDbContextService>();
-                }
-                return _dbContextService;
-            }
-            set
-            {
-                _dbContextService = value;
-            }
-        }
-
         protected override bool IsMobileInterface { get { return false; } }
-
-        public const int pageSize = 20;
-
-        public static string NEWS_RESOURCES_DIR_ROOT = ConfigKeys.TYD_NEWS_RESOURCES_DIR_ROOT.ConfigValue();
-
-        public string NEWS_DEST_HD_IMAGE_DIR_BASE = string.Format("{0}\\Images\\720\\", NEWS_RESOURCES_DIR_ROOT);
-
-        public string NEWS_DEST_NORMAL_IMAGE_DIR_BASE = string.Format("{0}\\Images\\480\\", NEWS_RESOURCES_DIR_ROOT);
-
-        #endregion
-
-        #region Ctor
-
-        public NewsUIController(INewsUIService newsUIService)
-        {
-            this.NewsUIService = newsUIService;
-        }
 
         #endregion
 

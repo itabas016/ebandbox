@@ -188,6 +188,7 @@
     <Compile Include="Controllers\Common\CacheController.cs" />
     <Compile Include="Controllers\Common\MobileController.cs" />
     <Compile Include="Controllers\Common\RadarController.cs" />
+    <Compile Include="Controllers\News\NewsBaseController.cs" />
     <Compile Include="Controllers\News\NewsController.cs" />
     <Compile Include="Controllers\News\NewsUIController.cs" />
     <Compile Include="Controllers\Theme\ThemeBaseController.cs" />

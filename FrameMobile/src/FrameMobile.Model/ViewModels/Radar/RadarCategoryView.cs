@@ -16,6 +16,14 @@ namespace FrameMobile.Model
         [JsonProperty("name")]
         public string Name { get; set; }
 
+        [JsonProperty("normallogourl")]
+        [JsonIgnore]
+        public string NormalLogoUrl { get; set; }
+
+        [JsonProperty("hdlogourl")]
+        [JsonIgnore]
+        public string HDLogoUrl { get; set; }
+
         [JsonProperty("comment")]
         [JsonIgnore]
         public string Comment { get; set; }

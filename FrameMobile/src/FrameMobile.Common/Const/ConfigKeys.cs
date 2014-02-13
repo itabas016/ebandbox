@@ -35,6 +35,8 @@ namespace FrameMobile.Common
 
         public const string TYD_NEWS_APP_DOWNLOAD_PREFIX_URL = "TYD_News_App_Download_Prefix_URL";
 
+        public const string TYD_NEWS_RADAR_LOGO_IMAGE_PREFIX = "TYD_News_Radar_Logo_Image_Prefix";
+
         #endregion
 
         #region Theme

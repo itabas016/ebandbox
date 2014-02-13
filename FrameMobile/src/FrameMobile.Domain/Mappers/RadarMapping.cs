@@ -15,6 +15,8 @@ namespace FrameMobile.Domain
             Mapper.CreateMap<RadarCategory, RadarCategoryView>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(ori => ori.Id))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(ori => ori.Name))
+                .ForMember(dest => dest.NormalLogoUrl, opt => opt.MapFrom(ori => ori.NormalLogoUrl))
+                .ForMember(dest => dest.HDLogoUrl, opt => opt.MapFrom(ori => ori.HDLogoUrl))
                 .ForMember(dest => dest.Comment, opt => opt.MapFrom(ori => ori.Comment))
                 .ForMember(dest => dest.Status, opt => opt.MapFrom(ori => ori.Status))
                 .IgnoreAllNonExisting();

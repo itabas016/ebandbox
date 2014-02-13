@@ -59,10 +59,12 @@ namespace FrameMobile.Domain.Service
         [ServiceCache]
         public IList<NewsRadarView> GetNewsRadarViewList(MobileParam mobileParams, int cver, out int sver)
         {
+            var imageType = GetImageURLTypeByResolution(mobileParams);
+
             var radarlist = new RadarCategory().ReturnRadarInstance<RadarCategory>(cver, out sver);
             var subradarlist = new RadarElement().ReturnRadarInstance<RadarElement>(cver, out sver);
 
-            return ConvertByRadar(radarlist, subradarlist);
+            return ConvertByRadar(imageType, radarlist, subradarlist);
         }
 
         [ServiceCache]
@@ -262,13 +264,15 @@ namespace FrameMobile.Domain.Service
             return string.Empty;
         }
 
-        private IList<NewsRadarView> ConvertByRadar(IList<RadarCategory> radarlist, IList<RadarElement> subradarlist)
+        private IList<NewsRadarView> ConvertByRadar(int imageType, IList<RadarCategory> radarlist, IList<RadarElement> subradarlist)
         {
             var radarviewlist = radarlist.To<IList<NewsRadarView>>();
             var subradarviewlist = subradarlist.To<IList<NewsRadarElementView>>();
 
             foreach (var item in radarviewlist)
             {
+                var radar = radarlist.Where(x => x.Id == item.Id).SingleOrDefault();
+                item.LogoUrl = imageType == 1 ? radar.NormalLogoUrl : radar.HDLogoUrl;
                 item.NewsRadarElementList = subradarviewlist.Where(x => x.RadarCategoryIds.Contains(item.Id)).ToList();
             }
             return radarviewlist;

@@ -725,13 +725,13 @@ namespace Frame.Mobile.WebSite.Controllers
                     if (files.AllKeys[i].EqualsOrdinalIgnoreCase("thumbnailfile")
                         && !string.IsNullOrWhiteSpace(Request.Files[i].FileName))
                     {
-                        var thumbnailFilePath = SaveResourceFile(Const.THEME_THUMBNAILS_FOLDER_NAME, ResourcesFilePathHelper.ThemeThumbnailPath, files[i], string.Format("{0}_{1}{2}", files[i].GetFileNamePrefix(), wallpaper.ThumbnailName.GetFileNamePrefix(), files[i].GetFileType()).NormalzieFileName());
+                        var thumbnailFilePath = SaveThemeResourceFile(Const.THEME_THUMBNAILS_FOLDER_NAME, ResourcesFilePathHelper.ThemeThumbnailPath, files[i], string.Format("{0}_{1}{2}", files[i].GetFileNamePrefix(), wallpaper.ThumbnailName.GetFileNamePrefix(), files[i].GetFileType()).NormalzieFileName());
                         continue;
                     }
                     if (files.AllKeys[i].EqualsOrdinalIgnoreCase("originalfile")
                         && !string.IsNullOrWhiteSpace(Request.Files[i].FileName))
                     {
-                        var originalFilePath = SaveResourceFile(Const.THEME_ORIGINALS_FOLDER_NAME, ResourcesFilePathHelper.ThemeOriginalPath, files[i], string.Format("{0}_{1}{2}", files[i].GetFileNamePrefix(), wallpaper.OriginalName.GetFileNamePrefix(), files[i].GetFileType()).NormalzieFileName());
+                        var originalFilePath = SaveThemeResourceFile(Const.THEME_ORIGINALS_FOLDER_NAME, ResourcesFilePathHelper.ThemeOriginalPath, files[i], string.Format("{0}_{1}{2}", files[i].GetFileNamePrefix(), wallpaper.OriginalName.GetFileNamePrefix(), files[i].GetFileType()).NormalzieFileName());
                         continue;
                     }
                 }

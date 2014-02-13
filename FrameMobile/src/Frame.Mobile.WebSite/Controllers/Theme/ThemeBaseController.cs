@@ -87,7 +87,7 @@ namespace Frame.Mobile.WebSite.Controllers
         {
             if (logoFile != null && !string.IsNullOrWhiteSpace(logoFile.FileName))
             {
-                var logoFilePath = SaveResourceFile(Const.THEME_LOGOS_FOLDER_NAME, ResourcesFilePathHelper.ThemeLogoPath, logoFile, string.Format("{0}_{1}_{2}", model.Name, Guid.NewGuid().ToString(), Path.GetExtension(logoFile.FileName)).NormalzieFileName());
+                var logoFilePath = SaveThemeResourceFile(Const.THEME_LOGOS_FOLDER_NAME, ResourcesFilePathHelper.ThemeLogoPath, logoFile, string.Format("{0}_{1}_{2}", model.Name, Guid.NewGuid().ToString(), Path.GetExtension(logoFile.FileName)).NormalzieFileName());
 
                 return logoFilePath;
             }
@@ -98,7 +98,7 @@ namespace Frame.Mobile.WebSite.Controllers
         {
             if (thumbnailFile != null && !string.IsNullOrWhiteSpace(thumbnailFile.FileName))
             {
-                var thumbnailFilePath = SaveResourceFile(Const.THEME_THUMBNAILS_FOLDER_NAME, ResourcesFilePathHelper.ThemeLogoPath, thumbnailFile, string.Format("{0}_{1}_{2}", model.WallPaperNo, Guid.NewGuid().ToString(), Path.GetExtension(thumbnailFile.FileName)).NormalzieFileName());
+                var thumbnailFilePath = SaveThemeResourceFile(Const.THEME_THUMBNAILS_FOLDER_NAME, ResourcesFilePathHelper.ThemeLogoPath, thumbnailFile, string.Format("{0}_{1}_{2}", model.WallPaperNo, Guid.NewGuid().ToString(), Path.GetExtension(thumbnailFile.FileName)).NormalzieFileName());
 
                 return thumbnailFilePath;
             }
@@ -109,7 +109,7 @@ namespace Frame.Mobile.WebSite.Controllers
         {
             if (originalFile != null && !string.IsNullOrWhiteSpace(originalFile.FileName))
             {
-                var originalFilePath = SaveResourceFile(Const.THEME_ORIGINALS_FOLDER_NAME, ResourcesFilePathHelper.ThemeLogoPath, originalFile, string.Format("{0}_{1}_{2}", model.WallPaperNo, Guid.NewGuid().ToString(), Path.GetExtension(originalFile.FileName)).NormalzieFileName());
+                var originalFilePath = SaveThemeResourceFile(Const.THEME_ORIGINALS_FOLDER_NAME, ResourcesFilePathHelper.ThemeLogoPath, originalFile, string.Format("{0}_{1}_{2}", model.WallPaperNo, Guid.NewGuid().ToString(), Path.GetExtension(originalFile.FileName)).NormalzieFileName());
 
                 return originalFilePath;
             }

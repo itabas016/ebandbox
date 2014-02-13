@@ -12,6 +12,14 @@ namespace FrameMobile.Model.Radar
     {
         [SubSonicStringLength(256)]
         [SubSonicNullString]
+        public string NormalLogoUrl { get; set; }
+
+        [SubSonicStringLength(256)]
+        [SubSonicNullString]
+        public string HDLogoUrl { get; set; }
+
+        [SubSonicStringLength(256)]
+        [SubSonicNullString]
         public string Comment { get; set; }
     }
 }
