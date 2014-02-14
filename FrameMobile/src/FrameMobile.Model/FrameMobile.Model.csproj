@@ -115,7 +115,10 @@
     <Compile Include="ViewModels\Common\MobilePropertyView.cs" />
     <Compile Include="ViewModels\News\NewsCategoryView.cs" />
     <Compile Include="ViewModels\News\NewsConfigView.cs" />
+    <Compile Include="ViewModels\News\AggregateResult\NewsContentResult.cs" />
+    <Compile Include="ViewModels\News\NewsCollectionView.cs" />
     <Compile Include="ViewModels\News\NewsExtraAppView.cs" />
+    <Compile Include="ViewModels\News\AggregateResult\NewsExtraResult.cs" />
     <Compile Include="ViewModels\News\NewsInfAddressView.cs" />
     <Compile Include="ViewModels\News\NewsRadarView.cs" />
     <Compile Include="ViewModels\News\NewsSourceView.cs" />

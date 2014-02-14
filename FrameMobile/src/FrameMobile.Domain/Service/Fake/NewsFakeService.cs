@@ -404,6 +404,11 @@ namespace FrameMobile.Domain.Service
             return GetTouTiaoContentViewList(mobileParams, categoryIds, stamp, action, startnum, num, out totalCount);
         }
 
+        public NewsCollectionView GetNewsCollectionView(MobileParam mobileParams, long stamp, int extracver, bool action, string categoryIds, int startnum, int num, out int totalCount)
+        {
+            throw new NotImplementedException();
+        }
+
         #region Helper
 
         private List<NewsContent> GetTouTiaoContentList(string response, int subcategoryId)

@@ -100,5 +100,18 @@ namespace Frame.Mobile.WebSite.Controllers
             actionResult.Total = totalCount;
             return Content(actionResult.ToString());
         }
+
+        public ActionResult NewsList(string imsi, string lcd, string categoryIds, long stamp, int extracver = 0, bool act = true, int startnum = 1, int num = 10)
+        {
+            var mobileParams = GetMobileParam();
+            int totalCount = 0;
+
+            Func<NewsCollectionView> getnewscollection = () => NewsService.GetNewsCollectionView(mobileParams, stamp, extracver, act, categoryIds, startnum, num, out totalCount);
+
+            var actionResult = BuildResult(this.CheckRequiredParams(imsi, lcd), getnewscollection);
+
+            actionResult.Total = totalCount;
+            return Content(actionResult.ToString());
+        }
     }
 }

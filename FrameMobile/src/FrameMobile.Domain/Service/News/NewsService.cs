@@ -82,6 +82,17 @@ namespace FrameMobile.Domain.Service
             return contentlist.Skip(startnum - 1).Take(num).ToList();
         }
 
+        [ServiceCache]
+        public NewsCollectionView GetNewsCollectionView(MobileParam mobileParams, long stamp, int extracver, bool action, string categoryIds, int startnum, int num, out int totalCount)
+        {
+            var collection = new NewsCollectionView();
+
+            var extraServerVersion = 0;
+            collection.NewsExtraResult = GetNewsExtraResult(mobileParams, extracver, out extraServerVersion);
+            collection.NewsContentResult = GetNewsContentResult(mobileParams, stamp, action, categoryIds, startnum, num, out totalCount);
+            return collection;
+        }
+
         #region Helper
 
         private List<NewsContentView> GetContentViewList(MobileParam mobileParams, List<int> categoryIds, long stamp, bool action)
@@ -276,6 +287,32 @@ namespace FrameMobile.Domain.Service
                 item.NewsRadarElementList = subradarviewlist.Where(x => x.RadarCategoryIds.Contains(item.Id)).ToList();
             }
             return radarviewlist;
+        }
+
+        private NewsExtraResult GetNewsExtraResult(MobileParam mobileParams, int extracver, out int extrasver)
+        {
+            var extralist = GetExtraAppViewList(mobileParams, extracver, out extrasver);
+
+            var result = new NewsExtraResult()
+            {
+                NewsExtraList = extralist.ToList(),
+                Count = extralist.Count,
+                ServerViersion = extrasver
+            };
+            return result;
+        }
+
+        private NewsContentResult GetNewsContentResult(MobileParam mobileParams, long stamp, bool action, string categoryIds, int startnum, int num, out int totalCount)
+        {
+            var contentlist = GetNewsContentViewList(mobileParams, stamp, action, categoryIds, startnum, num, out totalCount);
+
+            var result = new NewsContentResult()
+            {
+                NewsContentList = contentlist.ToList(),
+                Total = totalCount,
+                Count = contentlist.Count
+            };
+            return result;
         }
 
         #endregion
