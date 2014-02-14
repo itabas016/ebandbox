@@ -91,13 +91,13 @@ namespace Frame.Mobile.WebSite.Controllers
 
         public string NEWS_DEST_NORMAL_IMAGE_DIR_BASE = string.Format("{0}\\Images\\480\\", NEWS_RESOURCES_DIR_ROOT);
 
-        public string NEWS_RADAR_LOGOS_IMAGE_PREFIX = ConfigKeys.TYD_NEWS_RADAR_LOGO_IMAGE_PREFIX.ConfigValue();
+        public string NEWS_LOGOS_IMAGE_PREFIX = ConfigKeys.TYD_NEWS_LOGO_IMAGE_PREFIX.ConfigValue();
 
-        protected string GetRadarCategoryLogoFilePath<T>(T model, HttpPostedFileBase logoFile) where T : MySQLModel
+        protected string GetNewsLogoFilePath<T>(T model, HttpPostedFileBase logoFile) where T : MySQLModel
         {
             if (logoFile != null && !string.IsNullOrWhiteSpace(logoFile.FileName))
             {
-                var logoFilePath = SaveNewsResourceFile(Const.NEWS_RADAR_LOGOS_FOLDER_NAME, ResourcesFilePathHelper.NewsRadarLogoPath, logoFile, string.Format("{0}_{1}", Guid.NewGuid().ToString(), Path.GetExtension(logoFile.FileName)).NormalzieFileName());
+                var logoFilePath = SaveNewsResourceFile(Const.NEWS_LOGOS_FOLDER_NAME, ResourcesFilePathHelper.NewsLogoPath, logoFile, string.Format("{0}_{1}", Guid.NewGuid().ToString(), Path.GetExtension(logoFile.FileName)).NormalzieFileName());
 
                 return logoFilePath;
             }

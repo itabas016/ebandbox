@@ -133,7 +133,7 @@ namespace FrameMobile.Domain.Service
                 Name = "今日头条",
                 NameLowCase = "toutiao",
                 PackageName = pkgName_TouTiao,
-                DownloadURL = string.Format(APK_DOWNLOAD_PREFIX_URL, pkgName_TouTiao),
+                ExtraLinkUrl = string.Format(APK_DOWNLOAD_PREFIX_URL, pkgName_TouTiao),
                 IsBrower = 0,
                 Status = 1,
                 CreateDateTime = DateTime.Now
@@ -145,7 +145,7 @@ namespace FrameMobile.Domain.Service
                 Name = "QQ浏览器",
                 NameLowCase = "tentcent",
                 PackageName = pkgName_QQBrower,
-                DownloadURL = string.Format(APK_DOWNLOAD_PREFIX_URL, pkgName_QQBrower),
+                ExtraLinkUrl = string.Format(APK_DOWNLOAD_PREFIX_URL, pkgName_QQBrower),
                 IsBrower = 1,
                 Status = 1,
                 CreateDateTime = DateTime.Now

@@ -54,16 +54,16 @@ namespace Frame.Mobile.WebSite.Controllers
             var normallogoFile = Request.Files[Request.Files.Keys[0]];
             var hdlogoFile = Request.Files[Request.Files.Keys[1]];
 
-            var normallogoFilePath = GetRadarCategoryLogoFilePath<RadarCategory>(model, normallogoFile);
-            var hdlogoFilePath = GetRadarCategoryLogoFilePath<RadarCategory>(model, hdlogoFile);
+            var normallogoFilePath = GetNewsLogoFilePath<RadarCategory>(model, normallogoFile);
+            var hdlogoFilePath = GetNewsLogoFilePath<RadarCategory>(model, hdlogoFile);
             if (!string.IsNullOrEmpty(normallogoFilePath))
             {
-                model.NormalLogoUrl = string.Format("{0}{1}", NEWS_RADAR_LOGOS_IMAGE_PREFIX, Path.GetFileName(normallogoFilePath));
+                model.NormalLogoUrl = string.Format("{0}{1}", NEWS_LOGOS_IMAGE_PREFIX, Path.GetFileName(normallogoFilePath));
             }
 
             if (!string.IsNullOrEmpty(hdlogoFilePath))
             {
-                model.HDLogoUrl = string.Format("{0}{1}", NEWS_RADAR_LOGOS_IMAGE_PREFIX, Path.GetFileName(hdlogoFilePath));
+                model.HDLogoUrl = string.Format("{0}{1}", NEWS_LOGOS_IMAGE_PREFIX, Path.GetFileName(hdlogoFilePath));
             }
 
             var ret = dbContextService.Add<RadarCategory>(model);
@@ -103,17 +103,17 @@ namespace Frame.Mobile.WebSite.Controllers
             radarCategory.Status = model.Status;
             radarCategory.CreateDateTime = DateTime.Now;
 
-            var normallogoFilePath = GetRadarCategoryLogoFilePath<RadarCategory>(model, normallogoFile);
-            var hdlogoFilePath = GetRadarCategoryLogoFilePath<RadarCategory>(model, hdlogoFile);
+            var normallogoFilePath = GetNewsLogoFilePath<RadarCategory>(model, normallogoFile);
+            var hdlogoFilePath = GetNewsLogoFilePath<RadarCategory>(model, hdlogoFile);
 
             if (!string.IsNullOrEmpty(normallogoFilePath))
             {
-                radarCategory.NormalLogoUrl = string.Format("{0}{1}", NEWS_RADAR_LOGOS_IMAGE_PREFIX, Path.GetFileName(normallogoFilePath));
+                radarCategory.NormalLogoUrl = string.Format("{0}{1}", NEWS_LOGOS_IMAGE_PREFIX, Path.GetFileName(normallogoFilePath));
             }
 
             if (!string.IsNullOrEmpty(hdlogoFilePath))
             {
-                radarCategory.HDLogoUrl = string.Format("{0}{1}", NEWS_RADAR_LOGOS_IMAGE_PREFIX, Path.GetFileName(hdlogoFilePath));
+                radarCategory.HDLogoUrl = string.Format("{0}{1}", NEWS_LOGOS_IMAGE_PREFIX, Path.GetFileName(hdlogoFilePath));
             }
 
             var ret = dbContextService.Update<RadarCategory>(radarCategory);

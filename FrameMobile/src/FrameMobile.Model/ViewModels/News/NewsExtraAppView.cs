@@ -18,13 +18,16 @@ namespace FrameMobile.Model
         public int IsBrower { get; set; }
 
         [JsonProperty("type")]
-        public int ShowType { get; set; }
+        public int ExtraType { get; set; }
+
+        [JsonProperty("versioncode")]
+        public int VersionCode { get; set; }
 
         [JsonProperty("logourl")]
-        public string ExtraAppLogoUrl { get; set; }
+        public string ExtraLogoUrl { get; set; }
 
-        [JsonProperty("downloadurl")]
-        public string DownloadURL { get; set; }
+        [JsonProperty("linkurl")]
+        public string ExtraLinkUrl { get; set; }
 
         [JsonProperty("description")]
         public string Description { get; set; }

@@ -459,6 +459,13 @@ namespace Frame.Mobile.WebSite.Controllers
                 TempData["errorMsg"] = "该外推应用已存在！";
                 return View();
             }
+            var logoFile = Request.Files[Request.Files.Keys[0]];
+
+            var logoFilePath = GetNewsLogoFilePath<NewsExtraApp>(model, logoFile);
+            if (!string.IsNullOrEmpty(logoFilePath))
+            {
+                model.ExtraLogoUrl = string.Format("{0}{1}", NEWS_LOGOS_IMAGE_PREFIX, Path.GetFileName(logoFilePath));
+            }
             var ret = dbContextService.Add<NewsExtraApp>(model);
 
             NewsUIService.UpdateServerVersion<NewsExtraApp>();
@@ -486,20 +493,27 @@ namespace Frame.Mobile.WebSite.Controllers
 
         [AdminAuthorize(UserGroups = "NewsAdministrator,NewsOperator")]
         [HttpPost]
-        public ActionResult ExtraAppEdit(NewsExtraApp model)
+        public ActionResult ExtraAppEdit(NewsExtraApp model, HttpPostedFileBase logoFile)
         {
             var extraApp = dbContextService.Single<NewsExtraApp>(model.Id);
 
             extraApp.Name = model.Name;
             extraApp.NameLowCase = model.NameLowCase;
             extraApp.PackageName = model.PackageName;
-            extraApp.ShowType = model.ShowType;
+            extraApp.ExtraType = model.ExtraType;
             extraApp.IsBrower = model.IsBrower;
-            extraApp.DownloadURL = model.DownloadURL;
-            extraApp.ExtraAppLogoUrl = model.ExtraAppLogoUrl;
+            extraApp.ExtraLinkUrl = model.ExtraLinkUrl;
+            extraApp.ExtraLogoUrl = model.ExtraLogoUrl;
             extraApp.Description = model.Description;
             extraApp.Status = model.Status;
             extraApp.CreateDateTime = DateTime.Now;
+
+            var logoFilePath = GetNewsLogoFilePath<NewsExtraApp>(model, logoFile);
+
+            if (!string.IsNullOrEmpty(logoFilePath))
+            {
+                extraApp.ExtraLogoUrl = string.Format("{0}{1}", NEWS_LOGOS_IMAGE_PREFIX, Path.GetFileName(logoFilePath));
+            }
 
             var ret = dbContextService.Update<NewsExtraApp>(extraApp);
 

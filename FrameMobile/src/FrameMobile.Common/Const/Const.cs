@@ -21,7 +21,7 @@ namespace FrameMobile.Common
 
         public const string NEWS_RESOURCES_FOLDER_NAME = "NewsResources";
 
-        public const string NEWS_RADAR_LOGOS_FOLDER_NAME = "Logos";
+        public const string NEWS_LOGOS_FOLDER_NAME = "Logos";
 
         #endregion
 

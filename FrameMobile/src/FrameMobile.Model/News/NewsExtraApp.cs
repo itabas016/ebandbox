@@ -10,17 +10,25 @@ namespace FrameMobile.Model.News
     [SubSonicTableNameOverride("newsextraapp")]
     public class NewsExtraApp : NewsSource
     {
-        //0 非浏览器 1 浏览器
+        /// <summary>
+        /// 是否是浏览器
+        /// 0 非浏览器 1 浏览器
+        /// </summary>
         public int IsBrower { get; set; }
 
-        //
-        public int ShowType { get; set; }
+        /// <summary>
+        /// 推广类型
+        /// 0 推广链接 1 推广应用
+        /// </summary>
+        public int ExtraType { get; set; }
+
+        public int VersionCode { get; set; }
 
         [SubSonicStringLength(256)]
-        public string ExtraAppLogoUrl { get; set; }
+        public string ExtraLogoUrl { get; set; }
 
         [SubSonicStringLength(256)]
-        public string DownloadURL { get; set; }
+        public string ExtraLinkUrl { get; set; }
 
         [SubSonicStringLength(256)]
         public string Description { get; set; }
