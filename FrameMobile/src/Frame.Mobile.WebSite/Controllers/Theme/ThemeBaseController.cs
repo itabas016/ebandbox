@@ -11,6 +11,7 @@ using FrameMobile.Domain;
 using System.IO;
 using FrameMobile.Model;
 using FrameMobile.Model.Theme;
+using NCore;
 
 namespace Frame.Mobile.WebSite.Controllers
 {
@@ -83,11 +84,13 @@ namespace Frame.Mobile.WebSite.Controllers
 
         public const int pageSize = 20;
 
+        public string THEME_LOGO_IMAGE_PREFIX = ConfigKeys.TYD_WALLPAPER_LOGO_IMAGE_PREFIX.ConfigValue();
+
         protected string GetThemeLogoFilePath<T>(T model, HttpPostedFileBase logoFile) where T : MySQLModel
         {
             if (logoFile != null && !string.IsNullOrWhiteSpace(logoFile.FileName))
             {
-                var logoFilePath = SaveThemeResourceFile(Const.THEME_LOGOS_FOLDER_NAME, ResourcesFilePathHelper.ThemeLogoPath, logoFile, string.Format("{0}_{1}_{2}", model.Name, Guid.NewGuid().ToString(), Path.GetExtension(logoFile.FileName)).NormalzieFileName());
+                var logoFilePath = SaveThemeResourceFile(Const.THEME_LOGOS_FOLDER_NAME, ResourcesFilePathHelper.ThemeLogoPath, logoFile, string.Format("{0}_{1}", Guid.NewGuid().ToString(), Path.GetExtension(logoFile.FileName)).NormalzieFileName());
 
                 return logoFilePath;
             }
