@@ -18,6 +18,7 @@ using FrameMobile.Core;
 using System.IO;
 using FrameMobile.Domain;
 using NCore;
+using FrameMobile.Common;
 
 namespace Frame.Mobile.WebSite.Controllers
 {
@@ -67,7 +68,7 @@ namespace Frame.Mobile.WebSite.Controllers
         {
             get
             {
-                return CookieService.TryGet("NewsUserName");
+                return CookieService.TryGet("UserName");
             }
         }
 
@@ -94,12 +95,12 @@ namespace Frame.Mobile.WebSite.Controllers
         [HttpPost]
         public ActionResult Login(LoginView model, string returnUrl)
         {
-            if (returnUrl.IsNullOrEmpty()) returnUrl = "/NewsUI/NewsManage";
+            if (returnUrl.IsNullOrEmpty()) returnUrl = string.Format("/Account/Manage?userName={0}", model.UserName.MakeSureNotNull());
 
             if (ModelState.IsValid && AccountService.Login(model.UserName, model.Password) && Session["VerificationCode"].ToString() == model.VerificationCode.ToUpper())
             {
-                CookieService.Set("NewsUserName", model.UserName, CookieTimeoutSeconds);
-                CookieService.Set("NewsPassword", model.Password.GetMD5Hash(), CookieTimeoutSeconds);
+                CookieService.Set("UserName", model.UserName, CookieTimeoutSeconds);
+                CookieService.Set("Password", model.Password.GetMD5Hash(), CookieTimeoutSeconds);
                 return RedirectToLocal(returnUrl);
             }
 
@@ -161,6 +162,11 @@ namespace Frame.Mobile.WebSite.Controllers
 
         public ActionResult Manage(string userName)
         {
+            if (string.IsNullOrEmpty(userName))
+            {
+                userName = UserName;
+            }
+
             var user = AccountService.GetUser(userName);
 
             return View(user);
@@ -250,22 +256,11 @@ namespace Frame.Mobile.WebSite.Controllers
         [HttpGet]
         public ActionResult ChangeInfo(int? userId)
         {
-            var userGrouplist = AccountService.GetUserGroupList();
-            ViewData["UserGrouplist"] = userGrouplist.GetSelectList();
-            var userGroupName = string.Empty;
-            var currentuser = userId.HasValue ? AccountService.GetUser(userId.Value) : AccountService.GetUser(UserName);
-            var userGroup = AccountService.GetUserGroup(currentuser.UserGroupId);
-            if (userGroup != null)
-            {
-                userGroupName = userGroup.Name;
-
-                if (userGroup.Name.ToLower() == "administrator")
-                {
-                    ViewData["IsAdmin"] = true;
-                }
-            }
-            ViewData["UserGroupName"] = userGroupName;
-            return View(currentuser);
+            var currentUser = AccountService.GetUser(UserName);
+            var user = userId.HasValue ? AccountService.GetUser(userId.Value) : AccountService.GetUser(UserName);
+            var isAdmin = currentUser.UserGroupIds.Contains(Const.SUPER_ADMIN_GROUPID);
+            ViewData["IsAdministrator"] = isAdmin;
+            return View(user);
         }
 
         [HttpPost]
@@ -303,7 +298,7 @@ namespace Frame.Mobile.WebSite.Controllers
                 try
                 {
                     AccountService.ChangePassword(model, UserName);
-                    CookieService.Remove("NewsPassword");
+                    CookieService.Remove("Password");
                     return RedirectToAction("Manage", "Account", new { userName = UserName });
                 }
                 catch (MembershipCreateUserException e)

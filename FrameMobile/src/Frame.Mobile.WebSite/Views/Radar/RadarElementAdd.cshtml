@@ -1,0 +1,79 @@
+﻿@using FrameMobile.Model;
+@using NCore;
+@model RadarElementView
+@{
+    bool isUpdateMode = ViewData["IsUpdate"] != null;
+    ViewBag.Title = isUpdateMode ? "修改雷达元素" : "添加雷达元素";
+    Layout = "~/Views/Shared/_NewsLayout.cshtml";
+
+    var actionName = isUpdateMode ? "RadarElementEdit" : "RadarElementAdd";
+    var radarcategorylist = ViewData["RadarCategorylist"] as SelectList;
+    var radarcategoryIds = ViewData["RadarCategoryIds"] as List<int>;
+}
+
+<div class="contentHeader">
+    <div class="contentHeaderInfo">
+        <button class="btn btn-quaternary btn-large addapp" onclick="history.back();">
+            返 回</button>
+    </div>
+    <div class="apphead">
+        <div class="title">
+            <b>@ViewBag.Title </b>
+        </div>
+    </div>
+</div>
+<div class="content">
+    <div class="windows">
+        @using (Html.BeginForm(actionName, "Radar", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+
+            <p>
+                <div class="title">
+                    <h1>
+                        @ViewBag.Title</h1>
+                </div>
+            </p>
+
+            <div style="clear: both">
+                <table>
+                    <tr>
+                        @Html.ValidationSummary(true)
+                        @Html.HiddenFor(m => m.Id)
+                        <td><strong>名称: </strong></td>
+                        <td>@Html.TextBoxFor(m => m.Name)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>雷达分类: </strong></td>
+                        <td>
+                            @foreach (var item in radarcategorylist)
+                            {
+                                if (isUpdateMode)
+                                {
+                                    var ischecked = radarcategoryIds.Contains(item.Value.ToInt32()) ? "checked='checked'" : string.Empty;
+                                    <input type="checkbox" name="radarcategory" value="@item.Value" @ischecked />@item.Text
+                                }
+                                else
+                                {
+                                    <input type="checkbox" name="radarcategory" value="@item.Value" />@item.Text
+                                }
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>状态: </strong></td>
+                        <td>@Html.RadioButtonFor(m => m.Status, 1) 有效 @Html.RadioButtonFor(m => m.Status, 0) 无效</td>
+                    </tr>
+                    <tr>
+                        <td><strong>备注: </strong></td>
+                        <td>@Html.TextAreaFor(m => m.Comment)</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <button class="btn btn-large btn-blue addapp" style="margin-left: 50px">@ViewBag.Title</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        }
+    </div>
+</div>

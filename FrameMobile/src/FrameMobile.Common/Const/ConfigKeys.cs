@@ -41,6 +41,8 @@ namespace FrameMobile.Common
 
         public const string TYD_NEWS_RESOURCES_DIR_ROOT = "TYD_News_Resources_Dir_Root";
 
+        public const string TYD_NEWS_RESOURCES_DIR_ROOT_CLOSE = "TYD_News_Resources_Dir_Root_Close";
+
         public const string TYD_NEWS_IMAGE_FILE_URL = "TYD_News_Image_File_URL";
 
         public const string TYD_NEWS_TOUTIAO_PARTNER = "TYD_News_TouTiao_Partner";
@@ -54,6 +56,8 @@ namespace FrameMobile.Common
         public const string DEMO_TOUTIAO_FILE_PATH_ROOT = "Demo_TouTiao_File_Path_Root";
 
         public const string TYD_NEWS_APP_DOWNLOAD_PREFIX_URL = "TYD_News_App_Download_Prefix_URL";
+
+        public const string TYD_NEWS_LOGO_IMAGE_PREFIX = "TYD_News_Logo_Image_Prefix";
 
         #endregion
 

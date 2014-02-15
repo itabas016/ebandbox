@@ -11,12 +11,19 @@ using FrameMobile.Common;
 using NCore;
 using FrameMobile.Model;
 using FrameMobile.Model.Mobile;
+using SubSonic.Schema;
 
 namespace Frame.Mobile.WebSite.Controllers
 {
+    [UserAuthorize(UserGroupTypes = "WallPaper")]
     public class WallPaperUIController : ThemeBaseController
     {
         protected override bool IsMobileInterface { get { return false; } }
+
+        public ActionResult WallPaperManage()
+        {
+            return RedirectToAction("WallPaperList");
+        }
 
         #region Category
 
@@ -35,6 +42,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return View();
         }
 
+        [AdminAuthorize(UserGroups = "WallPaperAdministrator,WallPaperOperator")]
         [HttpPost]
         public ActionResult CategoryAdd(WallPaperCategory model)
         {
@@ -47,10 +55,10 @@ namespace Frame.Mobile.WebSite.Controllers
 
             var logoFile = Request.Files[Request.Files.Keys.Count - 1];
             var logoFilePath = GetThemeLogoFilePath<WallPaperCategory>(model, logoFile);
-            var logo_Image_Prefix = ConfigKeys.TYD_WALLPAPER_LOGO_IMAGE_PREFIX.ConfigValue();
-            model.CategoryLogoUrl = string.Format("{0}{1}", logo_Image_Prefix, Path.GetFileName(logoFilePath));
+            model.CategoryLogoUrl = string.IsNullOrEmpty(logoFilePath) ? string.Empty : string.Format("{0}{1}", THEME_LOGO_IMAGE_PREFIX, Path.GetFileName(logoFilePath));
 
             var ret = dbContextService.Add<WallPaperCategory>(model);
+            WallPaperUIService.UpdateServerVersion<WallPaperCategory>();
 
             return RedirectToAction("CategoryList");
         }
@@ -63,6 +71,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return View("CategoryAdd", category);
         }
 
+        [AdminAuthorize(UserGroups = "WallPaperAdministrator,WallPaperOperator")]
         [HttpPost]
         public ActionResult CategoryEdit(WallPaperCategory model, HttpPostedFileBase logoFile)
         {
@@ -75,16 +84,20 @@ namespace Frame.Mobile.WebSite.Controllers
             category.CreateDateTime = DateTime.Now;
 
             var logoFilePath = GetThemeLogoFilePath<WallPaperCategory>(model, logoFile);
-            var logo_Image_Prefix = ConfigKeys.TYD_WALLPAPER_LOGO_IMAGE_PREFIX.ConfigValue();
-            category.CategoryLogoUrl = string.Format("{0}{1}", logo_Image_Prefix, Path.GetFileName(logoFilePath));
+            category.CategoryLogoUrl = string.IsNullOrEmpty(logoFilePath) ? string.Empty : string.Format("{0}{1}", THEME_LOGO_IMAGE_PREFIX, Path.GetFileName(logoFilePath));
 
             dbContextService.Update<WallPaperCategory>(category);
+            WallPaperUIService.UpdateServerVersion<WallPaperCategory>();
+
             return RedirectToAction("CategoryList");
         }
 
+        [AdminAuthorize(UserGroups = "WallPaperAdministrator,WallPaperOperator")]
         public ActionResult CategoryDelete(int categoryId)
         {
             var ret = dbContextService.Delete<WallPaperCategory>(categoryId);
+            WallPaperUIService.UpdateServerVersion<WallPaperCategory>();
+
             return RedirectToAction("CategoryList");
         }
 
@@ -110,6 +123,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return View();
         }
 
+        [AdminAuthorize(UserGroups = "WallPaperAdministrator,WallPaperOperator")]
         [HttpPost]
         public ActionResult SubCategoryAdd(WallPaperSubCategory model)
         {
@@ -122,10 +136,10 @@ namespace Frame.Mobile.WebSite.Controllers
 
             var logoFile = Request.Files[Request.Files.Keys.Count - 1];
             var logoFilePath = GetThemeLogoFilePath<WallPaperSubCategory>(model, logoFile);
-            var logo_Image_Prefix = ConfigKeys.TYD_WALLPAPER_LOGO_IMAGE_PREFIX.ConfigValue();
-            model.SubCategoryLogoUrl = string.Format("{0}{1}", logo_Image_Prefix, Path.GetFileName(logoFilePath));
+            model.SubCategoryLogoUrl = string.IsNullOrEmpty(logoFilePath) ? string.Empty : string.Format("{0}{1}", THEME_LOGO_IMAGE_PREFIX, Path.GetFileName(logoFilePath));
 
             var ret = dbContextService.Add<WallPaperSubCategory>(model);
+            WallPaperUIService.UpdateServerVersion<WallPaperSubCategory>();
 
             return RedirectToAction("SubCategoryList");
         }
@@ -141,6 +155,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return View("SubCategoryAdd", subcategory);
         }
 
+        [AdminAuthorize(UserGroups = "WallPaperAdministrator,WallPaperOperator")]
         [HttpPost]
         public ActionResult SubCategoryEdit(WallPaperSubCategory model, HttpPostedFileBase logoFile)
         {
@@ -153,16 +168,20 @@ namespace Frame.Mobile.WebSite.Controllers
             subcategory.CreateDateTime = DateTime.Now;
 
             var logoFilePath = GetThemeLogoFilePath<WallPaperSubCategory>(model, logoFile);
-            var logo_Image_Prefix = ConfigKeys.TYD_WALLPAPER_LOGO_IMAGE_PREFIX.ConfigValue();
-            subcategory.SubCategoryLogoUrl = string.Format("{0}{1}", logo_Image_Prefix, Path.GetFileName(logoFilePath));
+            subcategory.SubCategoryLogoUrl = string.IsNullOrEmpty(logoFilePath) ? string.Empty : string.Format("{0}{1}", THEME_LOGO_IMAGE_PREFIX, Path.GetFileName(logoFilePath));
 
             dbContextService.Update<WallPaperSubCategory>(subcategory);
+            WallPaperUIService.UpdateServerVersion<WallPaperSubCategory>();
+
             return RedirectToAction("SubCategoryList");
         }
 
+        [AdminAuthorize(UserGroups = "WallPaperAdministrator,WallPaperOperator")]
         public ActionResult SubCategoryDelete(int subcategoryId)
         {
             var ret = dbContextService.Delete<WallPaperSubCategory>(subcategoryId);
+            WallPaperUIService.UpdateServerVersion<WallPaperSubCategory>();
+
             return RedirectToAction("SubCategoryList");
         }
 
@@ -185,6 +204,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return View();
         }
 
+        [AdminAuthorize(UserGroups = "WallPaperAdministrator,WallPaperOperator")]
         [HttpPost]
         public ActionResult TopicAdd(WallPaperTopic model)
         {
@@ -197,10 +217,10 @@ namespace Frame.Mobile.WebSite.Controllers
 
             var logoFile = Request.Files[Request.Files.Keys.Count - 1];
             var logoFilePath = GetThemeLogoFilePath<WallPaperTopic>(model, logoFile);
-            var logo_Image_Prefix = ConfigKeys.TYD_WALLPAPER_LOGO_IMAGE_PREFIX.ConfigValue();
-            model.TopicLogoUrl = string.Format("{0}{1}", logo_Image_Prefix, Path.GetFileName(logoFilePath));
+            model.TopicLogoUrl = string.IsNullOrEmpty(logoFilePath) ? string.Empty : string.Format("{0}{1}", THEME_LOGO_IMAGE_PREFIX, Path.GetFileName(logoFilePath));
 
             var ret = dbContextService.Add<WallPaperTopic>(model);
+            WallPaperUIService.UpdateServerVersion<WallPaperTopic>();
 
             return RedirectToAction("TopicList");
         }
@@ -213,6 +233,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return View("TopicAdd", Topic);
         }
 
+        [AdminAuthorize(UserGroups = "WallPaperAdministrator,WallPaperOperator")]
         [HttpPost]
         public ActionResult TopicEdit(WallPaperTopic model, HttpPostedFileBase logoFile)
         {
@@ -221,20 +242,25 @@ namespace Frame.Mobile.WebSite.Controllers
             topic.Name = model.Name;
             topic.Status = model.Status;
             topic.OrderNumber = model.OrderNumber;
+            topic.Summary = model.Summary;
             topic.Comment = model.Comment;
             topic.CreateDateTime = DateTime.Now;
 
             var logoFilePath = GetThemeLogoFilePath<WallPaperTopic>(model, logoFile);
-            var logo_Image_Prefix = ConfigKeys.TYD_WALLPAPER_LOGO_IMAGE_PREFIX.ConfigValue();
-            topic.TopicLogoUrl = string.Format("{0}{1}", logo_Image_Prefix, Path.GetFileName(logoFilePath));
+            topic.TopicLogoUrl = string.IsNullOrEmpty(logoFilePath) ? string.Empty : string.Format("{0}{1}", THEME_LOGO_IMAGE_PREFIX, Path.GetFileName(logoFilePath));
 
             dbContextService.Update<WallPaperTopic>(topic);
+            WallPaperUIService.UpdateServerVersion<WallPaperTopic>();
+
             return RedirectToAction("TopicList");
         }
 
+        [AdminAuthorize(UserGroups = "WallPaperAdministrator,WallPaperOperator")]
         public ActionResult TopicDelete(int topicId)
         {
             var ret = dbContextService.Delete<WallPaperTopic>(topicId);
+            WallPaperUIService.UpdateServerVersion<WallPaperTopic>();
+
             return RedirectToAction("TopicList");
         }
 
@@ -242,13 +268,14 @@ namespace Frame.Mobile.WebSite.Controllers
 
         #region WallPaper
 
-        public ActionResult WallPaperList()
+        public ActionResult WallPaperList(int? page)
         {
-            var wallpaperlist = dbContextService.All<WallPaper>().ToList();
+            int pageNum = page.HasValue ? page.Value : 0;
+            PagedList<WallPaper> wallpaperlist = dbContextService.GetPaged<WallPaper>("PublishTime desc", pageNum, pageSize);
             ViewData["WallPaperlist"] = wallpaperlist;
+            ViewData["pageNum"] = pageNum;
             ViewData["TotalCount"] = wallpaperlist.Count;
-
-            return View();
+            return View(wallpaperlist);
         }
 
         [HttpGet]
@@ -257,10 +284,11 @@ namespace Frame.Mobile.WebSite.Controllers
             return View();
         }
 
+        [AdminAuthorize(UserGroups = "WallPaperAdministrator,WallPaperOperator")]
         [HttpPost]
         public ActionResult WallPaperAdd(WallPaper model)
         {
-            var exist = dbContextService.Exists<WallPaper>(x => x.Titile == model.Titile);
+            var exist = dbContextService.Exists<WallPaper>(x => x.Title == model.Title);
             if (exist)
             {
                 TempData["errorMsg"] = "该分类已经存在！";
@@ -269,11 +297,11 @@ namespace Frame.Mobile.WebSite.Controllers
 
             var thumbnailFile = Request.Files[Request.Files.Keys[0]];
             var thumbnailFilePath = GetThemeThumbnailFilePath(model, thumbnailFile);
-            model.ThumbnailName = Path.GetFileName(thumbnailFilePath);
+            model.ThumbnailName = string.IsNullOrEmpty(thumbnailFilePath) ? string.Empty : Path.GetFileName(thumbnailFilePath);
 
             var originalFile = Request.Files[Request.Files.Keys[1]];
             var originalFilePath = GetThemeOriginalFilePath(model, originalFile);
-            model.OriginalName = Path.GetFileName(originalFilePath);
+            model.OriginalName = string.IsNullOrEmpty(originalFilePath) ? string.Empty : Path.GetFileName(originalFilePath);
 
             var ret = dbContextService.Add<WallPaper>(model);
 
@@ -288,12 +316,14 @@ namespace Frame.Mobile.WebSite.Controllers
             return View("WallPaperAdd", wallpaper);
         }
 
+        [AdminAuthorize(UserGroups = "WallPaperAdministrator,WallPaperOperator")]
         [HttpPost]
         public ActionResult WallPaperEdit(WallPaper model, HttpPostedFileBase thumbnailFile, HttpPostedFileBase originalFile)
         {
             var wallpaper = dbContextService.Single<WallPaper>(model.Id);
 
-            wallpaper.Titile = model.Titile;
+            wallpaper.Title = model.Title;
+            wallpaper.WallPaperNo = model.WallPaperNo;
             wallpaper.Status = model.Status;
             wallpaper.PublishTime = model.PublishTime;
             wallpaper.ModifiedTime = DateTime.Now;
@@ -304,19 +334,44 @@ namespace Frame.Mobile.WebSite.Controllers
             wallpaper.CreateDateTime = DateTime.Now;
 
             var thumbnailFilePath = GetThemeThumbnailFilePath(model, thumbnailFile);
-            wallpaper.ThumbnailName = Path.GetFileName(thumbnailFilePath);
+            wallpaper.ThumbnailName = string.IsNullOrEmpty(thumbnailFilePath) ? string.Empty : Path.GetFileName(thumbnailFilePath);
 
             var originalFilePath = GetThemeOriginalFilePath(model, originalFile);
-            wallpaper.OriginalName = Path.GetFileName(originalFilePath);
+            wallpaper.OriginalName = string.IsNullOrEmpty(originalFilePath) ? string.Empty : Path.GetFileName(originalFilePath);
 
             dbContextService.Update<WallPaper>(wallpaper);
             return RedirectToAction("WallPaperList");
         }
 
+        [AdminAuthorize(UserGroups = "WallPaperAdministrator,WallPaperOperator")]
         public ActionResult WallPaperDelete(int wallpaperId)
         {
             var ret = dbContextService.Delete<WallPaper>(wallpaperId);
             return RedirectToAction("WallPaperList");
+        }
+
+        public ActionResult WallPaperSearchResult(int? page)
+        {
+            int pageNum = page.HasValue ? page.Value : 1;
+            var searchKey = Request.QueryString["textfield"];
+
+            var wallpaperResult = (from p in dbContextService.All<WallPaper>()
+                                   where (p.WallPaperNo == searchKey || p.Title.Contains(searchKey))
+                                   select new WallPaper
+                                   {
+                                       Id = p.Id,
+                                       WallPaperNo = p.WallPaperNo,
+                                       Title = p.Title,
+                                       DownloadNumber = p.DownloadNumber,
+                                       PublishTime = p.PublishTime,
+                                       Status = p.Status
+                                   }).AsQueryable();
+            var wallpaperlist = wallpaperResult.ToPagedList<WallPaper>(pageNum, pageSize);
+
+            ViewData["WallPaperlist"] = wallpaperlist;
+            ViewData["pageNum"] = pageNum;
+            ViewData["TotalCount"] = wallpaperlist.Count;
+            return View("WallPaperList", wallpaperlist);
         }
 
         #endregion
@@ -337,11 +392,17 @@ namespace Frame.Mobile.WebSite.Controllers
             var relatetopicIds = WallPaperUIService.GetRelateTopicIds(wallpaperId).ToList();
             var relatepropertyIds = WallPaperUIService.GetRelateMobilePropertyIds(wallpaperId).ToList();
 
+            var thumbnailNamelist = WallPaperUIService.GetImageNameListByMobileProperty(Const.WALLPAPER_THUMBNAIL, wallpaper, relatepropertyIds).ToList();
+            var originalNamelist = WallPaperUIService.GetImageNameListByMobileProperty(Const.WALLPAPER_ORIGINAL, wallpaper, relatepropertyIds).ToList();
+
             ViewData["Categorylist"] = categorylist.GetSelectList();
             ViewData["SubCategorylist"] = subcategorylist.GetSelectList();
             ViewData["Topiclist"] = topiclist.GetSelectList();
             ViewData["Propertylist"] = propertylist.GetSelectList();
             ViewData["WallPaper"] = wallpaper;
+
+            ViewData["ThumbnailNames"] = thumbnailNamelist;
+            ViewData["OriginalNames"] = originalNamelist;
 
             ViewData["RelateCategoryIds"] = relatecategoryIds;
             ViewData["RelateSubCategoryIds"] = relatesubcategoryIds;
@@ -354,12 +415,15 @@ namespace Frame.Mobile.WebSite.Controllers
                 RelateCategoryIds = relatecategoryIds,
                 RelateSubCategoryIds = relatesubcategoryIds,
                 RelateTopicIds = relatetopicIds,
-                RelateMobilePropertyIds = relatepropertyIds
+                RelateMobilePropertyIds = relatepropertyIds,
+                ThumbnailNames = thumbnailNamelist,
+                OriginalNames = originalNamelist
             };
 
             return View(config);
         }
 
+        [AdminAuthorize(UserGroups = "WallPaperAdministrator,WallPaperOperator")]
         [HttpPost]
         public ActionResult WallPaperConfig(WallPaperConfigView model, FormCollection parameters)
         {
@@ -371,6 +435,38 @@ namespace Frame.Mobile.WebSite.Controllers
             WallPaperConfig(model, categoryIds, subcategoryIds, topicIds, propertyIds);
 
             return RedirectToAction("WallPaperList");
+        }
+
+        [HttpPost]
+        public ActionResult Preview(WallPaperConfigView model, string type)
+        {
+            var imageViewlist = new List<ImageView>();
+            var thumbnailImagePrefix = ConfigKeys.TYD_WALLPAPER_THUMBNAIL_IMAGE_PREFIX.ConfigValue();
+            var originalImagePrefix = ConfigKeys.TYD_WALLPAPER_ORIGINAL_IMAGE_PREFIX.ConfigValue();
+
+            switch (type)
+            {
+                case Const.WALLPAPER_THUMBNAIL:
+                    foreach (var item in model.ThumbnailNames)
+                    {
+                        var imageView = new ImageView();
+                        imageView.ImagePath = string.Format("{0}{1}", thumbnailImagePrefix, item);
+                        imageViewlist.Add(imageView);
+                    }
+                    break;
+                case Const.WALLPAPER_ORIGINAL:
+                    foreach (var item in model.OriginalNames)
+                    {
+                        var urlView = new ImageView();
+                        urlView.ImagePath = string.Format("{0}{1}", originalImagePrefix, item);
+                        imageViewlist.Add(urlView);
+                    }
+                    break;
+                default:
+                    break;
+            }
+            ViewData["Imagelist"] = imageViewlist;
+            return View();
         }
 
         #endregion
@@ -623,13 +719,13 @@ namespace Frame.Mobile.WebSite.Controllers
                     if (files.AllKeys[i].EqualsOrdinalIgnoreCase("thumbnailfile")
                         && !string.IsNullOrWhiteSpace(Request.Files[i].FileName))
                     {
-                        var thumbnailFilePath = SaveResourceFile(Const.THEME_THUMBNAILS_FOLDER_NAME, ResourcesFilePathHelper.ThemeThumbnailPath, files[i], string.Format("{0}_{1}{2}", files[i].GetFileNamePrefix(), wallpaper.ThumbnailName.GetFileNamePrefix(), files[i].GetFileType()).NormalzieFileName());
+                        var thumbnailFilePath = SaveThemeResourceFile(Const.THEME_THUMBNAILS_FOLDER_NAME, ResourcesFilePathHelper.ThemeThumbnailPath, files[i], string.Format("{0}_{1}{2}", files[i].GetFileNamePrefix(), wallpaper.ThumbnailName.GetFileNamePrefix(), files[i].GetFileType()).NormalzieFileName());
                         continue;
                     }
                     if (files.AllKeys[i].EqualsOrdinalIgnoreCase("originalfile")
                         && !string.IsNullOrWhiteSpace(Request.Files[i].FileName))
                     {
-                        var originalFilePath = SaveResourceFile(Const.THEME_ORIGINALS_FOLDER_NAME, ResourcesFilePathHelper.ThemeOriginalPath, files[i], string.Format("{0}_{1}{2}", files[i].GetFileNamePrefix(), wallpaper.OriginalName.GetFileNamePrefix(), files[i].GetFileType()).NormalzieFileName());
+                        var originalFilePath = SaveThemeResourceFile(Const.THEME_ORIGINALS_FOLDER_NAME, ResourcesFilePathHelper.ThemeOriginalPath, files[i], string.Format("{0}_{1}{2}", files[i].GetFileNamePrefix(), wallpaper.OriginalName.GetFileNamePrefix(), files[i].GetFileType()).NormalzieFileName());
                         continue;
                     }
                 }

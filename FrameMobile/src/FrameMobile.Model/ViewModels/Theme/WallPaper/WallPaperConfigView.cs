@@ -18,5 +18,9 @@ namespace FrameMobile.Model
         public List<int> RelateTopicIds { get; set; }
 
         public List<int> RelateMobilePropertyIds { get; set; }
+
+        public List<string> ThumbnailNames { get; set; }
+
+        public List<string> OriginalNames { get; set; }
     }
 }

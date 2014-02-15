@@ -61,5 +61,25 @@ namespace FrameMobile.Domain
             var result = string.Format("{0}_{1}_{2}", fileNamePrefix, resolution, fileName);
             return result;
         }
+
+        public static string GetCompleteThumbnailUrl(this string thumbnailName, MobileParam mobileParams)
+        {
+            var resolution = mobileParams.Resolution.ToLower();
+            if (string.IsNullOrEmpty(resolution))
+            {
+                return string.Format("{0}{1}", ConfigKeys.TYD_WALLPAPER_THUMBNAIL_IMAGE_PREFIX.ConfigValue(), thumbnailName);
+            }
+            return string.Format("{0}{1}_{2}", ConfigKeys.TYD_WALLPAPER_THUMBNAIL_IMAGE_PREFIX.ConfigValue(), resolution, thumbnailName);
+        }
+
+        public static string GetCompleteOriginalUrl(this string originalName, MobileParam mobileParams)
+        {
+            var resolution = mobileParams.Resolution.ToLower();
+            if (string.IsNullOrEmpty(resolution))
+            {
+                return string.Format("{0}{1}", ConfigKeys.TYD_WALLPAPER_ORIGINAL_IMAGE_PREFIX.ConfigValue(), originalName);
+            }
+            return string.Format("{0}{1}_{2}", ConfigKeys.TYD_WALLPAPER_ORIGINAL_IMAGE_PREFIX.ConfigValue(), resolution, originalName);
+        }
     }
 }

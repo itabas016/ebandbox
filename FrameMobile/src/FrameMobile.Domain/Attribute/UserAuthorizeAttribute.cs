@@ -9,20 +9,36 @@ using StructureMap;
 
 namespace FrameMobile.Domain
 {
-    public class UserAuthorizeAttribute : AuthorizeAttribute
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = true)]
+    public class UserAuthorizeAttribute : AuthorizeAttributeBase
     {
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
-            IAccountService accountService = ObjectFactory.GetInstance<IAccountService>();
+            if (UserName == "" || Password == "") return false;
 
-            ICookieService cookieService = ObjectFactory.GetInstance<ICookieService>();
-
-            var userName = cookieService.TryGet("NewsUserName");
-            var password = cookieService.TryGet("NewsPassword");
-
-            if (userName == "" || password == "") return false;
-
-            if (accountService.Authentication(userName, password) == 0) return true;
+            if (accountService.Authentication(UserName, Password) == 0)
+            {
+                if (CurrentUser != null)
+                {
+                    var userGroupIds = CurrentUser.UserGroupIds.GetIds();
+                    foreach (var userGroupId in userGroupIds)
+                    {
+                        if (userGroupId == 1)//super admin
+                        {
+                            return true;
+                        }
+                        if (userGroupId != 0 && userGroupId != 1 && !string.IsNullOrEmpty(UserGroups))
+                        {
+                            var usergroup = accountService.GetUserGroup(userGroupId);
+                            if (usergroup != null && UserGroupTypes.Contains(usergroup.Type))
+                            {
+                                return true;
+                            }
+                        }
+                    }
+                }
+                return false;
+            }
 
             else return false;
         }

@@ -10,24 +10,8 @@ using StructureMap;
 
 namespace Frame.Mobile.WebSite.Controllers
 {
-    public class NewsController : MvcControllerBase
+    public class NewsController : NewsBaseController
     {
-        public INewsService NewsService
-        {
-            get
-            {
-                if (_newsService == null)
-                    _newsService = ObjectFactory.GetInstance<INewsService>();
-
-                return _newsService;
-            }
-            set
-            {
-                _newsService = value;
-            }
-        }
-        private INewsService _newsService;
-
         public ActionResult SourceList(string imsi, int cver = 0)
         {
             var mobileParams = GetMobileParam();
@@ -91,6 +75,19 @@ namespace Frame.Mobile.WebSite.Controllers
             return Content(actionResult.ToString());
         }
 
+        public ActionResult RadarList(string imsi, string lcd, int cver = 0)
+        {
+            var mobileParams = GetMobileParam();
+            int sver = 0;
+
+            Func<IList<NewsRadarView>> getradarlist = () => NewsService.GetNewsRadarViewList(mobileParams, cver, out sver);
+
+            var actionResult = BuildResult(this.CheckRequiredParams(imsi, lcd), getradarlist);
+
+            actionResult.ServerVerison = sver;
+            return Content(actionResult.ToString());
+        }
+
         public ActionResult NewsList(string imsi, string lcd, string categoryIds, long stamp, bool act = true, int startnum = 1, int num = 10)
         {
             var mobileParams = GetMobileParam();
@@ -99,6 +96,19 @@ namespace Frame.Mobile.WebSite.Controllers
             Func<IList<NewsContentView>> gettoutiaocontentlist = () => NewsService.GetNewsContentViewList(mobileParams, stamp, act, categoryIds, startnum, num, out totalCount);
 
             var actionResult = BuildResult(this.CheckRequiredParams(imsi, lcd), gettoutiaocontentlist);
+
+            actionResult.Total = totalCount;
+            return Content(actionResult.ToString());
+        }
+
+        public ActionResult NewsList(string imsi, string lcd, string categoryIds, long stamp, int extracver, bool act = true, int startnum = 1, int num = 10)
+        {
+            var mobileParams = GetMobileParam();
+            int totalCount = 0;
+
+            Func<NewsCollectionView> getnewscollection = () => NewsService.GetNewsCollectionView(mobileParams, stamp, extracver, act, categoryIds, startnum, num, out totalCount);
+
+            var actionResult = BuildResult(this.CheckRequiredParams(imsi, lcd), getnewscollection);
 
             actionResult.Total = totalCount;
             return Content(actionResult.ToString());

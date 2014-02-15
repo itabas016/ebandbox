@@ -23,7 +23,7 @@ namespace FrameMobile.Model
         public int HardwareId { get; set; }
 
         [JsonProperty("resolutionid")]
-        public int ResoulutionId { get; set; }
+        public int ResolutionId { get; set; }
 
         [JsonProperty("status")]
         public int Status { get; set; }

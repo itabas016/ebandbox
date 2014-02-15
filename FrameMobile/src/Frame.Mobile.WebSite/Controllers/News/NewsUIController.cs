@@ -18,63 +18,12 @@ using FrameMobile.Model.Common;
 
 namespace Frame.Mobile.WebSite.Controllers
 {
-    [UserAuthorize]
-    public class NewsUIController : MvcControllerBase
+    [UserAuthorize(UserGroupTypes = "News")]
+    public class NewsUIController : NewsBaseController
     {
         #region Prop
 
-        private INewsUIService _newsUIService;
-        public INewsUIService NewsUIService
-        {
-            get
-            {
-                if (_newsUIService == null)
-                {
-                    _newsUIService = ObjectFactory.GetInstance<INewsUIService>();
-                }
-                return _newsUIService;
-            }
-            set
-            {
-                _newsUIService = value;
-            }
-        }
-
-        private INewsDbContextService _dbContextService;
-        public INewsDbContextService dbContextService
-        {
-            get
-            {
-                if (_dbContextService == null)
-                {
-                    _dbContextService = ObjectFactory.GetInstance<INewsDbContextService>();
-                }
-                return _dbContextService;
-            }
-            set
-            {
-                _dbContextService = value;
-            }
-        }
-
         protected override bool IsMobileInterface { get { return false; } }
-
-        public const int pageSize = 20;
-
-        public static string NEWS_RESOURCES_DIR_ROOT = ConfigKeys.TYD_NEWS_RESOURCES_DIR_ROOT.ConfigValue();
-
-        public string NEWS_DEST_HD_IMAGE_DIR_BASE = string.Format("{0}\\Images\\720\\", NEWS_RESOURCES_DIR_ROOT);
-
-        public string NEWS_DEST_NORMAL_IMAGE_DIR_BASE = string.Format("{0}\\Images\\480\\", NEWS_RESOURCES_DIR_ROOT);
-
-        #endregion
-
-        #region Ctor
-
-        public NewsUIController(INewsUIService newsUIService)
-        {
-            this.NewsUIService = newsUIService;
-        }
 
         #endregion
 
@@ -103,7 +52,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return View();
         }
 
-        [AdminAuthorize]
+        [AdminAuthorize(UserGroups = "NewsAdministrator,NewsOperator")]
         [HttpPost]
         public ActionResult NewsAdd(NewsContent model)
         {
@@ -128,7 +77,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return View("NewsAdd", news);
         }
 
-        [AdminAuthorize]
+        [AdminAuthorize(UserGroups = "NewsAdministrator,NewsOperator")]
         [HttpPost]
         public ActionResult NewsEdit(NewsContent model, HttpPostedFileBase newsimage)
         {
@@ -161,7 +110,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return RedirectToAction("NewsManage");
         }
 
-        [AdminAuthorize]
+        [AdminAuthorize(UserGroups = "NewsAdministrator,NewsOperator")]
         public ActionResult NewsDelete(int newsId)
         {
             var ret = dbContextService.Delete<NewsContent>(x => x.Id == newsId);
@@ -173,9 +122,17 @@ namespace Frame.Mobile.WebSite.Controllers
             int pageNum = page.HasValue ? page.Value : 1;
             var searchKey = Request.QueryString["textfield"];
 
-            var newsResult = dbContextService.Find<NewsContent>(x => x.Title.Contains(searchKey)) as IQueryable<NewsContent>;
-
-            PagedList<NewsContent> newslist = new PagedList<NewsContent>(newsResult, pageNum, pageSize);
+            var newsResult = (from p in dbContextService.All<NewsContent>()
+                             where p.Title.Contains(searchKey)
+                             select new NewsContent
+                             {
+                                 Id = p.Id,
+                                 Title = p.Title,
+                                 Site = p.Site,
+                                 PublishTime = p.PublishTime,
+                                 Status = p.Status
+                             }).AsQueryable();
+            var newslist = newsResult.ToPagedList<NewsContent>(pageNum, pageSize);
 
             ViewData["newslist"] = newslist;
             ViewData["pageNum"] = pageNum;
@@ -199,7 +156,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return View();
         }
 
-        [AdminAuthorize]
+        [AdminAuthorize(UserGroups = "NewsAdministrator,NewsOperator")]
         [HttpPost]
         public ActionResult ConfigAdd(NewsConfig model)
         {
@@ -213,7 +170,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return RedirectToAction("ConfigList");
         }
 
-        [AdminAuthorize]
+        [AdminAuthorize(UserGroups = "NewsAdministrator,NewsOperator")]
         public ActionResult ConfigDelete(int configId)
         {
             var ret = dbContextService.Delete<NewsConfig>(configId);
@@ -228,7 +185,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return View("ConfigAdd", config);
         }
 
-        [AdminAuthorize]
+        [AdminAuthorize(UserGroups = "NewsAdministrator,NewsOperator")]
         [HttpPost]
         public ActionResult ConfigEdit(NewsConfig model)
         {
@@ -262,7 +219,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return View();
         }
 
-        [AdminAuthorize]
+        [AdminAuthorize(UserGroups = "NewsAdministrator,NewsOperator")]
         [HttpPost]
         public ActionResult SourceAdd(NewsSource model)
         {
@@ -279,7 +236,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return RedirectToAction("SourceList");
         }
 
-        [AdminAuthorize]
+        [AdminAuthorize(UserGroups = "NewsAdministrator,NewsOperator")]
         public ActionResult SourceDelete(int sourceId)
         {
             var ret = dbContextService.Delete<NewsSource>(sourceId);
@@ -297,7 +254,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return View("SourceAdd", source);
         }
 
-        [AdminAuthorize]
+        [AdminAuthorize(UserGroups = "NewsAdministrator,NewsOperator")]
         [HttpPost]
         public ActionResult SourceEdit(NewsSource model)
         {
@@ -334,7 +291,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return View();
         }
 
-        [AdminAuthorize]
+        [AdminAuthorize(UserGroups = "NewsAdministrator,NewsOperator")]
         [HttpPost]
         public ActionResult CategoryAdd(NewsCategory model)
         {
@@ -351,7 +308,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return RedirectToAction("CategoryList");
         }
 
-        [AdminAuthorize]
+        [AdminAuthorize(UserGroups = "NewsAdministrator,NewsOperator")]
         public ActionResult CategoryDelete(int categoryId)
         {
             var ret = dbContextService.Delete<NewsCategory>(categoryId);
@@ -369,7 +326,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return View("CategoryAdd", category);
         }
 
-        [AdminAuthorize]
+        [AdminAuthorize(UserGroups = "NewsAdministrator,NewsOperator")]
         [HttpPost]
         public ActionResult CategoryEdit(NewsCategory model)
         {
@@ -410,7 +367,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return View();
         }
 
-        [AdminAuthorize]
+        [AdminAuthorize(UserGroups = "NewsAdministrator,NewsOperator")]
         [HttpPost]
         public ActionResult SubCategoryAdd(NewsSubCategory model)
         {
@@ -427,7 +384,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return RedirectToAction("SubCategoryList");
         }
 
-        [AdminAuthorize]
+        [AdminAuthorize(UserGroups = "NewsAdministrator,NewsOperator")]
         public ActionResult SubCategoryDelete(int subcategoryId)
         {
             var ret = dbContextService.Delete<NewsSubCategory>(subcategoryId);
@@ -452,7 +409,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return View("SubCategoryAdd", subcategory);
         }
 
-        [AdminAuthorize]
+        [AdminAuthorize(UserGroups = "NewsAdministrator,NewsOperator")]
         [HttpPost]
         public ActionResult SubCategoryEdit(NewsSubCategory model)
         {
@@ -492,7 +449,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return View();
         }
 
-        [AdminAuthorize]
+        [AdminAuthorize(UserGroups = "NewsAdministrator,NewsOperator")]
         [HttpPost]
         public ActionResult ExtraAppAdd(NewsExtraApp model)
         {
@@ -502,6 +459,13 @@ namespace Frame.Mobile.WebSite.Controllers
                 TempData["errorMsg"] = "该外推应用已存在！";
                 return View();
             }
+            var logoFile = Request.Files[Request.Files.Keys[0]];
+
+            var logoFilePath = GetNewsLogoFilePath<NewsExtraApp>(model, logoFile);
+            if (!string.IsNullOrEmpty(logoFilePath))
+            {
+                model.ExtraLogoUrl = string.Format("{0}{1}", NEWS_LOGOS_IMAGE_PREFIX, Path.GetFileName(logoFilePath));
+            }
             var ret = dbContextService.Add<NewsExtraApp>(model);
 
             NewsUIService.UpdateServerVersion<NewsExtraApp>();
@@ -509,6 +473,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return RedirectToAction("ExtraAppList");
         }
 
+        [AdminAuthorize(UserGroups = "NewsAdministrator,NewsOperator")]
         public ActionResult ExtraAppDelete(int extraAppId)
         {
             var ret = dbContextService.Delete<NewsExtraApp>(extraAppId);
@@ -526,19 +491,29 @@ namespace Frame.Mobile.WebSite.Controllers
             return View("ExtraAppAdd", extraApp);
         }
 
-        [AdminAuthorize]
+        [AdminAuthorize(UserGroups = "NewsAdministrator,NewsOperator")]
         [HttpPost]
-        public ActionResult ExtraAppEdit(NewsExtraApp model)
+        public ActionResult ExtraAppEdit(NewsExtraApp model, HttpPostedFileBase logoFile)
         {
             var extraApp = dbContextService.Single<NewsExtraApp>(model.Id);
 
             extraApp.Name = model.Name;
             extraApp.NameLowCase = model.NameLowCase;
             extraApp.PackageName = model.PackageName;
+            extraApp.ExtraType = model.ExtraType;
             extraApp.IsBrower = model.IsBrower;
-            extraApp.DownloadURL = model.DownloadURL;
+            extraApp.ExtraLinkUrl = model.ExtraLinkUrl;
+            extraApp.ExtraLogoUrl = model.ExtraLogoUrl;
+            extraApp.Description = model.Description;
             extraApp.Status = model.Status;
             extraApp.CreateDateTime = DateTime.Now;
+
+            var logoFilePath = GetNewsLogoFilePath<NewsExtraApp>(model, logoFile);
+
+            if (!string.IsNullOrEmpty(logoFilePath))
+            {
+                extraApp.ExtraLogoUrl = string.Format("{0}{1}", NEWS_LOGOS_IMAGE_PREFIX, Path.GetFileName(logoFilePath));
+            }
 
             var ret = dbContextService.Update<NewsExtraApp>(extraApp);
 
@@ -572,7 +547,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return View();
         }
 
-        [AdminAuthorize]
+        [AdminAuthorize(UserGroups = "NewsAdministrator,NewsOperator")]
         [HttpPost]
         public ActionResult InfAddressAdd(NewsInfAddress model)
         {
@@ -589,6 +564,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return RedirectToAction("InfAddressList");
         }
 
+        [AdminAuthorize(UserGroups = "NewsAdministrator,NewsOperator")]
         public ActionResult InfAddressDelete(int infAddressId)
         {
             var ret = dbContextService.Delete<NewsInfAddress>(infAddressId);
@@ -615,7 +591,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return View("InfAddressAdd", extraApp);
         }
 
-        [AdminAuthorize]
+        [AdminAuthorize(UserGroups = "NewsAdministrator,NewsOperator")]
         [HttpPost]
         public ActionResult InfAddressEdit(NewsInfAddress model)
         {

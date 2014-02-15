@@ -68,6 +68,7 @@ namespace FrameMobile.Domain.Service
                 Id = 0,
                 Name = "全部",
                 CategoryLogoUrl = "",
+                Summary = string.Empty,
                 OrderNumber = 0,
                 CreateDateTime = DateTime.Now,
                 Comment = "",
@@ -78,7 +79,8 @@ namespace FrameMobile.Domain.Service
                 {
                     Id = 1,
                     Name = "美女",
-                    CategoryLogoUrl = "http://theme.kk874.com/ThemeResources/Thumbnail/th1123.jpg",
+                    CategoryLogoUrl = "http://theme.kk874.com/ThemeResources/Thumbnails/th1123.jpg",
+                    Summary = string.Empty,
                     OrderNumber = 1,
                     CreateDateTime = DateTime.Now,
                     Comment = "",
@@ -89,7 +91,8 @@ namespace FrameMobile.Domain.Service
             {
                 Id = 2,
                 Name = "动漫",
-                CategoryLogoUrl = "http://theme.kk874.com/ThemeResources/Thumbnail/th1111.jpg",
+                CategoryLogoUrl = "http://theme.kk874.com/ThemeResources/Thumbnails/th1111.jpg",
+                Summary = string.Empty,
                 OrderNumber = 2,
                 CreateDateTime = DateTime.Now,
                 Comment = "",
@@ -113,7 +116,8 @@ namespace FrameMobile.Domain.Service
                 Id = 1,
                 Name = "美女之家",
                 CategoryId = 1,
-                SubCategoryLogoUrl = "http://theme.kk874.com/ThemeResources/Thumbnail/th1123.jpg",
+                SubCategoryLogoUrl = "http://theme.kk874.com/ThemeResources/Thumbnails/th1123.jpg",
+                Summary = string.Empty,
                 OrderNumber = 1,
                 CreateDateTime = DateTime.Now,
                 Comment = "",
@@ -125,7 +129,8 @@ namespace FrameMobile.Domain.Service
                 Id = 2,
                 Name = "模特",
                 CategoryId = 1,
-                SubCategoryLogoUrl = "http://theme.kk874.com/ThemeResources/Thumbnail/th1124.jpg",
+                SubCategoryLogoUrl = "http://theme.kk874.com/ThemeResources/Thumbnails/th1124.jpg",
+                Summary = string.Empty,
                 OrderNumber = 3,
                 CreateDateTime = DateTime.Now,
                 Comment = "",
@@ -137,7 +142,8 @@ namespace FrameMobile.Domain.Service
                 Id = 3,
                 Name = "动漫1",
                 CategoryId = 2,
-                SubCategoryLogoUrl = "http://theme.kk874.com/ThemeResources/Thumbnail/th1112.jpg",
+                SubCategoryLogoUrl = "http://theme.kk874.com/ThemeResources/Thumbnails/th1112.jpg",
+                Summary = string.Empty,
                 OrderNumber = 2,
                 CreateDateTime = DateTime.Now,
                 Comment = "",
@@ -160,8 +166,9 @@ namespace FrameMobile.Domain.Service
             {
                 Id = 1,
                 Name = "新年快乐",
-                TopicLogoUrl = "http://theme.kk874.com/ThemeResources/Logo/p1.jpg",
+                TopicLogoUrl = "http://theme.kk874.com/ThemeResources/Logos/p1.jpg",
                 OrderNumber = 1,
+                Summary = "这一季，有我最深的思念。就让风捎去满心的祝福，缀满你甜蜜的梦境，祝你拥有一个更加灿烂更加辉煌的来年。把美好的祝福，输在这条短信里，信不长情意重，我的好友愿你新年快乐！",
                 CreateDateTime = DateTime.Now,
                 Comment = "",
                 Status = 1
@@ -171,15 +178,39 @@ namespace FrameMobile.Domain.Service
             {
                 Id = 2,
                 Name = "元旦快乐",
-                TopicLogoUrl = "http://theme.kk874.com/ThemeResources/Logo/p2.jpg",
+                TopicLogoUrl = "http://theme.kk874.com/ThemeResources/Logos/p2.jpg",
                 OrderNumber = 2,
+                Summary = "这一季，有我最深的思念。就让风捎去满心的祝福，缀满你甜蜜的梦境，祝你拥有一个更加灿烂更加辉煌的来年。把美好的祝福，输在这条短信里，信不长情意重，我的好友愿你新年快乐！",
+                CreateDateTime = DateTime.Now,
+                Comment = "",
+                Status = 1
+            };
+
+            var topic3 = new WallPaperTopic()
+            {
+                Id = 3,
+                Name = "元旦快乐",
+                TopicLogoUrl = "http://theme.kk874.com/ThemeResources/Logos/p2.jpg",
+                OrderNumber = 2,
+                Summary = "这一季，有我最深的思念。就让风捎去满心的祝福，缀满你甜蜜的梦境，祝你拥有一个更加灿烂更加辉煌的来年。把美好的祝福，输在这条短信里，信不长情意重，我的好友愿你新年快乐！",
+                CreateDateTime = DateTime.Now,
+                Comment = "",
+                Status = 1
+            };
+            var topic4 = new WallPaperTopic()
+            {
+                Id = 4,
+                Name = "元旦快乐",
+                TopicLogoUrl = "http://theme.kk874.com/ThemeResources/Logos/p2.jpg",
+                OrderNumber = 2,
+                Summary = "这一季，有我最深的思念。就让风捎去满心的祝福，缀满你甜蜜的梦境，祝你拥有一个更加灿烂更加辉煌的来年。把美好的祝福，输在这条短信里，信不长情意重，我的好友愿你新年快乐！",
                 CreateDateTime = DateTime.Now,
                 Comment = "",
                 Status = 1
             };
             #endregion
 
-            var topiclist = new List<WallPaperTopic>() { topic1, topic2, topic2, topic1 };
+            var topiclist = new List<WallPaperTopic>() { topic1, topic2, topic3, topic4 };
 
             var result = topiclist.To<IList<WallPaperTopicView>>();
 
@@ -193,11 +224,31 @@ namespace FrameMobile.Domain.Service
 
             if (sort == 0)
             {
-                if (categoryId == 0)
+                if (categoryId == 0 && topicId == 0)
                 {
                     result = FakeWallPaperList().To<IList<WallPaperView>>().OrderByDescending(x => x.DownloadNumber).ToList();
                 }
-                else
+                if (categoryId == 0 && topicId != 0)
+                {
+                    var hotwallpaperlist = from l in FakeWallPaperList()
+                                           join r in FakeWallPaperRelateTopicList() on l.Id equals r.WallPaperId
+                                           where r.TopicId == topicId
+                                           orderby l.DownloadNumber descending
+                                           select new WallPaper
+                                           {
+                                               Id = l.Id,
+                                               Title = l.Title,
+                                               ThumbnailName = l.ThumbnailName,
+                                               OriginalName = l.OriginalName,
+                                               DownloadNumber = l.DownloadNumber,
+                                               Rating = l.Status,
+                                               PublishTime = l.PublishTime
+                                           };
+
+                    result = hotwallpaperlist.To<IList<WallPaperView>>().ToList();
+                }
+
+                if (categoryId != 0)
                 {
                     var hotwallpaperlist = from l in FakeWallPaperList()
                                            join r in FakeWallPaperRelateCategoryList() on l.Id equals r.WallPaperId
@@ -206,7 +257,7 @@ namespace FrameMobile.Domain.Service
                                            select new WallPaper
                                            {
                                                Id = l.Id,
-                                               Titile = l.Titile,
+                                               Title = l.Title,
                                                ThumbnailName = l.ThumbnailName,
                                                OriginalName = l.OriginalName,
                                                DownloadNumber = l.DownloadNumber,
@@ -219,11 +270,30 @@ namespace FrameMobile.Domain.Service
             }
             else if (sort == 1)
             {
-                if (categoryId == 0)
+                if (categoryId == 0 && topicId == 0)
                 {
                     result = FakeWallPaperList().To<IList<WallPaperView>>().OrderByDescending(x => x.PublishTime).ToList();
                 }
-                else
+                if (categoryId == 0 && topicId != 0)
+                {
+                    var hotwallpaperlist = from l in FakeWallPaperList()
+                                           join r in FakeWallPaperRelateTopicList() on l.Id equals r.WallPaperId
+                                           where r.TopicId == topicId
+                                           orderby l.PublishTime descending
+                                           select new WallPaper
+                                           {
+                                               Id = l.Id,
+                                               Title = l.Title,
+                                               ThumbnailName = l.ThumbnailName,
+                                               OriginalName = l.OriginalName,
+                                               DownloadNumber = l.DownloadNumber,
+                                               Rating = l.Status,
+                                               PublishTime = l.PublishTime
+                                           };
+
+                    result = hotwallpaperlist.To<IList<WallPaperView>>().ToList();
+                }
+                if (categoryId != 0)
                 {
                     var latestwallpaperlist = from l in FakeWallPaperList()
                                               join r in FakeWallPaperRelateCategoryList() on l.Id equals r.WallPaperId
@@ -232,7 +302,7 @@ namespace FrameMobile.Domain.Service
                                               select new WallPaper
                                               {
                                                   Id = l.Id,
-                                                  Titile = l.Titile,
+                                                  Title = l.Title,
                                                   ThumbnailName = l.ThumbnailName,
                                                   OriginalName = l.OriginalName,
                                                   DownloadNumber = l.DownloadNumber,
@@ -264,10 +334,10 @@ namespace FrameMobile.Domain.Service
             var wall1 = new WallPaper()
             {
                 Id = 1,
-                Titile = "美女01",
+                Title = "美女01",
                 Rating = 1,
-                ThumbnailName = "http://theme.kk874.com/ThemeResources/Thumbnail/th04.jpg",
-                OriginalName = "http://theme.kk874.com/ThemeResources/Original/th04.jpg",
+                ThumbnailName = "http://theme.kk874.com/ThemeResources/Thumbnails/th04.jpg",
+                OriginalName = "http://theme.kk874.com/ThemeResources/Originals/th04.jpg",
                 PublishTime = DateTime.Now.AddHours(-1),
                 ModifiedTime = DateTime.Now,
                 DownloadNumber = 23,
@@ -279,10 +349,10 @@ namespace FrameMobile.Domain.Service
             var wall01 = new WallPaper()
             {
                 Id = 2,
-                Titile = "美女01",
+                Title = "美女01",
                 Rating = 1,
-                ThumbnailName = "http://theme.kk874.com/ThemeResources/Thumbnail/th05.jpg",
-                OriginalName = "http://theme.kk874.com/ThemeResources/Original/th05.jpg",
+                ThumbnailName = "http://theme.kk874.com/ThemeResources/Thumbnails/th05.jpg",
+                OriginalName = "http://theme.kk874.com/ThemeResources/Originals/th05.jpg",
                 PublishTime = DateTime.Now.AddHours(-5),
                 ModifiedTime = DateTime.Now,
                 DownloadNumber = 56,
@@ -294,10 +364,10 @@ namespace FrameMobile.Domain.Service
             var wall2 = new WallPaper()
             {
                 Id = 3,
-                Titile = "模特01",
+                Title = "模特01",
                 Rating = 1,
-                ThumbnailName = "http://theme.kk874.com/ThemeResources/Thumbnail/th06.jpg",
-                OriginalName = "http://theme.kk874.com/ThemeResources/Original/th06.jpg",
+                ThumbnailName = "http://theme.kk874.com/ThemeResources/Thumbnails/th06.jpg",
+                OriginalName = "http://theme.kk874.com/ThemeResources/Originals/th06.jpg",
                 PublishTime = DateTime.Now.AddDays(-1),
                 ModifiedTime = DateTime.Now,
                 DownloadNumber = 10,
@@ -309,10 +379,10 @@ namespace FrameMobile.Domain.Service
             var wall02 = new WallPaper()
             {
                 Id = 4,
-                Titile = "模特02",
+                Title = "模特02",
                 Rating = 1,
-                ThumbnailName = "http://theme.kk874.com/ThemeResources/Thumbnail/th07.jpg",
-                OriginalName = "http://theme.kk874.com/ThemeResources/Original/th07.jpg",
+                ThumbnailName = "http://theme.kk874.com/ThemeResources/Thumbnails/th07.jpg",
+                OriginalName = "http://theme.kk874.com/ThemeResources/Originals/th07.jpg",
                 PublishTime = DateTime.Now.AddHours(-17),
                 ModifiedTime = DateTime.Now,
                 DownloadNumber = 40,
@@ -324,10 +394,10 @@ namespace FrameMobile.Domain.Service
             var wall3 = new WallPaper()
             {
                 Id = 5,
-                Titile = "动漫01",
+                Title = "动漫01",
                 Rating = 3,
-                ThumbnailName = "http://theme.kk874.com/ThemeResources/Thumbnail/th01.jpg",
-                OriginalName = "http://theme.kk874.com/ThemeResources/Original/th01.jpg",
+                ThumbnailName = "http://theme.kk874.com/ThemeResources/Thumbnails/th01.jpg",
+                OriginalName = "http://theme.kk874.com/ThemeResources/Originals/th01.jpg",
                 PublishTime = DateTime.Now.AddMinutes(-2),
                 ModifiedTime = DateTime.Now,
                 DownloadNumber = 5,
@@ -339,10 +409,10 @@ namespace FrameMobile.Domain.Service
             var wall4 = new WallPaper()
             {
                 Id = 6,
-                Titile = "哆啦A梦",
+                Title = "哆啦A梦",
                 Rating = 3,
-                ThumbnailName = "http://theme.kk874.com/ThemeResources/Thumbnail/th02.jpg",
-                OriginalName = "http://theme.kk874.com/ThemeResources/Original/th02.jpg",
+                ThumbnailName = "http://theme.kk874.com/ThemeResources/Thumbnails/th02.jpg",
+                OriginalName = "http://theme.kk874.com/ThemeResources/Originals/th02.jpg",
                 PublishTime = DateTime.Now.AddMinutes(-13),
                 ModifiedTime = DateTime.Now,
                 DownloadNumber = 6,
@@ -414,6 +484,80 @@ namespace FrameMobile.Domain.Service
             #endregion
 
             var list = new List<WallPaperRelateCategory>() { r1, r2, r3, r4, r5, r6 };
+            return list;
+        }
+
+        private IList<WallPaperRelateTopic> FakeWallPaperRelateTopicList()
+        {
+            #region instance
+
+            var r1 = new WallPaperRelateTopic()
+            {
+                Id = 1,
+                TopicId = 1,
+                WallPaperId = 1,
+                Status = 1
+            };
+
+            var r2 = new WallPaperRelateTopic()
+            {
+                Id = 2,
+                TopicId = 1,
+                WallPaperId = 2,
+                Status = 1
+            };
+
+            var r3 = new WallPaperRelateTopic()
+            {
+                Id = 3,
+                TopicId = 2,
+                WallPaperId = 1,
+                Status = 1
+            };
+
+            var r4 = new WallPaperRelateTopic()
+            {
+                Id = 4,
+                TopicId = 2,
+                WallPaperId = 3,
+                Status = 1
+            };
+
+            var r5 = new WallPaperRelateTopic()
+            {
+                Id = 5,
+                TopicId = 1,
+                WallPaperId = 4,
+                Status = 1
+            };
+
+            var r6 = new WallPaperRelateTopic()
+            {
+                Id = 6,
+                TopicId = 3,
+                WallPaperId = 5,
+                Status = 1
+            };
+
+            var r7 = new WallPaperRelateTopic()
+            {
+                Id = 7,
+                TopicId = 4,
+                WallPaperId = 6,
+                Status = 1
+            };
+
+            var r8 = new WallPaperRelateTopic()
+            {
+                Id = 8,
+                TopicId = 4,
+                WallPaperId = 3,
+                Status = 1
+            };
+
+            #endregion
+
+            var list = new List<WallPaperRelateTopic>() { r1, r2, r3, r4, r5, r6, r7, r8 };
             return list;
         }
     }

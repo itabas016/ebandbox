@@ -21,6 +21,8 @@ namespace FrameMobile.Common
 
         public const string NEWS_RESOURCES_FOLDER_NAME = "NewsResources";
 
+        public const string NEWS_LOGOS_FOLDER_NAME = "Logos";
+
         #endregion
 
         #region Theme
@@ -39,9 +41,41 @@ namespace FrameMobile.Common
 
         #endregion
 
+        #region Sort Field
+
+        public const string SORT_PUBLISHTIME = "PublishTime";
+
+        public const string SORT_DOWNLOADNUMBER = "DownloadNumber";
+
+        #endregion
+
         #region System
 
         public const string FRAME_MODEL_MASTER = "FrameMobile.Model";
+
+        public const string NEWS_METHOD_NAME_GETNEWSCONTENTVIEWLIST = "getnewscontentviewlist";
+
+        public const string NEWS_METHOD_NAME_GETNEWSCOLLECTIONVIEW = "getnewscollectionview";
+
+        public const string NEWS_METHOD_NAME_GETIMAGETYPEBYRESOLUTION = "getimageurltypebyresolution";
+
+        public const string WALLPAPER_METHOD_NAME_GETMOBILEPROPERTY = "getmobileproperty";
+
+        public const string WALLPAPER_METHOD_NAME_GETWALLPAPERVIEWLIST = "getwallpaperviewlist";
+
+        public const string WALLPAPER_METHOD_NAME_GETWALLPAPERVIEWDETAIL = "getwallpaperviewdetail";
+
+        #endregion
+
+        #region Account
+
+        public const string SUPER_ADMIN_GROUPID = "1";
+        
+        #endregion
+        
+        #region Relation
+        
+        public const string NEWS_RADAR_CONFIG_TABLE_NAME = "newsradar";
 
         #endregion
     }

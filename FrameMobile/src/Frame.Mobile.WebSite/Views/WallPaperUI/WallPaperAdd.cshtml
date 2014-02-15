@@ -1,4 +1,6 @@
 ﻿@using FrameMobile.Model.Theme;
+@using FrameMobile.Common;
+@using NCore;
 @model WallPaper
 @{
     bool isUpdateMode = ViewData["IsUpdate"] != null;
@@ -6,11 +8,13 @@
     Layout = "~/Views/Shared/_WallPaperLayout.cshtml";
 
     var actionName = isUpdateMode ? "WallPaperEdit" : "WallPaperAdd";
-    
+
     var thumbnailName = string.Empty;
     var originalName = string.Empty;
     var publishTime = DateTime.Now;
     var modifiedTime = DateTime.Now;
+    var thumbnailImagePrefix = ConfigKeys.TYD_WALLPAPER_THUMBNAIL_IMAGE_PREFIX.ConfigValue();
+    var originalImagePrefix = ConfigKeys.TYD_WALLPAPER_ORIGINAL_IMAGE_PREFIX.ConfigValue();
     if (isUpdateMode)
     {
         thumbnailName = string.IsNullOrEmpty(@Model.ThumbnailName) ? string.Empty : @Model.ThumbnailName;
@@ -48,8 +52,20 @@
                     <tr>
                         @Html.ValidationSummary(true)
                         @Html.HiddenFor(m => m.Id)
+                        <td><strong>编号: </strong></td>
+                        <td>
+                            @if (isUpdateMode)
+                            {
+                                @Html.TextBoxFor(m => m.WallPaperNo, new { @readonly = true, Class = "txt-readonly" })}
+                            else
+                            {
+                                @Html.TextBoxFor(m => m.WallPaperNo)
+                            }
+                        </td>
+                    </tr>
+                    <tr>
                         <td><strong>标题: </strong></td>
-                        <td>@Html.TextBoxFor(m => m.Titile)</td>
+                        <td>@Html.TextBoxFor(m => m.Title)</td>
                     </tr>
                     <tr>
                         <td><strong>星级: </strong></td>
@@ -76,7 +92,8 @@
                             <td>
                                 @Html.TextBoxFor(m => m.ModifiedTime, new { @readonly = true, Class = "txt-readonly" })
                             </td>
-                        </tr>}
+                        </tr>
+                    }
                     <tr>
                         <td><strong>缩略图地址: </strong></td>
                         <td>
@@ -90,7 +107,7 @@
                     {
                         <tr>
                             <td colspan="2">
-                                <img src="@Model.ThumbnailName" />
+                                <img src="@string.Format("{0}{1}", thumbnailImagePrefix, thumbnailName)" />
                             </td>
                         </tr>
                     }
@@ -107,7 +124,7 @@
                     {
                         <tr>
                             <td colspan="2">
-                                <img src="@Model.OriginalName" />
+                                <img src="@string.Format("{0}{1}", originalImagePrefix, originalName)" />
                             </td>
                         </tr>
                     }

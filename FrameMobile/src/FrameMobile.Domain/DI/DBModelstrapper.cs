@@ -19,6 +19,7 @@ namespace FrameMobile.Domain
         {
             UserInitialize();
             NewsInitialize();
+            RadarInitialize();
             MobileInitialize();
             ThemeInitialize();
         }
@@ -33,6 +34,12 @@ namespace FrameMobile.Domain
         {
             var newsModelSpace = string.Format("{0}.{1}", Const.FRAME_MODEL_MASTER, "News");
             Initialize(NEWSCONNECTSTRING, newsModelSpace);
+        }
+
+        public static void RadarInitialize()
+        {
+            var radarModelSpace = string.Format("{0}.{1}", Const.FRAME_MODEL_MASTER, "Radar");
+            Initialize(NEWSCONNECTSTRING, radarModelSpace);
         }
 
         public static void MobileInitialize()

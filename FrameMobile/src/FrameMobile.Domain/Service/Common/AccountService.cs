@@ -8,6 +8,7 @@ using FrameMobile.Common;
 using FrameMobile.Core;
 using FrameMobile.Model;
 using FrameMobile.Model.Account;
+using StructureMap;
 using SubSonic.DataProviders;
 using SubSonic.Query;
 
@@ -15,6 +16,35 @@ namespace FrameMobile.Domain.Service
 {
     public class AccountService : NewsDbContextService, IAccountService
     {
+        #region Prop
+
+        private ICookieService _cookieService;
+        public ICookieService CookieService
+        {
+            get
+            {
+                if (_cookieService == null)
+                {
+                    _cookieService = ObjectFactory.GetInstance<ICookieService>();
+                }
+                return _cookieService;
+            }
+            set
+            {
+                _cookieService = value;
+            }
+        }
+
+        public string CurrentUserName
+        {
+            get
+            {
+                return CookieService.TryGet("UserName");
+            }
+        }
+
+        #endregion
+
         #region Register Login
 
         public int CreateUser(RegisterView model)
@@ -66,10 +96,14 @@ namespace FrameMobile.Domain.Service
 
         public int ChangeInfo(User model)
         {
+            var currentUser = GetUser(CurrentUserName);
             var user = dbContextService.Single<User>(x => x.Name == model.Name);
             if (model != null && user != null && user.Password == model.Password.GetMD5Hash())
             {
-                user.UserGroupId = model.UserGroupId;
+                if (currentUser.UserGroupIds.Contains(Const.SUPER_ADMIN_GROUPID))
+                {
+                    user.UserGroupIds = UpdateUserGroupIds(model.UserGroupIds);
+                }
                 user.Email = model.Email;
                 user.PostCode = model.PostCode;
                 user.QQ = model.QQ;
@@ -254,6 +288,15 @@ namespace FrameMobile.Domain.Service
             if (_user == null) return 1;
             else if (_user.Password != password) return 2;
             else return 0;
+        }
+
+        public string UpdateUserGroupIds(string userGroupIds)
+        {
+            if (!string.IsNullOrEmpty(userGroupIds))
+            {
+                return userGroupIds;
+            }
+            return string.Empty;
         }
 
         #endregion

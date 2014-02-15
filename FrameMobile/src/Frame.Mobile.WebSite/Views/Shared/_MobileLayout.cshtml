@@ -3,7 +3,7 @@
 @{
     Layout = null;
     ICookieService cookService = ObjectFactory.GetInstance<ICookieService>();
-    var userName = cookService.TryGet("NewsUserName");
+    var userName = cookService.TryGet("UserName");
 }
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -20,8 +20,10 @@
 <body>
     <div class="top">
         <div style="float: right; line-height: 25px;">
-            <span style="float: left; display: block; padding: 15px 15px 0 0"><u>@userName</u>
-            </span><a href="/Account/LogOff" class="logout" title="退出登录"></a>
+            <span style="float: left; display: block; padding: 15px 15px 0 0">
+                <a href="/Account/Manage?userName=@userName" style="color:white"><u>@userName</u></a>
+            </span>
+            <a href="/Account/LogOff" class="logout" title="退出登录"></a>
         </div>
     </div>
     <div class="main">
@@ -31,6 +33,7 @@
                 <li><span class="ico icon-compass"></span>@Html.ActionLink("品牌配置", "BrandList", "Mobile", null, new { highlight = "true", style = "color:white" })</li>
                 <li><span class="ico icon-compass"></span>@Html.ActionLink("分辨率配置", "ResolutionList", "Mobile", null, new { highlight = "true", style = "color:white" })</li>
                 <li><span class="ico icon-compass"></span>@Html.ActionLink("项目配置", "HardwareList", "Mobile", null, new { highlight = "true", style = "color:white" })</li>
+                <li><span class="ico icon-compass"></span>@Html.ActionLink("壁纸管理", "WallPaperManage", "WallPaperUI", null, new { highlight = "true", style = "color:white" })</li>
                 </ul>
         </div>
         <div class="right">

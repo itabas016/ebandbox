@@ -241,11 +241,31 @@ namespace FrameMobile.Web
             };
         }
 
+        protected virtual Func<bool> CheckRequiredParams(string imsi, string lcd, string mf)
+        {
+            return () =>
+            {
+                var ret = true;
+                if (string.IsNullOrEmpty(imsi) || string.IsNullOrEmpty(lcd) || string.IsNullOrEmpty(mf)) ret = false;
+
+                return ret;
+            };
+        }
+
         #endregion
 
         #region Resource Helper
 
-        protected string SaveResourceFile(string subFolderName, string dirPath, HttpPostedFileBase file, string fileName)
+        protected string SaveNewsResourceFile(string subFolderName, string dirPath, HttpPostedFileBase file, string fileName)
+        {
+            fileName = string.IsNullOrEmpty(fileName) ? file.FileName : fileName;
+            var filePath = GetNewsResourceFilePath(subFolderName, dirPath, fileName);
+
+            file.SaveAs(filePath);
+            return filePath;
+        }
+
+        protected string SaveThemeResourceFile(string subFolderName, string dirPath, HttpPostedFileBase file, string fileName)
         {
             fileName = string.IsNullOrEmpty(fileName) ? file.FileName : fileName;
             var filePath = GetThemeResourceFilePath(subFolderName, dirPath, fileName);
@@ -269,6 +289,11 @@ namespace FrameMobile.Web
             return GetThemeResourceFilePath("Logos", fileName);
         }
 
+        protected string GetRadarCategoryLogoPath(string fileName = "")
+        {
+            return GetNewsResourceFilePath("Logos", fileName);
+        }
+
         protected string GetOriginalWallPaperPath(string fileName = "")
         {
             return GetThemeResourceFilePath("Originals", fileName);
@@ -286,12 +311,35 @@ namespace FrameMobile.Web
             return string.Format("{0}{1}", dirPath, fileName);
         }
 
+        protected string GetNewsResourceFilePath(string subFolderName, string fileName = "")
+        {
+            string dirPath = string.Format("{0}{1}\\", GetResourcePathNewsBase(), subFolderName);
+            MakeSureDirExist(dirPath);
+            return string.Format("{0}{1}", dirPath, fileName);
+        }
+
         protected string GetThemeResourceFilePath(string subFolderName, string dirPath, string fileName)
         {
             var filePath = string.Empty;
             if (ConfigKeys.USING_SHARED_RESOURCE_FOLDER.ConfigValue().ToBoolean())
             {
                 filePath = GetThemeResourceFilePath(subFolderName, fileName);
+            }
+            else
+            {
+                MakeSureDirExist(dirPath);
+                filePath = Path.Combine(dirPath, fileName);
+            }
+
+            return filePath;
+        }
+
+        protected string GetNewsResourceFilePath(string subFolderName, string dirPath, string fileName)
+        {
+            var filePath = string.Empty;
+            if (ConfigKeys.USING_SHARED_RESOURCE_FOLDER.ConfigValue().ToBoolean())
+            {
+                filePath = GetNewsResourceFilePath(subFolderName, fileName);
             }
             else
             {

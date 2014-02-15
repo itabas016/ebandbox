@@ -13,10 +13,15 @@ namespace FrameMobile.Model
         [JsonProperty("id")]
         public int Id { get; set; }
 
+        [JsonProperty("wallpaperno")]
+        [JsonIgnore]
+        public string WallPaperNo { get; set; }
+
         [JsonProperty("title")]
         public string Title { get; set; }
 
         [JsonProperty("categoryid")]
+        [JsonIgnore]
         public int CategoryId { get; set; }
 
         [JsonIgnore]
@@ -27,6 +32,7 @@ namespace FrameMobile.Model
         public DateTime PublishTime { get; set; }
 
         [JsonProperty("rating")]
+        [JsonIgnore]
         public int Rating { get; set; }
 
         [JsonProperty("thumbnailurl")]
@@ -51,6 +57,7 @@ namespace FrameMobile.Model
         public string Comment { get; set; }
 
         [JsonProperty("status")]
+        [JsonIgnore]
         public int Status { get; set; }
     }
 }
