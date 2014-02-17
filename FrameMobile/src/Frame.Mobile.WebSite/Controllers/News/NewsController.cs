@@ -105,8 +105,9 @@ namespace Frame.Mobile.WebSite.Controllers
         {
             var mobileParams = GetMobileParam();
             int totalCount = 0;
+            int extraServerVersion = 0;
 
-            Func<NewsCollectionView> getnewscollection = () => NewsService.GetNewsCollectionView(mobileParams, stamp, extracver, act, categoryIds, startnum, num, out totalCount);
+            Func<NewsCollectionView> getnewscollection = () => NewsService.GetNewsCollectionView(mobileParams, stamp, extracver, act, categoryIds, startnum, num, out extraServerVersion, out totalCount);
 
             var actionResult = BuildResult(this.CheckRequiredParams(imsi, lcd), getnewscollection);
 
