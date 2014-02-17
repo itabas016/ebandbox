@@ -30,7 +30,7 @@ namespace FrameMobile.Domain
         public static IList<T> ReturnNewsInstance<T>(this T source, int cver, out int sver) where T : class, IMySQLModel, new()
         {
             var result = new List<T>();
-            sver = 0;
+            sver = cver;
             var version = GetNewsConfsver(source);
             if (version != cver)
             {

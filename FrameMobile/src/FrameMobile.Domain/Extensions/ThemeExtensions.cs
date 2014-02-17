@@ -25,7 +25,7 @@ namespace FrameMobile.Domain
         public static IList<T> ReturnThemeInstance<T>(this T source, int cver, out int sver) where T : class, IMySQLModel, new()
         {
             var result = new List<T>();
-            sver = 0;
+            sver = cver;
             var version = GetThemeConfsver(source);
             if (version != cver)
             {
