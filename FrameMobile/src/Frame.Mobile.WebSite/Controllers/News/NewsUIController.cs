@@ -499,6 +499,7 @@ namespace Frame.Mobile.WebSite.Controllers
 
             extraApp.Name = model.Name;
             extraApp.PackageName = model.PackageName;
+            extraApp.VersionCode = model.VersionCode;
             extraApp.ExtraType = model.ExtraType;
             extraApp.IsBrower = model.IsBrower;
             extraApp.ExtraLinkUrl = model.ExtraLinkUrl;
