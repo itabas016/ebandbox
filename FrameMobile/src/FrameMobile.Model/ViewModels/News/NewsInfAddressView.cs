@@ -9,7 +9,6 @@ using SubSonic.SqlGeneration.Schema;
 namespace FrameMobile.Model
 {
     [Serializable]
-    [SubSonicTableNameOverride("newsinfaddr")]
     public class NewsInfAddressView : ViewModelBase
     {
         [ViewField(IsDisplay = false)]
