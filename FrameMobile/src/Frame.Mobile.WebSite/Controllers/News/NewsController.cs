@@ -101,7 +101,7 @@ namespace Frame.Mobile.WebSite.Controllers
             return Content(actionResult.ToString());
         }
 
-        public ActionResult NewsList(string imsi, string lcd, string categoryIds, long stamp, int extracver, bool act = true, int startnum = 1, int num = 10)
+        public ActionResult NewsCollection(string imsi, string lcd, string categoryIds, long stamp, int extracver = 0, bool act = true, int startnum = 1, int num = 10)
         {
             var mobileParams = GetMobileParam();
             int totalCount = 0;
