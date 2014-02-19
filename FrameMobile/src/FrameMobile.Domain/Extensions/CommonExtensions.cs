@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -51,6 +52,22 @@ namespace FrameMobile.Domain
                 return fileNamePrefix;
             }
             return string.Empty;
+        }
+
+        public static string GetFilePixel(this HttpPostedFileBase file)
+        {
+            var pixel = string.Empty;
+            if (file != null)
+            {
+                var image = Image.FromStream(file.InputStream, true, true);
+                if (image != null)
+                {
+                    var width = image.Width;
+                    var height = image.Height;
+                    pixel = string.Format("{0}x{1}", width, height);
+                }
+            }
+            return pixel;
         }
 
         public static IQueryable<T> ConvertIQueryable<T>(this IEnumerable<T> source) where T : MySQLModelBase
