@@ -78,7 +78,7 @@ namespace QihooAppStoreCap
                 {
                     DownloadFile(img, Path.Combine(Screenshots_Folder_Base, GetFileNameFromUri(img)));
                 }
-                DownloadFile(appItem.DownloadURL, Path.Combine(APK_Folder_Base, GetFileNameFromUri(GetDownloadUrl(appItem, appItem.DownloadURL))));
+                DownloadFile(appItem.DownloadURL, Path.Combine(APK_Folder_Base, GetFileNameFromUri(GetRedirectUrl(appItem.DownloadURL))));
             }
         }
 
@@ -444,6 +444,20 @@ namespace QihooAppStoreCap
         {
             Uri uri = new Uri(uriPath);
             return uri.AbsolutePath.Replace("/", "_");
+        }
+
+        public string GetRedirectUrl(string originalUrl)
+        {
+            var redirectUrl = string.Empty;
+            HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(originalUrl);
+            request.Referer = originalUrl;
+            request.AllowAutoRedirect = false;
+
+            using (WebResponse response = request.GetResponse())
+            {
+                redirectUrl = response.Headers["Location"];
+            }
+            return redirectUrl;
         }
 
         public string GetDownloadUrl<T>(T appItem, string fullDownloadUrl) where T : QihooAppStoreApp
