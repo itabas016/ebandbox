@@ -77,11 +77,19 @@ namespace BaiduAppStoreCap
         {
             ReformApp reformApp = new ReformApp();
 
-            var appItemlist = GetAllAppItem();
-
-            foreach (var item in appItemlist)
+            var categorylist = GetAllCategory();
+            foreach (var category in categorylist)
             {
-                BuildAppProject(reformApp, item);
+                var appItemlist = GetAllAppItemByCategory(category);
+
+                foreach (var item in appItemlist)
+                {
+                    if (item.Name == "斗地主(单机版)" || item.PackageName == "com.tuyoo.doudizhu.main")
+                    {
+
+                    }
+                    BuildAppProject(reformApp, item);
+                }
             }
 
             LogHelper.WriteInfo("新增应用数：" + reformApp.NewAppCount);
@@ -97,6 +105,16 @@ namespace BaiduAppStoreCap
         {
             var categorylist = GetAllCategory();
             var applist = GetAllAppItemByCategory(categorylist);
+            var appDetaillist = GetAllAppItemByAppId(applist);
+
+            return appDetaillist;
+        }
+
+        public List<BaiduAppDetail> GetAllAppItemByCategory(BaiduCategory category)
+        {
+            int total = 0;
+            var applist = GetApplistByCategoryId(category.Id, out total);
+            LogHelper.WriteInfo(string.Format("Category {0} has {1} apps", category.Name, total), ConsoleColor.Yellow);
             var appDetaillist = GetAllAppItemByAppId(applist);
 
             return appDetaillist;
@@ -237,10 +255,10 @@ namespace BaiduAppStoreCap
             return applist;
         }
 
-        public List<BaiduApp> GetCategoryApplistByPaged(List<BaiduApp> applist ,BaiduAppListResult applistResult, int categoryId)
+        public List<BaiduApp> GetCategoryApplistByPaged(List<BaiduApp> applist, BaiduAppListResult applistResult, int categoryId)
         {
             var total = applistResult.Total;
-            var page = total / 50;
+            var page = total / 500;
             if (page >= 1)
             {
                 for (int i = 1; i < total / 100 + 1; i++)
@@ -302,9 +320,10 @@ namespace BaiduAppStoreCap
                 LogHelper.WriteInfo(string.Format("Has new app, name {0}, downloading...", appItem.Name), ConsoleColor.Yellow);
                 reformApp.NewAppCount++;
 
-                DownloadResources(appItem);
+                var appfileName = string.Empty;
+                DownloadResources(appItem, out appfileName);
 
-                appProject = AddNewApp(appItem, appProject);
+                appProject = AddNewApp(appItem, appProject, appfileName);
             }
             else
             {
@@ -327,7 +346,7 @@ namespace BaiduAppStoreCap
             }
         }
 
-        public AppProject AddNewApp(BaiduAppDetail appItem, AppProject appProject)
+        public AppProject AddNewApp(BaiduAppDetail appItem, AppProject appProject, string appfileName)
         {
             try
             {
@@ -336,6 +355,7 @@ namespace BaiduAppStoreCap
                 appProject = SetupAppList(appProject, out app);
                 appProject = SetupAppProject(appItem, appProject);
                 app = SetupApp(appItem, appProject, app);
+                SetupAppVersion(appItem, app, appfileName);
                 SetupTags(appItem, appProject, app);
             }
             catch (Exception ex)
@@ -382,9 +402,10 @@ namespace BaiduAppStoreCap
 
             if (!isTYD && !isTencent)
             {
-                DownloadResources(appItem);
+                var appfileName = string.Empty;
+                DownloadResources(appItem, out appfileName);
 
-                SetupAppVersion(appItem, app);
+                SetupAppVersion(appItem, app, appfileName);
 
                 SetupTags(appItem, app);
             }
@@ -395,8 +416,9 @@ namespace BaiduAppStoreCap
 
         #region Download
 
-        public void DownloadResources(BaiduAppDetail appItem)
+        public void DownloadResources(BaiduAppDetail appItem, out string appfileName)
         {
+            appfileName = string.Empty;
             if (appItem != null)
             {
                 MakeSureDIRExist(APK_Folder_Base);
@@ -405,19 +427,19 @@ namespace BaiduAppStoreCap
 
                 var iconFileName = GetFileNameFromUri(GetDownloadUrl(appItem.IconUrl));
                 var iconFilePath = Path.Combine(Logo_Folder_Base, iconFileName);
-                DownloadFile(appItem.IconUrl, iconFilePath);
+                //DownloadFile(appItem.IconUrl, iconFilePath);
 
                 var screenshotlist = GetScreenShotlist(appItem);
                 foreach (var img in screenshotlist)
                 {
                     var screenshotFileName = GetFileNameFromUri(GetDownloadUrl(img));
                     var screenshotFilePath = Path.Combine(Screenshots_Folder_Base, screenshotFileName);
-                    DownloadFile(img, screenshotFilePath);
+                    //DownloadFile(img, screenshotFilePath);
                 }
 
-                var apkFileName = GetFileNameFromUri(GetRedirectUrl(appItem.DownloadUrlDetail));
-                var apkFilePath = Path.Combine(APK_Folder_Base, apkFileName);
-                DownloadFile(appItem.DownloadUrl, apkFilePath);
+                var appdownloadurl = GetRedirectUrl(appItem.DownloadUrlDetail, out appfileName);
+                var apkFilePath = Path.Combine(APK_Folder_Base, appfileName);
+                //DownloadFile(appdownloadurl, apkFilePath);
             }
         }
 
@@ -464,7 +486,7 @@ namespace BaiduAppStoreCap
 
             appProject.AppNo = "baidu_" + appItem.Id;
             appProject.Creator = appItem.SourceName;
-            appProject.LogoFile = GetFileNameFromUri(appItem.IconUrl);
+            appProject.LogoFile = GetFileNameFromUri(GetDownloadUrl(appItem.IconUrl));
             appProject.Name = appItem.Name;
             appProject.PackageName = appItem.PackageName;
             //appProject.Rate = appItem.Rating.ToInt32();
@@ -484,7 +506,7 @@ namespace BaiduAppStoreCap
             ClientImageInfo lg = new ClientImageInfo
             {
                 BelongsToAppId = app.Id,
-                FileUrl = Path.Combine(LogoDirRoot, GetFileNameFromUri(appItem.IconUrl)),
+                FileUrl = Path.Combine(LogoDirRoot, GetFileNameFromUri(GetDownloadUrl(appItem.IconUrl))),
                 TypeId = AppConfigKey.CLIENT_IMAGE_TYPE_ID
             };
             RedisService.Add<ClientImageInfo>(lg);
@@ -496,7 +518,7 @@ namespace BaiduAppStoreCap
             ImageInfo lg2 = new ImageInfo
             {
                 BelongsToAppId = app.Id,
-                FileUrl = Path.Combine(LogoDirRoot, GetFileNameFromUri(appItem.IconUrl))
+                FileUrl = Path.Combine(LogoDirRoot, GetFileNameFromUri(GetDownloadUrl(appItem.IconUrl)))
             };
             RedisService.Add<ImageInfo>(lg2);
             app.Logo = lg2;
@@ -511,7 +533,7 @@ namespace BaiduAppStoreCap
                 ImageInfo ss = new ImageInfo
                 {
                     BelongsToAppId = app.Id,
-                    FileUrl = Path.Combine(ScreenshotDirRoot, GetFileNameFromUri(s))
+                    FileUrl = Path.Combine(ScreenshotDirRoot, GetFileNameFromUri(GetDownloadUrl(s)))
                 };
                 RedisService.Add<ImageInfo>(ss);
                 app.ScreenShot.Add(ss);
@@ -525,18 +547,18 @@ namespace BaiduAppStoreCap
             return app;
         }
 
-        public void SetupAppVersion(BaiduAppDetail appItem, App app)
+        public void SetupAppVersion(BaiduAppDetail appItem, App app, string appfileName)
         {
-            if (!string.IsNullOrEmpty(appItem.DownloadUrl))
+            if (!string.IsNullOrEmpty(appItem.DownloadUrlDetail))
             {
-                FileInfo fi = new FileInfo(Path.Combine(APK_Folder_Base, GetFileNameFromUri(appItem.DownloadUrl)));
+                FileInfo fi = new FileInfo(Path.Combine(APK_Folder_Base, appfileName));
 
                 if (fi != null && fi.Exists)
                 {
                     AppVersion ver = new AppVersion
                     {
                         FileSize = (int)fi.Length,
-                        FileUrl = GetFileNameFromUri(appItem.DownloadUrl),
+                        FileUrl = appfileName,
                         PublishDateTime = appItem.UpdateTimeDetail.ToExactDateTime("yyyy-MM-dd"),
                         Status = 1,
                         VersionName = appItem.VersionName,
@@ -707,21 +729,10 @@ namespace BaiduAppStoreCap
 
                     return;
                 }
-                var contentType = string.Empty;
-                var redirectUrl = GetRedirectUrl(fileUrl, out contentType);
-
                 using (WebClient webClient = new WebClient())
                 {
-                    if (string.IsNullOrEmpty(redirectUrl))
-                    {
-                        Console.WriteLine(fileUrl);
-                        webClient.DownloadFile(fileUrl, string.Format("{0}{1}", path.TrimEnd('.'), GetExtensionType(contentType)));
-                    }
-                    else
-                    {
-                        Console.WriteLine(redirectUrl);
-                        webClient.DownloadFile(redirectUrl, path);
-                    }
+                    Console.WriteLine(fileUrl);
+                    webClient.DownloadFile(fileUrl, path);
                 }
                 LogHelper.WriteInfo("Downloaded file: " + path, ConsoleColor.DarkGreen);
                 retryTimes = 0;
@@ -738,33 +749,33 @@ namespace BaiduAppStoreCap
             }
         }
 
-        public string GetRedirectUrl(string originalUrl)
+        public string GetRedirectUrl(string originalUrl, out string appfileName)
         {
+            appfileName = string.Empty;
             var redirectUrl = string.Empty;
-            HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(originalUrl);
-            request.Referer = originalUrl;
-            request.AllowAutoRedirect = false;
-
-            using (WebResponse response = request.GetResponse())
+            while (true)
             {
-                redirectUrl = response.Headers["Location"];
-            }
-            return redirectUrl;
-        }
+                HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(originalUrl);
+                Console.WriteLine(originalUrl);
+                request.Referer = originalUrl;
+                request.AllowAutoRedirect = false;
 
-        public string GetRedirectUrl(string originalUrl, out string contentType)
-        {
-            var redirectUrl = string.Empty;
-            contentType = string.Empty;
-            HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(originalUrl);
-            request.Referer = originalUrl;
-            request.AllowAutoRedirect = false;
-
-            using (WebResponse response = request.GetResponse())
-            {
-                redirectUrl = response.Headers["Location"];
-                contentType = response.ContentType;
+                using (WebResponse response = request.GetResponse())
+                {
+                    var location = response.Headers["Location"];
+                    if (location.EndsWith(".apk"))
+                    {
+                        redirectUrl = string.IsNullOrEmpty(location) ? originalUrl : location;
+                        appfileName = string.IsNullOrEmpty(location) ? GetFileNameFromUri(originalUrl) : GetFileNameFromUri(redirectUrl);
+                        break;
+                    }
+                    else
+                    {
+                        originalUrl = location;
+                    }
+                }
             }
+            Console.WriteLine(redirectUrl);
             return redirectUrl;
         }
 
