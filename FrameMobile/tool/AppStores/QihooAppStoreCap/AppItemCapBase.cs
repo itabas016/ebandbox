@@ -78,7 +78,30 @@ namespace QihooAppStoreCap
                 {
                     DownloadFile(img, Path.Combine(Screenshots_Folder_Base, GetFileNameFromUri(img)));
                 }
-                DownloadFile(appItem.DownloadURL, Path.Combine(APK_Folder_Base, GetFileNameFromUri(GetRedirectUrl(appItem.DownloadURL))));
+                var appfileName = string.Empty;
+                var appdownloadurl = GetRedirectUrl(appItem.DownloadURL, out appfileName);
+                DownloadFile(appItem.DownloadURL, Path.Combine(APK_Folder_Base, appfileName));
+            }
+        }
+
+        public void DownloadResources<T>(T appItem, out string appfileName) where T : QihooAppStoreApp
+        {
+            appfileName = string.Empty;
+            if (appItem != null)
+            {
+                MakeSureDIRExist(APK_Folder_Base);
+                MakeSureDIRExist(Screenshots_Folder_Base);
+                MakeSureDIRExist(Logo_Folder_Base);
+
+                DownloadFile(appItem.IconURL, Path.Combine(Logo_Folder_Base, GetFileNameFromUri(appItem.IconURL)));
+
+                var screenshotlist = GetScreenShotlist<T>(appItem);
+                foreach (var img in screenshotlist)
+                {
+                    DownloadFile(img, Path.Combine(Screenshots_Folder_Base, GetFileNameFromUri(img)));
+                }
+                var appdownloadurl = GetRedirectUrl(appItem.DownloadURL, out appfileName);
+                DownloadFile(appItem.DownloadURL, Path.Combine(APK_Folder_Base, appfileName));
             }
         }
 
@@ -196,6 +219,42 @@ namespace QihooAppStoreCap
                     {
                         FileSize = (int)fi.Length,
                         FileUrl = GetFileNameFromUri(GetDownloadUrl(appItem, appItem.DownloadURL)),
+                        PublishDateTime = appItem.UpdateTime.ToExactDateTime("yyyy-MM-dd"),
+                        Status = 1,
+                        VersionName = appItem.VersionName,
+                        Id = appItem.VersionCode
+                    };
+
+                    AndroidPackageView apkInfo = FileService.GetAndroidPackageInfomation(fi.FullName);
+                    apkInfo.Id = ver.Id;
+
+                    var originalApp = RedisService.Get<App>(app.Id);
+                    if (app.Status == 0)
+                    {
+                        RedisService.UpdateWithRebuildIndex<App>(originalApp, app);
+                        LogHelper.WriteInfo(string.Format("This App {0} status is invaild", app.Name), ConsoleColor.Gray);
+                    }
+
+                    RedisService.SetSubModel<App, AppVersion>(app.Id, ver);
+                    RedisService.SetSubModel<App, AndroidPackageView>(app.Id, apkInfo);
+                    AppStoreUIService.SetAppCurrentTestVersion(app.Id, ver.Id);
+                    AppStoreUIService.PublishAppVersion(app.Id);
+                }
+            }
+        }
+
+        public void SetupAppVersion<T>(T appItem, App app, string appfileName) where T : QihooAppStoreApp
+        {
+            if (!string.IsNullOrEmpty(appItem.DownloadURL))
+            {
+                FileInfo fi = new FileInfo(Path.Combine(APK_Folder_Base, appfileName));
+
+                if (fi != null && fi.Exists)
+                {
+                    AppVersion ver = new AppVersion
+                    {
+                        FileSize = (int)fi.Length,
+                        FileUrl = appfileName,
                         PublishDateTime = appItem.UpdateTime.ToExactDateTime("yyyy-MM-dd"),
                         Status = 1,
                         VersionName = appItem.VersionName,
@@ -446,17 +505,48 @@ namespace QihooAppStoreCap
             return uri.AbsolutePath.Replace("/", "_");
         }
 
-        public string GetRedirectUrl(string originalUrl)
+        public string GetDownloadFileName(string url)
         {
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+
+            HttpWebResponse res = (HttpWebResponse)request.GetResponse();
+            using (Stream rstream = res.GetResponseStream())
+            {
+                string fileName = res.Headers["Content-Disposition"] != null ?
+                    res.Headers["Content-Disposition"].Replace("attachment; filename=", "").Replace("\"", "") :
+                    res.Headers["Location"] != null ? Path.GetFileName(res.Headers["Location"]) :
+                    Path.GetFileName(url).Contains('?') || Path.GetFileName(url).Contains('=') ?
+                    Path.GetFileName(res.ResponseUri.ToString()) : GetFileNameFromUri(url);
+                return fileName;
+            }
+            res.Close();
+            return string.Empty;
+        }
+
+        public string GetRedirectUrl(string originalUrl, out string fileName)
+        {
+            fileName = string.Empty;
             var redirectUrl = string.Empty;
+            Console.WriteLine(string.Format("OriginalUrl:{0}", originalUrl));
             HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(originalUrl);
             request.Referer = originalUrl;
             request.AllowAutoRedirect = false;
 
             using (WebResponse response = request.GetResponse())
             {
-                redirectUrl = response.Headers["Location"];
+                switch (response.ContentType)
+                {
+                    case "application/vnd.android.package-archive":
+                        redirectUrl = originalUrl;
+                        fileName = response.Headers["Content-Disposition"].Replace("attachment; filename=", "").Replace("\"", "");
+                        break;
+                    default:
+                        redirectUrl = response.Headers["Location"];
+                        fileName = GetFileNameFromUri(redirectUrl);
+                        break;
+                }
             }
+            Console.WriteLine(string.Format("RediectUrl:{0}", redirectUrl));
             return redirectUrl;
         }
 

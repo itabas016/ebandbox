@@ -118,9 +118,10 @@ namespace QihooAppStoreCap
                 LogHelper.WriteInfo(string.Format("Has new app, name {0}, downloading...", appItem.Name), ConsoleColor.Yellow);
                 reformApp.NewAppCount++;
 
-                DownloadResources(appItem);
+                var appfileName = string.Empty;
+                DownloadResources(appItem, out appfileName);
 
-                appProject = AddNewApp(appItem, appProject);
+                appProject = AddNewApp(appItem, appProject, appfileName);
             }
             else
             {
@@ -143,7 +144,7 @@ namespace QihooAppStoreCap
             }
         }
 
-        public AppProject AddNewApp(QihooAppStoreCompleteApp appItem, AppProject appProject)
+        public AppProject AddNewApp(QihooAppStoreCompleteApp appItem, AppProject appProject, string appfileName)
         {
             try
             {
@@ -152,6 +153,7 @@ namespace QihooAppStoreCap
                 appProject = SetupAppList(appProject, out app);
                 appProject = SetupAppProject(appItem, appProject);
                 app = SetupApp(appItem, appProject, app);
+                SetupAppVersion(appItem, app, appfileName);
                 SetupTags(appItem, appProject, app);
             }
             catch (Exception ex)
@@ -198,9 +200,10 @@ namespace QihooAppStoreCap
 
             if (!isTYD && !isTencent)
             {
-                DownloadResources(appItem);
+                var appfileName = string.Empty;
+                DownloadResources(appItem, out appfileName);
 
-                SetupAppVersion(appItem, app);
+                SetupAppVersion(appItem, app, appfileName);
 
                 SetupTags(appItem, app);
             }
