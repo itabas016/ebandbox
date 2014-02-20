@@ -78,16 +78,14 @@ namespace BaiduAppStoreCap
             ReformApp reformApp = new ReformApp();
 
             var categorylist = GetAllCategory();
+            var applist = GetAllAppItemByCategory(categorylist);
+
             foreach (var category in categorylist)
             {
                 var appItemlist = GetAllAppItemByCategory(category);
 
                 foreach (var item in appItemlist)
                 {
-                    if (item.Name == "斗地主(单机版)" || item.PackageName == "com.tuyoo.doudizhu.main")
-                    {
-
-                    }
                     BuildAppProject(reformApp, item);
                 }
             }
@@ -258,7 +256,7 @@ namespace BaiduAppStoreCap
         public List<BaiduApp> GetCategoryApplistByPaged(List<BaiduApp> applist, BaiduAppListResult applistResult, int categoryId)
         {
             var total = applistResult.Total;
-            var page = total / 500;
+            var page = total / 50;
             if (page >= 1)
             {
                 for (int i = 1; i < total / 100 + 1; i++)
@@ -427,19 +425,19 @@ namespace BaiduAppStoreCap
 
                 var iconFileName = GetFileNameFromUri(GetDownloadUrl(appItem.IconUrl));
                 var iconFilePath = Path.Combine(Logo_Folder_Base, iconFileName);
-                //DownloadFile(appItem.IconUrl, iconFilePath);
+                DownloadFile(appItem.IconUrl, iconFilePath);
 
                 var screenshotlist = GetScreenShotlist(appItem);
                 foreach (var img in screenshotlist)
                 {
                     var screenshotFileName = GetFileNameFromUri(GetDownloadUrl(img));
                     var screenshotFilePath = Path.Combine(Screenshots_Folder_Base, screenshotFileName);
-                    //DownloadFile(img, screenshotFilePath);
+                    DownloadFile(img, screenshotFilePath);
                 }
 
                 var appdownloadurl = GetRedirectUrl(appItem.DownloadUrlDetail, out appfileName);
                 var apkFilePath = Path.Combine(APK_Folder_Base, appfileName);
-                //DownloadFile(appdownloadurl, apkFilePath);
+                DownloadFile(appdownloadurl, apkFilePath);
             }
         }
 
@@ -753,6 +751,7 @@ namespace BaiduAppStoreCap
         {
             appfileName = string.Empty;
             var redirectUrl = string.Empty;
+            LogHelper.WriteInfo(string.Format("original url : {0}", originalUrl));
             while (true)
             {
                 HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(originalUrl);
@@ -763,6 +762,7 @@ namespace BaiduAppStoreCap
                 using (WebResponse response = request.GetResponse())
                 {
                     var location = response.Headers["Location"];
+                    LogHelper.WriteInfo(string.Format("rediect url : {0}", location));
                     if (location.EndsWith(".apk"))
                     {
                         redirectUrl = string.IsNullOrEmpty(location) ? originalUrl : location;
