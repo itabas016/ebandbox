@@ -436,7 +436,7 @@ namespace BaiduAppStoreCap
                 }
 
                 var appdownloadurl = GetRedirectUrl(appItem.DownloadUrlDetail, out appfileName);
-                var apkFilePath = Path.Combine(APK_Folder_Base, appfileName);
+                var apkFilePath = Path.Combine(APK_Folder_Base, appfileName.MakeSureNotNull());
                 DownloadFile(appdownloadurl, apkFilePath);
             }
         }
@@ -549,7 +549,7 @@ namespace BaiduAppStoreCap
         {
             if (!string.IsNullOrEmpty(appItem.DownloadUrlDetail))
             {
-                FileInfo fi = new FileInfo(Path.Combine(APK_Folder_Base, appfileName));
+                FileInfo fi = new FileInfo(Path.Combine(APK_Folder_Base, appfileName.MakeSureNotNull()));
 
                 if (fi != null && fi.Exists)
                 {
@@ -758,21 +758,40 @@ namespace BaiduAppStoreCap
                 Console.WriteLine(originalUrl);
                 request.Referer = originalUrl;
                 request.AllowAutoRedirect = false;
-
-                using (WebResponse response = request.GetResponse())
+                try
                 {
-                    var location = response.Headers["Location"];
-                    LogHelper.WriteInfo(string.Format("rediect url : {0}", location));
-                    if (location.EndsWith(".apk"))
+                    using (WebResponse response = request.GetResponse())
                     {
-                        redirectUrl = string.IsNullOrEmpty(location) ? originalUrl : location;
-                        appfileName = string.IsNullOrEmpty(location) ? GetFileNameFromUri(originalUrl) : GetFileNameFromUri(redirectUrl);
-                        break;
+                        HttpWebResponse httpResponse = (HttpWebResponse)response;
+                        var status = httpResponse.StatusCode;
+                        var location = response.Headers["Location"];
+                        if (!string.IsNullOrEmpty(location))
+                        {
+                            LogHelper.WriteInfo(string.Format("rediect url : {0}", location));
+                        }
+                        if (originalUrl.EndsWith(".apk") && status == HttpStatusCode.OK)
+                        {
+                            redirectUrl = originalUrl;
+                            appfileName = GetFileNameFromUri(redirectUrl);
+                            break;
+                        }
+                        if (status == HttpStatusCode.Redirect)
+                        {
+                            originalUrl = location;
+                        }
+                        else
+                        {
+                            break;
+                        }
                     }
-                    else
-                    {
-                        originalUrl = location;
-                    }
+                }
+                catch (Exception ex)
+                {
+                    LogHelper.WriteInfo(ex.Message);
+                    LogHelper.WriteError(ex.Message);
+                    redirectUrl = originalUrl;
+                    break;
+                    throw;
                 }
             }
             Console.WriteLine(redirectUrl);
