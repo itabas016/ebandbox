@@ -770,11 +770,18 @@ namespace BaiduAppStoreCap
                         HttpWebResponse httpResponse = (HttpWebResponse)response;
                         var status = httpResponse.StatusCode;
                         var location = response.Headers["Location"];
+                        var contentdisposition = response.Headers["Content-Disposition"];
                         if (!string.IsNullOrEmpty(location))
                         {
                             LogHelper.WriteInfo(string.Format("rediect url : {0}", location));
                         }
-                        if (originalUrl.EndsWith(".apk") && status == HttpStatusCode.OK)
+                        if (!string.IsNullOrEmpty(contentdisposition))
+                        {
+                            redirectUrl = originalUrl;
+                            appfileName = contentdisposition.Replace("attachment; filename=", "").Replace("\"", "");
+                            break;
+                        }
+                        if (status == HttpStatusCode.OK && (response.ContentType == "application/vnd.android.package-archive") || response.ContentType.Contains("application/octet-stream") && response.ContentLength > 0)
                         {
                             redirectUrl = originalUrl;
                             appfileName = GetFileNameFromUri(redirectUrl);
@@ -786,6 +793,7 @@ namespace BaiduAppStoreCap
                         }
                         else
                         {
+                            LogHelper.WriteInfo(status.ToString());
                             break;
                         }
                     }

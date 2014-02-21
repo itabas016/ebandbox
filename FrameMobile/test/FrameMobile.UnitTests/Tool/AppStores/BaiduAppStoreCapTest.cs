@@ -78,9 +78,11 @@ namespace FrameMobile.UnitTests.Tool.AppStores
 
             var originalurl3 = "http://m.baidu.com/api?action=redirect&token=tianyida&from=1001816u&type=app&dltype=new&tj=game_4113230_1996776028_%E5%A4%AA%E9%BC%93%E6%AC%A1%E9%83%8E&blink=50cb687474703a2f2f7777772e6170706368696e612e636f6d2f6d61726b65742f642f313233383231382f636f702e62616964755f302f636f6d2e73756e7761792e70656b322e61706b0653&crversion=1";
 
+            var originalurl4 = "http://m.baidu.com/api?action=redirect&token=tianyida&from=1001816u&type=app&dltype=new&tj=game_2098537_73762_%E5%A4%A7%E5%AE%B6%E6%9D%A5%E6%89%BE%E8%8C%AC%E6%B5%B7%E9%87%8F%E7%89%88&blink=31d2687474703a2f2f617070646c2e6869636c6f75642e636f6d2f646c2f617070646c2f6170706c69636174696f6e2f61706b2f32312f32316537393762616566383134353166626633333635396463366639643266322f6e65742e66662e66696e64696f6e652e313230373330313931342e61706b3f7369676e3d62616964754062616964750653&crversion=1";
+
             var appfileName = string.Empty;
 
-            var ret = _cap.GetRedirectUrl(originalurl3, out appfileName);
+            var ret = _cap.GetRedirectUrl(originalurl4, out appfileName);
             Console.WriteLine(appfileName);
         }
 
