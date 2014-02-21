@@ -755,7 +755,6 @@ namespace BaiduAppStoreCap
             while (true)
             {
                 HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(originalUrl);
-                Console.WriteLine(originalUrl);
                 request.Referer = originalUrl;
                 request.AllowAutoRedirect = false;
                 try
@@ -775,7 +774,7 @@ namespace BaiduAppStoreCap
                             appfileName = GetFileNameFromUri(redirectUrl);
                             break;
                         }
-                        if (status == HttpStatusCode.Redirect)
+                        if (status == HttpStatusCode.Redirect || status == HttpStatusCode.MovedPermanently)
                         {
                             originalUrl = location;
                         }
@@ -794,7 +793,6 @@ namespace BaiduAppStoreCap
                     throw;
                 }
             }
-            Console.WriteLine(redirectUrl);
             return redirectUrl;
         }
 

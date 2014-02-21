@@ -75,9 +75,12 @@ namespace FrameMobile.UnitTests.Tool.AppStores
             var originalurl = "http://m.baidu.com/api?action=redirect&token=tianyida&from=1001816u&type=app&dltype=new&tj=game_3623078_1142824823_%E5%BC%80%E5%87%BA%E5%81%9C%E8%BD%A6%E5%9C%BA&blink=64c2687474703a2f2f61706b2e6766616e2e636f6d2f6261696475646f776e6c6f61642e7068703f61706b3d323330303732267372633d6261696475706167650653&crversion=1";
 
             var originalurl2 = "http://m.baidu.com/api?action=redirect&token=tianyida&from=1001816u&type=app&dltype=new&tj=game_3363485_3010049507_%E6%8B%AF%E6%95%91%E6%88%91%E7%9A%84%E7%94%B5%E8%A7%86&blink=aac7687474703a2f2f646f776e2e616e64726f69642e642e636e2f362f32322f383831365f3134313532303f687474703a2f2f632e646f776e616e64726f69642e636f6d2f616e64726f69642f6e65772f67616d65312f38372f3130313438372f7a6a776464735f313337313130363631323537342e61706b3f663d62616964755f310553&crversion=1";
+
+            var originalurl3 = "http://m.baidu.com/api?action=redirect&token=tianyida&from=1001816u&type=app&dltype=new&tj=game_4113230_1996776028_%E5%A4%AA%E9%BC%93%E6%AC%A1%E9%83%8E&blink=50cb687474703a2f2f7777772e6170706368696e612e636f6d2f6d61726b65742f642f313233383231382f636f702e62616964755f302f636f6d2e73756e7761792e70656b322e61706b0653&crversion=1";
+
             var appfileName = string.Empty;
 
-            var ret = _cap.GetRedirectUrl(originalurl2, out appfileName);
+            var ret = _cap.GetRedirectUrl(originalurl3, out appfileName);
             Console.WriteLine(appfileName);
         }
 
