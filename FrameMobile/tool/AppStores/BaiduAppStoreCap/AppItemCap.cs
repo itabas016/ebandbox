@@ -321,7 +321,10 @@ namespace BaiduAppStoreCap
                 var appfileName = string.Empty;
                 DownloadResources(appItem, out appfileName);
 
-                appProject = AddNewApp(appItem, appProject, appfileName);
+                if (!string.IsNullOrEmpty(appfileName))
+                {
+                    appProject = AddNewApp(appItem, appProject, appfileName);
+                }
             }
             else
             {
@@ -403,9 +406,12 @@ namespace BaiduAppStoreCap
                 var appfileName = string.Empty;
                 DownloadResources(appItem, out appfileName);
 
-                SetupAppVersion(appItem, app, appfileName);
+                if (!string.IsNullOrEmpty(appfileName))
+                {
+                    SetupAppVersion(appItem, app, appfileName);
 
-                SetupTags(appItem, app);
+                    SetupTags(appItem, app);
+                }
             }
             return newVersionCount;
         }
@@ -549,7 +555,7 @@ namespace BaiduAppStoreCap
         {
             if (!string.IsNullOrEmpty(appItem.DownloadUrlDetail))
             {
-                FileInfo fi = new FileInfo(Path.Combine(APK_Folder_Base, appfileName.MakeSureNotNull()));
+                FileInfo fi = new FileInfo(Path.Combine(APK_Folder_Base, appfileName));
 
                 if (fi != null && fi.Exists)
                 {
