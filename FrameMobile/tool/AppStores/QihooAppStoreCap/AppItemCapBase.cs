@@ -523,30 +523,60 @@ namespace QihooAppStoreCap
             return string.Empty;
         }
 
-        public string GetRedirectUrl(string originalUrl, out string fileName)
+        public string GetRedirectUrl(string originalUrl, out string appfileName)
         {
-            fileName = string.Empty;
+            appfileName = string.Empty;
             var redirectUrl = string.Empty;
-            Console.WriteLine(string.Format("OriginalUrl:{0}", originalUrl));
-            HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(originalUrl);
-            request.Referer = originalUrl;
-            request.AllowAutoRedirect = false;
-
-            using (WebResponse response = request.GetResponse())
+            LogHelper.WriteInfo(string.Format("original url : {0}", originalUrl));
+            while (true)
             {
-                switch (response.ContentType)
+                HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(originalUrl);
+                request.Referer = originalUrl;
+                request.AllowAutoRedirect = false;
+                try
                 {
-                    case "application/vnd.android.package-archive":
-                        redirectUrl = originalUrl;
-                        fileName = response.Headers["Content-Disposition"].Replace("attachment; filename=", "").Replace("\"", "");
-                        break;
-                    default:
-                        redirectUrl = response.Headers["Location"];
-                        fileName = GetFileNameFromUri(redirectUrl);
-                        break;
+                    using (WebResponse response = request.GetResponse())
+                    {
+                        HttpWebResponse httpResponse = (HttpWebResponse)response;
+                        var status = httpResponse.StatusCode;
+                        var location = response.Headers["Location"];
+                        var contentdisposition = response.Headers["Content-Disposition"];
+                        if (!string.IsNullOrEmpty(location))
+                        {
+                            LogHelper.WriteInfo(string.Format("rediect url : {0}", location));
+                        }
+                        if (!string.IsNullOrEmpty(contentdisposition))
+                        {
+                            redirectUrl = originalUrl;
+                            appfileName = contentdisposition.Replace("attachment; filename=", "").Replace("\"", "");
+                            break;
+                        }
+                        if (status == HttpStatusCode.OK && (response.ContentType == "application/vnd.android.package-archive") || response.ContentType.Contains("application/octet-stream") && response.ContentLength > 0)
+                        {
+                            redirectUrl = originalUrl;
+                            appfileName = GetFileNameFromUri(redirectUrl);
+                            break;
+                        }
+                        if (status == HttpStatusCode.Redirect || status == HttpStatusCode.MovedPermanently)
+                        {
+                            originalUrl = location;
+                        }
+                        else
+                        {
+                            LogHelper.WriteInfo(status.ToString());
+                            break;
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    LogHelper.WriteInfo(ex.Message);
+                    LogHelper.WriteError(ex.Message);
+                    redirectUrl = originalUrl;
+                    break;
+                    throw;
                 }
             }
-            Console.WriteLine(string.Format("RediectUrl:{0}", redirectUrl));
             return redirectUrl;
         }
 
