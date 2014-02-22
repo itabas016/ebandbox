@@ -29,6 +29,15 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Live|AnyCPU'">
+    <OutputPath>..\..\bin\Live\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="MySql.Data, Version=6.7.4.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -60,19 +69,33 @@
   <ItemGroup>
     <Compile Include="Account\InvitationCode.cs" />
     <Compile Include="Account\UserGroup.cs" />
+    <Compile Include="Common\Mobile\MobileBrand.cs" />
+    <Compile Include="Common\Mobile\MobileHardware.cs" />
     <Compile Include="Common\MobileParam.cs" />
+    <Compile Include="Common\Mobile\MobileProperty.cs" />
+    <Compile Include="Common\MobilePropertyBase.cs" />
+    <Compile Include="Common\Mobile\MobileResolution.cs" />
     <Compile Include="Common\TimeStamp.cs" />
     <Compile Include="News\NewsContent.cs" />
     <Compile Include="News\NewsConfig.cs" />
     <Compile Include="News\NewsExtraApp.cs" />
     <Compile Include="News\NewsInfAddress.cs" />
+    <Compile Include="Radar\RadarCategory.cs" />
     <Compile Include="News\NewsSource.cs" />
     <Compile Include="Account\User.cs" />
+    <Compile Include="Radar\RadarElement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Support\IMySQLModeBasel.cs" />
     <Compile Include="Support\IMySQLModel.cs" />
     <Compile Include="Support\MySQLModel.cs" />
     <Compile Include="Support\MySQLModelBase.cs" />
     <Compile Include="Support\RedisModelBase.cs" />
+    <Compile Include="Theme\ThemeConfig.cs" />
+    <Compile Include="Theme\WallPaper\WallPaperRelateSubCategory.cs" />
+    <Compile Include="Theme\WallPaper\WallPaperRelateCategory.cs" />
+    <Compile Include="Theme\WallPaper\WallPaperRelateMobileProperty.cs" />
+    <Compile Include="Theme\WallPaper\WallPaperRelateTopic.cs" />
+    <Compile Include="Theme\WallPaper\WallPaperTopic.cs" />
     <Compile Include="ThirdPart\News\Tencent\TencentCategory.cs" />
     <Compile Include="ThirdPart\News\Tencent\TencentContentSection.cs" />
     <Compile Include="ThirdPart\News\Tencent\TencentContent.cs" />
@@ -90,22 +113,32 @@
     <Compile Include="ViewModels\Account\LocalPasswordView.cs" />
     <Compile Include="ViewModels\Account\LoginView.cs" />
     <Compile Include="ViewModels\Account\RegisterView.cs" />
+    <Compile Include="ViewModels\Common\MobilePropertyView.cs" />
     <Compile Include="ViewModels\News\NewsCategoryView.cs" />
     <Compile Include="ViewModels\News\NewsConfigView.cs" />
+    <Compile Include="ViewModels\News\AggregateResult\NewsContentResult.cs" />
+    <Compile Include="ViewModels\News\NewsCollectionView.cs" />
     <Compile Include="ViewModels\News\NewsExtraAppView.cs" />
+    <Compile Include="ViewModels\News\AggregateResult\NewsExtraResult.cs" />
     <Compile Include="ViewModels\News\NewsInfAddressView.cs" />
+    <Compile Include="ViewModels\News\NewsRadarView.cs" />
     <Compile Include="ViewModels\News\NewsSourceView.cs" />
     <Compile Include="ViewModels\News\NewsSubCategoryView.cs" />
     <Compile Include="ViewModels\News\NewsContentView.cs" />
+    <Compile Include="ViewModels\News\NewsRadarElementView.cs" />
+    <Compile Include="ViewModels\Radar\RadarCategoryView.cs" />
+    <Compile Include="ViewModels\Radar\RadarElementView.cs" />
     <Compile Include="ViewModels\ResultBuilder.cs" />
+    <Compile Include="ViewModels\Theme\ThemeConfigView.cs" />
     <Compile Include="ViewModels\Theme\WallPaper\WallPaperCategoryView.cs" />
-    <Compile Include="ViewModels\Theme\WallPaper\WallPaperDetailView.cs" />
+    <Compile Include="ViewModels\Theme\WallPaper\WallPaperConfigView.cs" />
     <Compile Include="ViewModels\Theme\WallPaper\WallPaperSubCategoryView.cs" />
+    <Compile Include="ViewModels\Theme\WallPaper\WallPaperTopicView.cs" />
+    <Compile Include="ViewModels\Theme\WallPaper\ImageView.cs" />
     <Compile Include="ViewModels\Theme\WallPaper\WallPaperView.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Theme\WallPaper\WallPaper.cs" />
     <Compile Include="Theme\WallPaper\WallPaperCategory.cs" />
-    <Compile Include="Theme\WallPaper\WallPaperDetail.cs" />
     <Compile Include="Theme\WallPaper\WallPaperSubCategory.cs" />
   </ItemGroup>
   <ItemGroup>

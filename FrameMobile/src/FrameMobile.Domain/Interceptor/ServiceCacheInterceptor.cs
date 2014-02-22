@@ -26,7 +26,14 @@ namespace FrameMobile.Domain
                 return;
             }
 
-            var cacheKey = GetCacheKey(invocation, parameters);
+            CacheKeyManage(invocation, parameters, svcCacheAttribute);
+        }
+
+        public void CacheKeyManage(IInvocation invocation, ParameterInfo[] parameters, ServiceCacheAttribute svcCacheAttribute)
+        {
+            var parameterString = GenerateParameterKey(invocation, parameters);
+            var cacheKey = GenerateCacheKey(invocation, parameterString);
+
             var redisCacheHepler = ObjectFactory.GetInstance<ICacheManagerHelper>();
 
             if (redisCacheHepler.Contains(cacheKey))
@@ -39,11 +46,43 @@ namespace FrameMobile.Domain
             }
         }
 
-        private string GetCacheKey(IInvocation invocation)
+        private string GenerateCacheKey(IInvocation invocation, string cacheKeyString)
         {
-            StringBuilder paramSb = new StringBuilder();
-            var parameters = invocation.Method.GetParameters();
+            var cachekey = string.Format("{0}|{1}|{2}", invocation.TargetType.Name, invocation.Method.Name, cacheKeyString);
+
+            return "SVC:" + cachekey.SHA1Hash();
+        }
+
+        private string GenerateParameterKey(IInvocation invocation, ParameterInfo[] parameters)
+        {
+            var methodName = invocation.Method.Name.ToLower();
             var args = invocation.Arguments;
+
+            StringBuilder paramSb = new StringBuilder();
+
+            switch (methodName)
+            {
+                case Const.NEWS_METHOD_NAME_GETNEWSCONTENTVIEWLIST:
+                case Const.NEWS_METHOD_NAME_GETNEWSCOLLECTIONVIEW:
+                    paramSb = NewsContentCacheKey(paramSb, args, parameters);
+                    break;
+                case Const.NEWS_METHOD_NAME_GETIMAGETYPEBYRESOLUTION:
+                    paramSb = NewsImageTypeCacheKey(paramSb, args, parameters);
+                    break;
+                case Const.WALLPAPER_METHOD_NAME_GETMOBILEPROPERTY:
+                case Const.WALLPAPER_METHOD_NAME_GETWALLPAPERVIEWLIST:
+                case Const.WALLPAPER_METHOD_NAME_GETWALLPAPERVIEWDETAIL:
+                    paramSb = MobilePropertyCacheKey(paramSb, args, parameters);
+                    break;
+                default:
+                    paramSb = CommonCacheKey(paramSb, args, parameters);
+                    break;
+            }
+            return paramSb.ToString();
+        }
+
+        private StringBuilder CommonCacheKey(StringBuilder paramSb, object[] args, ParameterInfo[] parameters)
+        {
             if (parameters != null && parameters.Length > 0)
             {
                 for (int i = 0; i < parameters.Length; i++)
@@ -51,43 +90,11 @@ namespace FrameMobile.Domain
                     paramSb.AppendFormat("{0}[{1}]", parameters[i].Name, args[i] == null ? string.Empty : args[i].ToString());
                 }
             }
-
-            var cachekey = string.Format("{0}|{1}|{2}", invocation.TargetType.Name, invocation.Method.Name, paramSb.ToString());
-
-            return "SVC:" + cachekey.SHA1Hash();
+            return paramSb;
         }
 
-        private string GetCacheKey(IInvocation invocation, ParameterInfo[] parameters)
+        private StringBuilder NewsContentCacheKey(StringBuilder paramSb, object[] args, ParameterInfo[] parameters)
         {
-            var methodName = invocation.Method.Name;
-            var checkName = "GetNewsContentViewList";
-
-            StringBuilder paramSb = new StringBuilder();
-            var args = invocation.Arguments;
-            if (parameters != null && parameters.Length > 0)
-            {
-                if (methodName == checkName)
-                {
-                    paramSb.Append(GetCacheKey(invocation, args, parameters));
-                }
-                else
-                {
-                    for (int i = 0; i < parameters.Length; i++)
-                    {
-                        paramSb.AppendFormat("{0}[{1}]", parameters[i].Name, args[i] == null ? string.Empty : args[i].ToString());
-                    }
-                }
-                var cachekey = string.Format("{0}|{1}|{2}", invocation.TargetType.Name, invocation.Method.Name, paramSb.ToString());
-
-                return "SVC:" + cachekey.SHA1Hash();
-            }
-            return string.Empty;
-        }
-
-        private string GetCacheKey(IInvocation invocation, object[] args, ParameterInfo[] parameters)
-        {
-            StringBuilder paramSb = new StringBuilder();
-
             for (int i = 0; i < parameters.Length; i++)
             {
                 if (parameters[i].ParameterType.Equals(typeof(MobileParam)))
@@ -110,7 +117,46 @@ namespace FrameMobile.Domain
 
                 paramSb.AppendFormat("{0}[{1}]", parameters[i].Name, args[i] == null ? string.Empty : args[i].ToString());
             }
-            return paramSb.ToString();
+            return paramSb;
+        }
+
+        private StringBuilder NewsImageTypeCacheKey(StringBuilder paramSb, object[] args, ParameterInfo[] parameters)
+        {
+            for (int i = 0; i < parameters.Length; i++)
+            {
+                if (parameters[i].ParameterType.Equals(typeof(MobileParam)))
+                {
+                    var mobileParam = args[i] as MobileParam;
+                    if (mobileParam != null)
+                    {
+                        var width = mobileParam.Resolution.GetResolutionWidth();
+                        paramSb.AppendFormat("{0}[{1}]", MobileParam.Key_Resolution, width);
+                    }
+                }
+                paramSb.AppendFormat("{0}[{1}]", parameters[i].Name, args[i] == null ? string.Empty : args[i].ToString());
+            }
+            return paramSb;
+        }
+
+        private StringBuilder MobilePropertyCacheKey(StringBuilder paramSb, object[] args, ParameterInfo[] parameters)
+        {
+            for (int i = 0; i < parameters.Length; i++)
+            {
+                if (parameters[i].ParameterType.Equals(typeof(MobileParam)))
+                {
+                    var mobileParam = args[i] as MobileParam;
+                    if (mobileParam != null)
+                    {
+                        var brand = mobileParam.Manufacturer.ToLower();
+                        var resolution = mobileParam.Resolution.ToLower();
+                        paramSb.AppendFormat("{0}[{1}]", MobileParam.Key_Manufacturer, brand);
+                        paramSb.AppendFormat("{0}[{1}]", MobileParam.Key_Resolution, resolution);
+                    }
+                    continue;
+                }
+                paramSb.AppendFormat("{0}[{1}]", parameters[i].Name, args[i] == null ? string.Empty : args[i].ToString());
+            }
+            return paramSb;
         }
 
         private string CacheTimeKey(string keyName, long stamp)

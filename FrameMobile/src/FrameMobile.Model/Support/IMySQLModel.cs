@@ -5,10 +5,8 @@ using System.Text;
 
 namespace FrameMobile.Model
 {
-    public interface IMySQLModel
+    public interface IMySQLModel : IMySQLModelBase
     {
-        int Id { get; set; }
-        System.DateTime CreateDateTime { get; set; }
-        int Status { get; set; }
+        string Name { get; set; }
     }
 }

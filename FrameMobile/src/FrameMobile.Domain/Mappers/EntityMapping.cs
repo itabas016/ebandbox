@@ -12,7 +12,11 @@ namespace FrameMobile.Domain
         {
             NewsMapping.CreateMap();
 
+            ThemeMapping.CreateMap();
+
             AccountMapping.CreateMap();
+
+            RadarMapping.CreateMap();
 
             Mapper.AssertConfigurationIsValid();
         }

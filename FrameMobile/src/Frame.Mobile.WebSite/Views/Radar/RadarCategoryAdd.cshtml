@@ -1,0 +1,105 @@
+﻿@using FrameMobile.Model.Radar;
+@model RadarCategory
+@{
+    bool isUpdateMode = ViewData["IsUpdate"] != null;
+    ViewBag.Title = isUpdateMode ? "修改雷达分类" : "添加雷达分类";
+    Layout = "~/Views/Shared/_NewsLayout.cshtml";
+
+    var actionName = isUpdateMode ? "RadarCategoryEdit" : "RadarCategoryAdd";
+
+    var normallogoUrl = string.Empty;
+    var hdlogoUrl = string.Empty;
+    if (isUpdateMode)
+    {
+        var s = string.IsNullOrEmpty(@Model.NormalLogoUrl) ? null : @Model.NormalLogoUrl.Split('/').ToList();
+        normallogoUrl = string.IsNullOrEmpty(@Model.NormalLogoUrl) ? string.Empty : s[s.Count - 1];
+        var t = string.IsNullOrEmpty(@Model.HDLogoUrl) ? null : @Model.HDLogoUrl.Split('/').ToList();
+        hdlogoUrl = string.IsNullOrEmpty(@Model.HDLogoUrl) ? string.Empty : t[t.Count - 1];
+    }
+}
+
+<div class="contentHeader">
+    <div class="contentHeaderInfo">
+        <button class="btn btn-quaternary btn-large addapp" onclick="history.back();">
+            返 回</button>
+    </div>
+    <div class="apphead">
+        <div class="title">
+            <b>@ViewBag.Title </b>
+        </div>
+    </div>
+</div>
+<div class="content">
+    <div class="windows">
+        @using (Html.BeginForm(actionName, "Radar", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+
+            <p>
+                <div class="title">
+                    <h1>
+                        @ViewBag.Title</h1>
+                </div>
+            </p>
+
+            <div style="clear: both">
+                <table>
+                    <tr>
+                        @Html.ValidationSummary(true)
+                        @Html.HiddenFor(m => m.Id)
+                        <td><strong>名称: </strong></td>
+                        <td>@Html.TextBoxFor(m => m.Name)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>图片地址: </strong></td>
+                        <td>
+                            <input type="file" name="normallogoFile" accept="bmp|gif|jpg|jpeg|png|tiff|abm" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <label>@normallogoUrl</label></td>
+                    </tr>
+                    @if (@normallogoUrl != string.Empty)
+                    {
+                        <tr>
+                            <td colspan="2">
+                                <img src="@Model.NormalLogoUrl" />
+                            </td>
+                        </tr>
+                    }
+                    <tr>
+                        <td><strong>HD图片地址: </strong></td>
+                        <td>
+                            <input type="file" name="hdlogoFile" accept="bmp|gif|jpg|jpeg|png|tiff|abm" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <label>@hdlogoUrl</label></td>
+                    </tr>
+                    @if (@hdlogoUrl != string.Empty)
+                    {
+                        <tr>
+                            <td colspan="2">
+                                <img src="@Model.HDLogoUrl" />
+                            </td>
+                        </tr>
+                    }
+                    <tr>
+                        <td><strong>状态: </strong></td>
+                        <td>@Html.RadioButtonFor(m => m.Status, 1) 有效 @Html.RadioButtonFor(m => m.Status, 0) 无效</td>
+                    </tr>
+                    <tr>
+                        <td><strong>备注: </strong></td>
+                        <td>@Html.TextAreaFor(m => m.Comment)</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <button class="btn btn-large btn-blue addapp" style="margin-left: 50px">@ViewBag.Title</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        }
+    </div>
+</div>

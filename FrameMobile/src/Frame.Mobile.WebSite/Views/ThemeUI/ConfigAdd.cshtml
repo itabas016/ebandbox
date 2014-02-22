@@ -1,0 +1,85 @@
+﻿@using FrameMobile.Model.Theme;
+@model ThemeConfig
+@{
+    bool isUpdateMode = ViewData["IsUpdate"] != null;
+    ViewBag.Title = isUpdateMode ? "修改配置表" : "添加配置表";
+    Layout = "~/Views/Shared/_ThemeLayout.cshtml";
+}
+
+<div class="contentHeader">
+    <div class="contentHeaderInfo">
+        <button class="btn btn-quaternary btn-large addapp" onclick="history.back();">
+            返 回</button>
+    </div>
+    <div class="apphead">
+        <div class="title">
+            <b>@ViewBag.Title </b>
+        </div>
+    </div>
+</div>
+<div class="content">
+    <div class="windows">
+        @using (Html.BeginForm())
+        {
+
+            <p>
+                <div class="title">
+                    <h1>
+                        @ViewBag.Title</h1>
+                </div>
+            </p>
+
+            <div style="clear: both">
+                <table>
+                    <tr>
+                        @Html.ValidationSummary(true)
+                        @Html.HiddenFor(m => m.Id)
+                        <td><strong>名称: </strong></td>
+                        <td>@Html.TextBoxFor(m => m.Name)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>配置表名: </strong></td>
+                        <td>
+                            @if (isUpdateMode)
+                            {
+                                @Html.TextBoxFor(m => m.NameLowCase, new { @readonly = true, Class = "txt-readonly" })}
+                            else
+                            {
+                                @Html.TextBoxFor(m => m.NameLowCase)
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>所属类型: </strong></td>
+                        <td>@Html.RadioButtonFor(m => m.Type, 1) 壁纸 @Html.RadioButtonFor(m => m.Type, 0) 铃声</td>
+                    </tr>
+                    <tr>
+                        <td><strong>当前版本: </strong></td>
+                        <td>
+                            @if (isUpdateMode)
+                            {
+                                @Html.TextBoxFor(m => m.Version, new { @readonly = true, Class = "txt-readonly" })}
+                            else
+                            {
+                                @Html.TextBoxFor(m => m.Version)
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>备注: </strong></td>
+                        <td>@Html.TextAreaFor(m => m.Comment)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>状态: </strong></td>
+                        <td>@Html.RadioButtonFor(m => m.Status, 1) 有效 @Html.RadioButtonFor(m => m.Status, 0) 无效</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <button class="btn btn-large btn-blue addapp" style="margin-left: 50px">@ViewBag.Title</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        }
+    </div>
+</div>

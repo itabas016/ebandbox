@@ -9,7 +9,7 @@ using NCore;
 
 namespace TYDNewsService
 {
-    public class UpdateNewsJob : JobBase, IJob
+    public class UpdateNewsJob : NewsJobBase, IJob
     {
         public void Execute(JobExecutionContext context)
         {

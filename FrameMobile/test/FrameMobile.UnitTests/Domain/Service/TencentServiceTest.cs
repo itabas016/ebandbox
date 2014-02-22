@@ -11,18 +11,18 @@ namespace FrameMobile.UnitTests.Domain.Service
 {
     public class TencentServiceTest : TestBase
     {
-        public IDbContextService dbContextService
+        public INewsDbContextService dbContextService
         {
             get
             {
                 if (_dbContextService == null)
                 {
-                    _dbContextService = ObjectFactory.GetInstance<IDbContextService>();
+                    _dbContextService = ObjectFactory.GetInstance<INewsDbContextService>();
                 }
                 return _dbContextService;
             }
         }
-        private IDbContextService _dbContextService;
+        private INewsDbContextService _dbContextService;
 
         protected TencentService service;
 

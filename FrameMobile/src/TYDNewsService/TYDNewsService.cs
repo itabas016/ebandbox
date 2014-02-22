@@ -23,7 +23,6 @@ namespace TYDNewsService
     public partial class TYDNewsService : ServiceBase
     {
         private readonly IQuartzServer server;
-        IDataProvider provider = ProviderFactory.GetProvider(ConnectionStrings.NEWS_MYSQL_CONNECTSTRING);
 
         public TYDNewsService()
         {
@@ -47,29 +46,7 @@ namespace TYDNewsService
         public void JobStart()
         {
             Bootstrapper.Start();
-            //Initialize DB and Create Tables and Index
-            NewsDBInitialize();
-            NLogHelper.WriteInfo("Initialize DB is done!");
             server.Start();
-        }
-
-        private void NewsDBInitialize()
-        {
-            #region Create tables
-            BatchQuery query = new BatchQuery(provider);
-            Assembly assembly = Assembly.Load("FrameMobile.Model");
-            string spacename = "FrameMobile.Model.News";
-
-            var migrator = new SubSonic.Schema.Migrator(assembly);
-            string[] commands = migrator.MigrateFromModel(spacename, provider);
-
-            foreach (var s in commands)
-            {
-                query.QueueForTransaction(new QueryCommand(s.Trim(), provider));
-            }
-            query.ExecuteTransaction();
-            #endregion
-
         }
     }
 }

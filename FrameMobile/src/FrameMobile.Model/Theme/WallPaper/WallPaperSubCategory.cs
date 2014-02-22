@@ -20,6 +20,10 @@ namespace FrameMobile.Model.Theme
 
         [SubSonicStringLength(512)]
         [SubSonicNullString]
+        public string Summary { get; set; }
+
+        [SubSonicStringLength(512)]
+        [SubSonicNullString]
         public string Comment { get; set; }
     }
 }

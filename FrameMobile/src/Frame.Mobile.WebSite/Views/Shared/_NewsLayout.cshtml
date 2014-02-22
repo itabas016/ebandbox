@@ -3,7 +3,7 @@
 @{
     Layout = null;
     ICookieService cookService = ObjectFactory.GetInstance<ICookieService>();
-    var userName = cookService.TryGet("NewsUserName");
+    var userName = cookService.TryGet("UserName");
 }
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -19,9 +19,12 @@
 </head>
 <body>
     <div class="top">
+        <img src="../../Content/common/images/news_logo.png" alt="新闻管理" style="float: left;">
         <div style="float: right; line-height: 25px;">
-            <span style="float: left; display: block; padding: 15px 15px 0 0"><u>@userName</u>
-            </span><a href="/Account/LogOff" class="logout" title="退出登录"></a>
+            <span style="float: left; display: block; padding: 15px 15px 0 0">
+                <a href="/Account/Manage?userName=@userName" style="color:white"><u>@userName</u></a>
+            </span>
+            <a href="/Account/LogOff" class="logout" title="退出登录"></a>
         </div>
     </div>
     <div class="main">
@@ -34,7 +37,9 @@
                 <li><span class="ico icon-compass"></span>@Html.ActionLink("分类管理", "CategoryList", "NewsUI", null, new { highlight = "true", style = "color:white" })</li>
                 <li><span class="ico icon-compass"></span>@Html.ActionLink("子分类管理", "SubCategoryList", "NewsUI", null, new { highlight = "true", style = "color:white" })</li>
                 <li><span class="ico icon-compass"></span>@Html.ActionLink("接口地址管理", "InfAddressList", "NewsUI", null, new { highlight = "true", style = "color:white" })</li>
-                <li><span class="ico icon-list"></span>@Html.ActionLink("用户中心", "Manage", "Account", new { userName = @userName }, new { highlight = "true" })</li>
+                <li><span class="ico icon-compass"></span>@Html.ActionLink("雷达分类管理", "RadarCategoryList", "Radar", null, new { highlight = "true", style = "color:white" })</li>
+                <li><span class="ico icon-compass"></span>@Html.ActionLink("雷达元素管理", "RadarElementList", "Radar", null, new { highlight = "true", style = "color:white" })</li>
+
             </ul>
         </div>
         <div class="right">

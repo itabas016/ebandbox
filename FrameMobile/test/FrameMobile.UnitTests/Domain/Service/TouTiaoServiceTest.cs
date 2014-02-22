@@ -15,18 +15,18 @@ namespace FrameMobile.UnitTests.Domain
 {
     public class TouTiaoServiceTest : TestBase
     {
-        public IDbContextService dbContextService
+        public INewsDbContextService dbContextService
         {
             get
             {
                 if (_dbContextService == null)
                 {
-                    _dbContextService = ObjectFactory.GetInstance<IDbContextService>();
+                    _dbContextService = ObjectFactory.GetInstance<INewsDbContextService>();
                 }
                 return _dbContextService;
             }
         }
-        private IDbContextService _dbContextService;
+        private INewsDbContextService _dbContextService;
 
         protected TouTiaoService dataService;
 

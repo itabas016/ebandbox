@@ -8,6 +8,8 @@ using FrameMobile.Core;
 using FrameMobile.Model;
 using StructureMap;
 using NCore;
+using System.IO;
+using System.Web;
 
 namespace FrameMobile.Web
 {
@@ -237,6 +239,123 @@ namespace FrameMobile.Web
 
                 return ret;
             };
+        }
+
+        protected virtual Func<bool> CheckRequiredParams(string imsi, string lcd, string mf)
+        {
+            return () =>
+            {
+                var ret = true;
+                if (string.IsNullOrEmpty(imsi) || string.IsNullOrEmpty(lcd) || string.IsNullOrEmpty(mf)) ret = false;
+
+                return ret;
+            };
+        }
+
+        #endregion
+
+        #region Resource Helper
+
+        protected string SaveNewsResourceFile(string subFolderName, string dirPath, HttpPostedFileBase file, string fileName)
+        {
+            fileName = string.IsNullOrEmpty(fileName) ? file.FileName : fileName;
+            var filePath = GetNewsResourceFilePath(subFolderName, dirPath, fileName);
+
+            file.SaveAs(filePath);
+            return filePath;
+        }
+
+        protected string SaveThemeResourceFile(string subFolderName, string dirPath, HttpPostedFileBase file, string fileName)
+        {
+            fileName = string.IsNullOrEmpty(fileName) ? file.FileName : fileName;
+            var filePath = GetThemeResourceFilePath(subFolderName, dirPath, fileName);
+
+            file.SaveAs(filePath);
+            return filePath;
+        }
+
+        protected string GetResourcePathNewsBase()
+        {
+            return Server.MapPath(ConfigKeys.TYD_NEWS_RESOURCES_DIR_ROOT.ConfigValue());
+        }
+
+        protected string GetResourcePathThemeBase()
+        {
+            return Server.MapPath(ConfigKeys.TYD_THEME_RESOURCES_DIR_ROOT.ConfigValue());
+        }
+
+        protected string GetThemeLogoPath(string fileName = "")
+        {
+            return GetThemeResourceFilePath("Logos", fileName);
+        }
+
+        protected string GetRadarCategoryLogoPath(string fileName = "")
+        {
+            return GetNewsResourceFilePath("Logos", fileName);
+        }
+
+        protected string GetOriginalWallPaperPath(string fileName = "")
+        {
+            return GetThemeResourceFilePath("Originals", fileName);
+        }
+
+        protected string GetThumbnailWallPaperPath(string fileName = "")
+        {
+            return GetThemeResourceFilePath("Thumbnails", fileName);
+        }
+
+        protected string GetThemeResourceFilePath(string subFolderName, string fileName = "")
+        {
+            string dirPath = string.Format("{0}{1}\\", GetResourcePathThemeBase(), subFolderName);
+            MakeSureDirExist(dirPath);
+            return string.Format("{0}{1}", dirPath, fileName);
+        }
+
+        protected string GetNewsResourceFilePath(string subFolderName, string fileName = "")
+        {
+            string dirPath = string.Format("{0}{1}\\", GetResourcePathNewsBase(), subFolderName);
+            MakeSureDirExist(dirPath);
+            return string.Format("{0}{1}", dirPath, fileName);
+        }
+
+        protected string GetThemeResourceFilePath(string subFolderName, string dirPath, string fileName)
+        {
+            var filePath = string.Empty;
+            if (ConfigKeys.USING_SHARED_RESOURCE_FOLDER.ConfigValue().ToBoolean())
+            {
+                filePath = GetThemeResourceFilePath(subFolderName, fileName);
+            }
+            else
+            {
+                MakeSureDirExist(dirPath);
+                filePath = Path.Combine(dirPath, fileName);
+            }
+
+            return filePath;
+        }
+
+        protected string GetNewsResourceFilePath(string subFolderName, string dirPath, string fileName)
+        {
+            var filePath = string.Empty;
+            if (ConfigKeys.USING_SHARED_RESOURCE_FOLDER.ConfigValue().ToBoolean())
+            {
+                filePath = GetNewsResourceFilePath(subFolderName, fileName);
+            }
+            else
+            {
+                MakeSureDirExist(dirPath);
+                filePath = Path.Combine(dirPath, fileName);
+            }
+
+            return filePath;
+        }
+
+        private void MakeSureDirExist(string dirPath)
+        {
+            if (!Directory.Exists(dirPath))
+            {
+                Directory.CreateDirectory(dirPath);
+            }
         }
 
         #endregion

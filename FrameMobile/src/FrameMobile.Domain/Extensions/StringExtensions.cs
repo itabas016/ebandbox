@@ -93,5 +93,38 @@ namespace FrameMobile.Domain
             }
             return result;
         }
+
+        public static List<int> GetIds(this string input)
+        {
+            if (!string.IsNullOrEmpty(input))
+            {
+                var array = input.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+                if (array != null && array.Length > 0)
+                {
+                    var ret = new List<int>();
+                    for (int i = 0; i < array.Length; i++)
+                    {
+                        ret.Add(array[i].ToInt32());
+                    }
+                    return ret;
+                }
+            }
+            return new List<int>() { 0 };
+        }
+
+        public static string GetString(this List<int> input)
+        {
+            if (input != null && input.Count > 0)
+            {
+                var sb = new StringBuilder();
+
+                foreach (var item in input)
+                {
+                    sb.AppendFormat("{0},", item);
+                }
+                return sb.ToString().TrimEnd(',');
+            }
+            return string.Empty;
+        }
     }
 }

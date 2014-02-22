@@ -14,11 +14,11 @@ using System.Web;
 
 namespace FrameMobile.Domain.Service
 {
-    public class TouTiaoService : NewsServiceBase
+    public class TouTiaoService : NewsDbContextService
     {
         #region Prop
 
-        public static string NEWS_RESOURCES_DIR_ROOT = ConfigKeys.TYD_NEWS_RESOURCES_DIR_ROOT.ConfigValue();
+        public static string NEWS_RESOURCES_DIR_ROOT = ConfigKeys.TYD_NEWS_RESOURCES_DIR_ROOT_CLOSE.ConfigValue();
 
         public int NEWS_CATEGORY_REQUEST_COUNT = ConfigKeys.TYD_NEWS_TOUTIAO_REQUEST_COUNT.ConfigValue().ToInt32();
 
@@ -39,7 +39,7 @@ namespace FrameMobile.Domain.Service
         #endregion
 
         #region Ctor
-        public TouTiaoService(IDbContextService dbContextService)
+        public TouTiaoService(INewsDbContextService dbContextService)
         {
             this.dbContextService = dbContextService;
         }

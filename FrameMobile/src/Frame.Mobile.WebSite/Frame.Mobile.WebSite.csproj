@@ -184,10 +184,17 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\CacheController.cs" />
-    <Compile Include="Controllers\NewsController.cs" />
-    <Compile Include="Controllers\NewsUIController.cs" />
+    <Compile Include="Controllers\Common\AccountController.cs" />
+    <Compile Include="Controllers\Common\CacheController.cs" />
+    <Compile Include="Controllers\Common\MobileController.cs" />
+    <Compile Include="Controllers\Common\RadarController.cs" />
+    <Compile Include="Controllers\News\NewsBaseController.cs" />
+    <Compile Include="Controllers\News\NewsController.cs" />
+    <Compile Include="Controllers\News\NewsUIController.cs" />
+    <Compile Include="Controllers\Theme\ThemeBaseController.cs" />
+    <Compile Include="Controllers\Theme\ThemeUIController.cs" />
+    <Compile Include="Controllers\Theme\WallPaperController.cs" />
+    <Compile Include="Controllers\Theme\WallPaperUIController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -203,11 +210,16 @@
     <Content Include="Content\account\images\nav_l.jpg" />
     <Content Include="Content\account\images\newsbanner.jpg" />
     <Content Include="Content\account\images\signup.jpg" />
+    <Content Include="Content\common\images\config_logo.png" />
+    <Content Include="Content\common\images\mobile_logo.png" />
     <Content Include="Content\news\css\main.css" />
     <Content Include="Content\news\images\icos.png" />
     <Content Include="Content\news\images\logout.png" />
+    <Content Include="Content\common\images\news_logo.png" />
+    <Content Include="Content\common\images\ring_logo.png" />
     <Content Include="Content\news\images\sidebarBg.png" />
     <Content Include="Content\news\images\sidebarBg2.png" />
+    <Content Include="Content\common\images\wallpaper_logo.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -314,12 +326,6 @@
     <Content Include="Scripts\modernizr-1.7.min.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
     <Content Include="Web.config" />
-    <Content Include="Web.Debug.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </Content>
-    <Content Include="Web.Release.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </Content>
     <Content Include="Scripts\_references.js" />
     <Content Include="Images\accent.png" />
     <Content Include="Images\bullet.png" />
@@ -369,6 +375,42 @@
     <Content Include="Views\NewsUI\TimeConvert.cshtml" />
     <Content Include="Views\NewsUI\InfAddressAdd.cshtml" />
     <Content Include="Views\NewsUI\InfAddressList.cshtml" />
+    <Content Include="Views\Shared\_MobileLayout.cshtml" />
+    <Content Include="Views\Shared\_WallPaperLayout.cshtml" />
+    <Content Include="Views\Mobile\PropertyList.cshtml" />
+    <Content Include="Views\Mobile\BrandAdd.cshtml" />
+    <Content Include="Views\Mobile\PropertyAdd.cshtml" />
+    <Content Include="Views\Mobile\BrandList.cshtml" />
+    <Content Include="Views\Mobile\HardwareAdd.cshtml" />
+    <Content Include="Views\Mobile\HardwareList.cshtml" />
+    <Content Include="Views\Mobile\ResolutionAdd.cshtml" />
+    <Content Include="Views\Mobile\ResolutionList.cshtml" />
+    <Content Include="Views\WallPaperUI\CategoryAdd.cshtml" />
+    <Content Include="Views\WallPaperUI\CategoryList.cshtml" />
+    <Content Include="Views\WallPaperUI\SubCategoryList.cshtml" />
+    <Content Include="Views\WallPaperUI\SubCategoryAdd.cshtml" />
+    <Content Include="Views\WallPaperUI\TopicAdd.cshtml" />
+    <Content Include="Views\WallPaperUI\TopicList.cshtml" />
+    <Content Include="Views\WallPaperUI\WallPaperAdd.cshtml" />
+    <Content Include="Views\WallPaperUI\WallPaperList.cshtml" />
+    <Content Include="Views\ThemeUI\ConfigAdd.cshtml" />
+    <Content Include="Views\ThemeUI\ConfigList.cshtml" />
+    <Content Include="Views\Shared\_ThemeLayout.cshtml" />
+    <Content Include="Views\WallPaperUI\WallPaperConfig.cshtml" />
+    <Content Include="Views\WallPaperUI\Preview.cshtml" />
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Live.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Radar\RadarCategoryAdd.cshtml" />
+    <Content Include="Views\Radar\RadarCategoryList.cshtml" />
+    <Content Include="Views\Radar\RadarElementAdd.cshtml" />
+    <Content Include="Views\Radar\RadarElementList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -407,6 +449,15 @@
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Live|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
@@ -437,4 +488,16 @@
   </Target>
   <Target Name="AfterBuild">
   </Target> -->
+  <UsingTask TaskName="TransformXml" AssemblyFile="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\Web\Microsoft.Web.Publishing.Tasks.dll" />
+  <Target Name="AfterCompile" Condition="Exists('Web.$(Configuration).config')">
+    <!--Generate transformed app config in the intermediate directory-->
+    <TransformXml Source="Web.config" Destination="$(IntermediateOutputPath)$(TargetFileName).config" Transform="Web.$(Configuration).config" />
+    <!--Force build process to use the transformed configuration file from now on.-->
+    <ItemGroup>
+      <AppConfigWithTargetPath Remove="Web.config" />
+      <AppConfigWithTargetPath Include="$(IntermediateOutputPath)$(TargetFileName).config">
+        <TargetPath>$(TargetFileName).config</TargetPath>
+      </AppConfigWithTargetPath>
+    </ItemGroup>
+  </Target>
 </Project>
