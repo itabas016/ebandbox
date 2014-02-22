@@ -7,7 +7,7 @@ using SubSonic.SqlGeneration.Schema;
 namespace FrameMobile.Model
 {
     [Serializable]
-    public class MySQLModelBase : IMySQLModel
+    public class MySQLModelBase : IMySQLModelBase
     {
         public int Status
         {

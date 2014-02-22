@@ -21,6 +21,7 @@
 
 <body>
     <div class="top">
+        <img src="../../Content/common/images/wallpaper_logo.png" alt="壁纸管理" style="float: left;">
         <div style="float: right; line-height: 25px;">
             <span style="float: left; display: block; padding: 15px 15px 0 0">
                 <a href="/Account/Manage?userName=@userName" style="color:white"><u>@userName</u></a>
@@ -36,7 +37,7 @@
                 <li><span class="ico icon-compass"></span>@Html.ActionLink("子分类列表", "SubCategoryList", "WallPaperUI", null, new { highlight = "true", style = "color:white" })</li>
                 <li><span class="ico icon-compass"></span>@Html.ActionLink("专题列表", "TopicList", "WallPaperUI", null, new { highlight = "true", style = "color:white" })</li>
                 <li><span class="ico icon-compass"></span>@Html.ActionLink("配置表管理", "ConfigManage", "ThemeUI", null, new { highlight = "true", style = "color:white" })</li>
-                <li><span class="ico icon-compass"></span>@Html.ActionLink("属性配置", "MobileManage", "Mobile", null, new { highlight = "true", style = "color:white" })</li>
+                <li><span class="ico icon-compass"></span>@Html.ActionLink("手机属性管理", "MobileManage", "Mobile", null, new { highlight = "true", style = "color:white" })</li>
             </ul>
         </div>
         <div class="right">

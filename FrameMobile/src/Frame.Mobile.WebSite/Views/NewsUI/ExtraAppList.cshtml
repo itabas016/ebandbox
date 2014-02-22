@@ -31,12 +31,7 @@
             <tr>
                 <th>序号</th>
                 <th>名称</th>
-                <th>简称</th>
                 <th>推广类型</th>
-                <th>包名</th>
-                <th>版本号</th>
-                <th>是否浏览器</th>
-                <th>推广链接</th>
                 <th>状态</th>
                 <th>&nbsp;</th>
             </tr>
@@ -47,12 +42,7 @@
                 <tr class="odd gradeX">
                     <td><strong>@item.Id</strong></td>
                     <td><strong>@item.Name</strong></td>
-                    <td>@item.NameLowCase</td>
                     <td>@item.ExtraType</td>
-                    <td>@item.PackageName</td>
-                    <td>@item.VersionCode</td>
-                    <td>@item.IsBrower</td>
-                    <td>@item.ExtraLinkUrl</td>
                     <td>@item.Status</td>
                     <td class="center">
                         <button type="button" class="btn btn-large btn-gray"  onclick="window.open('ExtraAppEdit?extraAppId=@item.Id','_self');">修 改</button>

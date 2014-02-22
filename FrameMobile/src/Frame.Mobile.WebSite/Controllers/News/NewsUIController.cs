@@ -453,7 +453,7 @@ namespace Frame.Mobile.WebSite.Controllers
         [HttpPost]
         public ActionResult ExtraAppAdd(NewsExtraApp model)
         {
-            var exist = dbContextService.Exists<NewsExtraApp>(x => x.Name == model.NameLowCase || x.PackageName == model.PackageName);
+            var exist = dbContextService.Exists<NewsExtraApp>(x => x.Name == model.Name);
             if (exist)
             {
                 TempData["errorMsg"] = "该外推应用已存在！";
@@ -498,8 +498,8 @@ namespace Frame.Mobile.WebSite.Controllers
             var extraApp = dbContextService.Single<NewsExtraApp>(model.Id);
 
             extraApp.Name = model.Name;
-            extraApp.NameLowCase = model.NameLowCase;
             extraApp.PackageName = model.PackageName;
+            extraApp.VersionCode = model.VersionCode;
             extraApp.ExtraType = model.ExtraType;
             extraApp.IsBrower = model.IsBrower;
             extraApp.ExtraLinkUrl = model.ExtraLinkUrl;

@@ -131,7 +131,6 @@ namespace FrameMobile.Domain.Service
             {
                 Id = 1,
                 Name = "今日头条",
-                NameLowCase = "toutiao",
                 PackageName = pkgName_TouTiao,
                 ExtraLinkUrl = string.Format(APK_DOWNLOAD_PREFIX_URL, pkgName_TouTiao),
                 IsBrower = 0,
@@ -143,7 +142,6 @@ namespace FrameMobile.Domain.Service
             {
                 Id = 2,
                 Name = "QQ浏览器",
-                NameLowCase = "tentcent",
                 PackageName = pkgName_QQBrower,
                 ExtraLinkUrl = string.Format(APK_DOWNLOAD_PREFIX_URL, pkgName_QQBrower),
                 IsBrower = 1,
@@ -404,7 +402,7 @@ namespace FrameMobile.Domain.Service
             return GetTouTiaoContentViewList(mobileParams, categoryIds, stamp, action, startnum, num, out totalCount);
         }
 
-        public NewsCollectionView GetNewsCollectionView(MobileParam mobileParams, long stamp, int extracver, bool action, string categoryIds, int startnum, int num, out int totalCount)
+        public NewsCollectionView GetNewsCollectionView(MobileParam mobileParams, long stamp, int extracver, bool action, string categoryIds, int startnum, int num,out int extrasver, out int totalCount)
         {
             throw new NotImplementedException();
         }

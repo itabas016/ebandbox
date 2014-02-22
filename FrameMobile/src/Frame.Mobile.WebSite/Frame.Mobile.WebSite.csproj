@@ -210,11 +210,16 @@
     <Content Include="Content\account\images\nav_l.jpg" />
     <Content Include="Content\account\images\newsbanner.jpg" />
     <Content Include="Content\account\images\signup.jpg" />
+    <Content Include="Content\common\images\config_logo.png" />
+    <Content Include="Content\common\images\mobile_logo.png" />
     <Content Include="Content\news\css\main.css" />
     <Content Include="Content\news\images\icos.png" />
     <Content Include="Content\news\images\logout.png" />
+    <Content Include="Content\common\images\news_logo.png" />
+    <Content Include="Content\common\images\ring_logo.png" />
     <Content Include="Content\news\images\sidebarBg.png" />
     <Content Include="Content\news\images\sidebarBg2.png" />
+    <Content Include="Content\common\images\wallpaper_logo.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />

@@ -83,12 +83,11 @@ namespace FrameMobile.Domain.Service
         }
 
         [ServiceCache]
-        public NewsCollectionView GetNewsCollectionView(MobileParam mobileParams, long stamp, int extracver, bool action, string categoryIds, int startnum, int num, out int totalCount)
+        public NewsCollectionView GetNewsCollectionView(MobileParam mobileParams, long stamp, int extracver, bool action, string categoryIds, int startnum, int num, out int extrasver, out int totalCount)
         {
             var collection = new NewsCollectionView();
 
-            var extraServerVersion = 0;
-            collection.NewsExtraResult = GetNewsExtraResult(mobileParams, extracver, out extraServerVersion);
+            collection.NewsExtraResult = GetNewsExtraResult(mobileParams, extracver, out extrasver);
             collection.NewsContentResult = GetNewsContentResult(mobileParams, stamp, action, categoryIds, startnum, num, out totalCount);
             return collection;
         }

@@ -51,12 +51,26 @@ namespace Frame.Mobile.WebSite.Controllers
             return Content(actionResult.ToString());
         }
 
-        public ActionResult WallPaperList(string imsi, string lcd, string mf, int categoryId = 0, int topicId = 0, int subcategoryId = 0, int sort = 0, int startnum = 1, int num = 10)
+        /// <summary>
+        /// st 0 代表窄屏，1代表宽屏
+        /// </summary>
+        /// <param name="imsi"></param>
+        /// <param name="lcd"></param>
+        /// <param name="mf"></param>
+        /// <param name="st"></param>
+        /// <param name="categoryId"></param>
+        /// <param name="topicId"></param>
+        /// <param name="subcategoryId"></param>
+        /// <param name="sort"></param>
+        /// <param name="startnum"></param>
+        /// <param name="num"></param>
+        /// <returns></returns>
+        public ActionResult WallPaperList(string imsi, string lcd, string mf, int st = 0, int categoryId = 0, int topicId = 0, int subcategoryId = 0, int sort = 0, int startnum = 1, int num = 10)
         {
             var mobileParams = GetMobileParam();
             int totalCount = 0;
 
-            Func<IList<WallPaperView>> getwallpaperlist = () => WallPaperService.GetWallPaperViewList(mobileParams, categoryId, topicId, subcategoryId, sort, startnum, num, out totalCount);
+            Func<IList<WallPaperView>> getwallpaperlist = () => WallPaperService.GetWallPaperViewList(mobileParams, st, categoryId, topicId, subcategoryId, sort, startnum, num, out totalCount);
 
             var actionResult = BuildResult(this.CheckRequiredParams(imsi, lcd, mf), getwallpaperlist);
 

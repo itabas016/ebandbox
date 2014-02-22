@@ -11,10 +11,10 @@ namespace FrameMobile.Domain
 {
     public static class RadarExtensions
     {
-        public static IList<T> ReturnRadarInstance<T>(this T source, int cver, out int sver) where T : class, IMySQLModel, new()
+        public static IList<T> ReturnRadarInstance<T>(this T source, int cver, out int sver) where T : class, IMySQLModelBase, new()
         {
             var result = new List<T>();
-            sver = 0;
+            sver = cver;
             var version = source.GetNewsConfsver();
             if (version != cver)
             {

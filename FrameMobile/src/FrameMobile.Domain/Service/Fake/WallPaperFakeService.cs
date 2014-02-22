@@ -218,7 +218,7 @@ namespace FrameMobile.Domain.Service
             return result;
         }
 
-        public IList<WallPaperView> GetWallPaperViewList(MobileParam mobileParams, int categoryId, int topicId, int subcategoryId, int sort, int startnum, int num, out int totalCount)
+        public IList<WallPaperView> GetWallPaperViewList(MobileParam mobileParams, int screenType, int categoryId, int topicId, int subcategoryId, int sort, int startnum, int num, out int totalCount)
         {
             var result = new List<WallPaperView>();
 
@@ -226,7 +226,8 @@ namespace FrameMobile.Domain.Service
             {
                 if (categoryId == 0 && topicId == 0)
                 {
-                    result = FakeWallPaperList().To<IList<WallPaperView>>().OrderByDescending(x => x.DownloadNumber).ToList();
+                    var wallpaperlist = screenType == 0 ? FakeWallPaperList() : FakeWallPaperWidthyList();
+                    result = wallpaperlist.To<IList<WallPaperView>>().OrderByDescending(x => x.DownloadNumber).ToList();
                 }
                 if (categoryId == 0 && topicId != 0)
                 {
@@ -272,7 +273,8 @@ namespace FrameMobile.Domain.Service
             {
                 if (categoryId == 0 && topicId == 0)
                 {
-                    result = FakeWallPaperList().To<IList<WallPaperView>>().OrderByDescending(x => x.PublishTime).ToList();
+                    var wallpaperlist = screenType == 0 ? FakeWallPaperList() : FakeWallPaperWidthyList();
+                    result = wallpaperlist.To<IList<WallPaperView>>().OrderByDescending(x => x.PublishTime).ToList();
                 }
                 if (categoryId == 0 && topicId != 0)
                 {
@@ -413,6 +415,105 @@ namespace FrameMobile.Domain.Service
                 Rating = 3,
                 ThumbnailName = "http://theme.kk874.com/ThemeResources/Thumbnails/th02.jpg",
                 OriginalName = "http://theme.kk874.com/ThemeResources/Originals/th02.jpg",
+                PublishTime = DateTime.Now.AddMinutes(-13),
+                ModifiedTime = DateTime.Now,
+                DownloadNumber = 6,
+                OrderNumber = 2,
+                CreateDateTime = DateTime.Now,
+                Status = 0
+            };
+            #endregion
+
+            var wallpaperlist = new List<WallPaper>() { wall1, wall01, wall02, wall2, wall3, wall4 };
+
+            return wallpaperlist;
+        }
+
+        private IList<WallPaper> FakeWallPaperWidthyList()
+        {
+            #region instance
+            var wall1 = new WallPaper()
+            {
+                Id = 1,
+                Title = "美女01",
+                Rating = 1,
+                ThumbnailName = "http://theme.kk874.com/ThemeResources/Thumbnails/w_th04.jpg",
+                OriginalName = "http://theme.kk874.com/ThemeResources/Originals/w_th04.jpg",
+                PublishTime = DateTime.Now.AddHours(-1),
+                ModifiedTime = DateTime.Now,
+                DownloadNumber = 23,
+                OrderNumber = 12,
+                CreateDateTime = DateTime.Now,
+                Status = 1
+            };
+
+            var wall01 = new WallPaper()
+            {
+                Id = 2,
+                Title = "美女01",
+                Rating = 1,
+                ThumbnailName = "http://theme.kk874.com/ThemeResources/Thumbnails/w_th05.jpg",
+                OriginalName = "http://theme.kk874.com/ThemeResources/Originals/w_th05.jpg",
+                PublishTime = DateTime.Now.AddHours(-5),
+                ModifiedTime = DateTime.Now,
+                DownloadNumber = 56,
+                OrderNumber = 12,
+                CreateDateTime = DateTime.Now,
+                Status = 1
+            };
+
+            var wall2 = new WallPaper()
+            {
+                Id = 3,
+                Title = "模特01",
+                Rating = 1,
+                ThumbnailName = "http://theme.kk874.com/ThemeResources/Thumbnails/w_th06.jpg",
+                OriginalName = "http://theme.kk874.com/ThemeResources/Originals/w_th06.jpg",
+                PublishTime = DateTime.Now.AddDays(-1),
+                ModifiedTime = DateTime.Now,
+                DownloadNumber = 10,
+                OrderNumber = 15,
+                CreateDateTime = DateTime.Now,
+                Status = 1
+            };
+
+            var wall02 = new WallPaper()
+            {
+                Id = 4,
+                Title = "模特02",
+                Rating = 1,
+                ThumbnailName = "http://theme.kk874.com/ThemeResources/Thumbnails/w_th07.jpg",
+                OriginalName = "http://theme.kk874.com/ThemeResources/Originals/w_th07.jpg",
+                PublishTime = DateTime.Now.AddHours(-17),
+                ModifiedTime = DateTime.Now,
+                DownloadNumber = 40,
+                OrderNumber = 15,
+                CreateDateTime = DateTime.Now,
+                Status = 1
+            };
+
+            var wall3 = new WallPaper()
+            {
+                Id = 5,
+                Title = "动漫01",
+                Rating = 3,
+                ThumbnailName = "http://theme.kk874.com/ThemeResources/Thumbnails/w_th01.jpg",
+                OriginalName = "http://theme.kk874.com/ThemeResources/Originals/w_th01.jpg",
+                PublishTime = DateTime.Now.AddMinutes(-2),
+                ModifiedTime = DateTime.Now,
+                DownloadNumber = 5,
+                OrderNumber = 20,
+                CreateDateTime = DateTime.Now,
+                Status = 1
+            };
+
+            var wall4 = new WallPaper()
+            {
+                Id = 6,
+                Title = "哆啦A梦",
+                Rating = 3,
+                ThumbnailName = "http://theme.kk874.com/ThemeResources/Thumbnails/w_th02.jpg",
+                OriginalName = "http://theme.kk874.com/ThemeResources/Originals/w_th02.jpg",
                 PublishTime = DateTime.Now.AddMinutes(-13),
                 ModifiedTime = DateTime.Now,
                 DownloadNumber = 6,

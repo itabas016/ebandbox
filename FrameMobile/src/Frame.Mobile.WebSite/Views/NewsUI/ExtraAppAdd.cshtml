@@ -47,18 +47,6 @@
                         <td>@Html.TextBoxFor(m => m.Name)</td>
                     </tr>
                     <tr>
-                        <td><strong>简称: </strong></td>
-                        <td>
-                            @if (isUpdateMode)
-                            {
-                                @Html.TextBoxFor(m => m.NameLowCase, new { @readonly = true, Class = "txt-readonly" })}
-                            else
-                            {
-                                @Html.TextBoxFor(m => m.NameLowCase)
-                            }
-                        </td>
-                    </tr>
-                    <tr>
                         <td><strong>包名: </strong></td>
                         <td>
                             @if (isUpdateMode)
@@ -101,6 +89,10 @@
                         <td>@Html.RadioButtonFor(m => m.IsBrower, 1) 是 @Html.RadioButtonFor(m => m.IsBrower, 0) 否</td>
                     </tr>
                     <tr>
+                        <td><strong>状态: </strong></td>
+                        <td>@Html.RadioButtonFor(m => m.Status, 1) 有效 @Html.RadioButtonFor(m => m.Status, 0) 无效</td>
+                    </tr>
+                    <tr>
                         <td>
                             <strong>链接地址: </strong></td>
                         <td class="txt-longer">
@@ -114,14 +106,10 @@
                         </td>
                     </tr>
                     <tr>
-                        <td><strong>状态: </strong></td>
-                        <td>@Html.RadioButtonFor(m => m.Status, 1) 有效 @Html.RadioButtonFor(m => m.Status, 0) 无效</td>
-                    </tr>
-                    <tr>
                         <td>
                             <strong>推广说明: </strong></td>
                         <td class="txt-longer">
-                            @Html.TextAreaFor(m => m.ExtraLinkUrl)
+                            @Html.TextAreaFor(m => m.Description)
                         </td>
                     </tr>
                     <tr>

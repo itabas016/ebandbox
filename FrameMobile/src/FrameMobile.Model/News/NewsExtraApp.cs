@@ -8,7 +8,7 @@ namespace FrameMobile.Model.News
 {
     [Serializable]
     [SubSonicTableNameOverride("newsextraapp")]
-    public class NewsExtraApp : NewsSource
+    public class NewsExtraApp : MySQLModel
     {
         /// <summary>
         /// 是否是浏览器
@@ -22,15 +22,21 @@ namespace FrameMobile.Model.News
         /// </summary>
         public int ExtraType { get; set; }
 
+        [SubSonicStringLength(128)]
+        [SubSonicNullString]
+        public string PackageName { get; set; }
+
         public int VersionCode { get; set; }
 
         [SubSonicStringLength(256)]
+        [SubSonicNullString]
         public string ExtraLogoUrl { get; set; }
 
         [SubSonicStringLength(256)]
         public string ExtraLinkUrl { get; set; }
 
         [SubSonicStringLength(256)]
+        [SubSonicNullString]
         public string Description { get; set; }
     }
 }

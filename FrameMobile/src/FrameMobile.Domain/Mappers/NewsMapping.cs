@@ -57,7 +57,6 @@ namespace FrameMobile.Domain
             Mapper.CreateMap<NewsExtraApp, NewsExtraAppView>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(ori => ori.Id))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(ori => ori.Name))
-                .ForMember(dest => dest.NameLowCase, opt => opt.MapFrom(ori => ori.NameLowCase))
                 .ForMember(dest => dest.ExtraType, opt => opt.MapFrom(ori => ori.ExtraType))
                 .ForMember(dest => dest.IsBrower, opt => opt.MapFrom(ori => ori.IsBrower))
                 .ForMember(dest => dest.PackageName, opt => opt.MapFrom(ori => ori.PackageName))
