@@ -62,7 +62,7 @@ namespace FrameMobile.Domain.Service
         }
 
         [ServiceCache]
-        public IList<WallPaperView> GetWallPaperViewList(MobileParam mobileParams, int categoryId, int topicId, int subcategoryId, int sort, int startnum, int num, out int totalCount)
+        public IList<WallPaperView> GetWallPaperViewList(MobileParam mobileParams, int screenType, int categoryId, int topicId, int subcategoryId, int sort, int startnum, int num, out int totalCount)
         {
             var property = GetMobileProperty(mobileParams);
 
