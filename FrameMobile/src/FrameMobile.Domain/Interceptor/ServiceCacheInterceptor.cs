@@ -34,7 +34,7 @@ namespace FrameMobile.Domain
             var parameterString = GenerateParameterKey(invocation, parameters);
             var cacheKey = GenerateCacheKey(invocation, parameterString);
 
-            var redisCacheHepler = ObjectFactory.GetInstance<ICacheManagerHelper>();
+            var redisCacheHepler = ObjectFactory.GetInstance<IRedisCacheService>();
 
             if (redisCacheHepler.Contains(cacheKey))
             {
@@ -192,30 +192,30 @@ namespace FrameMobile.Domain
             return string.Format("{0}[{1}]", keyName, value);
         }
 
-        private void AddCacheKey(IInvocation invocation, ICacheManagerHelper redisCacheHepler, ParameterInfo[] parameters, ServiceCacheAttribute svcCacheAttribute, string cacheKey)
+        private void AddCacheKey(IInvocation invocation, IRedisCacheService redisCacheService, ParameterInfo[] parameters, ServiceCacheAttribute svcCacheAttribute, string cacheKey)
         {
             invocation.Proceed();
 
-            redisCacheHepler.AddNullableData(cacheKey, invocation.ReturnValue, svcCacheAttribute.TimeoutSecs);
+            redisCacheService.AddNullableData(cacheKey, invocation.ReturnValue, svcCacheAttribute.TimeoutSecs);
 
             for (int i = 0; i < parameters.Length; i++)
             {
                 if (parameters[i].ParameterType.IsByRef && invocation.Arguments[i] != null)
                 {
-                    redisCacheHepler.Add(cacheKey + parameters[i].Name, invocation.Arguments[i], svcCacheAttribute.TimeoutSecs);
+                    redisCacheService.Add(cacheKey + parameters[i].Name, invocation.Arguments[i], svcCacheAttribute.TimeoutSecs);
                 }
             }
         }
 
-        private void GetDataByCacheKey(IInvocation invocation, ICacheManagerHelper redisCacheHepler, ParameterInfo[] parameters, string cacheKey)
+        private void GetDataByCacheKey(IInvocation invocation, IRedisCacheService redisCacheService, ParameterInfo[] parameters, string cacheKey)
         {
-            invocation.ReturnValue = redisCacheHepler.GetNullableData(cacheKey, invocation.Method.ReturnType);
+            invocation.ReturnValue = redisCacheService.GetNullableData(cacheKey, invocation.Method.ReturnType);
 
             for (int i = 0; i < parameters.Length; i++)
             {
                 if (parameters[i].ParameterType.IsByRef)
                 {
-                    object argVal = redisCacheHepler.GetData(cacheKey + parameters[i].Name, parameters[i].ParameterType.GetElementType());
+                    object argVal = redisCacheService.GetData(cacheKey + parameters[i].Name, parameters[i].ParameterType.GetElementType());
                     invocation.SetArgumentValue(i, argVal);
                 }
             }

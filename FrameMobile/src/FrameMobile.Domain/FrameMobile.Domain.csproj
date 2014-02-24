@@ -137,13 +137,17 @@
     <Compile Include="Service\Fake\NewsFakeService.cs" />
     <Compile Include="Service\Fake\WallPaperFakeService.cs" />
     <Compile Include="Service\Interface\IMobileUIService.cs" />
+    <Compile Include="Service\Interface\INewsRedisCacheService.cs" />
     <Compile Include="Service\Interface\IRadarService.cs" />
+    <Compile Include="Service\Interface\IThemeRedisCacheService.cs" />
     <Compile Include="Service\Interface\IThemeServiceBase.cs" />
     <Compile Include="Service\Interface\IThemeDbContextService.cs" />
     <Compile Include="Service\Interface\IWallPaperService.cs" />
     <Compile Include="Service\Interface\IWallPaperUIService.cs" />
+    <Compile Include="Service\News\NewsRedisCacheService.cs" />
     <Compile Include="Service\Radar\RadarService.cs" />
     <Compile Include="Service\ServiceBase\ThemeDbContextService.cs" />
+    <Compile Include="Service\Theme\ThemeRedisCacheService.cs" />
     <Compile Include="Service\Theme\WallPaperService.cs" />
     <Compile Include="Service\Theme\WallPaperUIService.cs" />
     <Compile Include="Service\ThirdPart\TencentService.cs" />

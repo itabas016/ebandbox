@@ -77,8 +77,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ICacheManagerHelper.cs" />
+    <Compile Include="IRedisCacheService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RedisCacheHelper.cs" />
+    <Compile Include="RedisCacheService.cs" />
+    <Compile Include="RedisClientCacheManagerRepo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FrameMobile.Common\FrameMobile.Common.csproj">
+      <Project>{4eab6159-e307-4c31-8241-0cb556778111}</Project>
+      <Name>FrameMobile.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

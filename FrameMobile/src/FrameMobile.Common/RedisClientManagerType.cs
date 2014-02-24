@@ -6,7 +6,10 @@ namespace FrameMobile.Common
     public enum RedisClientManagerType
     {
         News,
+        NewsCache,
         Theme,
-        Mixed
+        ThemeCache,
+        Mixed,
+        MixedCache
     }
 }
