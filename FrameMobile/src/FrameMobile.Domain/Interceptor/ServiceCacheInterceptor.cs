@@ -34,16 +34,39 @@ namespace FrameMobile.Domain
             var parameterString = GenerateParameterKey(invocation, parameters);
             var cacheKey = GenerateCacheKey(invocation, parameterString);
 
-            var redisCacheHepler = ObjectFactory.GetInstance<IRedisCacheService>();
+            var redisCacheService = ObjectFactory.GetInstance<IRedisCacheService>();
 
-            if (redisCacheHepler.Contains(cacheKey))
+            if (redisCacheService.Contains(cacheKey))
             {
-                GetDataByCacheKey(invocation, redisCacheHepler, parameters, cacheKey);
+                GetDataByCacheKey(invocation, redisCacheService, parameters, cacheKey);
             }
             else
             {
-                AddCacheKey(invocation, redisCacheHepler, parameters, svcCacheAttribute, cacheKey);
+                AddCacheKey(invocation, redisCacheService, parameters, svcCacheAttribute, cacheKey);
             }
+        }
+
+        public IRedisCacheService RedisCacheServiceFactory(ServiceCacheAttribute svcCacheAttribute)
+        {
+            var clientType = svcCacheAttribute.ClientType;
+            switch (clientType)
+            {
+                case RedisClientManagerType.News:
+                    break;
+                case RedisClientManagerType.NewsCache:
+                    break;
+                case RedisClientManagerType.Theme:
+                    break;
+                case RedisClientManagerType.ThemeCache:
+                    break;
+                case RedisClientManagerType.Mixed:
+                    break;
+                case RedisClientManagerType.MixedCache:
+                    break;
+                default:
+                    break;
+            }
+            return null;
         }
 
         private string GenerateCacheKey(IInvocation invocation, string cacheKeyString)
