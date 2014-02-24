@@ -78,5 +78,17 @@ namespace FrameMobile.Domain
             }
             return new EnumerableQuery<T>(source);
         }
+
+        public static IList<T> GetCompleteInstance<T>(this IList<T> list) where T : MySQLModel, new()
+        {
+            var instance = new T()
+            {
+                Id = 0,
+                Status = 1,
+                Name = "全部",
+            };
+            list.Add(instance);
+            return list;
+        }
     }
 }

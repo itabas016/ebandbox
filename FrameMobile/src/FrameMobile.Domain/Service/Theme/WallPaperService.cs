@@ -44,6 +44,8 @@ namespace FrameMobile.Domain.Service
         public IList<WallPaperCategoryView> GetCategoryViewList(MobileParam mobileParams, int cver, out int sver)
         {
             var categorylist = new WallPaperCategory().ReturnThemeInstance<WallPaperCategory>(cver, out sver);
+
+            categorylist.GetCompleteInstance<WallPaperCategory>();
             return categorylist.To<IList<WallPaperCategoryView>>();
         }
 
