@@ -50,22 +50,7 @@ namespace FrameMobile.Domain
         public IRedisCacheService RedisCacheServiceFactory(ServiceCacheAttribute svcCacheAttribute)
         {
             var clientType = svcCacheAttribute.ClientType;
-            var redisCacheService = default(IRedisCacheService);
-            switch (clientType)
-            {
-                case RedisClientManagerType.NewsCache:
-                    redisCacheService = ObjectFactory.GetInstance<INewsRedisCacheService>();
-                    break;
-                case RedisClientManagerType.ThemeCache:
-                    redisCacheService = ObjectFactory.GetInstance<IThemeRedisCacheService>();
-                    break;
-                case RedisClientManagerType.MixedCache:
-                    redisCacheService = ObjectFactory.GetInstance<IRedisCacheService>();
-                    break;
-                default:
-                    redisCacheService = ObjectFactory.GetInstance<IRedisCacheService>();
-                    break;
-            }
+            var redisCacheService = clientType.RedisCacheServiceFactory();
             return redisCacheService;
         }
 

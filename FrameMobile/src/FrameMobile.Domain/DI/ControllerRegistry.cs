@@ -28,6 +28,7 @@ namespace FrameMobile.Domain
             For<INewsDbContextService>().Use<NewsDbContextService>();
             For<IThemeDbContextService>().Use<ThemeDbContextService>();
             For<ICacheManagerHelper>().Use<RedisCacheHelper>();
+            For<ICacheService>().Use<CacheService>();
             For<IRedisCacheService>().Use<RedisCacheService>();
             For<IAccountService>().Use<AccountService>();
             For<ICookieService>().Use<CookieService>();
