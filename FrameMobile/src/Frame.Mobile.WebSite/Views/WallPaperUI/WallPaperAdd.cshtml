@@ -65,35 +65,33 @@
                     </tr>
                     <tr>
                         <td><strong>标题: </strong></td>
-                        <td>@Html.TextBoxFor(m => m.Title)</td>
+                        <td>@Html.TextAreaFor(m => m.Title)</td>
                     </tr>
                     <tr>
                         <td><strong>星级: </strong></td>
                         <td>@Html.TextBoxFor(m => m.Rating, new { type = "number", min = "0", max = "99999999" })</td>
+                        <td><strong>下载次数: </strong></td>
+                        <td>@Html.TextBoxFor(m => m.DownloadNumber, new { type = "number", min = "0", max = "99999999" })</td>
                     </tr>
                     <tr>
                         <td><strong>发布时间: </strong></td>
                         <td>
                             @Html.TextBoxFor(m => m.PublishTime, new { @class = "Wdate", Value = @publishTime.ToString("yyyy-MM-dd HH:mm:ss"), onclick = "WdatePicker({ dateFmt: 'yyyy-MM-dd HH:mm:ss' })" })
                         </td>
-                    </tr>
-                    <tr>
-                        <td><strong>下载次数: </strong></td>
-                        <td>@Html.TextBoxFor(m => m.DownloadNumber, new { type = "number", min = "0", max = "99999999" })</td>
-                    </tr>
-                    <tr>
-                        <td><strong>排序号: </strong></td>
-                        <td>@Html.TextBoxFor(m => m.OrderNumber, new { type = "number", min = "0", max = "99999999" })</td>
-                    </tr>
-                    @if (isUpdateMode)
-                    {
-                        <tr>
+                        @if (isUpdateMode)
+                        {
                             <td><strong>修改时间: </strong></td>
                             <td>
                                 @Html.TextBoxFor(m => m.ModifiedTime, new { @readonly = true, Class = "txt-readonly" })
                             </td>
-                        </tr>
-                    }
+                        }
+                    </tr>
+                    <tr>
+                        <td><strong>状态: </strong></td>
+                        <td>@Html.RadioButtonFor(m => m.Status, 1) 有效 @Html.RadioButtonFor(m => m.Status, 0) 无效</td>
+                        <td><strong>图片属性: </strong></td>
+                        <td>@Html.RadioButtonFor(m => m.ScreenType, 1) 宽屏 @Html.RadioButtonFor(m => m.ScreenType, 0) 窄屏</td>
+                    </tr>
                     <tr>
                         <td><strong>缩略图地址: </strong></td>
                         <td>
@@ -132,10 +130,7 @@
                         <td><strong>备注: </strong></td>
                         <td>@Html.TextAreaFor(m => m.Comment)</td>
                     </tr>
-                    <tr>
-                        <td><strong>状态: </strong></td>
-                        <td>@Html.RadioButtonFor(m => m.Status, 1) 有效 @Html.RadioButtonFor(m => m.Status, 0) 无效</td>
-                    </tr>
+                    
                     <tr>
                         <td colspan="2">
                             <button class="btn btn-large btn-blue addapp" style="margin-left: 50px">@ViewBag.Title</button>
