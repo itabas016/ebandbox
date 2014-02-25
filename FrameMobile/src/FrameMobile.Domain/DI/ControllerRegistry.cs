@@ -28,6 +28,7 @@ namespace FrameMobile.Domain
             For<INewsDbContextService>().Use<NewsDbContextService>();
             For<IThemeDbContextService>().Use<ThemeDbContextService>();
             For<ICacheManagerHelper>().Use<RedisCacheHelper>();
+            For<IRedisCacheService>().Use<RedisCacheService>();
             For<IAccountService>().Use<AccountService>();
             For<ICookieService>().Use<CookieService>();
             For<IMobileUIService>().Use<MobileUIService>();
@@ -37,6 +38,7 @@ namespace FrameMobile.Domain
         private void RegistyNewsService()
         {
             For<INewsUIService>().Use<NewsUIService>();
+            For<INewsRedisCacheService>().Use<NewsRedisCacheService>();
 
 #if DEBUG
             For<INewsService>().Use<NewsFakeService>();
@@ -48,6 +50,7 @@ namespace FrameMobile.Domain
         private void RegistyThemeService()
         {
             For<IWallPaperUIService>().Use<WallPaperUIService>();
+            For<IThemeRedisCacheService>().Use<ThemeRedisCacheService>();
 
 #if DEBUG
             For<IWallPaperService>().Use<WallPaperFakeService>();
