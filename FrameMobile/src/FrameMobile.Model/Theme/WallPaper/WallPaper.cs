@@ -20,6 +20,11 @@ namespace FrameMobile.Model.Theme
 
         public int Rating { get; set; }
 
+        /// <summary>
+        /// 0 代表窄屏，1代表宽屏
+        /// </summary>
+        public int ScreenType { get; set; }
+
         [SubSonicStringLength(512)]
         public string ThumbnailName { get; set; }
 

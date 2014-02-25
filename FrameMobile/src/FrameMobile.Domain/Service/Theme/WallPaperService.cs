@@ -77,10 +77,10 @@ namespace FrameMobile.Domain.Service
             switch (sort)
             {
                 case 1:
-                    result = GetLatestWallPaperViewList(mobileParams, property, categoryId, topicId, subcategoryId, out totalCount);
+                    result = GetLatestWallPaperViewList(mobileParams, property, screenType, categoryId, topicId, subcategoryId, out totalCount);
                     break;
                 default:
-                    result = GetHottestWallPaperViewList(mobileParams, property, categoryId, topicId, subcategoryId, out totalCount);
+                    result = GetHottestWallPaperViewList(mobileParams, property, screenType, categoryId, topicId, subcategoryId, out totalCount);
                     break;
             }
             return result.Skip(startnum - 1).Take(num).ToList();
@@ -88,12 +88,12 @@ namespace FrameMobile.Domain.Service
 
         #region Heleper
 
-        public List<WallPaperView> GetLatestWallPaperViewList(MobileParam mobileParams, MobileProperty property, int categoryId, int topicId, int subcategoryId, out int totalCount)
+        public List<WallPaperView> GetLatestWallPaperViewList(MobileParam mobileParams, MobileProperty property, int screenType, int categoryId, int topicId, int subcategoryId, out int totalCount)
         {
             totalCount = 0;
             if (categoryId == 0 && topicId != 0)
             {
-                var latestwallpaperlistbytopic = from p in dbContextService.Find<WallPaper>(x => x.Status == 1)
+                var latestwallpaperlistbytopic = from p in dbContextService.Find<WallPaper>(x => x.Status == 1 && x.ScreenType == screenType)
                                                  join pt in GetWallPaperRelateTopicList(topicId) on p.Id equals pt.TopicId
                                                  join pm in GetWallPaperRelateMobilePropertyList(property.Id) on p.Id equals pm.WallPaperId
                                                  orderby p.PublishTime descending
@@ -111,7 +111,7 @@ namespace FrameMobile.Domain.Service
             }
             if (categoryId == 0 && topicId == 0)
             {
-                var latestwallpaperlistbycategory = from p in dbContextService.Find<WallPaper>(x => x.Status == 1)
+                var latestwallpaperlistbycategory = from p in dbContextService.Find<WallPaper>(x => x.Status == 1 && x.ScreenType == screenType)
                                                     join pc in GetWallPaperRelateCategoryList(categoryId) on p.Id equals pc.WallPaperId
                                                     join pm in GetWallPaperRelateMobilePropertyList(property.Id) on p.Id equals pm.WallPaperId
                                                     orderby p.PublishTime descending
@@ -130,12 +130,12 @@ namespace FrameMobile.Domain.Service
             return new List<WallPaperView>();
         }
 
-        public List<WallPaperView> GetHottestWallPaperViewList(MobileParam mobileParams, MobileProperty property, int categoryId, int topicId, int subcategoryId, out int totalCount)
+        public List<WallPaperView> GetHottestWallPaperViewList(MobileParam mobileParams, MobileProperty property, int screenType, int categoryId, int topicId, int subcategoryId, out int totalCount)
         {
             totalCount = 0;
             if (categoryId == 0 && topicId != 0)
             {
-                var hottestwallpaperlistbytopic = from p in dbContextService.Find<WallPaper>(x => x.Status == 1)
+                var hottestwallpaperlistbytopic = from p in dbContextService.Find<WallPaper>(x => x.Status == 1 && x.ScreenType == screenType)
                                                   join pt in GetWallPaperRelateTopicList(topicId) on p.Id equals pt.TopicId
                                                   join pm in GetWallPaperRelateMobilePropertyList(property.Id) on p.Id equals pm.WallPaperId
                                                   orderby p.DownloadNumber descending
@@ -153,7 +153,7 @@ namespace FrameMobile.Domain.Service
             }
             if (categoryId == 0 && topicId == 0)
             {
-                var hottestwallpaperlistbycategory = from p in dbContextService.Find<WallPaper>(x => x.Status == 1)
+                var hottestwallpaperlistbycategory = from p in dbContextService.Find<WallPaper>(x => x.Status == 1 && x.ScreenType == screenType)
                                                      join pc in GetWallPaperRelateCategoryList(categoryId) on p.Id equals pc.WallPaperId
                                                      join pm in GetWallPaperRelateMobilePropertyList(property.Id) on p.Id equals pm.WallPaperId
                                                      orderby p.DownloadNumber descending
