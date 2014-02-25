@@ -14,7 +14,7 @@ namespace FrameMobile.Domain.Service
         {
             get
             {
-                return RedisClientManagerRepo.Instance.NewsRedisClientManager;
+                return RedisClientCacheManagerRepo.Instance.NewsRedisClientCacheManager;
             }
         }
     }

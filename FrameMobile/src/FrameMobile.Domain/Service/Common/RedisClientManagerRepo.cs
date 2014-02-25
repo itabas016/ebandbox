@@ -39,6 +39,19 @@ namespace FrameMobile.Domain.Service
             }
         } IRedisClientsManager _themeRedisClientManager;
 
+        public IRedisClientsManager RedisClientManager
+        {
+            get
+            {
+                if (_redisClientManager == null)
+                {
+                    _redisClientManager = GetInstance(RedisClientManagerType.Mixed);
+                }
+
+                return _redisClientManager;
+            }
+        } IRedisClientsManager _redisClientManager;
+
         #endregion
 
         #region Method
