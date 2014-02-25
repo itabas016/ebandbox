@@ -35,6 +35,10 @@ namespace FrameMobile.Model
         [JsonIgnore]
         public int Rating { get; set; }
 
+        [JsonProperty("st")]
+        [JsonIgnore]
+        public int ScreenType { get; set; }
+
         [JsonProperty("thumbnailurl")]
         public string ThumbnailUrl { get; set; }
 
