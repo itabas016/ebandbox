@@ -11,7 +11,7 @@ namespace FrameMobile.Domain.Service
 {
     public class WallPaperService : ThemeDbContextService, IWallPaperService
     {
-        [ServiceCache]
+        [ServiceCache(ClientType=RedisClientManagerType.ThemeCache)]
         public MobileProperty GetMobileProperty(MobileParam mobileParams)
         {
             var brand = mobileParams.Manufacturer.ToLower();
@@ -33,35 +33,35 @@ namespace FrameMobile.Domain.Service
             return mobileproperty.SingleOrDefault<MobileProperty>();
         }
 
-        [ServiceCache]
+        [ServiceCache(ClientType=RedisClientManagerType.ThemeCache)]
         public IList<ThemeConfigView> GetConfigViewList(MobileParam mobileParams, int type)
         {
             var configlist = dbContextService.Find<ThemeConfig>(x => x.Status == 1 && x.Type == type);
             return configlist.To<IList<ThemeConfigView>>();
         }
 
-        [ServiceCache]
+        [ServiceCache(ClientType=RedisClientManagerType.ThemeCache)]
         public IList<WallPaperCategoryView> GetCategoryViewList(MobileParam mobileParams, int cver, out int sver)
         {
             var categorylist = new WallPaperCategory().ReturnThemeInstance<WallPaperCategory>(cver, out sver);
             return categorylist.To<IList<WallPaperCategoryView>>();
         }
 
-        [ServiceCache]
+        [ServiceCache(ClientType=RedisClientManagerType.ThemeCache)]
         public IList<WallPaperSubCategoryView> GetSubCategoryViewList(MobileParam mobileParams, int cver, out int sver)
         {
             var subcategorylist = new WallPaperSubCategory().ReturnThemeInstance<WallPaperSubCategory>(cver, out sver);
             return subcategorylist.To<IList<WallPaperSubCategoryView>>();
         }
 
-        [ServiceCache]
+        [ServiceCache(ClientType=RedisClientManagerType.ThemeCache)]
         public IList<WallPaperTopicView> GetTopicViewList(MobileParam mobileParams, int cver, out int sver)
         {
             var topiclist = new WallPaperTopic().ReturnThemeInstance<WallPaperTopic>(cver, out sver);
             return topiclist.To<IList<WallPaperTopicView>>();
         }
 
-        [ServiceCache]
+        [ServiceCache(ClientType=RedisClientManagerType.ThemeCache)]
         public IList<WallPaperView> GetWallPaperViewList(MobileParam mobileParams, int screenType, int categoryId, int topicId, int subcategoryId, int sort, int startnum, int num, out int totalCount)
         {
             var property = GetMobileProperty(mobileParams);
@@ -170,7 +170,7 @@ namespace FrameMobile.Domain.Service
             return new List<WallPaperView>();
         }
 
-        [ServiceCache]
+        [ServiceCache(ClientType=RedisClientManagerType.ThemeCache)]
         public IList<WallPaperRelateCategory> GetWallPaperRelateCategoryList(int categoryId)
         {
             if (categoryId == 0)
@@ -181,7 +181,7 @@ namespace FrameMobile.Domain.Service
             return categorywallpaperlist;
         }
 
-        [ServiceCache]
+        [ServiceCache(ClientType=RedisClientManagerType.ThemeCache)]
         public IList<WallPaperRelateSubCategory> GetWallPaperRelateSubCategoryList(int subcategoryId)
         {
             if (subcategoryId == 0)
@@ -192,21 +192,21 @@ namespace FrameMobile.Domain.Service
             return subcategorywallpaperlist;
         }
 
-        [ServiceCache]
+        [ServiceCache(ClientType=RedisClientManagerType.ThemeCache)]
         public IList<WallPaperRelateTopic> GetWallPaperRelateTopicList(int topicId)
         {
             var topicwallpaperlist = dbContextService.Find<WallPaperRelateTopic>(x => x.TopicId == topicId && x.Status == 1).ToList();
             return topicwallpaperlist;
         }
 
-        [ServiceCache]
+        [ServiceCache(ClientType=RedisClientManagerType.ThemeCache)]
         public IList<WallPaperRelateMobileProperty> GetWallPaperRelateMobilePropertyList(int propertyId)
         {
             var mobilePropertylist = dbContextService.Find<WallPaperRelateMobileProperty>(x => x.MobilePropertyId == propertyId && x.Status == 1).ToList();
             return mobilePropertylist;
         }
 
-        [ServiceCache]
+        [ServiceCache(ClientType=RedisClientManagerType.ThemeCache)]
         public WallPaperView GetWallPaperViewDetail(MobileParam mobileParams, int wallPaperId)
         {
             var property = GetMobileProperty(mobileParams);

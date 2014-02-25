@@ -10,6 +10,7 @@ using FrameMobile.Model;
 using Snap;
 using StructureMap;
 using NCore;
+using FrameMobile.Domain.Service;
 
 namespace FrameMobile.Domain
 {
@@ -49,24 +50,23 @@ namespace FrameMobile.Domain
         public IRedisCacheService RedisCacheServiceFactory(ServiceCacheAttribute svcCacheAttribute)
         {
             var clientType = svcCacheAttribute.ClientType;
+            var redisCacheService = default(IRedisCacheService);
             switch (clientType)
             {
-                case RedisClientManagerType.News:
-                    break;
                 case RedisClientManagerType.NewsCache:
-                    break;
-                case RedisClientManagerType.Theme:
+                    redisCacheService = ObjectFactory.GetInstance<INewsRedisCacheService>();
                     break;
                 case RedisClientManagerType.ThemeCache:
-                    break;
-                case RedisClientManagerType.Mixed:
+                    redisCacheService = ObjectFactory.GetInstance<IThemeRedisCacheService>();
                     break;
                 case RedisClientManagerType.MixedCache:
+                    redisCacheService = ObjectFactory.GetInstance<IRedisCacheService>();
                     break;
                 default:
+                    redisCacheService = ObjectFactory.GetInstance<IRedisCacheService>();
                     break;
             }
-            return null;
+            return redisCacheService;
         }
 
         private string GenerateCacheKey(IInvocation invocation, string cacheKeyString)
