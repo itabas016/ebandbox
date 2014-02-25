@@ -7,7 +7,7 @@ using FrameMobile.Domain;
 
 namespace FrameMobile.Domain.Service
 {
-    public class MobileUIService : ThemeDbContextService, IMobileUIService
+    public class MobileUIService : CommonDbContextService, IMobileUIService
     {
         public IList<MobileBrand> GetMobileBrandList()
         {

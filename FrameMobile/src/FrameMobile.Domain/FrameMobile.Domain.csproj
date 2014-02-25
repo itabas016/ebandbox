@@ -127,6 +127,7 @@
     <Compile Include="Service\Common\MobileUIService.cs" />
     <Compile Include="Service\Fake\NewsFakeService.cs" />
     <Compile Include="Service\Fake\WallPaperFakeService.cs" />
+    <Compile Include="Service\Interface\ICommonDbContextService.cs" />
     <Compile Include="Service\Interface\IMobileUIService.cs" />
     <Compile Include="Service\Interface\IRadarService.cs" />
     <Compile Include="Service\Interface\IThemeServiceBase.cs" />
@@ -134,6 +135,7 @@
     <Compile Include="Service\Interface\IWallPaperService.cs" />
     <Compile Include="Service\Interface\IWallPaperUIService.cs" />
     <Compile Include="Service\Radar\RadarService.cs" />
+    <Compile Include="Service\ServiceBase\CommonDbContextService.cs" />
     <Compile Include="Service\ServiceBase\ThemeDbContextService.cs" />
     <Compile Include="Service\Theme\WallPaperService.cs" />
     <Compile Include="Service\Theme\WallPaperUIService.cs" />

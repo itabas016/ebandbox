@@ -22,47 +22,11 @@ using FrameMobile.Common;
 
 namespace Frame.Mobile.WebSite.Controllers
 {
-    public class AccountController : MvcControllerBase
+    public class AccountController : CommonBaseController
     {
         #region Prop
 
         protected override bool IsMobileInterface { get { return false; } }
-
-        private IAccountService _accountService;
-        public IAccountService AccountService
-        {
-            get
-            {
-                if (_accountService == null)
-                {
-                    _accountService = ObjectFactory.GetInstance<IAccountService>();
-                }
-                return _accountService;
-            }
-            set
-            {
-                _accountService = value;
-            }
-        }
-
-        private ICookieService _cookieService;
-        public ICookieService CookieService
-        {
-            get
-            {
-                if (_cookieService == null)
-                {
-                    _cookieService = ObjectFactory.GetInstance<ICookieService>();
-                }
-                return _cookieService;
-            }
-            set
-            {
-                _cookieService = value;
-            }
-        }
-
-        const int CookieTimeoutSeconds = 1209600;
 
         public string UserName
         {
@@ -70,16 +34,6 @@ namespace Frame.Mobile.WebSite.Controllers
             {
                 return CookieService.TryGet("UserName");
             }
-        }
-
-        #endregion
-
-        #region Ctor
-
-        public AccountController(IAccountService accountService, ICookieService cookieService)
-        {
-            this.AccountService = accountService;
-            this.CookieService = cookieService;
         }
 
         #endregion

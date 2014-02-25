@@ -11,8 +11,8 @@ using FrameMobile.Domain.Service;
 
 namespace Frame.Mobile.WebSite.Controllers
 {
-    [UserAuthorize(UserGroupTypes = "WallPaper")]
-    public class MobileController : ThemeBaseController
+    [UserAuthorize(UserGroupTypes = "WallPaper,News")]
+    public class MobileController : CommonBaseController
     {
         protected override bool IsMobileInterface { get { return false; } }
 

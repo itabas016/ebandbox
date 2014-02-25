@@ -186,6 +186,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\Common\AccountController.cs" />
     <Compile Include="Controllers\Common\CacheController.cs" />
+    <Compile Include="Controllers\Common\CommonBaseController.cs" />
     <Compile Include="Controllers\Common\MobileController.cs" />
     <Compile Include="Controllers\Common\RadarController.cs" />
     <Compile Include="Controllers\News\NewsBaseController.cs" />
