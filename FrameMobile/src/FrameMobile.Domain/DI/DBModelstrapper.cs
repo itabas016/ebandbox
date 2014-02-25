@@ -11,6 +11,8 @@ namespace FrameMobile.Domain
 {
     public class DBModelstrapper
     {
+        public static string COMMONCONNECTSTRING = ConnectionStrings.COMMON_MYSQL_CONNECTSTRING;
+
         public static string NEWSCONNECTSTRING = ConnectionStrings.NEWS_MYSQL_CONNECTSTRING;
 
         public static string THEMECONNECTSTRING = ConnectionStrings.THEME_MYSQL_CONNECTSTRING;
@@ -27,7 +29,7 @@ namespace FrameMobile.Domain
         public static void UserInitialize()
         {
             var accountModelSpace = string.Format("{0}.{1}", Const.FRAME_MODEL_MASTER, "Account");
-            Initialize(NEWSCONNECTSTRING, accountModelSpace);
+            Initialize(COMMONCONNECTSTRING, accountModelSpace);
         }
 
         public static void NewsInitialize()
@@ -39,13 +41,13 @@ namespace FrameMobile.Domain
         public static void RadarInitialize()
         {
             var radarModelSpace = string.Format("{0}.{1}", Const.FRAME_MODEL_MASTER, "Radar");
-            Initialize(NEWSCONNECTSTRING, radarModelSpace);
+            Initialize(COMMONCONNECTSTRING, radarModelSpace);
         }
 
         public static void MobileInitialize()
         {
             var mobileModelSpace = string.Format("{0}.{1}", Const.FRAME_MODEL_MASTER, "Mobile");
-            Initialize(THEMECONNECTSTRING, mobileModelSpace);
+            Initialize(COMMONCONNECTSTRING, mobileModelSpace);
         }
 
         public static void ThemeInitialize()

@@ -6,11 +6,28 @@ using FrameMobile.Common;
 using FrameMobile.Model;
 using FrameMobile.Model.Mobile;
 using FrameMobile.Model.Theme;
+using StructureMap;
 
 namespace FrameMobile.Domain.Service
 {
     public class WallPaperUIService : ThemeDbContextService, IWallPaperUIService
     {
+        public IMobileUIService MobileUIService
+        {
+            get
+            {
+                if (_mobileUIService == null)
+                    _mobileUIService = ObjectFactory.GetInstance<IMobileUIService>();
+
+                return _mobileUIService;
+            }
+            set
+            {
+                _mobileUIService = value;
+            }
+        }
+        private IMobileUIService _mobileUIService;
+
         public IList<WallPaperCategory> GetWallPaperCategoryList()
         {
             var categorylist = dbContextService.All<WallPaperCategory>().ToList();
@@ -56,20 +73,6 @@ namespace FrameMobile.Domain.Service
         public MobileProperty GetMobileProperty(MobileParam mobileParams)
         {
             throw new NotImplementedException();
-        }
-
-        public IList<MobileResolution> GetMobileResolutionList(List<int> mobilePropertyIds)
-        {
-            var lcds = from r in dbContextService.Find<MobileResolution>(x => x.Status == 1)
-                       join p in dbContextService.Find<MobileProperty>(x => x.Status == 1) on r.Id equals p.ResolutionId
-                       where mobilePropertyIds.Contains(p.Id)
-                       select new MobileResolution
-                       {
-                           Id = r.Id,
-                           Name = r.Name,
-                           Value = r.Value
-                       };
-            return lcds.ToList();
         }
 
         public IList<WallPaperRelateCategory> GetWallRelateCategoryList(int wallpaperId)
@@ -158,7 +161,7 @@ namespace FrameMobile.Domain.Service
             var originalName = wallpaper.OriginalName;
             var thumbnailNameList = new List<string>();
 
-            var resolutionlist = GetMobileResolutionList(mobilepropertyIds);
+            var resolutionlist = MobileUIService.GetMobileResolutionList(mobilepropertyIds);
             if (resolutionlist != null && resolutionlist.Count > 0)
             {
                 switch (type)
