@@ -35,7 +35,7 @@ namespace FrameMobile.Domain
             var parameterString = GenerateParameterKey(invocation, parameters);
             var cacheKey = GenerateCacheKey(invocation, parameterString);
 
-            var redisCacheService = ObjectFactory.GetInstance<IRedisCacheService>();
+            var redisCacheService = RedisCacheServiceFactory(svcCacheAttribute);
 
             if (redisCacheService.Contains(cacheKey))
             {
