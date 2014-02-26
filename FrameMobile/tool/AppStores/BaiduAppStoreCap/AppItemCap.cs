@@ -363,7 +363,7 @@ namespace BaiduAppStoreCap
             {
                 LogHelper.WriteError(ex.Message + ex.StackTrace);
                 AppProjectDelete(appProject.Id);
-                LogHelper.WriteInfo(string.Format("{AppProjectId: {0} is delete.}", appProject.Id));
+                LogHelper.WriteInfo(string.Format("AppProjectId: {0} is delete.", appProject.Id));
             }
             return appProject;
         }
