@@ -159,7 +159,7 @@ namespace QihooAppStoreCap
             catch (Exception ex)
             {
                 LogHelper.WriteError(ex.Message + ex.StackTrace);
-                LogHelper.WriteInfo(string.Format("{AppProjectId: {0} is delete.}", appProject.Id));
+                LogHelper.WriteInfo(string.Format("AppProjectId: {0} is delete.", appProject.Id));
                 AppProjectDelete(appProject.Id);
             }
             return appProject;
