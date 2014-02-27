@@ -10,6 +10,7 @@ using StructureMap;
 using NCore;
 using System.IO;
 using System.Web;
+using AutoMapper;
 
 namespace FrameMobile.Web
 {
@@ -230,7 +231,7 @@ namespace FrameMobile.Web
             };
         }
 
-        protected virtual Func<bool> CheckRequiredParams(string imsi,string lcd)
+        protected virtual Func<bool> CheckRequiredParams(string imsi, string lcd)
         {
             return () =>
             {

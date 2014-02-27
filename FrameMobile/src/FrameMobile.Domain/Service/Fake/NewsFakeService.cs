@@ -157,6 +157,13 @@ namespace FrameMobile.Domain.Service
             return result;
         }
 
+        [ServiceCache(ClientType = RedisClientManagerType.NewsCache)]
+        public IList<OlderNewsExtraAppView> GetOlderExtraAppViewList(MobileParam mobileParams, int cver, out int sver)
+        {
+            var extraappviewlist = GetExtraAppViewList(mobileParams, cver, out sver);
+            return extraappviewlist.To<IList<OlderNewsExtraAppView>>();
+        }
+
         [ServiceCache(ClientType=RedisClientManagerType.NewsCache)]
         public IList<NewsInfAddressView> GetInfAddressViewList(MobileParam mobileParams, int cver, out int sver)
         {
