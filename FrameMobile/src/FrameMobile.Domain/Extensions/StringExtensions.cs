@@ -80,6 +80,14 @@ namespace FrameMobile.Domain
             return width;
         }
 
+        public static int GetResolutionHeight(this string resolution)
+        {
+            //format : 320x480
+            var lcdArray = resolution.ToLower().Split('x');
+            var height = lcdArray[1].ToInt32();
+            return height;
+        }
+
         public static long TruncLong(this string input)
         {
             long result = 0;

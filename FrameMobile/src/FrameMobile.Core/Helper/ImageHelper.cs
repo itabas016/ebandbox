@@ -68,6 +68,30 @@ namespace FrameMobile.Core
             return ResizedByWidth(imageFile, destFilePath, destFileName, HD_IMAGE_WIDTH);
         }
 
+        public static string Resized(string originalFilePath, string destFilePath, int width, int height)
+        {
+            FileInfo fileInfo = new FileInfo(originalFilePath);
+            var bitmap = new Bitmap(originalFilePath);
+            if (bitmap != null)
+            {
+                if (bitmap.Width > width)
+                {
+                    var w = width;
+                    var h = (w * bitmap.Height) / bitmap.Width;
+                    var size = new Size(w, h);
+
+                    var destBitMap = ResizeImage(bitmap, size);
+                    if (destBitMap != null)
+                    {
+                        var destFileName = string.Format("{0}{1}x{2}{3}", destFilePath, width, height, fileInfo.Name);
+                        destBitMap.Save(destFileName);
+                    }
+                }
+            }
+            return string.Empty;
+
+        }
+
         #endregion
 
         #region Helper

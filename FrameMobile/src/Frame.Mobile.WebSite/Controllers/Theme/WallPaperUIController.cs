@@ -743,23 +743,48 @@ namespace Frame.Mobile.WebSite.Controllers
         public void Upload(WallPaper wallpaper, List<int> propertyIds)
         {
             var files = Request.Files;
-            if (propertyIds != null && propertyIds.Count > 0 && files.Count > 0 && !string.IsNullOrEmpty(wallpaper.ThumbnailName) && !string.IsNullOrEmpty(wallpaper.OriginalName))
+            if (propertyIds != null && propertyIds.Count > 0 && !string.IsNullOrEmpty(wallpaper.ThumbnailName) && !string.IsNullOrEmpty(wallpaper.OriginalName))
             {
-                for (int i = 0; i < files.Count; i++)
+                if (files.Count > 0)
                 {
-                    if (files.AllKeys[i].EqualsOrdinalIgnoreCase("thumbnailfile")
-                        && !string.IsNullOrWhiteSpace(Request.Files[i].FileName))
+                    for (int i = 0; i < files.Count; i++)
                     {
-                        var thumbnailFilePath = SaveThemeResourceFile(Const.THEME_THUMBNAILS_FOLDER_NAME, ResourcesFilePathHelper.ThemeThumbnailPath, files[i], string.Format("{0}_{1}{2}", GetThumbnailNamePrefixByPixel(files[i].GetFileNamePrefix()), wallpaper.ThumbnailName.GetFileNamePrefix(), files[i].GetFileType()).NormalzieFileName());
-                        continue;
-                    }
-                    if (files.AllKeys[i].EqualsOrdinalIgnoreCase("originalfile")
-                        && !string.IsNullOrWhiteSpace(Request.Files[i].FileName))
-                    {
-                        var originalFilePath = SaveThemeResourceFile(Const.THEME_ORIGINALS_FOLDER_NAME, ResourcesFilePathHelper.ThemeOriginalPath, files[i], string.Format("{0}_{1}{2}", files[i].GetFilePixel(), wallpaper.OriginalName.GetFileNamePrefix(), files[i].GetFileType()).NormalzieFileName());
-                        continue;
+                        if (files.AllKeys[i].EqualsOrdinalIgnoreCase("thumbnailfile")
+                            && !string.IsNullOrWhiteSpace(Request.Files[i].FileName))
+                        {
+                            var thumbnailFilePath = SaveThemeResourceFile(Const.THEME_THUMBNAILS_FOLDER_NAME, ResourcesFilePathHelper.ThemeThumbnailPath, files[i], string.Format("{0}_{1}{2}", GetThumbnailNamePrefixByPixel(files[i].GetFileNamePrefix()), wallpaper.ThumbnailName.GetFileNamePrefix(), files[i].GetFileType()).NormalzieFileName());
+                            continue;
+                        }
+                        if (files.AllKeys[i].EqualsOrdinalIgnoreCase("originalfile")
+                            && !string.IsNullOrWhiteSpace(Request.Files[i].FileName))
+                        {
+                            var originalFilePath = SaveThemeResourceFile(Const.THEME_ORIGINALS_FOLDER_NAME, ResourcesFilePathHelper.ThemeOriginalPath, files[i], string.Format("{0}_{1}{2}", files[i].GetFilePixel(), wallpaper.OriginalName.GetFileNamePrefix(), files[i].GetFileType()).NormalzieFileName());
+                            continue;
+                        }
                     }
                 }
+                else
+                {
+                    var resolutionlist = MobileUIService.GetMobileResolutionList(propertyIds);
+                    var originalFilePath = "";
+                    var thumbnailFilePath = "";
+                    foreach (var item in resolutionlist)
+                    {
+                        UploadSignal(originalFilePath, item);
+                        UploadSignal(thumbnailFilePath, item);
+                    }
+                }
+            }
+        }
+
+        private void UploadSignal(string filePath, MobileResolution resolution)
+        {
+            if (!string.IsNullOrEmpty(filePath))
+            {
+                FileInfo fi = new FileInfo(filePath);
+                var width = resolution.Value.GetResolutionWidth();
+                var height = resolution.Value.GetResolutionHeight();
+
             }
         }
 
@@ -769,9 +794,38 @@ namespace Frame.Mobile.WebSite.Controllers
             if (!string.IsNullOrEmpty(imagePixel))
             {
                 var width = imagePixel.GetResolutionWidth();
+                var thumbnailPixel = string.Empty;
                 switch (imagePixel)
                 {
-                    case "":
+                    case "1080x1920":
+                        thumbnailPixel = "360x640";
+                        break;
+                    case "2160x1920":
+                        thumbnailPixel = "540x480";
+                        break;
+                    case "720x1280":
+                        thumbnailPixel = "240x427";
+                        break;
+                    case "1440x1280":
+                        thumbnailPixel = "360x320";
+                        break;
+                    case "540x960":
+                        thumbnailPixel = "160x284";
+                        break;
+                    case "1080x960":
+                        thumbnailPixel = "240x270";
+                        break;
+                    case "480x854":
+                        thumbnailPixel = "142x253";
+                        break;
+                    case "960x854":
+                        thumbnailPixel = "213x190";
+                        break;
+                    case "480x800":
+                        thumbnailPixel = "142x237";
+                        break;
+                    case "960x800":
+                        thumbnailPixel = "213x178";
                         break;
                     default:
                         break;
