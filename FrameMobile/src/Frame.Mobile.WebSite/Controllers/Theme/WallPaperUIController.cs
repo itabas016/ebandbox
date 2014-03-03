@@ -12,6 +12,7 @@ using NCore;
 using FrameMobile.Model;
 using FrameMobile.Model.Mobile;
 using SubSonic.Schema;
+using FrameMobile.Core;
 
 namespace Frame.Mobile.WebSite.Controllers
 {
@@ -742,53 +743,49 @@ namespace Frame.Mobile.WebSite.Controllers
 
         public void Upload(WallPaper wallpaper, List<int> propertyIds)
         {
-            var files = Request.Files;
             if (propertyIds != null && propertyIds.Count > 0 && !string.IsNullOrEmpty(wallpaper.ThumbnailName) && !string.IsNullOrEmpty(wallpaper.OriginalName))
             {
-                if (files.Count > 0)
+                var resolutionlist = MobileUIService.GetMobileResolutionList(propertyIds);
+
+                var thumbnailfilePathPrefix = string.Format("{0}\\", ResourcesFilePathHelper.ThemeThumbnailPath);
+                var originalfilePathPrefix = string.Format("{0}\\", ResourcesFilePathHelper.ThemeOriginalPath);
+
+                var thumbnailFilePath = string.Format("{0}{1}", thumbnailfilePathPrefix, wallpaper.ThumbnailName);
+                var originalFilePath = string.Format("{0}{1}", originalfilePathPrefix, wallpaper.OriginalName);
+                foreach (var item in resolutionlist)
                 {
-                    for (int i = 0; i < files.Count; i++)
-                    {
-                        if (files.AllKeys[i].EqualsOrdinalIgnoreCase("thumbnailfile")
-                            && !string.IsNullOrWhiteSpace(Request.Files[i].FileName))
-                        {
-                            var thumbnailFilePath = SaveThemeResourceFile(Const.THEME_THUMBNAILS_FOLDER_NAME, ResourcesFilePathHelper.ThemeThumbnailPath, files[i], string.Format("{0}_{1}{2}", GetThumbnailNamePrefixByPixel(files[i].GetFileNamePrefix()), wallpaper.ThumbnailName.GetFileNamePrefix(), files[i].GetFileType()).NormalzieFileName());
-                            continue;
-                        }
-                        if (files.AllKeys[i].EqualsOrdinalIgnoreCase("originalfile")
-                            && !string.IsNullOrWhiteSpace(Request.Files[i].FileName))
-                        {
-                            var originalFilePath = SaveThemeResourceFile(Const.THEME_ORIGINALS_FOLDER_NAME, ResourcesFilePathHelper.ThemeOriginalPath, files[i], string.Format("{0}_{1}{2}", files[i].GetFilePixel(), wallpaper.OriginalName.GetFileNamePrefix(), files[i].GetFileType()).NormalzieFileName());
-                            continue;
-                        }
-                    }
-                }
-                else
-                {
-                    var resolutionlist = MobileUIService.GetMobileResolutionList(propertyIds);
-                    var originalFilePath = "";
-                    var thumbnailFilePath = "";
-                    foreach (var item in resolutionlist)
-                    {
-                        UploadSignal(originalFilePath, item);
-                        UploadSignal(thumbnailFilePath, item);
-                    }
+                    UploadSignal(thumbnailFilePath, thumbnailfilePathPrefix, item, false);
+                    UploadSignal(originalFilePath, originalfilePathPrefix, item, true);
                 }
             }
         }
 
-        private void UploadSignal(string filePath, MobileResolution resolution)
+        private string UploadSignal(string filePath, string destFilePathPrefix, MobileResolution resolution, bool isOrignal)
         {
+            var destFile = string.Empty;
             if (!string.IsNullOrEmpty(filePath))
             {
-                FileInfo fi = new FileInfo(filePath);
                 var width = resolution.Value.GetResolutionWidth();
                 var height = resolution.Value.GetResolutionHeight();
 
+                var imagePixel = string.Format("{0}x{1}", width, height);
+                if (!isOrignal)
+                {
+                    var thumbnailPixel = GetThumbnailPixelByOriginal(imagePixel);
+                    width = thumbnailPixel.GetResolutionWidth();
+                    height = thumbnailPixel.GetResolutionHeight();
+
+                    destFile = ImageHelper.Resized(filePath, destFilePathPrefix, width, height, thumbnailPixel);
+                }
+                else
+                {
+                    destFile = ImageHelper.Resized(filePath, destFilePathPrefix, width, height, string.Empty);
+                }
             }
+            return destFile;
         }
 
-        private string GetThumbnailNamePrefixByPixel(string imagePixel)
+        private string GetThumbnailPixelByOriginal(string imagePixel)
         {
             var prefix = string.Empty;
             if (!string.IsNullOrEmpty(imagePixel))
@@ -828,8 +825,10 @@ namespace Frame.Mobile.WebSite.Controllers
                         thumbnailPixel = "213x178";
                         break;
                     default:
+                        thumbnailPixel = imagePixel;
                         break;
                 }
+                prefix = thumbnailPixel;
             }
             return prefix;
         }
