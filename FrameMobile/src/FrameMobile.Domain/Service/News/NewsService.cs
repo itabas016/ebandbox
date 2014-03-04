@@ -147,7 +147,7 @@ namespace FrameMobile.Domain.Service
             }
             var width = resolution.GetResolutionWidth();
 
-            if (width > Const.NEWS_HD_RESOLUTION_WIDTH)
+            if (width >= Const.NEWS_HD_RESOLUTION_WIDTH)
                 return 2;
             return 1;
         }
