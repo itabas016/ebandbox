@@ -109,7 +109,7 @@ namespace FrameMobile.Domain.Service
             var imageType = GetImageURLTypeByResolution(mobileParams);
 
             var stampTime = stamp.UTCStamp();
-            var endDateTime = stampTime.AddDays(-5);
+            var endDateTime = stampTime.AddDays(-2);
 
             switch (action)
             {
