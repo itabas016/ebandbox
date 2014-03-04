@@ -23,5 +23,6 @@ namespace FrameMobile.Domain.Service
         IList<int> GetRelateTopicIds(int wallpaperId);
         IList<int> GetRelateMobilePropertyIds(int wallpaperId);
         IList<string> GetImageNameListByMobileProperty(string imageType, WallPaper wallpaper, List<int> mobilepropertyIds);
+        void WallPaperConfig(WallPaperConfigView model, List<int> categoryIds, List<int> subcategoryIds, List<int> topicIds, List<int> propertyIds);
     }
 }
