@@ -101,7 +101,7 @@ namespace Frame.Mobile.WebSite.Controllers
         {
             if (thumbnailFile != null && !string.IsNullOrWhiteSpace(thumbnailFile.FileName))
             {
-                var thumbnailFilePath = SaveThemeResourceFile(Const.THEME_THUMBNAILS_FOLDER_NAME, ResourcesFilePathHelper.ThemeLogoPath, thumbnailFile, string.Format("{0}_{1}_{2}", model.WallPaperNo, Guid.NewGuid().ToString(), Path.GetExtension(thumbnailFile.FileName)).NormalzieFileName());
+                var thumbnailFilePath = SaveThemeResourceFile(Const.THEME_THUMBNAILS_FOLDER_NAME, ResourcesFilePathHelper.ThemeThumbnailPath, thumbnailFile, string.Format("{0}_{1}_{2}", model.WallPaperNo, Guid.NewGuid().ToString(), Path.GetExtension(thumbnailFile.FileName)).NormalzieFileName());
 
                 return thumbnailFilePath;
             }
@@ -112,7 +112,7 @@ namespace Frame.Mobile.WebSite.Controllers
         {
             if (originalFile != null && !string.IsNullOrWhiteSpace(originalFile.FileName))
             {
-                var originalFilePath = SaveThemeResourceFile(Const.THEME_ORIGINALS_FOLDER_NAME, ResourcesFilePathHelper.ThemeLogoPath, originalFile, string.Format("{0}_{1}_{2}", model.WallPaperNo, Guid.NewGuid().ToString(), Path.GetExtension(originalFile.FileName)).NormalzieFileName());
+                var originalFilePath = SaveThemeResourceFile(Const.THEME_ORIGINALS_FOLDER_NAME, ResourcesFilePathHelper.ThemeOriginalPath, originalFile, string.Format("{0}_{1}_{2}", model.WallPaperNo, Guid.NewGuid().ToString(), Path.GetExtension(originalFile.FileName)).NormalzieFileName());
 
                 return originalFilePath;
             }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using FrameMobile.Common;
+using FrameMobile.Core;
 using FrameMobile.Model;
 using FrameMobile.Model.Mobile;
 using FrameMobile.Model.Theme;
@@ -183,6 +184,306 @@ namespace FrameMobile.Domain.Service
                 }
             }
             return thumbnailNameList.ToList();
+        }
+
+        public void WallPaperConfig(WallPaperConfigView model, List<int> categoryIds, List<int> subcategoryIds, List<int> topicIds, List<int> propertyIds)
+        {
+            var wallpaper = model.WallPaper.MakeSureNotNull() as WallPaper;
+
+            var outcategoryIds = new List<int>();
+            var outsubcategoryIds = new List<int>();
+            var outtopicIds = new List<int>();
+            var outpropertyIds = new List<int>();
+
+            var incategoryIds = categoryIds.InIds(model.RelateCategoryIds, out outcategoryIds);
+            var insubcategoryIds = subcategoryIds.InIds(model.RelateSubCategoryIds, out outsubcategoryIds);
+            var intopicIds = topicIds.InIds(model.RelateTopicIds, out outtopicIds);
+            var inpropertyIds = propertyIds.InIds(model.RelateMobilePropertyIds, out outpropertyIds);
+
+            AddRelateCategory(incategoryIds, wallpaper.Id);
+            AddRelateTopic(intopicIds, wallpaper.Id);
+            AddRelateMobileProperty(inpropertyIds, wallpaper.Id);
+
+            UpdateRelateCategory(outcategoryIds, wallpaper.Id);
+            UpdateRelateSubCategory(outsubcategoryIds, wallpaper.Id);
+            UpdateRelateTopic(outtopicIds, wallpaper.Id);
+            UpdateRelateMobileProperty(outpropertyIds, wallpaper.Id);
+
+            Upload(wallpaper, inpropertyIds);
+        }
+
+        #region Helper
+
+        private void AddRelateCategory(List<int> categoryIds, int wallpaperId)
+        {
+            if (categoryIds != null && categoryIds.Count > 0)
+            {
+                foreach (var item in categoryIds)
+                {
+                    var categoryId = item;
+
+                    var flag = UpdateRelateCategory(categoryId, wallpaperId, 1);
+                    if (!flag)
+                    {
+                        var model = new WallPaperRelateCategory();
+                        model.WallPaperId = wallpaperId;
+                        model.CategoryId = categoryId;
+                        dbContextService.Add<WallPaperRelateCategory>(model);
+                    }
+                }
+            }
+        }
+
+        private void AddRelateSubCategory(List<int> subcategoryIds, int wallpaperId)
+        {
+            if (subcategoryIds != null && subcategoryIds.Count > 0)
+            {
+                foreach (var item_sub in subcategoryIds)
+                {
+                    var subcategoryId = item_sub;
+
+                    var flag = UpdateRelateSubCategory(subcategoryId, wallpaperId, 1);
+                    if (!flag)
+                    {
+                        var model = new WallPaperRelateSubCategory();
+                        model.WallPaperId = wallpaperId;
+                        model.SubCategoryId = subcategoryId;
+                        dbContextService.Add<WallPaperRelateSubCategory>(model);
+                    }
+                }
+            }
+        }
+
+        private void AddRelateTopic(List<int> topicIds, int wallpaperId)
+        {
+            if (topicIds != null && topicIds.Count > 0)
+            {
+                foreach (var item in topicIds)
+                {
+                    var topicId = item;
+                    var flag = UpdateRelateTopic(topicId, wallpaperId, 1);
+                    if (!flag)
+                    {
+                        var model = new WallPaperRelateTopic();
+                        model.WallPaperId = wallpaperId;
+                        model.TopicId = topicId;
+                        dbContextService.Add<WallPaperRelateTopic>(model);
+                    }
+                }
+            }
+        }
+
+        private void AddRelateMobileProperty(List<int> propertyIds, int wallpaperId)
+        {
+            if (propertyIds != null && propertyIds.Count > 0)
+            {
+                foreach (var item in propertyIds)
+                {
+                    var propertyId = item;
+                    var flag = UpdateRelateMobileProperty(propertyId, wallpaperId, 1);
+                    if (!flag)
+                    {
+                        var model = new WallPaperRelateMobileProperty();
+                        model.WallPaperId = wallpaperId;
+                        model.MobilePropertyId = propertyId;
+                        dbContextService.Add<WallPaperRelateMobileProperty>(model);
+                    }
+                }
+            }
+        }
+
+        private void UpdateRelateCategory(List<int> categoryIds, int wallpaperId)
+        {
+            if (categoryIds != null && categoryIds.Count > 0)
+            {
+                foreach (var item in categoryIds)
+                {
+                    var categoryId = item;
+                    var flag = UpdateRelateCategory(categoryId, wallpaperId, 0);
+                }
+            }
+        }
+
+        private void UpdateRelateSubCategory(List<int> subcategoryIds, int wallpaperId)
+        {
+            if (subcategoryIds != null && subcategoryIds.Count > 0)
+            {
+                foreach (var item in subcategoryIds)
+                {
+                    var subcategoryId = item;
+                    var flag = UpdateRelateSubCategory(subcategoryId, wallpaperId, 0);
+                }
+            }
+        }
+
+        private void UpdateRelateTopic(List<int> topicIds, int wallpaperId)
+        {
+            if (topicIds != null && topicIds.Count > 0)
+            {
+                foreach (var item in topicIds)
+                {
+                    var topicId = item;
+                    var flag = UpdateRelateTopic(topicId, wallpaperId, 0);
+                }
+            }
+        }
+
+        private void UpdateRelateMobileProperty(List<int> propertyIds, int wallpaperId)
+        {
+            if (propertyIds != null && propertyIds.Count > 0)
+            {
+                foreach (var item in propertyIds)
+                {
+                    var propertyId = item;
+                    var flag = UpdateRelateMobileProperty(propertyId, wallpaperId, 0);
+                }
+            }
+        }
+
+        private bool UpdateRelateCategory(int categoryId, int wallpaperId, int status)
+        {
+            var flag = false;
+            var instance = dbContextService.Single<WallPaperRelateCategory>(x => x.CategoryId == categoryId && x.WallPaperId == wallpaperId);
+            if (instance != null)
+            {
+                instance.Status = status;
+                dbContextService.Update<WallPaperRelateCategory>(instance);
+                flag = true;
+            }
+            return flag;
+        }
+
+        private bool UpdateRelateSubCategory(int subcategoryId, int wallpaperId, int status)
+        {
+            var flag = false;
+            var instance = dbContextService.Single<WallPaperRelateSubCategory>(x => x.SubCategoryId == subcategoryId && x.WallPaperId == wallpaperId);
+            if (instance != null)
+            {
+                instance.Status = status;
+                dbContextService.Update<WallPaperRelateSubCategory>(instance);
+                flag = true;
+            }
+            return flag;
+        }
+
+        private bool UpdateRelateTopic(int topicId, int wallpaperId, int status)
+        {
+            var flag = false;
+            var instance = dbContextService.Single<WallPaperRelateTopic>(x => x.TopicId == topicId && x.WallPaperId == wallpaperId);
+            if (instance != null)
+            {
+                instance.Status = status;
+                dbContextService.Update<WallPaperRelateTopic>(instance);
+                flag = true;
+            }
+            return flag;
+        }
+
+        private bool UpdateRelateMobileProperty(int propertyId, int wallpaperId, int status)
+        {
+            var flag = false;
+            var instance = dbContextService.Single<WallPaperRelateMobileProperty>(x => x.MobilePropertyId == propertyId && x.WallPaperId == wallpaperId);
+            if (instance != null)
+            {
+                instance.Status = status;
+                dbContextService.Update<WallPaperRelateMobileProperty>(instance);
+                flag = true;
+            }
+            return flag;
+        }
+
+        #endregion
+
+        public void Upload(WallPaper wallpaper, List<int> propertyIds)
+        {
+            if (propertyIds != null && propertyIds.Count > 0 && !string.IsNullOrEmpty(wallpaper.ThumbnailName) && !string.IsNullOrEmpty(wallpaper.OriginalName))
+            {
+                var resolutionlist = MobileUIService.GetMobileResolutionList(propertyIds);
+
+                var thumbnailfilePathPrefix = string.Format("{0}\\", ResourcesFilePathHelper.ThemeThumbnailPath);
+                var originalfilePathPrefix = string.Format("{0}\\", ResourcesFilePathHelper.ThemeOriginalPath);
+
+                var thumbnailFilePath = string.Format("{0}{1}", thumbnailfilePathPrefix, wallpaper.ThumbnailName);
+                var originalFilePath = string.Format("{0}{1}", originalfilePathPrefix, wallpaper.OriginalName);
+                foreach (var item in resolutionlist)
+                {
+                    UploadSignal(thumbnailFilePath, thumbnailfilePathPrefix, item, false);
+                    UploadSignal(originalFilePath, originalfilePathPrefix, item, true);
+                }
+            }
+        }
+
+        private string UploadSignal(string filePath, string destFilePathPrefix, MobileResolution resolution, bool isOrignal)
+        {
+            var destFile = string.Empty;
+            if (!string.IsNullOrEmpty(filePath))
+            {
+                var width = resolution.Value.GetResolutionWidth();
+                var height = resolution.Value.GetResolutionHeight();
+
+                var imagePixel = string.Format("{0}x{1}", width, height);
+                if (!isOrignal)
+                {
+                    var thumbnailPixel = GetThumbnailPixelByOriginal(imagePixel);
+                    width = thumbnailPixel.GetResolutionWidth();
+                    height = thumbnailPixel.GetResolutionHeight();
+
+                    destFile = ImageHelper.Resized(filePath, destFilePathPrefix, width, height, imagePixel);
+                }
+                else
+                {
+                    destFile = ImageHelper.Resized(filePath, destFilePathPrefix, width, height, string.Empty);
+                }
+            }
+            return destFile;
+        }
+
+        private string GetThumbnailPixelByOriginal(string imagePixel)
+        {
+            var prefix = string.Empty;
+            if (!string.IsNullOrEmpty(imagePixel))
+            {
+                var width = imagePixel.GetResolutionWidth();
+                var thumbnailPixel = string.Empty;
+                switch (imagePixel)
+                {
+                    case "1080x1920":
+                        thumbnailPixel = "360x640";
+                        break;
+                    case "2160x1920":
+                        thumbnailPixel = "540x480";
+                        break;
+                    case "720x1280":
+                        thumbnailPixel = "240x427";
+                        break;
+                    case "1440x1280":
+                        thumbnailPixel = "360x320";
+                        break;
+                    case "540x960":
+                        thumbnailPixel = "160x284";
+                        break;
+                    case "1080x960":
+                        thumbnailPixel = "240x270";
+                        break;
+                    case "480x854":
+                        thumbnailPixel = "142x253";
+                        break;
+                    case "960x854":
+                        thumbnailPixel = "213x190";
+                        break;
+                    case "480x800":
+                        thumbnailPixel = "142x237";
+                        break;
+                    case "960x800":
+                        thumbnailPixel = "213x178";
+                        break;
+                    default:
+                        thumbnailPixel = imagePixel;
+                        break;
+                }
+                prefix = thumbnailPixel;
+            }
+            return prefix;
         }
     }
 }

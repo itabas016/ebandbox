@@ -92,51 +92,41 @@
                         <td><strong>图片属性: </strong></td>
                         <td>@Html.RadioButtonFor(m => m.ScreenType, 1) 宽屏 @Html.RadioButtonFor(m => m.ScreenType, 0) 窄屏</td>
                     </tr>
-                    <tr>
-                        <td><strong>缩略图地址: </strong></td>
-                        <td>
-                            <input type="file" name="thumbnailFile" accept="bmp|gif|jpg|jpeg|png|tiff|abm" /></td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <label>@thumbnailName</label></td>
-                    </tr>
+                </table>
+
+                <div>
+                    <strong>缩略图地址: </strong>
+                    <input type="file" name="thumbnailFile" accept="bmp|gif|jpg|jpeg|png|tiff|abm" />
+                    <br />
+                    <label>@thumbnailName</label>
+                    <br />
                     @if (@thumbnailName != string.Empty)
                     {
-                        <tr>
-                            <td colspan="2">
-                                <img src="@string.Format("{0}{1}", thumbnailImagePrefix, thumbnailName)" />
-                            </td>
-                        </tr>
+                        <img src="@string.Format("{0}{1}", thumbnailImagePrefix, thumbnailName)" />
+                        <br />
                     }
-                    <tr>
-                        <td><strong>原图地址: </strong></td>
-                        <td>
-                            <input type="file" name="originalFile" accept="bmp|gif|jpg|jpeg|png|tiff|abm" /></td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <label>@originalName</label></td>
-                    </tr>
+                </div>
+                <div>
+                    <strong>原图地址: </strong>
+                    <input type="file" name="originalFile" accept="bmp|gif|jpg|jpeg|png|tiff|abm" />
+                    <br />
+                    <label>@originalName</label>
+                    <br />
                     @if (@originalName != string.Empty)
                     {
-                        <tr>
-                            <td colspan="2">
-                                <img src="@string.Format("{0}{1}", originalImagePrefix, originalName)" />
-                            </td>
-                        </tr>
+                        <img src="@string.Format("{0}{1}", originalImagePrefix, originalName)" />
+                        <br />
                     }
-                    <tr>
-                        <td><strong>备注: </strong></td>
-                        <td>@Html.TextAreaFor(m => m.Comment)</td>
-                    </tr>
-                    
-                    <tr>
-                        <td colspan="2">
-                            <button class="btn btn-large btn-blue addapp" style="margin-left: 50px">@ViewBag.Title</button>
-                        </td>
-                    </tr>
-                </table>
+                </div>
+                <div>
+                    <strong>备注: </strong>
+                    <br />
+                    @Html.TextAreaFor(m => m.Comment)
+                    <br />
+                </div>
+                <div>
+                    <button class="btn btn-large btn-blue addapp" style="margin-left: 50px">@ViewBag.Title</button>
+                </div>
             </div>
         }
     </div>
