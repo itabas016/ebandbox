@@ -428,7 +428,7 @@ namespace FrameMobile.Domain.Service
                     width = thumbnailPixel.GetResolutionWidth();
                     height = thumbnailPixel.GetResolutionHeight();
 
-                    destFile = ImageHelper.Resized(filePath, destFilePathPrefix, width, height, thumbnailPixel);
+                    destFile = ImageHelper.Resized(filePath, destFilePathPrefix, width, height, imagePixel);
                 }
                 else
                 {

@@ -68,7 +68,7 @@ namespace FrameMobile.Core
             return ResizedByWidth(imageFile, destFilePath, destFileName, HD_IMAGE_WIDTH);
         }
 
-        public static string Resized(string originalFilePath, string destFilePath, int width, int height, string originalPixel)
+        public static string Resized(string originalFilePath, string destFilePathPrefix, int width, int height, string originalPixel)
         {
             FileInfo fileInfo = new FileInfo(originalFilePath);
             var bitmap = new Bitmap(originalFilePath);
@@ -83,18 +83,33 @@ namespace FrameMobile.Core
                     var destBitMap = ResizeImage(bitmap, size);
                     if (destBitMap != null)
                     {
-                        if (!string.IsNullOrEmpty(originalFilePath))
+                        if (!string.IsNullOrEmpty(originalPixel))
                         {
-                            var destFileName = string.Format("{0}{1}_{2}", destFilePath, originalPixel, fileInfo.Name);
+                            var destFileName = string.Format("{0}{1}_{2}", destFilePathPrefix, originalPixel, fileInfo.Name);
                             destBitMap.Save(destFileName);
                             return destFileName;
                         }
                         else
                         {
-                            var destFileName = string.Format("{0}{1}x{2}_{3}", destFilePath, bitmap.Width, bitmap.Height, fileInfo.Name);
+                            var destFileName = string.Format("{0}{1}x{2}_{3}", destFilePathPrefix, width, height, fileInfo.Name);
                             destBitMap.Save(destFileName);
                             return destFileName;
                         }
+                    }
+                }
+                else
+                {
+                    if (!string.IsNullOrEmpty(originalPixel))
+                    {
+                        var destFileName = string.Format("{0}{1}_{2}", destFilePathPrefix, originalPixel, fileInfo.Name);
+                        fileInfo.CopyTo(destFileName, true);
+                        return destFileName;
+                    }
+                    else
+                    {
+                        var destFileName = string.Format("{0}{1}x{2}_{3}", destFilePathPrefix, width, height, fileInfo.Name);
+                        fileInfo.CopyTo(destFileName, true);
+                        return destFileName;
                     }
                 }
             }
