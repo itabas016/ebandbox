@@ -36,13 +36,13 @@ namespace FrameMobile.Domain.Service
         public IList<MobileResolution> GetMobileResolutionList(List<int> mobilePropertyIds)
         {
             var lcds = (from r in dbContextService.Find<MobileResolution>(x => x.Status == 1)
-                       join p in dbContextService.Find<MobileProperty>(x => x.Status == 1) on r.Id equals p.ResolutionId
-                       where mobilePropertyIds.Contains(p.Id)
-                       select new MobileResolution
-                       {
-                           Name = r.Name,
-                           Value = r.Value
-                       }).Distinct();
+                        join p in dbContextService.Find<MobileProperty>(x => x.Status == 1) on r.Id equals p.ResolutionId
+                        where mobilePropertyIds.Contains(p.Id)
+                        select new MobileResolution
+                        {
+                            Name = r.Name,
+                            Value = r.Value
+                        }).GroupBy(x => x.Value).Select(x => x.First());
             return lcds.ToList();
         }
     }
