@@ -5,51 +5,63 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using FrameMobile.Cache;
+using FrameMobile.Common;
 using StructureMap;
+using FrameMobile.Domain;
+using FrameMobile.Domain.Service;
 
 namespace Frame.Mobile.WebSite.Controllers
 {
     public class CacheController : Controller
     {
-        public ICacheManagerHelper CacheService
+        public ICacheService CacheService
         {
             get
             {
                 if (_cacheService == null)
                 {
-                    _cacheService = ObjectFactory.GetInstance<ICacheManagerHelper>();
+                    _cacheService = ObjectFactory.GetInstance<ICacheService>();
                 }
                 return _cacheService;
             }
             set { _cacheService = value; }
         }
-        private ICacheManagerHelper _cacheService;
+        private ICacheService _cacheService;
 
-        public CacheController(ICacheManagerHelper cacheService)
+        public ActionResult NewsClear()
         {
-            this.CacheService = cacheService;
+            var newscacheService = RedisClientManagerType.NewsCache.RedisCacheServiceFactory();
+
+            CacheService.Clear(newscacheService);
+
+            return Content("news service cache cleared.");
         }
 
-        public ActionResult ClearService()
+        public ActionResult ThemeClear()
         {
-            CacheService.ClearServiceCache();
-            List<string> toRemove = new List<string>();
-            foreach (DictionaryEntry cacheItem in HttpRuntime.Cache)
-            {
-                toRemove.Add(cacheItem.Key.ToString());
-            }
-            foreach (string key in toRemove)
-            {
-                HttpRuntime.Cache.Remove(key);
-            }
+            var themecacheService = RedisClientManagerType.ThemeCache.RedisCacheServiceFactory();
 
-            return Content("service cache cleared.");
+            CacheService.Clear(themecacheService);
+
+            return Content("theme service cache cleared.");
+        }
+
+        public ActionResult Clear()
+        {
+            var commoncacheService = RedisClientManagerType.MixedCache.RedisCacheServiceFactory();
+
+            CacheService.Clear(commoncacheService);
+
+            return Content("common service cache cleared.");
         }
 
         public ActionResult ClearAll()
         {
-            CacheService.Flush();
-            return Content("all cache cleared.");
+            var commoncacheService = RedisClientManagerType.MixedCache.RedisCacheServiceFactory();
+
+            CacheService.ClearAll(commoncacheService);
+
+            return Content("common service cache cleared.");
         }
 
     }

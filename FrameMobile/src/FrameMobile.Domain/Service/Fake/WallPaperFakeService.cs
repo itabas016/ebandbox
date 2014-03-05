@@ -5,6 +5,7 @@ using System.Text;
 using FrameMobile.Model;
 using FrameMobile.Model.Theme;
 using FrameMobile.Model.Mobile;
+using FrameMobile.Common;
 
 namespace FrameMobile.Domain.Service
 {
@@ -15,6 +16,7 @@ namespace FrameMobile.Domain.Service
             return null;
         }
 
+        [ServiceCache(ClientType = RedisClientManagerType.ThemeCache)]
         public IList<ThemeConfigView> GetConfigViewList(MobileParam mobileParams, int type)
         {
             #region instance
@@ -59,6 +61,7 @@ namespace FrameMobile.Domain.Service
             return result;
         }
 
+        [ServiceCache(ClientType = RedisClientManagerType.ThemeCache)]
         public IList<WallPaperCategoryView> GetCategoryViewList(MobileParam mobileParams, int cver, out int sver)
         {
             #region instance
@@ -108,6 +111,7 @@ namespace FrameMobile.Domain.Service
             return result;
         }
 
+        [ServiceCache(ClientType = RedisClientManagerType.ThemeCache)]
         public IList<WallPaperSubCategoryView> GetSubCategoryViewList(MobileParam mobileParams, int cver, out int sver)
         {
             #region instance
@@ -159,6 +163,7 @@ namespace FrameMobile.Domain.Service
             return result;
         }
 
+        [ServiceCache(ClientType = RedisClientManagerType.ThemeCache)]
         public IList<WallPaperTopicView> GetTopicViewList(MobileParam mobileParams, int cver, out int sver)
         {
             #region instance
@@ -218,6 +223,7 @@ namespace FrameMobile.Domain.Service
             return result;
         }
 
+        [ServiceCache(ClientType = RedisClientManagerType.ThemeCache)]
         public IList<WallPaperView> GetWallPaperViewList(MobileParam mobileParams, int screenType, int categoryId, int topicId, int subcategoryId, int sort, int startnum, int num, out int totalCount)
         {
             var result = new List<WallPaperView>();
@@ -319,6 +325,7 @@ namespace FrameMobile.Domain.Service
             return result;
         }
 
+        [ServiceCache(ClientType = RedisClientManagerType.ThemeCache)]
         public WallPaperView GetWallPaperViewDetail(MobileParam mobileParams, int wallPaperId)
         {
             var wallpaperlist = FakeWallPaperList();

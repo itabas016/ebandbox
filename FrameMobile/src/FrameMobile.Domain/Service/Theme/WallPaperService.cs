@@ -11,7 +11,7 @@ namespace FrameMobile.Domain.Service
 {
     public class WallPaperService : ThemeDbContextService, IWallPaperService
     {
-        [ServiceCache]
+        [ServiceCache(ClientType=RedisClientManagerType.ThemeCache)]
         public MobileProperty GetMobileProperty(MobileParam mobileParams)
         {
             var brand = mobileParams.Manufacturer.ToLower();
@@ -33,35 +33,37 @@ namespace FrameMobile.Domain.Service
             return mobileproperty.SingleOrDefault<MobileProperty>();
         }
 
-        [ServiceCache]
+        [ServiceCache(ClientType=RedisClientManagerType.ThemeCache)]
         public IList<ThemeConfigView> GetConfigViewList(MobileParam mobileParams, int type)
         {
             var configlist = dbContextService.Find<ThemeConfig>(x => x.Status == 1 && x.Type == type);
             return configlist.To<IList<ThemeConfigView>>();
         }
 
-        [ServiceCache]
+        [ServiceCache(ClientType=RedisClientManagerType.ThemeCache)]
         public IList<WallPaperCategoryView> GetCategoryViewList(MobileParam mobileParams, int cver, out int sver)
         {
             var categorylist = new WallPaperCategory().ReturnThemeInstance<WallPaperCategory>(cver, out sver);
+
+            categorylist.GetCompleteInstance<WallPaperCategory>();
             return categorylist.To<IList<WallPaperCategoryView>>();
         }
 
-        [ServiceCache]
+        [ServiceCache(ClientType=RedisClientManagerType.ThemeCache)]
         public IList<WallPaperSubCategoryView> GetSubCategoryViewList(MobileParam mobileParams, int cver, out int sver)
         {
             var subcategorylist = new WallPaperSubCategory().ReturnThemeInstance<WallPaperSubCategory>(cver, out sver);
             return subcategorylist.To<IList<WallPaperSubCategoryView>>();
         }
 
-        [ServiceCache]
+        [ServiceCache(ClientType=RedisClientManagerType.ThemeCache)]
         public IList<WallPaperTopicView> GetTopicViewList(MobileParam mobileParams, int cver, out int sver)
         {
             var topiclist = new WallPaperTopic().ReturnThemeInstance<WallPaperTopic>(cver, out sver);
             return topiclist.To<IList<WallPaperTopicView>>();
         }
 
-        [ServiceCache]
+        [ServiceCache(ClientType=RedisClientManagerType.ThemeCache)]
         public IList<WallPaperView> GetWallPaperViewList(MobileParam mobileParams, int screenType, int categoryId, int topicId, int subcategoryId, int sort, int startnum, int num, out int totalCount)
         {
             var property = GetMobileProperty(mobileParams);
@@ -75,10 +77,10 @@ namespace FrameMobile.Domain.Service
             switch (sort)
             {
                 case 1:
-                    result = GetLatestWallPaperViewList(mobileParams, property, categoryId, topicId, subcategoryId, out totalCount);
+                    result = GetLatestWallPaperViewList(mobileParams, property, screenType, categoryId, topicId, subcategoryId, out totalCount);
                     break;
                 default:
-                    result = GetHottestWallPaperViewList(mobileParams, property, categoryId, topicId, subcategoryId, out totalCount);
+                    result = GetHottestWallPaperViewList(mobileParams, property, screenType, categoryId, topicId, subcategoryId, out totalCount);
                     break;
             }
             return result.Skip(startnum - 1).Take(num).ToList();
@@ -86,12 +88,12 @@ namespace FrameMobile.Domain.Service
 
         #region Heleper
 
-        public List<WallPaperView> GetLatestWallPaperViewList(MobileParam mobileParams, MobileProperty property, int categoryId, int topicId, int subcategoryId, out int totalCount)
+        public List<WallPaperView> GetLatestWallPaperViewList(MobileParam mobileParams, MobileProperty property, int screenType, int categoryId, int topicId, int subcategoryId, out int totalCount)
         {
             totalCount = 0;
             if (categoryId == 0 && topicId != 0)
             {
-                var latestwallpaperlistbytopic = from p in dbContextService.Find<WallPaper>(x => x.Status == 1)
+                var latestwallpaperlistbytopic = from p in dbContextService.Find<WallPaper>(x => x.Status == 1 && x.ScreenType == screenType)
                                                  join pt in GetWallPaperRelateTopicList(topicId) on p.Id equals pt.TopicId
                                                  join pm in GetWallPaperRelateMobilePropertyList(property.Id) on p.Id equals pm.WallPaperId
                                                  orderby p.PublishTime descending
@@ -109,7 +111,7 @@ namespace FrameMobile.Domain.Service
             }
             if (categoryId == 0 && topicId == 0)
             {
-                var latestwallpaperlistbycategory = from p in dbContextService.Find<WallPaper>(x => x.Status == 1)
+                var latestwallpaperlistbycategory = from p in dbContextService.Find<WallPaper>(x => x.Status == 1 && x.ScreenType == screenType)
                                                     join pc in GetWallPaperRelateCategoryList(categoryId) on p.Id equals pc.WallPaperId
                                                     join pm in GetWallPaperRelateMobilePropertyList(property.Id) on p.Id equals pm.WallPaperId
                                                     orderby p.PublishTime descending
@@ -128,12 +130,12 @@ namespace FrameMobile.Domain.Service
             return new List<WallPaperView>();
         }
 
-        public List<WallPaperView> GetHottestWallPaperViewList(MobileParam mobileParams, MobileProperty property, int categoryId, int topicId, int subcategoryId, out int totalCount)
+        public List<WallPaperView> GetHottestWallPaperViewList(MobileParam mobileParams, MobileProperty property, int screenType, int categoryId, int topicId, int subcategoryId, out int totalCount)
         {
             totalCount = 0;
             if (categoryId == 0 && topicId != 0)
             {
-                var hottestwallpaperlistbytopic = from p in dbContextService.Find<WallPaper>(x => x.Status == 1)
+                var hottestwallpaperlistbytopic = from p in dbContextService.Find<WallPaper>(x => x.Status == 1 && x.ScreenType == screenType)
                                                   join pt in GetWallPaperRelateTopicList(topicId) on p.Id equals pt.TopicId
                                                   join pm in GetWallPaperRelateMobilePropertyList(property.Id) on p.Id equals pm.WallPaperId
                                                   orderby p.DownloadNumber descending
@@ -151,7 +153,7 @@ namespace FrameMobile.Domain.Service
             }
             if (categoryId == 0 && topicId == 0)
             {
-                var hottestwallpaperlistbycategory = from p in dbContextService.Find<WallPaper>(x => x.Status == 1)
+                var hottestwallpaperlistbycategory = from p in dbContextService.Find<WallPaper>(x => x.Status == 1 && x.ScreenType == screenType)
                                                      join pc in GetWallPaperRelateCategoryList(categoryId) on p.Id equals pc.WallPaperId
                                                      join pm in GetWallPaperRelateMobilePropertyList(property.Id) on p.Id equals pm.WallPaperId
                                                      orderby p.DownloadNumber descending
@@ -170,7 +172,7 @@ namespace FrameMobile.Domain.Service
             return new List<WallPaperView>();
         }
 
-        [ServiceCache]
+        [ServiceCache(ClientType=RedisClientManagerType.ThemeCache)]
         public IList<WallPaperRelateCategory> GetWallPaperRelateCategoryList(int categoryId)
         {
             if (categoryId == 0)
@@ -181,7 +183,7 @@ namespace FrameMobile.Domain.Service
             return categorywallpaperlist;
         }
 
-        [ServiceCache]
+        [ServiceCache(ClientType=RedisClientManagerType.ThemeCache)]
         public IList<WallPaperRelateSubCategory> GetWallPaperRelateSubCategoryList(int subcategoryId)
         {
             if (subcategoryId == 0)
@@ -192,21 +194,21 @@ namespace FrameMobile.Domain.Service
             return subcategorywallpaperlist;
         }
 
-        [ServiceCache]
+        [ServiceCache(ClientType=RedisClientManagerType.ThemeCache)]
         public IList<WallPaperRelateTopic> GetWallPaperRelateTopicList(int topicId)
         {
             var topicwallpaperlist = dbContextService.Find<WallPaperRelateTopic>(x => x.TopicId == topicId && x.Status == 1).ToList();
             return topicwallpaperlist;
         }
 
-        [ServiceCache]
+        [ServiceCache(ClientType=RedisClientManagerType.ThemeCache)]
         public IList<WallPaperRelateMobileProperty> GetWallPaperRelateMobilePropertyList(int propertyId)
         {
             var mobilePropertylist = dbContextService.Find<WallPaperRelateMobileProperty>(x => x.MobilePropertyId == propertyId && x.Status == 1).ToList();
             return mobilePropertylist;
         }
 
-        [ServiceCache]
+        [ServiceCache(ClientType=RedisClientManagerType.ThemeCache)]
         public WallPaperView GetWallPaperViewDetail(MobileParam mobileParams, int wallPaperId)
         {
             var property = GetMobileProperty(mobileParams);

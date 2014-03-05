@@ -78,5 +78,45 @@ namespace FrameMobile.Domain
             }
             return new EnumerableQuery<T>(source);
         }
+
+        public static IList<T> GetCompleteInstance<T>(this IList<T> list) where T : MySQLModel, new()
+        {
+            var instance = new T()
+            {
+                Id = 0,
+                Status = 1,
+                Name = "全部",
+            };
+            list.Add(instance);
+            return list;
+        }
+
+        public static List<int> InIds(this List<int> currentIds, List<int> originalIds, out List<int> outIds)
+        {
+            var inIds = new List<int>();
+            outIds = new List<int>();
+            if (currentIds != null && originalIds != null)
+            {
+                foreach (var currentId in currentIds)
+                {
+                    if (!originalIds.Contains(currentId))
+                    {
+                        inIds.Add(currentId);
+                    }
+                }
+                foreach (var originalId in originalIds)
+                {
+                    if (!currentIds.Contains(originalId))
+                    {
+                        outIds.Add(originalId);
+                    }
+                }
+            }
+            else
+            {
+                inIds = currentIds;
+            }
+            return inIds;
+        }
     }
 }

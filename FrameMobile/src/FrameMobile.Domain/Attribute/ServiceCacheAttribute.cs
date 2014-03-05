@@ -11,7 +11,6 @@ namespace FrameMobile.Domain
     public class ServiceCacheAttribute : MethodInterceptAttribute
     {
         private int _timeoutSecs = ConfigKeys.SERVICE_CACHE_TIMEOUT_SECONDS.ConfigValue().ToInt32();
-
         public int TimeoutSecs
         {
             get
@@ -23,5 +22,12 @@ namespace FrameMobile.Domain
                 _timeoutSecs = value;
             }
         }
+
+        public RedisClientManagerType ClientType
+        {
+            get { return _clientType; }
+            set { _clientType = value; }
+        }
+        private RedisClientManagerType _clientType = RedisClientManagerType.MixedCache;
     }
 }

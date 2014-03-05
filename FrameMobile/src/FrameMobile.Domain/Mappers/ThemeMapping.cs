@@ -35,6 +35,7 @@ namespace FrameMobile.Domain
                 .ForMember(dest => dest.ThumbnailUrl, opt => opt.MapFrom(ori => ori.ThumbnailName))
                 .ForMember(dest => dest.OriginalUrl, opt => opt.MapFrom(ori => ori.OriginalName))
                 .ForMember(dest => dest.Rating, opt => opt.MapFrom(ori => ori.Rating))
+                .ForMember(dest => dest.ScreenType, opt => opt.MapFrom(ori => ori.ScreenType))
                 .ForMember(dest => dest.DownloadNumber, opt => opt.MapFrom(ori => ori.DownloadNumber))
                 .ForMember(dest => dest.PublishTime, opt => opt.MapFrom(ori => ori.PublishTime))
                 .ForMember(dest => dest.ModifiedTime, opt => opt.MapFrom(ori => ori.ModifiedTime))

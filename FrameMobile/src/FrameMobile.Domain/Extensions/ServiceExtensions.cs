@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using AutoMapper;
+using FrameMobile.Cache;
+using FrameMobile.Common;
+using FrameMobile.Domain.Service;
+using StructureMap;
 
 namespace FrameMobile.Domain
 {
@@ -27,6 +31,27 @@ namespace FrameMobile.Domain
             if (source == null) return default(int);
             var random = new Random(Guid.NewGuid().GetHashCode());
             return random.Next(1, source.Count + 1);
+        }
+
+        public static IRedisCacheService RedisCacheServiceFactory(this RedisClientManagerType clientType)
+        {
+            var redisCacheService = default(IRedisCacheService);
+            switch (clientType)
+            {
+                case RedisClientManagerType.NewsCache:
+                    redisCacheService = ObjectFactory.GetInstance<INewsRedisCacheService>();
+                    break;
+                case RedisClientManagerType.ThemeCache:
+                    redisCacheService = ObjectFactory.GetInstance<IThemeRedisCacheService>();
+                    break;
+                case RedisClientManagerType.MixedCache:
+                    redisCacheService = ObjectFactory.GetInstance<IRedisCacheService>();
+                    break;
+                default:
+                    redisCacheService = ObjectFactory.GetInstance<IRedisCacheService>();
+                    break;
+            }
+            return redisCacheService;
         }
     }
 }

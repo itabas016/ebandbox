@@ -65,6 +65,16 @@ namespace FrameMobile.Domain
                 .ForMember(dest => dest.ExtraLinkUrl, opt => opt.MapFrom(ori => ori.ExtraLinkUrl))
                 .ForMember(dest => dest.Description, opt => opt.MapFrom(ori => ori.Description));
 
+            Mapper.CreateMap<NewsExtraAppView, OlderNewsExtraAppView>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(ori => ori.Id))
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(ori => ori.Name))
+                .ForMember(dest => dest.NameLowCase, opt => opt.MapFrom(ori => ori.Name))
+                .ForMember(dest => dest.IsBrower, opt => opt.MapFrom(ori => ori.IsBrower))
+                .ForMember(dest => dest.PackageName, opt => opt.MapFrom(ori => ori.PackageName))
+                .ForMember(dest => dest.DownloadUrl, opt => opt.MapFrom(ori => ori.ExtraLinkUrl))
+                .ForMember(dest => dest.Status, opt => opt.MapFrom(ori => ori.Status))
+                .IgnoreAllNonExisting();
+
             Mapper.CreateMap<NewsInfAddress, NewsInfAddressView>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(ori => ori.Id))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(ori => ori.Name))

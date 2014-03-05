@@ -9,7 +9,7 @@ using FrameMobile.Model.Radar;
 
 namespace FrameMobile.Domain.Service
 {
-    public class RadarService : NewsDbContextService, IRadarService
+    public class RadarService : CommonDbContextService, IRadarService
     {
         public IList<RadarCategory> GetRadarCategoryList()
         {

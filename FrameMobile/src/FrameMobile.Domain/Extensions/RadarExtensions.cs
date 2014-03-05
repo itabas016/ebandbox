@@ -18,7 +18,7 @@ namespace FrameMobile.Domain
             var version = source.GetNewsConfsver();
             if (version != cver)
             {
-                var dbContextService = ObjectFactory.GetInstance<INewsDbContextService>();
+                var dbContextService = ObjectFactory.GetInstance<ICommonDbContextService>();
                 sver = version;
                 var type = typeof(T);
                 var flag = (type == typeof(RadarCategory) || type == typeof(RadarElement));

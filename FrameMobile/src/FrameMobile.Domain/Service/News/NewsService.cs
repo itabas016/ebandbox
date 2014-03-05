@@ -14,49 +14,56 @@ namespace FrameMobile.Domain.Service
 {
     public class NewsService : NewsDbContextService, INewsService
     {
-        [ServiceCache]
+        [ServiceCache(ClientType = RedisClientManagerType.NewsCache)]
         public IList<NewsConfigView> GetConfigViewList(MobileParam mobileParams)
         {
             var configlist = dbContextService.Find<NewsConfig>(x => x.Status == 1);
             return configlist.To<IList<NewsConfigView>>();
         }
 
-        [ServiceCache]
+        [ServiceCache(ClientType = RedisClientManagerType.NewsCache)]
         public IList<NewsSourceView> GetSourceViewList(MobileParam mobileParams, int cver, out int sver)
         {
             var sourcelist = new NewsSource().ReturnNewsInstance<NewsSource>(cver, out sver);
             return sourcelist.To<IList<NewsSourceView>>();
         }
 
-        [ServiceCache]
+        [ServiceCache(ClientType = RedisClientManagerType.NewsCache)]
         public IList<NewsExtraAppView> GetExtraAppViewList(MobileParam mobileParams, int cver, out int sver)
         {
             var extraAppList = new NewsExtraApp().ReturnNewsInstance<NewsExtraApp>(cver, out sver);
             return extraAppList.To<IList<NewsExtraAppView>>();
         }
 
-        [ServiceCache]
+        [ServiceCache(ClientType = RedisClientManagerType.NewsCache)]
+        public IList<OlderNewsExtraAppView> GetOlderExtraAppViewList(MobileParam mobileParams, int cver, out int sver)
+        {
+            var extraappviewlist = GetExtraAppViewList(mobileParams, cver, out sver);
+            return extraappviewlist.To<IList<OlderNewsExtraAppView>>();
+        }
+
+        [ServiceCache(ClientType = RedisClientManagerType.NewsCache)]
         public IList<NewsInfAddressView> GetInfAddressViewList(MobileParam mobileParams, int cver, out int sver)
         {
             var infAddressList = new NewsInfAddress().ReturnNewsInstance<NewsInfAddress>(cver, out sver);
             return infAddressList.To<IList<NewsInfAddressView>>();
         }
 
-        [ServiceCache]
+        [ServiceCache(ClientType = RedisClientManagerType.NewsCache)]
         public IList<NewsCategoryView> GetCategoryViewList(MobileParam mobileParams, int cver, out int sver)
         {
             var categorylist = new NewsCategory().ReturnNewsInstance<NewsCategory>(cver, out sver);
             return categorylist.To<IList<NewsCategoryView>>();
         }
 
-        [ServiceCache]
+        [ServiceCache(ClientType = RedisClientManagerType.NewsCache)]
         public IList<NewsSubCategoryView> GetSubCategoryViewList(MobileParam mobileParams)
         {
             var subcategorylist = dbContextService.Find<NewsSubCategory>(x => x.Status == 1);
             return subcategorylist.To<IList<NewsSubCategoryView>>();
         }
 
-        [ServiceCache]
+        [ServiceCache(ClientType = RedisClientManagerType.NewsCache)]
         public IList<NewsRadarView> GetNewsRadarViewList(MobileParam mobileParams, int cver, out int sver)
         {
             var imageType = GetImageURLTypeByResolution(mobileParams);
@@ -67,7 +74,7 @@ namespace FrameMobile.Domain.Service
             return ConvertByRadar(imageType, radarlist, subradarlist);
         }
 
-        [ServiceCache]
+        [ServiceCache(ClientType = RedisClientManagerType.NewsCache)]
         public IList<NewsContentView> GetNewsContentViewList(MobileParam mobileParams, long stamp, bool action, string categoryIds, int startnum, int num, out int totalCount)
         {
             var contentlist = new List<NewsContentView>();
@@ -82,7 +89,7 @@ namespace FrameMobile.Domain.Service
             return contentlist.Skip(startnum - 1).Take(num).ToList();
         }
 
-        [ServiceCache]
+        [ServiceCache(ClientType = RedisClientManagerType.NewsCache)]
         public NewsCollectionView GetNewsCollectionView(MobileParam mobileParams, long stamp, int extracver, bool action, string categoryIds, int startnum, int num, out int extrasver, out int totalCount)
         {
             var collection = new NewsCollectionView();
@@ -102,7 +109,7 @@ namespace FrameMobile.Domain.Service
             var imageType = GetImageURLTypeByResolution(mobileParams);
 
             var stampTime = stamp.UTCStamp();
-            var endDateTime = stampTime.AddDays(-5);
+            var endDateTime = stampTime.AddDays(-2);
 
             switch (action)
             {
@@ -121,7 +128,7 @@ namespace FrameMobile.Domain.Service
             return contentViewList;
         }
 
-        [ServiceCache]
+        [ServiceCache(ClientType = RedisClientManagerType.NewsCache)]
         private List<NewsExtraApp> GetNewsExtraAppList()
         {
             var extraAppList = dbContextService.Find<NewsExtraApp>(x => x.Status == 1);
@@ -129,7 +136,7 @@ namespace FrameMobile.Domain.Service
             return extraAppList.ToList();
         }
 
-        [ServiceCache]
+        [ServiceCache(ClientType = RedisClientManagerType.NewsCache)]
         private int GetImageURLTypeByResolution(MobileParam mobileParams)
         {
             var resolution = mobileParams.Resolution;
@@ -140,12 +147,12 @@ namespace FrameMobile.Domain.Service
             }
             var width = resolution.GetResolutionWidth();
 
-            if (width > Const.NEWS_HD_RESOLUTION_WIDTH)
+            if (width >= Const.NEWS_HD_RESOLUTION_WIDTH)
                 return 2;
             return 1;
         }
 
-        [ServiceCache]
+        [ServiceCache(ClientType = RedisClientManagerType.NewsCache)]
         private IEnumerable<NewsContentView> GetLocalContentViewList(List<NewsExtraApp> extraAppList, int imageType)
         {
             var contentlist = (from l in

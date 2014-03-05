@@ -114,6 +114,7 @@
     <Compile Include="ViewModels\Account\LoginView.cs" />
     <Compile Include="ViewModels\Account\RegisterView.cs" />
     <Compile Include="ViewModels\Common\MobilePropertyView.cs" />
+    <Compile Include="ViewModels\News\OlderNewsExtraAppView.cs" />
     <Compile Include="ViewModels\News\NewsCategoryView.cs" />
     <Compile Include="ViewModels\News\NewsConfigView.cs" />
     <Compile Include="ViewModels\News\AggregateResult\NewsContentResult.cs" />

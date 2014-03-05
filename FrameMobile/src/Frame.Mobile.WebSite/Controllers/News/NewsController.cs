@@ -25,14 +25,23 @@ namespace Frame.Mobile.WebSite.Controllers
             return Content(actionResult.ToString());
         }
 
-        public ActionResult ExtraAppList(string imsi, int cver = 0)
+        public ActionResult ExtraAppList(string imsi, int cver = 0, int infver = 0)
         {
             var mobileParams = GetMobileParam();
             int sver = 0;
+            var actionResult = default(CommonActionResult);
 
-            Func<IList<NewsExtraAppView>> getextraapplist = () => NewsService.GetExtraAppViewList(mobileParams, cver, out sver);
-
-            var actionResult = BuildResult(this.CheckRequiredParams(imsi), getextraapplist);
+            switch (infver)
+            {
+                case 0:
+                    Func<IList<OlderNewsExtraAppView>> getolderextraapplist = () => NewsService.GetOlderExtraAppViewList(mobileParams, cver, out sver);
+                    actionResult = BuildResult(this.CheckRequiredParams(imsi), getolderextraapplist);
+                    break;
+                case 1:
+                    Func<IList<NewsExtraAppView>> getextraapplist = () => NewsService.GetExtraAppViewList(mobileParams, cver, out sver);
+                    actionResult = BuildResult(this.CheckRequiredParams(imsi), getextraapplist);
+                    break;
+            }
 
             actionResult.ServerVerison = sver;
             return Content(actionResult.ToString());
@@ -114,5 +123,7 @@ namespace Frame.Mobile.WebSite.Controllers
             actionResult.Total = totalCount;
             return Content(actionResult.ToString());
         }
+
+
     }
 }

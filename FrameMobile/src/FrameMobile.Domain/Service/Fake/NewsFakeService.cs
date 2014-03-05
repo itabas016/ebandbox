@@ -46,7 +46,7 @@ namespace FrameMobile.Domain.Service
             return null;
         }
 
-        [ServiceCache]
+        [ServiceCache(ClientType=RedisClientManagerType.NewsCache)]
         public IList<NewsConfigView> GetConfigViewList(MobileParam mobileParams)
         {
             #region instance
@@ -88,7 +88,7 @@ namespace FrameMobile.Domain.Service
             return result;
         }
 
-        [ServiceCache]
+        [ServiceCache(ClientType=RedisClientManagerType.NewsCache)]
         public IList<NewsSourceView> GetSourceViewList(MobileParam mobileParams, int cver, out int sver)
         {
             #region instance
@@ -120,7 +120,7 @@ namespace FrameMobile.Domain.Service
             return result;
         }
 
-        [ServiceCache]
+        [ServiceCache(ClientType=RedisClientManagerType.NewsCache)]
         public IList<NewsExtraAppView> GetExtraAppViewList(MobileParam mobileParams, int cver, out int sver)
         {
             #region instance
@@ -157,7 +157,14 @@ namespace FrameMobile.Domain.Service
             return result;
         }
 
-        [ServiceCache]
+        [ServiceCache(ClientType = RedisClientManagerType.NewsCache)]
+        public IList<OlderNewsExtraAppView> GetOlderExtraAppViewList(MobileParam mobileParams, int cver, out int sver)
+        {
+            var extraappviewlist = GetExtraAppViewList(mobileParams, cver, out sver);
+            return extraappviewlist.To<IList<OlderNewsExtraAppView>>();
+        }
+
+        [ServiceCache(ClientType=RedisClientManagerType.NewsCache)]
         public IList<NewsInfAddressView> GetInfAddressViewList(MobileParam mobileParams, int cver, out int sver)
         {
             #region instance
@@ -196,7 +203,7 @@ namespace FrameMobile.Domain.Service
             return result;
         }
 
-        [ServiceCache]
+        [ServiceCache(ClientType=RedisClientManagerType.NewsCache)]
         public IList<NewsCategoryView> GetCategoryViewList(MobileParam mobileParams, int cver, out int sver)
         {
             #region instance
@@ -223,7 +230,7 @@ namespace FrameMobile.Domain.Service
             return result;
         }
 
-        [ServiceCache]
+        [ServiceCache(ClientType=RedisClientManagerType.NewsCache)]
         public IList<NewsSubCategoryView> GetSubCategoryViewList(MobileParam mobileParams)
         {
             #region instance
@@ -283,7 +290,7 @@ namespace FrameMobile.Domain.Service
             return restult;
         }
 
-        [ServiceCache]
+        [ServiceCache(ClientType=RedisClientManagerType.NewsCache)]
         public IList<NewsRadarView> GetNewsRadarViewList(MobileParam mobileParams, int cver, out int sver)
         {
             #region SubNewsRadar
@@ -396,7 +403,7 @@ namespace FrameMobile.Domain.Service
             return newsradarlist;
         }
 
-        [ServiceCache]
+        [ServiceCache(ClientType=RedisClientManagerType.NewsCache)]
         public IList<NewsContentView> GetNewsContentViewList(MobileParam mobileParams, long stamp, bool action, string categoryIds, int startnum, int num, out int totalCount)
         {
             return GetTouTiaoContentViewList(mobileParams, categoryIds, stamp, action, startnum, num, out totalCount);

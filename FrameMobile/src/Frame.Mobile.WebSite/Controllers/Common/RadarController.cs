@@ -16,7 +16,7 @@ using NCore;
 namespace Frame.Mobile.WebSite.Controllers
 {
     [UserAuthorize(UserGroupTypes = "News")]
-    public class RadarController : NewsBaseController
+    public class RadarController : CommonBaseController
     {
         #region Prop
 

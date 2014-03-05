@@ -14,7 +14,7 @@ using SubSonic.Query;
 
 namespace FrameMobile.Domain.Service
 {
-    public class AccountService : NewsDbContextService, IAccountService
+    public class AccountService : CommonDbContextService, IAccountService
     {
         #region Prop
 
