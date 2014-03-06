@@ -59,6 +59,8 @@ namespace FrameMobile.Common
 
         public const string NEWS_METHOD_NAME_GETIMAGETYPEBYRESOLUTION = "getimageurltypebyresolution";
 
+        public const string NEWS_METHOD_NAME_GETNEWSRADARVIEWLIST = "getnewsradarviewlist";
+
         public const string WALLPAPER_METHOD_NAME_GETMOBILEPROPERTY = "getmobileproperty";
 
         public const string WALLPAPER_METHOD_NAME_GETWALLPAPERVIEWLIST = "getwallpaperviewlist";

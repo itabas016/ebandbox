@@ -75,6 +75,7 @@ namespace FrameMobile.Domain
                     paramSb = NewsContentCacheKey(paramSb, args, parameters);
                     break;
                 case Const.NEWS_METHOD_NAME_GETIMAGETYPEBYRESOLUTION:
+                case Const.NEWS_METHOD_NAME_GETNEWSRADARVIEWLIST:
                     paramSb = NewsImageTypeCacheKey(paramSb, args, parameters);
                     break;
                 case Const.WALLPAPER_METHOD_NAME_GETMOBILEPROPERTY:
