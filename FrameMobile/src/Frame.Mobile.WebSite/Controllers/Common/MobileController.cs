@@ -255,7 +255,7 @@ namespace Frame.Mobile.WebSite.Controllers
             var exist = dbContextService.Exists<MobileResolution>(x => x.Value == model.Value);
             if (exist)
             {
-                TempData["errorMsg"] = "该品牌已经存在！";
+                TempData["errorMsg"] = "该分辨率已经存在！";
                 return View();
             }
             var ret = dbContextService.Add<MobileResolution>(model);
@@ -291,6 +291,70 @@ namespace Frame.Mobile.WebSite.Controllers
         {
             var ret = dbContextService.Delete<MobileResolution>(resolutionId);
             return RedirectToAction("ResolutionList");
+        }
+
+        #endregion
+
+        #region Channel
+
+        public ActionResult ChannelList()
+        {
+            var channellist = dbContextService.All<MobileChannel>().ToList();
+            ViewData["Channellist"] = channellist;
+            ViewData["TotalCount"] = channellist.Count;
+
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult ChannelAdd()
+        {
+            return View();
+        }
+
+        [AdminAuthorize(UserGroups = "NewsAdministrator,NewsOperator,WallPaperAdministrator,WallPaperOperator")]
+        [HttpPost]
+        public ActionResult ChannelAdd(MobileChannel model)
+        {
+            var exist = dbContextService.Exists<MobileChannel>(x => x.Value == model.Value);
+            if (exist)
+            {
+                TempData["errorMsg"] = "该渠道已经存在！";
+                return View();
+            }
+            var ret = dbContextService.Add<MobileChannel>(model);
+            return RedirectToAction("ChannelList");
+        }
+
+        [HttpGet]
+        public ActionResult ChannelEdit(int ChannelId)
+        {
+            var Channel = dbContextService.Single<MobileChannel>(ChannelId);
+            ViewData["IsUpdate"] = true;
+            return View("ChannelAdd", Channel);
+        }
+
+        [AdminAuthorize(UserGroups = "NewsAdministrator,NewsOperator,WallPaperAdministrator,WallPaperOperator")]
+        [HttpPost]
+        public ActionResult ChannelEdit(MobileChannel model)
+        {
+            var channel = dbContextService.Single<MobileChannel>(model.Id);
+
+            channel.Name = model.Name;
+            channel.Value = channel.Value;
+            channel.Status = model.Status;
+            channel.Comment = model.Comment;
+            channel.CreateDateTime = DateTime.Now;
+
+            dbContextService.Update<MobileChannel>(channel);
+            return RedirectToAction("ChannelList");
+        }
+
+        [AdminAuthorize(UserGroups = "NewsAdministrator,NewsOperator,WallPaperAdministrator,WallPaperOperator")]
+        public ActionResult ChannelDelete(int channelId)
+        {
+            var ret = dbContextService.Delete<MobileChannel>(channelId);
+            return RedirectToAction("ChannelList");
         }
 
         #endregion
