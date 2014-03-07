@@ -81,6 +81,7 @@
     <Compile Include="News\NewsConfig.cs" />
     <Compile Include="News\NewsExtraApp.cs" />
     <Compile Include="News\NewsInfAddress.cs" />
+    <Compile Include="News\NewsExtraRatio.cs" />
     <Compile Include="Radar\RadarCategory.cs" />
     <Compile Include="News\NewsSource.cs" />
     <Compile Include="Account\User.cs" />

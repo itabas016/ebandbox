@@ -524,6 +524,76 @@ namespace Frame.Mobile.WebSite.Controllers
 
         #endregion
 
+        #region NewsExtraRatio
+
+        public ActionResult ExtraRatioList()
+        {
+            var extraratiolist = dbContextService.All<NewsExtraRatio>().ToList();
+            ViewData["extraratiolist"] = extraratiolist;
+            ViewData["TotalCount"] = extraratiolist.Count;
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult ExtraRatioAdd()
+        {
+            return View();
+        }
+
+        [AdminAuthorize(UserGroups = "NewsAdministrator,NewsOperator")]
+        [HttpPost]
+        public ActionResult ExtraRatioAdd(NewsExtraRatio model)
+        {
+            var exist = dbContextService.Exists<NewsExtraRatio>(x => x.ChannelId == model.ChannelId);
+            if (exist)
+            {
+                TempData["errorMsg"] = "该渠道配置已存在！";
+                return View();
+            }
+
+            var ret = dbContextService.Add<NewsExtraRatio>(model);
+            NewsUIService.UpdateServerVersion<NewsExtraRatio>();
+
+            return RedirectToAction("ExtraRatioList");
+        }
+
+        [AdminAuthorize(UserGroups = "NewsAdministrator,NewsOperator")]
+        public ActionResult ExtraRatioDelete(int extraRatioId)
+        {
+            var ret = dbContextService.Delete<NewsExtraRatio>(extraRatioId);
+
+            NewsUIService.UpdateServerVersion<NewsExtraRatio>();
+
+            return RedirectToAction("ExtraRatioList");
+        }
+
+        [HttpGet]
+        public ActionResult ExtraRatioEdit(int extraRatioId)
+        {
+            var extraRatio = dbContextService.Single<NewsExtraRatio>(extraRatioId);
+            ViewData["IsUpdate"] = true;
+            return View("ExtraRatioAdd", extraRatio);
+        }
+
+        [AdminAuthorize(UserGroups = "NewsAdministrator,NewsOperator")]
+        [HttpPost]
+        public ActionResult ExtraRatioEdit(NewsExtraRatio model, HttpPostedFileBase logoFile)
+        {
+            var extraRatio = dbContextService.Single<NewsExtraRatio>(model.Id);
+
+            extraRatio.ChannelId = model.ChannelId;
+            extraRatio.Ratio = model.Ratio;
+            extraRatio.Status = model.Status;
+            extraRatio.CreateDateTime = DateTime.Now;
+
+            var ret = dbContextService.Update<NewsExtraRatio>(extraRatio);
+            NewsUIService.UpdateServerVersion<NewsExtraRatio>();
+
+            return RedirectToAction("ExtraRatioList");
+        }
+
+        #endregion
+
         #region NewsInfAddress
 
         public ActionResult InfAddressList()
