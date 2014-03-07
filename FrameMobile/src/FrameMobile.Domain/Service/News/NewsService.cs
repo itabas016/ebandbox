@@ -159,17 +159,19 @@ namespace FrameMobile.Domain.Service
         private int GetExtraRatioByChannel(MobileParam mobileParams)
         {
             var channel = mobileParams.Channel;
+            var ratio = 0;
 
             if (string.IsNullOrEmpty(channel))
             {
-                return 0;
+                return ratio;
             }
             else
             {
                 var mobilechannel = MobileUIService.GetMobileChannel(channel);
                 var extraratio = dbContextService.Single<NewsExtraRatio>(x => x.Status == 1 && x.ChannelId == mobilechannel.Id).MakeSureNotNull() as NewsExtraRatio;
-                return extraratio.Ratio;
+                ratio = extraratio.Ratio;
             }
+            return ratio;
         }
 
         [ServiceCache(ClientType = RedisClientManagerType.NewsCache)]
