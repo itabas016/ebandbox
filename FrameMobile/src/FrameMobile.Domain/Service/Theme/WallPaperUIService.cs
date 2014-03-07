@@ -399,12 +399,19 @@ namespace FrameMobile.Domain.Service
             if (propertyIds != null && propertyIds.Count > 0 && !string.IsNullOrEmpty(wallpaper.ThumbnailName) && !string.IsNullOrEmpty(wallpaper.OriginalName))
             {
                 var resolutionlist = MobileUIService.GetMobileResolutionList(propertyIds);
+                NLogHelper.WriteTrace(string.Format("the resolutions count: {0}", resolutionlist.Count));
 
                 var thumbnailfilePathPrefix = string.Format("{0}\\", ResourcesFilePathHelper.ThemeThumbnailPath);
                 var originalfilePathPrefix = string.Format("{0}\\", ResourcesFilePathHelper.ThemeOriginalPath);
 
+                NLogHelper.WriteTrace(string.Format("the thumbnail file path prefix: {0}", thumbnailfilePathPrefix));
+                NLogHelper.WriteTrace(string.Format("the original file path prefix: {0}", originalfilePathPrefix));
+
                 var thumbnailFilePath = string.Format("{0}{1}", thumbnailfilePathPrefix, wallpaper.ThumbnailName);
                 var originalFilePath = string.Format("{0}{1}", originalfilePathPrefix, wallpaper.OriginalName);
+
+                NLogHelper.WriteTrace(string.Format("the thumbnail file path: {0}", thumbnailFilePath));
+                NLogHelper.WriteTrace(string.Format("the original file path: {0}", originalFilePath));
                 foreach (var item in resolutionlist)
                 {
                     UploadSignal(thumbnailFilePath, thumbnailfilePathPrefix, item, false);
