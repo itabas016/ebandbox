@@ -30,6 +30,8 @@
                 <td>@Model.Comment</td>
                 <td>@Model.Status</td>
                 <td>
+                    <button type="button" onclick="window.open('UserEdit?userId=@Model.Id','_self');">
+                        修 改</button>
                     <button type="button" onclick="var c=confirm('确定要删除?'); if(c==true){window.open('UserDelete?userId=@Model.Id','_self');}">
                         删 除</button>
                 </td>
