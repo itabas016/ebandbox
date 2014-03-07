@@ -27,6 +27,12 @@ namespace FrameMobile.Domain.Service
             return resolutionlist;
         }
 
+        public IList<MobileChannel> GetMobileChannelList()
+        {
+            var channellist = dbContextService.All<MobileChannel>().ToList();
+            return channellist;
+        }
+
         public IList<MobileProperty> GetMobilePropertyList()
         {
             var propertylist = dbContextService.All<MobileProperty>().ToList();

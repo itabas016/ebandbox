@@ -11,6 +11,7 @@ namespace FrameMobile.Domain.Service
         IList<MobileBrand> GetMobileBrandList();
         IList<MobileHardware> GetMobileHardwareList();
         IList<MobileResolution> GetMobileResolutionList();
+        IList<MobileChannel> GetMobileChannelList();
         IList<MobileProperty> GetMobilePropertyList();
         IList<MobileResolution> GetMobileResolutionList(List<int> mobilePropertyIds);
     }

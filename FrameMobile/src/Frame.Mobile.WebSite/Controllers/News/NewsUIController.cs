@@ -528,6 +528,9 @@ namespace Frame.Mobile.WebSite.Controllers
 
         public ActionResult ExtraRatioList()
         {
+            var channellist = MobileUIService.GetMobileChannelList();
+            ViewData["Channellist"] = channellist.ToList();
+
             var extraratiolist = dbContextService.All<NewsExtraRatio>().ToList();
             ViewData["extraratiolist"] = extraratiolist;
             ViewData["TotalCount"] = extraratiolist.Count;
@@ -537,6 +540,9 @@ namespace Frame.Mobile.WebSite.Controllers
         [HttpGet]
         public ActionResult ExtraRatioAdd()
         {
+            var channellist = MobileUIService.GetMobileChannelList();
+            ViewData["Channellist"] = channellist.GetSelectList();
+
             return View();
         }
 
@@ -570,6 +576,9 @@ namespace Frame.Mobile.WebSite.Controllers
         [HttpGet]
         public ActionResult ExtraRatioEdit(int extraRatioId)
         {
+            var channellist = MobileUIService.GetMobileChannelList();
+            ViewData["Channellist"] = channellist.GetSelectList();
+
             var extraRatio = dbContextService.Single<NewsExtraRatio>(extraRatioId);
             ViewData["IsUpdate"] = true;
             return View("ExtraRatioAdd", extraRatio);
@@ -577,7 +586,7 @@ namespace Frame.Mobile.WebSite.Controllers
 
         [AdminAuthorize(UserGroups = "NewsAdministrator,NewsOperator")]
         [HttpPost]
-        public ActionResult ExtraRatioEdit(NewsExtraRatio model, HttpPostedFileBase logoFile)
+        public ActionResult ExtraRatioEdit(NewsExtraRatio model)
         {
             var extraRatio = dbContextService.Single<NewsExtraRatio>(model.Id);
 

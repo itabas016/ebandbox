@@ -414,7 +414,7 @@
     <Content Include="Views\Radar\RadarElementList.cshtml" />
     <Content Include="Views\Mobile\ChannelAdd.cshtml" />
     <Content Include="Views\Mobile\ChannelList.cshtml" />
-    <Content Include="Views\NewsUI\ExtraRatio.cshtml" />
+    <Content Include="Views\NewsUI\ExtraRatioAdd.cshtml" />
     <Content Include="Views\NewsUI\ExtraRatioList.cshtml" />
   </ItemGroup>
   <ItemGroup>
