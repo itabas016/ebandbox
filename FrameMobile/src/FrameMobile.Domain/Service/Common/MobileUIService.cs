@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using FrameMobile.Model.Mobile;
 using FrameMobile.Domain;
+using FrameMobile.Common;
 
 namespace FrameMobile.Domain.Service
 {
@@ -50,6 +51,20 @@ namespace FrameMobile.Domain.Service
                             Value = r.Value
                         }).GroupBy(x => x.Value).Select(x => x.First());
             return lcds.ToList();
+        }
+
+        [ServiceCache(ClientType = RedisClientManagerType.MixedCache)]
+        public MobileChannel GetMobileChannel(int channelId)
+        {
+            var channel = dbContextService.Single<MobileChannel>(x => x.Id == channelId && x.Status == 1);
+            return channel;
+        }
+
+        [ServiceCache(ClientType = RedisClientManagerType.MixedCache)]
+        public MobileChannel GetMobileChannel(string channelName)
+        {
+            var channel = dbContextService.Single<MobileChannel>(x =>x.Value == channelName.ToLower() && x.Status == 1);
+            return channel;
         }
     }
 }

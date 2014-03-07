@@ -41,6 +41,8 @@ namespace FrameMobile.Web
 
         public int? Total { get; set; }
 
+        public int? Ratio { get; set; }
+
         public List<CustomHeaderItem> CustomResultHeaders
         {
             get
