@@ -36,7 +36,7 @@ namespace FrameMobile.Model
         public const string Key_LBS_MNC = "mnc";
         public const string Key_LBS_LAC = "lac";
         public const string Key_LBS_CELLID = "cid";
-        public const string Key_Channel = "ch";
+        public const string Key_Channel = "td";
         #endregion
 
         public MobileParam()
