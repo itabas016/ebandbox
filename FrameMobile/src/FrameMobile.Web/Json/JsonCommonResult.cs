@@ -25,7 +25,7 @@ namespace FrameMobile.Web
                 this.CustomResultHeaders.Add(new CustomHeaderItem { Key = "sver", Value = this.ServerVerison.ToString(), IsValueType = true });
             }
 
-            if (this.ServerVerison.HasValue)
+            if (this.Ratio.HasValue)
             {
                 this.CustomResultHeaders.Add(new CustomHeaderItem { Key = "ratio", Value = this.Ratio.ToString(), IsValueType = true });
             }
