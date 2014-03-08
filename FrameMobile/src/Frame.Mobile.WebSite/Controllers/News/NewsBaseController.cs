@@ -66,6 +66,23 @@ namespace Frame.Mobile.WebSite.Controllers
             }
         }
 
+        private IMobileUIService _mobileUIService;
+        public IMobileUIService MobileUIService
+        {
+            get
+            {
+                if (_mobileUIService == null)
+                {
+                    _mobileUIService = ObjectFactory.GetInstance<IMobileUIService>();
+                }
+                return _mobileUIService;
+            }
+            set
+            {
+                _mobileUIService = value;
+            }
+        }
+
         private INewsDbContextService _dbContextService;
         public INewsDbContextService dbContextService
         {

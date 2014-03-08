@@ -9,6 +9,7 @@ using FrameMobile.Model.News;
 using StructureMap;
 using NCore;
 using FrameMobile.Model.Radar;
+using FrameMobile.Model.Mobile;
 
 namespace FrameMobile.Domain.Service
 {
@@ -29,8 +30,9 @@ namespace FrameMobile.Domain.Service
         }
 
         [ServiceCache(ClientType = RedisClientManagerType.NewsCache)]
-        public IList<NewsExtraAppView> GetExtraAppViewList(MobileParam mobileParams, int cver, out int sver)
+        public IList<NewsExtraAppView> GetExtraAppViewList(MobileParam mobileParams, int cver, out int sver, out int ratio)
         {
+            ratio = GetExtraRatioByChannel(mobileParams);
             var extraAppList = new NewsExtraApp().ReturnNewsInstance<NewsExtraApp>(cver, out sver);
             return extraAppList.To<IList<NewsExtraAppView>>();
         }
@@ -38,7 +40,8 @@ namespace FrameMobile.Domain.Service
         [ServiceCache(ClientType = RedisClientManagerType.NewsCache)]
         public IList<OlderNewsExtraAppView> GetOlderExtraAppViewList(MobileParam mobileParams, int cver, out int sver)
         {
-            var extraappviewlist = GetExtraAppViewList(mobileParams, cver, out sver);
+            var ratio = 0;
+            var extraappviewlist = GetExtraAppViewList(mobileParams, cver, out sver, out ratio);
             return extraappviewlist.To<IList<OlderNewsExtraAppView>>();
         }
 
@@ -90,11 +93,11 @@ namespace FrameMobile.Domain.Service
         }
 
         [ServiceCache(ClientType = RedisClientManagerType.NewsCache)]
-        public NewsCollectionView GetNewsCollectionView(MobileParam mobileParams, long stamp, int extracver, bool action, string categoryIds, int startnum, int num, out int extrasver, out int totalCount)
+        public NewsCollectionView GetNewsCollectionView(MobileParam mobileParams, long stamp, int extracver, bool action, string categoryIds, int startnum, int num, out int extrasver, out int ratio, out int totalCount)
         {
             var collection = new NewsCollectionView();
 
-            collection.NewsExtraResult = GetNewsExtraResult(mobileParams, extracver, out extrasver);
+            collection.NewsExtraResult = GetNewsExtraResult(mobileParams, extracver, out extrasver, out ratio);
             collection.NewsContentResult = GetNewsContentResult(mobileParams, stamp, action, categoryIds, startnum, num, out totalCount);
             return collection;
         }
@@ -150,6 +153,24 @@ namespace FrameMobile.Domain.Service
             if (width >= Const.NEWS_HD_RESOLUTION_WIDTH)
                 return 2;
             return 1;
+        }
+
+        [ServiceCache(ClientType = RedisClientManagerType.NewsCache)]
+        private int GetExtraRatioByChannel(MobileParam mobileParams)
+        {
+            var channel = mobileParams.Channel;
+            var ratio = ConfigKeys.TYD_AD_EXTRA_RATIO_DEFAULT_VALUE.ConfigValue().ToInt32();
+
+            if (!string.IsNullOrEmpty(channel))
+            {
+                var mobilechannel = MobileUIService.GetMobileChannel(channel);
+                if (mobilechannel != null)
+                {
+                    var extraratio = dbContextService.Single<NewsExtraRatio>(x => x.Status == 1 && x.ChannelId == mobilechannel.Id).MakeSureNotNull() as NewsExtraRatio;
+                    ratio = extraratio.Ratio;
+                }
+            }
+            return ratio;
         }
 
         [ServiceCache(ClientType = RedisClientManagerType.NewsCache)]
@@ -295,15 +316,16 @@ namespace FrameMobile.Domain.Service
             return radarviewlist;
         }
 
-        private NewsExtraResult GetNewsExtraResult(MobileParam mobileParams, int extracver, out int extrasver)
+        private NewsExtraResult GetNewsExtraResult(MobileParam mobileParams, int extracver, out int extrasver, out int ratio)
         {
-            var extralist = GetExtraAppViewList(mobileParams, extracver, out extrasver);
+            var extralist = GetExtraAppViewList(mobileParams, extracver, out extrasver, out ratio);
 
             var result = new NewsExtraResult()
             {
                 NewsExtraList = extralist.ToList(),
                 Count = extralist.Count,
-                ServerViersion = extrasver
+                ServerViersion = extrasver,
+                Ratio = ratio
             };
             return result;
         }

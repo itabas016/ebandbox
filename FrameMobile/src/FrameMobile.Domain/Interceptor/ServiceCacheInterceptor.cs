@@ -78,6 +78,10 @@ namespace FrameMobile.Domain
                 case Const.NEWS_METHOD_NAME_GETNEWSRADARVIEWLIST:
                     paramSb = NewsImageTypeCacheKey(paramSb, args, parameters);
                     break;
+                case Const.NEWS_METHOD_NAME_GETEXTRARATIOBYCHANNEL:
+                case Const.NEWS_METHOD_NAME_GETEXTRAAPPVIEWLIST:
+                    paramSb = NewsMobileChannelCacheKey(paramSb, args, parameters);
+                    break;
                 case Const.WALLPAPER_METHOD_NAME_GETMOBILEPROPERTY:
                 case Const.WALLPAPER_METHOD_NAME_GETWALLPAPERVIEWLIST:
                 case Const.WALLPAPER_METHOD_NAME_GETWALLPAPERVIEWDETAIL:
@@ -114,6 +118,9 @@ namespace FrameMobile.Domain
                         var width = mobileParam.Resolution.GetResolutionWidth();
                         var value = width > Const.NEWS_HD_RESOLUTION_WIDTH ? Const.NEWS_HD_RESOLUTION_WIDTH : Const.NEWS_NORMAL_RESOLUTION_WIDTH;
                         paramSb.AppendFormat("{0}[{1}]", MobileParam.Key_Resolution, value);
+
+                        var channel = mobileParam.Channel.ToLower();
+                        paramSb.AppendFormat("{0}[{1}]", MobileParam.Key_Channel, channel);
                     }
                     continue;
                 }
@@ -140,6 +147,24 @@ namespace FrameMobile.Domain
                     {
                         var width = mobileParam.Resolution.GetResolutionWidth();
                         paramSb.AppendFormat("{0}[{1}]", MobileParam.Key_Resolution, width);
+                    }
+                }
+                paramSb.AppendFormat("{0}[{1}]", parameters[i].Name, args[i] == null ? string.Empty : args[i].ToString());
+            }
+            return paramSb;
+        }
+
+        private StringBuilder NewsMobileChannelCacheKey(StringBuilder paramSb, object[] args, ParameterInfo[] parameters)
+        {
+            for (int i = 0; i < parameters.Length; i++)
+            {
+                if (parameters[i].ParameterType.Equals(typeof(MobileParam)))
+                {
+                    var mobileParam = args[i] as MobileParam;
+                    if (mobileParam != null)
+                    {
+                        var channel = mobileParam.Channel.ToLower();
+                        paramSb.AppendFormat("{0}[{1}]", MobileParam.Key_Channel, channel);
                     }
                 }
                 paramSb.AppendFormat("{0}[{1}]", parameters[i].Name, args[i] == null ? string.Empty : args[i].ToString());

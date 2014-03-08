@@ -36,6 +36,7 @@ namespace FrameMobile.Model
         public const string Key_LBS_MNC = "mnc";
         public const string Key_LBS_LAC = "lac";
         public const string Key_LBS_CELLID = "cid";
+        public const string Key_Channel = "td";
         #endregion
 
         public MobileParam()
@@ -152,6 +153,10 @@ namespace FrameMobile.Model
         /// </summary>
         public virtual string OS { get { return this.GetValue(Key_OS); } }
 
+        /// <summary>
+        /// 手机渠道号
+        /// </summary>
+        public virtual string Channel { get { return this.GetValue(Key_Channel); } }
 
         /// <summary>
         /// 当前网络连接类型
@@ -234,6 +239,7 @@ namespace FrameMobile.Model
                 _realValue[Key_LBS] = this.LBS;
                 _realValue[Key_AppVer] = this.AppVersion;
                 _realValue[Key_OS] = this.OS;
+                _realValue[Key_Channel] = this.Channel;
                 _realValue[Key_NetworkType] = this.NetworkType;
                 _realValue[Key_SoftwareVersion] = this.SoftwareVersion;
                 _realValue[Key_IsTest] = GetStringFromNullableBool(this.IsTest);

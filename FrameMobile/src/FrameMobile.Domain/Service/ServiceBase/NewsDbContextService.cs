@@ -40,5 +40,38 @@ namespace FrameMobile.Domain.Service
                 _dbContextService = value;
             }
         }
+
+        private ICommonDbContextService _dbCommonContextService;
+        public ICommonDbContextService dbCommonContextService
+        {
+            get
+            {
+                if (_dbCommonContextService == null)
+                {
+                    _dbCommonContextService = ObjectFactory.GetInstance<ICommonDbContextService>();
+                }
+                return _dbCommonContextService;
+            }
+            set
+            {
+                _dbCommonContextService = value;
+            }
+        }
+
+        public IMobileUIService MobileUIService
+        {
+            get
+            {
+                if (_mobileUIService == null)
+                    _mobileUIService = ObjectFactory.GetInstance<IMobileUIService>();
+
+                return _mobileUIService;
+            }
+            set
+            {
+                _mobileUIService = value;
+            }
+        }
+        private IMobileUIService _mobileUIService;
     }
 }

@@ -412,6 +412,10 @@
     <Content Include="Views\Radar\RadarCategoryList.cshtml" />
     <Content Include="Views\Radar\RadarElementAdd.cshtml" />
     <Content Include="Views\Radar\RadarElementList.cshtml" />
+    <Content Include="Views\Mobile\ChannelAdd.cshtml" />
+    <Content Include="Views\Mobile\ChannelList.cshtml" />
+    <Content Include="Views\NewsUI\ExtraRatioAdd.cshtml" />
+    <Content Include="Views\NewsUI\ExtraRatioList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -70,6 +70,7 @@
     <Compile Include="Account\InvitationCode.cs" />
     <Compile Include="Account\UserGroup.cs" />
     <Compile Include="Common\Mobile\MobileBrand.cs" />
+    <Compile Include="Common\Mobile\MobileChannel.cs" />
     <Compile Include="Common\Mobile\MobileHardware.cs" />
     <Compile Include="Common\MobileParam.cs" />
     <Compile Include="Common\Mobile\MobileProperty.cs" />
@@ -80,6 +81,7 @@
     <Compile Include="News\NewsConfig.cs" />
     <Compile Include="News\NewsExtraApp.cs" />
     <Compile Include="News\NewsInfAddress.cs" />
+    <Compile Include="News\NewsExtraRatio.cs" />
     <Compile Include="Radar\RadarCategory.cs" />
     <Compile Include="News\NewsSource.cs" />
     <Compile Include="Account\User.cs" />
