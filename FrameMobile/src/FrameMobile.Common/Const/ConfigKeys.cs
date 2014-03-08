@@ -75,6 +75,8 @@ namespace FrameMobile.Common
 
         public const string TYD_NEWS_LOGO_IMAGE_PREFIX = "TYD_News_Logo_Image_Prefix";
 
+        public const string TYD_AD_EXTRA_RATIO_DEFAULT_VALUE = "TYD_AD_Extra_Ratio_Default_Value";
+
         #endregion
 
         #region Theme

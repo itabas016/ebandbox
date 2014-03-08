@@ -159,7 +159,7 @@ namespace FrameMobile.Domain.Service
         private int GetExtraRatioByChannel(MobileParam mobileParams)
         {
             var channel = mobileParams.Channel;
-            var ratio = 0;
+            var ratio = ConfigKeys.TYD_AD_EXTRA_RATIO_DEFAULT_VALUE.ConfigValue().ToInt32();
 
             if (!string.IsNullOrEmpty(channel))
             {
