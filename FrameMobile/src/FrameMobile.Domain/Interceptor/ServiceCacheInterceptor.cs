@@ -79,6 +79,7 @@ namespace FrameMobile.Domain
                     paramSb = NewsImageTypeCacheKey(paramSb, args, parameters);
                     break;
                 case Const.NEWS_METHOD_NAME_GETEXTRARATIOBYCHANNEL:
+                case Const.NEWS_METHOD_NAME_GETEXTRAAPPVIEWLIST:
                     paramSb = NewsMobileChannelCacheKey(paramSb, args, parameters);
                     break;
                 case Const.WALLPAPER_METHOD_NAME_GETMOBILEPROPERTY:

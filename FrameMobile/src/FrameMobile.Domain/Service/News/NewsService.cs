@@ -168,8 +168,11 @@ namespace FrameMobile.Domain.Service
             else
             {
                 var mobilechannel = MobileUIService.GetMobileChannel(channel);
-                var extraratio = dbContextService.Single<NewsExtraRatio>(x => x.Status == 1 && x.ChannelId == mobilechannel.Id).MakeSureNotNull() as NewsExtraRatio;
-                ratio = extraratio.Ratio;
+                if (mobilechannel != null)
+                {
+                    var extraratio = dbContextService.Single<NewsExtraRatio>(x => x.Status == 1 && x.ChannelId == mobilechannel.Id).MakeSureNotNull() as NewsExtraRatio;
+                    ratio = extraratio.Ratio;
+                }
             }
             return ratio;
         }
