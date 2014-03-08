@@ -239,6 +239,7 @@ namespace FrameMobile.Model
                 _realValue[Key_LBS] = this.LBS;
                 _realValue[Key_AppVer] = this.AppVersion;
                 _realValue[Key_OS] = this.OS;
+                _realValue[Key_Channel] = this.Channel;
                 _realValue[Key_NetworkType] = this.NetworkType;
                 _realValue[Key_SoftwareVersion] = this.SoftwareVersion;
                 _realValue[Key_IsTest] = GetStringFromNullableBool(this.IsTest);

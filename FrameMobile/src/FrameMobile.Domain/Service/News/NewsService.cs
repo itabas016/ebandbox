@@ -161,11 +161,7 @@ namespace FrameMobile.Domain.Service
             var channel = mobileParams.Channel;
             var ratio = 0;
 
-            if (string.IsNullOrEmpty(channel))
-            {
-                return ratio;
-            }
-            else
+            if (!string.IsNullOrEmpty(channel))
             {
                 var mobilechannel = MobileUIService.GetMobileChannel(channel);
                 if (mobilechannel != null)

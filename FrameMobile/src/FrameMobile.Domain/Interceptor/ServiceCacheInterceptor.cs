@@ -118,6 +118,9 @@ namespace FrameMobile.Domain
                         var width = mobileParam.Resolution.GetResolutionWidth();
                         var value = width > Const.NEWS_HD_RESOLUTION_WIDTH ? Const.NEWS_HD_RESOLUTION_WIDTH : Const.NEWS_NORMAL_RESOLUTION_WIDTH;
                         paramSb.AppendFormat("{0}[{1}]", MobileParam.Key_Resolution, value);
+
+                        var channel = mobileParam.Channel.ToLower();
+                        paramSb.AppendFormat("{0}[{1}]", MobileParam.Key_Channel, channel);
                     }
                     continue;
                 }
