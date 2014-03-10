@@ -55,6 +55,8 @@ namespace FrameMobile.Common
 
         public const string NEWS_METHOD_NAME_GETNEWSCONTENTVIEWLIST = "getnewscontentviewlist";
 
+        public const string NEWS_METHOD_NAME_GETCONTENTVIEWLIST = "getcontentviewlist";
+
         public const string NEWS_METHOD_NAME_GETNEWSCOLLECTIONVIEW = "getnewscollectionview";
 
         public const string NEWS_METHOD_NAME_GETIMAGETYPEBYRESOLUTION = "getimageurltypebyresolution";

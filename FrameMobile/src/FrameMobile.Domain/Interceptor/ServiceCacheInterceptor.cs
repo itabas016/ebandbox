@@ -71,6 +71,7 @@ namespace FrameMobile.Domain
             switch (methodName)
             {
                 case Const.NEWS_METHOD_NAME_GETNEWSCONTENTVIEWLIST:
+                case Const.NEWS_METHOD_NAME_GETCONTENTVIEWLIST:
                 case Const.NEWS_METHOD_NAME_GETNEWSCOLLECTIONVIEW:
                     paramSb = NewsContentCacheKey(paramSb, args, parameters);
                     break;

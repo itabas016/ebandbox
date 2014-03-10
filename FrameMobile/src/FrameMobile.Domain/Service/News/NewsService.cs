@@ -104,6 +104,7 @@ namespace FrameMobile.Domain.Service
 
         #region Helper
 
+        [ServiceCache(ClientType = RedisClientManagerType.NewsCache)]
         private List<NewsContentView> GetContentViewList(MobileParam mobileParams, List<int> categoryIds, long stamp, bool action)
         {
             var contentViewList = new List<NewsContentView>();
@@ -112,7 +113,7 @@ namespace FrameMobile.Domain.Service
             var imageType = GetImageURLTypeByResolution(mobileParams);
 
             var stampTime = stamp.UTCStamp();
-            var endDateTime = stampTime.AddDays(-2);
+            var endDateTime = stampTime.AddDays(-3);
 
             switch (action)
             {
