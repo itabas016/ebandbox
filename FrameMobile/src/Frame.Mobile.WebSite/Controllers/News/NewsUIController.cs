@@ -558,7 +558,7 @@ namespace Frame.Mobile.WebSite.Controllers
             }
 
             var ret = dbContextService.Add<NewsExtraRatio>(model);
-            NewsUIService.UpdateServerVersion<NewsExtraRatio>();
+            NewsUIService.UpdateServerVersion<NewsExtraApp>();
 
             return RedirectToAction("ExtraRatioList");
         }
@@ -568,7 +568,7 @@ namespace Frame.Mobile.WebSite.Controllers
         {
             var ret = dbContextService.Delete<NewsExtraRatio>(extraRatioId);
 
-            NewsUIService.UpdateServerVersion<NewsExtraRatio>();
+            NewsUIService.UpdateServerVersion<NewsExtraApp>();
 
             return RedirectToAction("ExtraRatioList");
         }
@@ -596,7 +596,7 @@ namespace Frame.Mobile.WebSite.Controllers
             extraRatio.CreateDateTime = DateTime.Now;
 
             var ret = dbContextService.Update<NewsExtraRatio>(extraRatio);
-            NewsUIService.UpdateServerVersion<NewsExtraRatio>();
+            NewsUIService.UpdateServerVersion<NewsExtraApp>();
 
             return RedirectToAction("ExtraRatioList");
         }
