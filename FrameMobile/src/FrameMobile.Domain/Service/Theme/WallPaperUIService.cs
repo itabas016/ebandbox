@@ -186,7 +186,7 @@ namespace FrameMobile.Domain.Service
             return thumbnailNameList.ToList();
         }
 
-        public void WallPaperConfig(WallPaperConfigView model, List<int> categoryIds, List<int> subcategoryIds, List<int> topicIds, List<int> propertyIds)
+        public void WallPaperConfig(WallPaperConfigView model, List<int> categoryIds, List<int> subcategoryIds, List<int> topicIds, List<int> propertyIds, string resourceFilePath)
         {
             var wallpaper = model.WallPaper.MakeSureNotNull() as WallPaper;
 
@@ -209,7 +209,17 @@ namespace FrameMobile.Domain.Service
             UpdateRelateTopic(outtopicIds, wallpaper.Id);
             UpdateRelateMobileProperty(outpropertyIds, wallpaper.Id);
 
-            Upload(wallpaper, inpropertyIds);
+            LogHelper.Debug(string.Format("the wallpaper thumbnail name: {0}", wallpaper.ThumbnailName));
+            LogHelper.Debug(string.Format("the wallpaper orignail name: {0}", wallpaper.OriginalName));
+            LogHelper.Debug(string.Format("inpropertyIds count: {0}", inpropertyIds.Count));
+            try
+            {
+                Upload(wallpaper, inpropertyIds, resourceFilePath);
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Debug(ex.Message);
+            }
         }
 
         #region Helper
@@ -394,24 +404,24 @@ namespace FrameMobile.Domain.Service
 
         #endregion
 
-        public void Upload(WallPaper wallpaper, List<int> propertyIds)
+        public void Upload(WallPaper wallpaper, List<int> propertyIds, string resourceFilePath)
         {
             if (propertyIds != null && propertyIds.Count > 0 && !string.IsNullOrEmpty(wallpaper.ThumbnailName) && !string.IsNullOrEmpty(wallpaper.OriginalName))
             {
                 var resolutionlist = MobileUIService.GetMobileResolutionList(propertyIds);
-                NLogHelper.WriteTrace(string.Format("the resolutions count: {0}", resolutionlist.Count));
+                LogHelper.Debug(string.Format("the resolutions count: {0}", resolutionlist.Count));
 
-                var thumbnailfilePathPrefix = string.Format("{0}\\", ResourcesFilePathHelper.ThemeThumbnailPath);
-                var originalfilePathPrefix = string.Format("{0}\\", ResourcesFilePathHelper.ThemeOriginalPath);
+                var thumbnailfilePathPrefix = string.Format("{0}{1}\\", resourceFilePath, Const.THEME_THUMBNAILS_FOLDER_NAME);
+                var originalfilePathPrefix = string.Format("{0}{1}\\", resourceFilePath, Const.THEME_ORIGINALS_FOLDER_NAME);
 
-                NLogHelper.WriteTrace(string.Format("the thumbnail file path prefix: {0}", thumbnailfilePathPrefix));
-                NLogHelper.WriteTrace(string.Format("the original file path prefix: {0}", originalfilePathPrefix));
+                LogHelper.Debug(string.Format("the thumbnail file path prefix: {0}", thumbnailfilePathPrefix));
+                LogHelper.Debug(string.Format("the original file path prefix: {0}", originalfilePathPrefix));
 
                 var thumbnailFilePath = string.Format("{0}{1}", thumbnailfilePathPrefix, wallpaper.ThumbnailName);
                 var originalFilePath = string.Format("{0}{1}", originalfilePathPrefix, wallpaper.OriginalName);
 
-                NLogHelper.WriteTrace(string.Format("the thumbnail file path: {0}", thumbnailFilePath));
-                NLogHelper.WriteTrace(string.Format("the original file path: {0}", originalFilePath));
+                LogHelper.Debug(string.Format("the thumbnail file path: {0}", thumbnailFilePath));
+                LogHelper.Debug(string.Format("the original file path: {0}", originalFilePath));
                 foreach (var item in resolutionlist)
                 {
                     UploadSignal(thumbnailFilePath, thumbnailfilePathPrefix, item, false);
@@ -492,5 +502,7 @@ namespace FrameMobile.Domain.Service
             }
             return prefix;
         }
+
+        
     }
 }
