@@ -3,6 +3,8 @@
 @{
     ViewBag.Title = "用户管理";
     Layout = "~/Views/Shared/_AccountLayout.cshtml";
+
+    bool isAdmin = (bool)ViewData["IsAdmin"];
 }
 
 <div class="content">
@@ -11,7 +13,10 @@
             <tr>
                 <th>用户名</th>
                 <th>邮箱</th>
-                <th>用户组</th>
+                @if (isAdmin)
+                {
+                    <th>用户组</th>
+                }
                 <th>密保问题</th>
                 <th>密保答案</th>
                 <th>备注</th>
@@ -24,7 +29,10 @@
             <tr>
                 <td><strong>@Model.Name</strong></td>
                 <td>@Model.Email</td>
-                <td>@Model.UserGroupIds</td>
+                @if (isAdmin)
+                {
+                    <td>@Model.UserGroupIds</td>
+                }
                 <td>@Model.SecurityQuestion</td>
                 <td>@Model.SecurityAnswer</td>
                 <td>@Model.Comment</td>
