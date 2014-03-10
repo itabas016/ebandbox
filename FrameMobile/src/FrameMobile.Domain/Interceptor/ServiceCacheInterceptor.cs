@@ -115,11 +115,11 @@ namespace FrameMobile.Domain
                     var mobileParam = args[i] as MobileParam;
                     if (mobileParam != null)
                     {
-                        var width = mobileParam.Resolution.GetResolutionWidth();
+                        var width = mobileParam.Resolution.DefaultValue().GetResolutionWidth();
                         var value = width > Const.NEWS_HD_RESOLUTION_WIDTH ? Const.NEWS_HD_RESOLUTION_WIDTH : Const.NEWS_NORMAL_RESOLUTION_WIDTH;
                         paramSb.AppendFormat("{0}[{1}]", MobileParam.Key_Resolution, value);
 
-                        var channel = mobileParam.Channel.ToLower();
+                        var channel = mobileParam.Channel.DefaultValue().ToLower();
                         paramSb.AppendFormat("{0}[{1}]", MobileParam.Key_Channel, channel);
                     }
                     continue;
@@ -145,7 +145,7 @@ namespace FrameMobile.Domain
                     var mobileParam = args[i] as MobileParam;
                     if (mobileParam != null)
                     {
-                        var width = mobileParam.Resolution.GetResolutionWidth();
+                        var width = mobileParam.Resolution.DefaultValue().GetResolutionWidth();
                         paramSb.AppendFormat("{0}[{1}]", MobileParam.Key_Resolution, width);
                     }
                 }
@@ -163,7 +163,7 @@ namespace FrameMobile.Domain
                     var mobileParam = args[i] as MobileParam;
                     if (mobileParam != null)
                     {
-                        var channel = mobileParam.Channel.ToLower();
+                        var channel = mobileParam.Channel.DefaultValue().ToLower();
                         paramSb.AppendFormat("{0}[{1}]", MobileParam.Key_Channel, channel);
                     }
                 }
@@ -181,8 +181,8 @@ namespace FrameMobile.Domain
                     var mobileParam = args[i] as MobileParam;
                     if (mobileParam != null)
                     {
-                        var brand = mobileParam.Manufacturer.ToLower();
-                        var resolution = mobileParam.Resolution.ToLower();
+                        var brand = mobileParam.Manufacturer.DefaultValue().ToLower();
+                        var resolution = mobileParam.Resolution.DefaultValue().ToLower();
                         paramSb.AppendFormat("{0}[{1}]", MobileParam.Key_Manufacturer, brand);
                         paramSb.AppendFormat("{0}[{1}]", MobileParam.Key_Resolution, resolution);
                     }
