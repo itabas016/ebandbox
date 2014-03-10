@@ -70,14 +70,10 @@ namespace FrameMobile.Core
 
         public static string Resized(string originalFilePath, string destFilePathPrefix, int width, int height, string originalPixel)
         {
-            LogHelper.Debug(string.Format("the original file path: {0}", originalFilePath));
-            LogHelper.Debug(string.Format("the dest file path: {0}", destFilePathPrefix));
             FileInfo fileInfo = new FileInfo(originalFilePath);
-            LogHelper.Debug(string.Format("the original file name: {0}", fileInfo.Name));
             var bitmap = new Bitmap(originalFilePath);
             if (bitmap != null)
             {
-                NLogHelper.WriteTrace(string.Format("the original image file width: {0}", bitmap.Width));
                 if (bitmap.Width > width)
                 {
                     var w = width;
@@ -91,14 +87,12 @@ namespace FrameMobile.Core
                         {
                             var destFileName = string.Format("{0}{1}_{2}", destFilePathPrefix, originalPixel, fileInfo.Name);
                             destBitMap.Save(destFileName);
-                            LogHelper.Debug(string.Format("the dest file name: {0}", destFileName));
                             return destFileName;
                         }
                         else
                         {
                             var destFileName = string.Format("{0}{1}x{2}_{3}", destFilePathPrefix, width, height, fileInfo.Name);
                             destBitMap.Save(destFileName);
-                            LogHelper.Debug(string.Format("the dest file name: {0}", destFileName));
                             return destFileName;
                         }
                     }
@@ -109,14 +103,12 @@ namespace FrameMobile.Core
                     {
                         var destFileName = string.Format("{0}{1}_{2}", destFilePathPrefix, originalPixel, fileInfo.Name);
                         fileInfo.CopyTo(destFileName, true);
-                        LogHelper.Debug(string.Format("the dest file name: {0}", destFileName));
                         return destFileName;
                     }
                     else
                     {
                         var destFileName = string.Format("{0}{1}x{2}_{3}", destFilePathPrefix, width, height, fileInfo.Name);
                         fileInfo.CopyTo(destFileName, true);
-                        LogHelper.Debug(string.Format("the dest file name: {0}", destFileName));
                         return destFileName;
                     }
                 }
