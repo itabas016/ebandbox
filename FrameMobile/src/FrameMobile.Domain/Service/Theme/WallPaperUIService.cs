@@ -186,7 +186,7 @@ namespace FrameMobile.Domain.Service
             return thumbnailNameList.ToList();
         }
 
-        public void WallPaperConfig(WallPaperConfigView model, List<int> categoryIds, List<int> subcategoryIds, List<int> topicIds, List<int> propertyIds)
+        public void WallPaperConfig(WallPaperConfigView model, List<int> categoryIds, List<int> subcategoryIds, List<int> topicIds, List<int> propertyIds, string resourceFilePath)
         {
             var wallpaper = model.WallPaper.MakeSureNotNull() as WallPaper;
 
@@ -209,7 +209,14 @@ namespace FrameMobile.Domain.Service
             UpdateRelateTopic(outtopicIds, wallpaper.Id);
             UpdateRelateMobileProperty(outpropertyIds, wallpaper.Id);
 
-            Upload(wallpaper, inpropertyIds);
+            try
+            {
+                Upload(wallpaper, inpropertyIds, resourceFilePath);
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Error(ex.Message);
+            }
         }
 
         #region Helper
@@ -394,17 +401,18 @@ namespace FrameMobile.Domain.Service
 
         #endregion
 
-        public void Upload(WallPaper wallpaper, List<int> propertyIds)
+        public void Upload(WallPaper wallpaper, List<int> propertyIds, string resourceFilePath)
         {
             if (propertyIds != null && propertyIds.Count > 0 && !string.IsNullOrEmpty(wallpaper.ThumbnailName) && !string.IsNullOrEmpty(wallpaper.OriginalName))
             {
                 var resolutionlist = MobileUIService.GetMobileResolutionList(propertyIds);
 
-                var thumbnailfilePathPrefix = string.Format("{0}\\", ResourcesFilePathHelper.ThemeThumbnailPath);
-                var originalfilePathPrefix = string.Format("{0}\\", ResourcesFilePathHelper.ThemeOriginalPath);
+                var thumbnailfilePathPrefix = string.Format("{0}{1}\\", resourceFilePath, Const.THEME_THUMBNAILS_FOLDER_NAME);
+                var originalfilePathPrefix = string.Format("{0}{1}\\", resourceFilePath, Const.THEME_ORIGINALS_FOLDER_NAME);
 
                 var thumbnailFilePath = string.Format("{0}{1}", thumbnailfilePathPrefix, wallpaper.ThumbnailName);
                 var originalFilePath = string.Format("{0}{1}", originalfilePathPrefix, wallpaper.OriginalName);
+
                 foreach (var item in resolutionlist)
                 {
                     UploadSignal(thumbnailFilePath, thumbnailfilePathPrefix, item, false);

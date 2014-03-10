@@ -464,7 +464,8 @@ namespace Frame.Mobile.WebSite.Controllers
             var topicIds = parameters["topic"].GetIds();
             var propertyIds = parameters["property"].GetIds();
 
-            WallPaperUIService.WallPaperConfig(model, categoryIds, subcategoryIds, topicIds, propertyIds);
+            var resourceFilePath = GetResourcePathThemeBase();
+            WallPaperUIService.WallPaperConfig(model, categoryIds, subcategoryIds, topicIds, propertyIds, resourceFilePath);
 
             return RedirectToAction("WallPaperList");
         }
