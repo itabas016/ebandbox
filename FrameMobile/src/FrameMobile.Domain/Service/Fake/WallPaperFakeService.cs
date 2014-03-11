@@ -11,11 +11,6 @@ namespace FrameMobile.Domain.Service
 {
     public class WallPaperFakeService : ThemeDbContextService, IWallPaperService
     {
-        public MobileProperty GetMobileProperty(MobileParam mobileParams)
-        {
-            return null;
-        }
-
         [ServiceCache(ClientType = RedisClientManagerType.ThemeCache)]
         public IList<ThemeConfigView> GetConfigViewList(MobileParam mobileParams, int type)
         {
