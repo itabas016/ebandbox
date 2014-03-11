@@ -117,25 +117,29 @@
                     <input type="checkbox" name="property" value="@property.Value" @ischecked />@property.Text
                 }
                 <br />
-                <strong>适配的缩略图文件: </strong>
-                <input type="file" name="thumbnailfile" id="thumbnailfile" multiple="multiple" class="multi" accept="bmp|gif|jpg|jpeg|png|tiff|abm" />
-                <br />
-                @foreach (var s in Model.ThumbnailNames)
+                @if (Model.ThumbnailNames.Count > 0)
                 {
-                    <div>
+                    <strong>适配的缩略图文件: </strong>
+                    <br />
+                    @foreach (var s in Model.ThumbnailNames)
+                    {
+<div>
                         <a href="@string.Format("{0}{1}", thumbnailImagePrefix, s)" target="_blank" style="padding-left: 20px" >@s</a>
                         <br />
                     </div>
+                    }
                 }
-                <strong>适配的原图文件: </strong>
-                <input type="file" name="originalfile" id="originalfile" multiple="multiple" class="multi" accept="bmp|gif|jpg|jpeg|png|tiff|abm" />
-                <br />
-                @foreach (var s in Model.OriginalNames)
+                @if (Model.OriginalNames.Count > 0)
                 {
-                    <div>
+                    <strong>适配的原图文件: </strong>
+                    <br />
+                    @foreach (var s in Model.OriginalNames)
+                    {
+<div>
                         <a href="@string.Format("{0}{1}", originalImagePrefix, s)" target="_blank" style="padding-left: 20px" >@s</a>
                         <br />
                     </div>
+                    }
                 }
                 <div hidden="hidden">
                     @using (Html.BeginForm("Preview", "WallPaperUI", FormMethod.Post))
@@ -152,8 +156,8 @@
                                 ++q;
                             }
                         </div>
-                        @*<input type="submit" name="Preview" value="Preview" />*@
-                        @*<button type="button" name="thumbnail" onclick="window.open('Preview','_blank');">预览</button>*@
+@*<input type="submit" name="Preview" value="Preview" />*@
+@*<button type="button" name="thumbnail" onclick="window.open('Preview','_blank');">预览</button>*@
                         <br />
                     }
                 </div>
