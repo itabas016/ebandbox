@@ -508,5 +508,11 @@ namespace FrameMobile.Domain.Service
         }
 
         #endregion
+
+
+        public IList<NewsContentView> GetContentViewList(MobileParam mobileParams, List<int> categoryIds, long stamp, bool action)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -15,6 +15,22 @@ namespace FrameMobile.Domain.Service
 {
     public class NewsService : NewsDbContextService, INewsService
     {
+        public INewsServiceHelper NewsServiceHelper
+        {
+            get
+            {
+                if (_newsServiceHelper == null)
+                    _newsServiceHelper = ObjectFactory.GetInstance<INewsServiceHelper>();
+
+                return _newsServiceHelper;
+            }
+            set
+            {
+                _newsServiceHelper = value;
+            }
+        }
+        private INewsServiceHelper _newsServiceHelper;
+
         [ServiceCache(ClientType = RedisClientManagerType.NewsCache)]
         public IList<NewsConfigView> GetConfigViewList(MobileParam mobileParams)
         {
@@ -32,7 +48,7 @@ namespace FrameMobile.Domain.Service
         [ServiceCache(ClientType = RedisClientManagerType.NewsCache)]
         public IList<NewsExtraAppView> GetExtraAppViewList(MobileParam mobileParams, int cver, out int sver, out int ratio)
         {
-            ratio = GetExtraRatioByChannel(mobileParams);
+            ratio = NewsServiceHelper.GetExtraRatioByChannel(mobileParams);
             var extraAppList = new NewsExtraApp().ReturnNewsInstance<NewsExtraApp>(cver, out sver);
             return extraAppList.To<IList<NewsExtraAppView>>();
         }
@@ -69,7 +85,7 @@ namespace FrameMobile.Domain.Service
         [ServiceCache(ClientType = RedisClientManagerType.NewsCache)]
         public IList<NewsRadarView> GetNewsRadarViewList(MobileParam mobileParams, int cver, out int sver)
         {
-            var imageType = GetImageURLTypeByResolution(mobileParams);
+            var imageType = NewsServiceHelper.GetImageURLTypeByResolution(mobileParams);
 
             var radarlist = new RadarCategory().ReturnRadarInstance<RadarCategory>(cver, out sver);
             var subradarlist = new RadarElement().ReturnRadarInstance<RadarElement>(cver, out sver);
@@ -85,7 +101,7 @@ namespace FrameMobile.Domain.Service
             totalCount = 0;
             var categoryIdList = categoryIds.Split(';', '；').ToList().ToInt32List();
 
-            contentlist = GetContentViewList(mobileParams, categoryIdList, stamp, action);
+            contentlist = GetContentViewList(mobileParams, categoryIdList, stamp, action).ToList();
 
             totalCount = contentlist.Count;
 
@@ -97,20 +113,19 @@ namespace FrameMobile.Domain.Service
         {
             var collection = new NewsCollectionView();
 
-            collection.NewsExtraResult = GetNewsExtraResult(mobileParams, extracver, out extrasver, out ratio);
-            collection.NewsContentResult = GetNewsContentResult(mobileParams, stamp, action, categoryIds, startnum, num, out totalCount);
+            collection.NewsExtraResult = NewsServiceHelper.GetNewsExtraResult(mobileParams, extracver, out extrasver, out ratio);
+            collection.NewsContentResult = NewsServiceHelper.GetNewsContentResult(mobileParams, stamp, action, categoryIds, startnum, num, out totalCount);
             return collection;
         }
 
         #region Helper
 
-        [ServiceCache(ClientType = RedisClientManagerType.NewsCache)]
-        private List<NewsContentView> GetContentViewList(MobileParam mobileParams, List<int> categoryIds, long stamp, bool action)
+        public IList<NewsContentView> GetContentViewList(MobileParam mobileParams, List<int> categoryIds, long stamp, bool action)
         {
             var contentViewList = new List<NewsContentView>();
 
-            var extraAppList = GetNewsExtraAppList();
-            var imageType = GetImageURLTypeByResolution(mobileParams);
+            var extraAppList = NewsServiceHelper.GetNewsExtraAppList().ToList();
+            var imageType = NewsServiceHelper.GetImageURLTypeByResolution(mobileParams);
 
             var stampTime = stamp.UTCStamp();
             var endDateTime = stampTime.AddDays(-3);
@@ -118,138 +133,32 @@ namespace FrameMobile.Domain.Service
             switch (action)
             {
                 case false:
-                    contentViewList = GetOldestNewsContentView(categoryIds, extraAppList, imageType, endDateTime, stampTime).ToList();
+                    contentViewList = NewsServiceHelper.GetOldestNewsContentView(categoryIds, extraAppList, imageType, endDateTime, stampTime).ToList();
                     break;
                 default:
-                    contentViewList = GetLatestNewsContentView(categoryIds, extraAppList, imageType, stampTime).ToList();
+                    contentViewList = NewsServiceHelper.GetLatestNewsContentView(categoryIds, extraAppList, imageType, stampTime).ToList();
                     break;
             }
 
-            var localContentList = GetLocalContentViewList(extraAppList, imageType);
+            var localContentList = NewsServiceHelper.GetLocalContentViewList(extraAppList, imageType);
 
             contentViewList = InsertRange(contentViewList, localContentList);
 
             return contentViewList;
         }
 
-        [ServiceCache(ClientType = RedisClientManagerType.NewsCache)]
-        private List<NewsExtraApp> GetNewsExtraAppList()
+        private IList<NewsRadarView> ConvertByRadar(int imageType, IList<RadarCategory> radarlist, IList<RadarElement> subradarlist)
         {
-            var extraAppList = dbContextService.Find<NewsExtraApp>(x => x.Status == 1);
+            var radarviewlist = radarlist.To<IList<NewsRadarView>>();
+            var subradarviewlist = subradarlist.To<IList<NewsRadarElementView>>();
 
-            return extraAppList.ToList();
-        }
-
-        [ServiceCache(ClientType = RedisClientManagerType.NewsCache)]
-        private int GetImageURLTypeByResolution(MobileParam mobileParams)
-        {
-            var resolution = mobileParams.Resolution;
-
-            if (string.IsNullOrEmpty(resolution))
+            foreach (var item in radarviewlist)
             {
-                return 0;
+                var radar = radarlist.Where(x => x.Id == item.Id).SingleOrDefault();
+                item.LogoUrl = imageType == 1 ? radar.NormalLogoUrl : radar.HDLogoUrl;
+                item.NewsRadarElementList = subradarviewlist.Where(x => x.RadarCategoryIds.Contains(item.Id)).ToList();
             }
-            var width = resolution.GetResolutionWidth();
-
-            if (width >= Const.NEWS_HD_RESOLUTION_WIDTH)
-                return 2;
-            return 1;
-        }
-
-        [ServiceCache(ClientType = RedisClientManagerType.NewsCache)]
-        private int GetExtraRatioByChannel(MobileParam mobileParams)
-        {
-            var channel = mobileParams.Channel;
-            var ratio = ConfigKeys.TYD_AD_EXTRA_RATIO_DEFAULT_VALUE.ConfigValue().ToInt32();
-
-            if (!string.IsNullOrEmpty(channel))
-            {
-                var mobilechannel = MobileUIService.GetMobileChannel(channel);
-                if (mobilechannel != null)
-                {
-                    var extraratio = dbContextService.Single<NewsExtraRatio>(x => x.Status == 1 && x.ChannelId == mobilechannel.Id).MakeSureNotNull() as NewsExtraRatio;
-                    ratio = extraratio.Ratio;
-                }
-            }
-            return ratio;
-        }
-
-        [ServiceCache(ClientType = RedisClientManagerType.NewsCache)]
-        private IEnumerable<NewsContentView> GetLocalContentViewList(List<NewsExtraApp> extraAppList, int imageType)
-        {
-            var contentlist = (from l in
-                                   dbContextService.Find<NewsContent>(x => x.Rating > 0 && x.Status == 1)
-                               orderby l.PublishTime descending, l.Rating descending
-                               select new NewsContentView
-                               {
-                                   Id = l.Id,
-                                   NewsId = l.NewsId,
-                                   CategoryId = l.CategoryId,
-                                   SubCategoryId = l.SubCategoryId,
-                                   Site = l.Site,
-                                   Title = l.Title,
-                                   Summary = l.Summary,
-                                   Content = l.Content == null ? string.Empty : l.Content,
-                                   AppOpenURL = l.AppOpenURL,
-                                   WAPURL = l.WAPURL,
-                                   PublishTime = l.PublishTime,
-                                   Stamp = l.PublishTime.UnixStamp(),
-                                   ExtraAppId = l.ExtraAppId != 0 ? l.ExtraAppId : extraAppList.RandomInt(),
-                                   ImageURL = l.NormalURL == null ? string.Empty : GetImageURLByType(l, imageType)
-                               });
-            return contentlist;
-        }
-
-        private IEnumerable<NewsContentView> GetOldestNewsContentView(List<int> categoryIds, List<NewsExtraApp> extraAppList, int imageType, DateTime endDateTime, DateTime stampTime)
-        {
-            var categorycontentlist = (from l in
-                                           dbContextService.Find<NewsContent>(x => x.Status == 1 && x.PublishTime >= endDateTime && x.PublishTime <= stampTime)
-                                       where categoryIds.Contains(l.CategoryId)
-                                       orderby l.PublishTime descending
-                                       select new NewsContentView
-                                       {
-                                           Id = l.Id,
-                                           NewsId = l.NewsId,
-                                           CategoryId = l.CategoryId,
-                                           SubCategoryId = l.SubCategoryId,
-                                           Site = l.Site,
-                                           Title = l.Title,
-                                           Summary = l.Summary,
-                                           Content = l.Content == null ? string.Empty : l.Content,
-                                           AppOpenURL = l.AppOpenURL,
-                                           WAPURL = l.WAPURL,
-                                           PublishTime = l.PublishTime,
-                                           Stamp = l.PublishTime.UnixStamp(),
-                                           ExtraAppId = l.ExtraAppId != 0 ? l.ExtraAppId : extraAppList.RandomInt(),
-                                           ImageURL = l.NormalURL == null ? string.Empty : GetImageURLByType(l, imageType)
-                                       });
-            return categorycontentlist;
-        }
-
-        private IEnumerable<NewsContentView> GetLatestNewsContentView(List<int> categoryIds, List<NewsExtraApp> extraAppList, int imageType, DateTime stampTime)
-        {
-            var categorycontentlist = (from l in
-                                           dbContextService.Find<NewsContent>(x => x.Status == 1 && x.PublishTime >= stampTime)
-                                       where categoryIds.Contains(l.CategoryId)
-                                       orderby l.PublishTime ascending
-                                       select new NewsContentView
-                                       {
-                                           Id = l.Id,
-                                           NewsId = l.NewsId,
-                                           CategoryId = l.CategoryId,
-                                           SubCategoryId = l.SubCategoryId,
-                                           Site = l.Site,
-                                           Title = l.Title,
-                                           Summary = l.Summary,
-                                           Content = l.Content == null ? string.Empty : l.Content,
-                                           AppOpenURL = l.AppOpenURL,
-                                           WAPURL = l.WAPURL,
-                                           PublishTime = l.PublishTime,
-                                           Stamp = l.PublishTime.UnixStamp(),
-                                           ExtraAppId = l.ExtraAppId != 0 ? l.ExtraAppId : extraAppList.RandomInt(),
-                                           ImageURL = l.NormalURL == null ? string.Empty : GetImageURLByType(l, imageType)
-                                       });
-            return categorycontentlist;
+            return radarviewlist;
         }
 
         private List<NewsContentView> InsertRange(List<NewsContentView> contentViewList, IEnumerable<NewsContentView> localContentList)
@@ -287,61 +196,6 @@ namespace FrameMobile.Domain.Service
                 i++;
             }
             return contentViewList;
-        }
-
-        private string GetImageURLByType(NewsContent content, int imageType)
-        {
-            switch (imageType)
-            {
-                case 0:
-                    return string.Empty;
-                case 1:
-                    return content.NormalURL;
-                case 2:
-                    return content.HDURL;
-            }
-            return string.Empty;
-        }
-
-        private IList<NewsRadarView> ConvertByRadar(int imageType, IList<RadarCategory> radarlist, IList<RadarElement> subradarlist)
-        {
-            var radarviewlist = radarlist.To<IList<NewsRadarView>>();
-            var subradarviewlist = subradarlist.To<IList<NewsRadarElementView>>();
-
-            foreach (var item in radarviewlist)
-            {
-                var radar = radarlist.Where(x => x.Id == item.Id).SingleOrDefault();
-                item.LogoUrl = imageType == 1 ? radar.NormalLogoUrl : radar.HDLogoUrl;
-                item.NewsRadarElementList = subradarviewlist.Where(x => x.RadarCategoryIds.Contains(item.Id)).ToList();
-            }
-            return radarviewlist;
-        }
-
-        private NewsExtraResult GetNewsExtraResult(MobileParam mobileParams, int extracver, out int extrasver, out int ratio)
-        {
-            var extralist = GetExtraAppViewList(mobileParams, extracver, out extrasver, out ratio);
-
-            var result = new NewsExtraResult()
-            {
-                NewsExtraList = extralist.ToList(),
-                Count = extralist.Count,
-                ServerViersion = extrasver,
-                Ratio = ratio
-            };
-            return result;
-        }
-
-        private NewsContentResult GetNewsContentResult(MobileParam mobileParams, long stamp, bool action, string categoryIds, int startnum, int num, out int totalCount)
-        {
-            var contentlist = GetNewsContentViewList(mobileParams, stamp, action, categoryIds, startnum, num, out totalCount);
-
-            var result = new NewsContentResult()
-            {
-                NewsContentList = contentlist.ToList(),
-                Total = totalCount,
-                Count = contentlist.Count
-            };
-            return result;
         }
 
         #endregion

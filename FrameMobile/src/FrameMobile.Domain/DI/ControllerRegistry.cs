@@ -16,6 +16,8 @@ namespace FrameMobile.Domain
         {
             RegistyCommonService();
 
+            RegistyHelperService();
+
             RegistyNewsService();
 
             RegistyThemeService();
@@ -34,6 +36,11 @@ namespace FrameMobile.Domain
             For<ICookieService>().Use<CookieService>();
             For<IMobileUIService>().Use<MobileUIService>();
             For<IRadarService>().Use<RadarService>();
+        }
+
+        private void RegistyHelperService()
+        {
+            For<INewsServiceHelper>().Use<NewsServiceHelper>();
         }
 
         private void RegistyNewsService()
