@@ -65,7 +65,7 @@ namespace QihooAppStoreCap
 
         public void DownloadResources<T>(T appItem) where T : QihooAppStoreApp
         {
-            if (appItem != null)
+            if (appItem != null && string.IsNullOrEmpty(appItem.IconURL) && string.IsNullOrEmpty(appItem.ScreenHotsURL) && string.IsNullOrEmpty(appItem.DownloadURL))
             {
                 MakeSureDIRExist(APK_Folder_Base);
                 MakeSureDIRExist(Screenshots_Folder_Base);
@@ -87,7 +87,7 @@ namespace QihooAppStoreCap
         public void DownloadResources<T>(T appItem, out string appfileName) where T : QihooAppStoreApp
         {
             appfileName = string.Empty;
-            if (appItem != null)
+            if (appItem != null && string.IsNullOrEmpty(appItem.IconURL) && string.IsNullOrEmpty(appItem.ScreenHotsURL) && string.IsNullOrEmpty(appItem.DownloadURL))
             {
                 MakeSureDIRExist(APK_Folder_Base);
                 MakeSureDIRExist(Screenshots_Folder_Base);
