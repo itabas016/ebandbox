@@ -33,7 +33,7 @@ namespace FrameMobile.Domain.Service
                 totalCount = latestwallpaperlistbytopic.Count();
                 return latestwallpaperlistbytopic.ToList();
             }
-            if (categoryId == 0 && topicId == 0)
+            if (categoryId != 0)
             {
                 var latestwallpaperlistbycategory = from p in dbContextService.Find<WallPaper>(x => x.Status == 1 && x.ScreenType == screenType)
                                                     join pc in GetWallPaperRelateCategoryList(categoryId) on p.Id equals pc.WallPaperId
@@ -76,7 +76,7 @@ namespace FrameMobile.Domain.Service
                 totalCount = hottestwallpaperlistbytopic.Count();
                 return hottestwallpaperlistbytopic.ToList();
             }
-            if (categoryId == 0 && topicId == 0)
+            if (categoryId != 0)
             {
                 var hottestwallpaperlistbycategory = from p in dbContextService.Find<WallPaper>(x => x.Status == 1 && x.ScreenType == screenType)
                                                      join pc in GetWallPaperRelateCategoryList(categoryId) on p.Id equals pc.WallPaperId
