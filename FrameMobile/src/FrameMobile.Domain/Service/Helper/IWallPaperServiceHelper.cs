@@ -12,9 +12,5 @@ namespace FrameMobile.Domain.Service
     {
         IList<WallPaperView> GetLatestWallPaperViewList(MobileParam mobileParams, MobileProperty property, int screenType, int categoryId, int topicId, int subcategoryId, out int totalCount);
         IList<WallPaperView> GetHottestWallPaperViewList(MobileParam mobileParams, MobileProperty property, int screenType, int categoryId, int topicId, int subcategoryId, out int totalCount);
-        IList<WallPaperRelateCategory> GetWallPaperRelateCategoryList(int categoryId);
-        IList<WallPaperRelateSubCategory> GetWallPaperRelateSubCategoryList(int subcategoryId);
-        IList<WallPaperRelateTopic> GetWallPaperRelateTopicList(int topicId);
-        IList<WallPaperRelateMobileProperty> GetWallPaperRelateMobilePropertyList(int propertyId);
     }
 }

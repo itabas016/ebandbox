@@ -63,7 +63,7 @@ namespace FrameMobile.Domain
             For<IThemeRedisCacheService>().Use<ThemeRedisCacheService>();
 
 #if DEBUG
-            For<IWallPaperService>().Use<WallPaperService>();
+            For<IWallPaperService>().Use<WallPaperFakeService>();
 #else
             For<IWallPaperService>().Use<WallPaperService>();
 #endif
