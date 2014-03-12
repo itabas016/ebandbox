@@ -10,7 +10,7 @@ namespace FrameMobile.Domain.Service
 {
     public class CommonServiceHelper : CommonDbContextService, ICommonServiceHelper
     {
-        [ServiceCache(ClientType = RedisClientManagerType.ThemeCache)]
+        [ServiceCache(ClientType = RedisClientManagerType.MixedCache)]
         public MobileProperty GetMobileProperty(MobileParam mobileParams)
         {
             var brand = mobileParams.Manufacturer.ToLower();
