@@ -71,8 +71,10 @@ namespace FrameMobile.Domain
             switch (methodName)
             {
                 case Const.NEWS_METHOD_NAME_GETNEWSCONTENTVIEWLIST:
-                case Const.NEWS_METHOD_NAME_GETCONTENTVIEWLIST:
                 case Const.NEWS_METHOD_NAME_GETNEWSCOLLECTIONVIEW:
+                case Const.NEWS_HELPER_METHOD_GETOLDESTNEWSCONTENTVIEW:
+                case Const.NEWS_HELPER_METHOD_GETLATESTNEWSCONTENTVIEW:
+                case Const.NEWS_HELPER_METHOD_GETLOCALCONTENTVIEWLIST:
                     paramSb = NewsContentCacheKey(paramSb, args, parameters);
                     break;
                 case Const.NEWS_METHOD_NAME_GETIMAGETYPEBYRESOLUTION:
@@ -83,9 +85,11 @@ namespace FrameMobile.Domain
                 case Const.NEWS_METHOD_NAME_GETEXTRAAPPVIEWLIST:
                     paramSb = NewsMobileChannelCacheKey(paramSb, args, parameters);
                     break;
-                case Const.WALLPAPER_METHOD_NAME_GETMOBILEPROPERTY:
+                case Const.COMMON_HELPER_METHOD_NAME_GETMOBILEPROPERTY:
                 case Const.WALLPAPER_METHOD_NAME_GETWALLPAPERVIEWLIST:
                 case Const.WALLPAPER_METHOD_NAME_GETWALLPAPERVIEWDETAIL:
+                case Const.WALLPAPER_HELPER_METHOD_NAME_GETLATESTWALLPAPERVIEWLIST:
+                case Const.WALLPAPER_HELPER_METHOD_NAME_GETHOTTESTWALLPAPERVIEWLIST:
                     paramSb = MobilePropertyCacheKey(paramSb, args, parameters);
                     break;
                 default:

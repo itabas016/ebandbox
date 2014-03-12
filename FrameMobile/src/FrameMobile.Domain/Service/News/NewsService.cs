@@ -101,7 +101,7 @@ namespace FrameMobile.Domain.Service
             totalCount = 0;
             var categoryIdList = categoryIds.Split(';', '；').ToList().ToInt32List();
 
-            contentlist = GetContentViewList(mobileParams, categoryIdList, stamp, action).ToList();
+            contentlist = this.GetContentViewList(mobileParams, categoryIdList, stamp, action).ToList();
 
             totalCount = contentlist.Count;
 

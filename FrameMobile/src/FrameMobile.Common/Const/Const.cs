@@ -73,6 +73,23 @@ namespace FrameMobile.Common
 
         public const string WALLPAPER_METHOD_NAME_GETWALLPAPERVIEWDETAIL = "getwallpaperviewdetail";
 
+        #region Helper
+
+        public const string COMMON_HELPER_METHOD_NAME_GETMOBILEPROPERTY = "getmobileproperty";
+
+        public const string NEWS_HELPER_METHOD_GETOLDESTNEWSCONTENTVIEW = "getoldestnewscontentview";
+
+        public const string NEWS_HELPER_METHOD_GETLATESTNEWSCONTENTVIEW = "getlatestnewscontentview";
+
+        public const string NEWS_HELPER_METHOD_GETLOCALCONTENTVIEWLIST = "getlocalcontentviewlist";
+
+        public const string WALLPAPER_HELPER_METHOD_NAME_GETLATESTWALLPAPERVIEWLIST = "getlatestwallpaperviewlist";
+
+        public const string WALLPAPER_HELPER_METHOD_NAME_GETHOTTESTWALLPAPERVIEWLIST = "gethottestwallpaperviewlist";
+
+
+        #endregion
+
         #endregion
 
         #region Account
