@@ -87,7 +87,7 @@ namespace FrameMobile.Domain
                 Status = 1,
                 Name = "全部",
             };
-            list.Add(instance);
+            list.Insert(0, instance);
             return list;
         }
 
