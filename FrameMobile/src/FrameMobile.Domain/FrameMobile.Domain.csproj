@@ -137,7 +137,7 @@
     <Compile Include="Service\Common\RedisClientManagerRepo.cs" />
     <Compile Include="Service\Fake\NewsFakeService.cs" />
     <Compile Include="Service\Fake\WallPaperFakeService.cs" />
-    <Compile Include="Service\Interface\Helper\NewsServiceHelper.cs" />
+    <Compile Include="Service\Helper\NewsServiceHelper.cs" />
     <Compile Include="Service\Helper\CommonServiceHelper.cs" />
     <Compile Include="Service\Helper\ICommonServiceHelper.cs" />
     <Compile Include="Service\Helper\IWallPaperServiceHelper.cs" />
@@ -146,7 +146,7 @@
     <Compile Include="Service\Interface\ICommonDbContextService.cs" />
     <Compile Include="Service\Interface\IMobileUIService.cs" />
     <Compile Include="Service\Interface\INewsRedisCacheService.cs" />
-    <Compile Include="Service\Interface\Helper\INewsServiceHelper.cs" />
+    <Compile Include="Service\Helper\INewsServiceHelper.cs" />
     <Compile Include="Service\Interface\IRadarService.cs" />
     <Compile Include="Service\Interface\IThemeRedisCacheService.cs" />
     <Compile Include="Service\Interface\IThemeServiceBase.cs" />
