@@ -19,6 +19,8 @@ namespace FrameMobile.Domain.Service
 
         WallPaperView GetWallPaperViewDetail(MobileParam mobileParams, int wallPaperId);
 
+        IList<WallPaper> GetWallPaperListByScreenType(int screenType);
+
         IList<WallPaperRelateCategory> GetWallPaperRelateCategoryList(int categoryId);
 
         IList<WallPaperRelateSubCategory> GetWallPaperRelateSubCategoryList(int subcategoryId);

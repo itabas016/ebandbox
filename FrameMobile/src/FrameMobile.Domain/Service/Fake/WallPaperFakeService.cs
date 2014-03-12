@@ -683,5 +683,10 @@ namespace FrameMobile.Domain.Service
         {
             throw new NotImplementedException();
         }
+
+        public IList<WallPaper> GetWallPaperListByScreenType(int screenType)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

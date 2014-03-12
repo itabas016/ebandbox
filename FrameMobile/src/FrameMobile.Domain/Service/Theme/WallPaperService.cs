@@ -121,6 +121,13 @@ namespace FrameMobile.Domain.Service
         }
 
         [ServiceCache(ClientType = RedisClientManagerType.ThemeCache)]
+        public IList<WallPaper> GetWallPaperListByScreenType(int screenType)
+        {
+            var wallpaperlist = dbContextService.Find<WallPaper>(x => x.Status == 1 && x.ScreenType == screenType).ToList();
+            return wallpaperlist;
+        }
+
+        [ServiceCache(ClientType = RedisClientManagerType.ThemeCache)]
         public IList<WallPaperRelateCategory> GetWallPaperRelateCategoryList(int categoryId)
         {
             if (categoryId == 0)
