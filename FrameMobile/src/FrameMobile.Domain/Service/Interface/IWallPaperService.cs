@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using FrameMobile.Model;
+using FrameMobile.Model.Theme;
 
 namespace FrameMobile.Domain.Service
 {
@@ -17,5 +18,14 @@ namespace FrameMobile.Domain.Service
         IList<WallPaperView> GetWallPaperViewList(MobileParam mobileParams, int screenType, int categoryId, int topicId, int subcategoryId, int sort, int startnum, int num, out int totalCount);
 
         WallPaperView GetWallPaperViewDetail(MobileParam mobileParams, int wallPaperId);
+
+        IList<WallPaperRelateCategory> GetWallPaperRelateCategoryList(int categoryId);
+
+        IList<WallPaperRelateSubCategory> GetWallPaperRelateSubCategoryList(int subcategoryId);
+
+        IList<WallPaperRelateTopic> GetWallPaperRelateTopicList(int topicId);
+
+        IList<WallPaperRelateMobileProperty> GetWallPaperRelateMobilePropertyList(int propertyId);
+
     }
 }

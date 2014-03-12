@@ -663,5 +663,25 @@ namespace FrameMobile.Domain.Service
             var list = new List<WallPaperRelateTopic>() { r1, r2, r3, r4, r5, r6, r7, r8 };
             return list;
         }
+
+        public IList<WallPaperRelateCategory> GetWallPaperRelateCategoryList(int categoryId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IList<WallPaperRelateSubCategory> GetWallPaperRelateSubCategoryList(int subcategoryId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IList<WallPaperRelateTopic> GetWallPaperRelateTopicList(int topicId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IList<WallPaperRelateMobileProperty> GetWallPaperRelateMobilePropertyList(int propertyId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

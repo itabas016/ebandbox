@@ -119,5 +119,41 @@ namespace FrameMobile.Domain.Service
 
             return wallpaper.To<WallPaperView>();
         }
+
+        [ServiceCache(ClientType = RedisClientManagerType.ThemeCache)]
+        public IList<WallPaperRelateCategory> GetWallPaperRelateCategoryList(int categoryId)
+        {
+            if (categoryId == 0)
+            {
+                return dbContextService.Find<WallPaperRelateCategory>(x => x.Status == 1).ToList();
+            }
+            var categorywallpaperlist = dbContextService.Find<WallPaperRelateCategory>(x => x.CategoryId == categoryId && x.Status == 1).ToList();
+            return categorywallpaperlist;
+        }
+
+        [ServiceCache(ClientType = RedisClientManagerType.ThemeCache)]
+        public IList<WallPaperRelateSubCategory> GetWallPaperRelateSubCategoryList(int subcategoryId)
+        {
+            if (subcategoryId == 0)
+            {
+                return dbContextService.Find<WallPaperRelateSubCategory>(x => x.Status == 1).ToList();
+            }
+            var subcategorywallpaperlist = dbContextService.Find<WallPaperRelateSubCategory>(x => x.SubCategoryId == subcategoryId && x.Status == 1).ToList();
+            return subcategorywallpaperlist;
+        }
+
+        [ServiceCache(ClientType = RedisClientManagerType.ThemeCache)]
+        public IList<WallPaperRelateTopic> GetWallPaperRelateTopicList(int topicId)
+        {
+            var topicwallpaperlist = dbContextService.Find<WallPaperRelateTopic>(x => x.TopicId == topicId && x.Status == 1).ToList();
+            return topicwallpaperlist;
+        }
+
+        [ServiceCache(ClientType = RedisClientManagerType.ThemeCache)]
+        public IList<WallPaperRelateMobileProperty> GetWallPaperRelateMobilePropertyList(int propertyId)
+        {
+            var mobilePropertylist = dbContextService.Find<WallPaperRelateMobileProperty>(x => x.MobilePropertyId == propertyId && x.Status == 1).ToList();
+            return mobilePropertylist;
+        }
     }
 }
