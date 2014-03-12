@@ -12,7 +12,7 @@ namespace FrameMobile.Domain.Service
 
         IList<NewsSourceView> GetSourceViewList(MobileParam mobileParams, int cver, out int sver);
 
-        IList<NewsExtraAppView> GetExtraAppViewList(MobileParam mobileParams, int cver, out int sver);
+        IList<NewsExtraAppView> GetExtraAppViewList(MobileParam mobileParams, int cver, out int sver, out int ratio);
 
         IList<OlderNewsExtraAppView> GetOlderExtraAppViewList(MobileParam mobileParams, int cver, out int sver);
 
@@ -26,7 +26,9 @@ namespace FrameMobile.Domain.Service
 
         IList<NewsContentView> GetNewsContentViewList(MobileParam mobileParams, long stamp, bool action, string categoryIds, int startnum, int num, out int totalCount);
 
-        NewsCollectionView GetNewsCollectionView(MobileParam mobileParams, long stamp, int extracver, bool action, string categoryIds, int startnum, int num, out int extrasver, out int totalCount);
+        IList<NewsContentView> GetContentViewList(MobileParam mobileParams, List<int> categoryIds, long stamp, bool action);
+
+        NewsCollectionView GetNewsCollectionView(MobileParam mobileParams, long stamp, int extracver, bool action, string categoryIds, int startnum, int num, out int extrasver, out int ratio, out int totalCount);
 
     }
 }

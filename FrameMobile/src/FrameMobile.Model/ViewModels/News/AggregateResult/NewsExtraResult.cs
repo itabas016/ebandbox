@@ -14,6 +14,9 @@ namespace FrameMobile.Model
         [JsonProperty("sver")]
         public int ServerViersion { get; set; }
 
+        [JsonProperty("ratio")]
+        public int Ratio { get; set; }
+
         [JsonProperty("extralist")]
         public List<NewsExtraAppView> NewsExtraList { get; set; }
     }

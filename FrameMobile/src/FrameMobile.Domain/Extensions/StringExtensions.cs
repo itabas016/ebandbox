@@ -74,6 +74,10 @@ namespace FrameMobile.Domain
 
         public static int GetResolutionWidth(this string resolution)
         {
+            if (string.IsNullOrEmpty(resolution))
+            {
+                return 0;
+            }
             //format : 320x480
             var lcdArray = resolution.ToLower().Split('x');
             var width = lcdArray[0].ToInt32();
@@ -82,6 +86,10 @@ namespace FrameMobile.Domain
 
         public static int GetResolutionHeight(this string resolution)
         {
+            if (string.IsNullOrEmpty(resolution))
+            {
+                return 0;
+            }
             //format : 320x480
             var lcdArray = resolution.ToLower().Split('x');
             var height = lcdArray[1].ToInt32();

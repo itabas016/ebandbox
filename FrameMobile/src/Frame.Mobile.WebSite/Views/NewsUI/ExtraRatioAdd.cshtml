@@ -1,0 +1,67 @@
+﻿@using FrameMobile.Model.News;
+@model NewsExtraRatio
+@{
+    bool isUpdateMode = ViewData["IsUpdate"] != null;
+    ViewBag.Title = isUpdateMode ? "修改渠道广告位配置" : "添加渠道广告位配置";
+    Layout = "~/Views/Shared/_NewsLayout.cshtml";
+
+    var channellist = ViewData["Channellist"] as SelectList;
+}
+
+<div class="contentHeader">
+    <div class="contentHeaderInfo">
+        <button class="btn btn-quaternary btn-large addapp" onclick="history.back();">
+            返 回</button>
+    </div>
+    <div class="apphead">
+        <div class="title">
+            <b>@ViewBag.Title </b>
+        </div>
+    </div>
+</div>
+<div class="content">
+    <div class="windows">
+        @using (Html.BeginForm())
+        {
+
+            <p>
+                <div class="title">
+                    <h1>
+                        @ViewBag.Title</h1>
+                </div>
+            </p>
+
+            <div style="clear: both">
+                <table>
+                    @Html.ValidationSummary(true)
+                    @Html.HiddenFor(m => m.Id)
+                    <tr>
+                        <td><strong>渠道: </strong></td>
+                        <td>
+                            @Html.DropDownListFor(m => m.ChannelId, (SelectList)channellist, "请选择")
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>广告位出现比例: </strong>
+                        </td>
+                        <td>@Html.TextBoxFor(m => m.Ratio, new { type="number", min="0", max="10"}) 范围：1~10</td>
+                    </tr>
+                    <tr>
+                        <td><strong>状态: </strong></td>
+                        <td>@Html.RadioButtonFor(m => m.Status, 1) 有效 @Html.RadioButtonFor(m => m.Status, 0) 无效</td>
+                    </tr>
+                    <tr>
+                        <td><strong>备注: </strong></td>
+                        <td>@Html.TextAreaFor(m => m.Comment)</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <button class="btn btn-large btn-blue addapp" style="margin-left: 50px">@ViewBag.Title</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        }
+    </div>
+</div>

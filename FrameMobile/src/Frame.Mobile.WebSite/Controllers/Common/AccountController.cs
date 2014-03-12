@@ -123,6 +123,9 @@ namespace Frame.Mobile.WebSite.Controllers
 
             var user = AccountService.GetUser(userName);
 
+            var userGroupIds = user.UserGroupIds.GetIds();
+            var isAdmin = userGroupIds.Contains(1);
+            ViewData["IsAdmin"] = isAdmin;
             return View(user);
         }
 

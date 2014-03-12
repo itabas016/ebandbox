@@ -16,6 +16,8 @@ namespace FrameMobile.Domain
         {
             RegistyCommonService();
 
+            RegistyHelperService();
+
             RegistyNewsService();
 
             RegistyThemeService();
@@ -36,6 +38,13 @@ namespace FrameMobile.Domain
             For<IRadarService>().Use<RadarService>();
         }
 
+        private void RegistyHelperService()
+        {
+            For<ICommonServiceHelper>().Use<CommonServiceHelper>();
+            For<INewsServiceHelper>().Use<NewsServiceHelper>();
+            For<IWallPaperServiceHelper>().Use<WallPaperServiceHelper>();
+        }
+
         private void RegistyNewsService()
         {
             For<INewsUIService>().Use<NewsUIService>();
@@ -54,7 +63,7 @@ namespace FrameMobile.Domain
             For<IThemeRedisCacheService>().Use<ThemeRedisCacheService>();
 
 #if DEBUG
-            For<IWallPaperService>().Use<WallPaperFakeService>();
+            For<IWallPaperService>().Use<WallPaperService>();
 #else
             For<IWallPaperService>().Use<WallPaperService>();
 #endif

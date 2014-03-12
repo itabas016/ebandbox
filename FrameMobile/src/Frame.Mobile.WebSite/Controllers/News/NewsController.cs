@@ -29,6 +29,7 @@ namespace Frame.Mobile.WebSite.Controllers
         {
             var mobileParams = GetMobileParam();
             int sver = 0;
+            int ratio = 0;
             var actionResult = default(CommonActionResult);
 
             switch (infver)
@@ -38,8 +39,9 @@ namespace Frame.Mobile.WebSite.Controllers
                     actionResult = BuildResult(this.CheckRequiredParams(imsi), getolderextraapplist);
                     break;
                 case 1:
-                    Func<IList<NewsExtraAppView>> getextraapplist = () => NewsService.GetExtraAppViewList(mobileParams, cver, out sver);
+                    Func<IList<NewsExtraAppView>> getextraapplist = () => NewsService.GetExtraAppViewList(mobileParams, cver, out sver, out ratio);
                     actionResult = BuildResult(this.CheckRequiredParams(imsi), getextraapplist);
+                    actionResult.Ratio = ratio;
                     break;
             }
 
@@ -115,8 +117,9 @@ namespace Frame.Mobile.WebSite.Controllers
             var mobileParams = GetMobileParam();
             int totalCount = 0;
             int extraServerVersion = 0;
+            int ratio = 0;
 
-            Func<NewsCollectionView> getnewscollection = () => NewsService.GetNewsCollectionView(mobileParams, stamp, extracver, act, categoryIds, startnum, num, out extraServerVersion, out totalCount);
+            Func<NewsCollectionView> getnewscollection = () => NewsService.GetNewsCollectionView(mobileParams, stamp, extracver, act, categoryIds, startnum, num, out extraServerVersion, out ratio, out totalCount);
 
             var actionResult = BuildResult(this.CheckRequiredParams(imsi, lcd), getnewscollection);
 

@@ -52,16 +52,6 @@
                     <tr>
                         @Html.ValidationSummary(true)
                         @Html.HiddenFor(m => m.Id)
-                        <td><strong>编号: </strong></td>
-                        <td>
-                            @if (isUpdateMode)
-                            {
-                                @Html.TextBoxFor(m => m.WallPaperNo, new { @readonly = true, Class = "txt-readonly" })}
-                            else
-                            {
-                                @Html.TextBoxFor(m => m.WallPaperNo)
-                            }
-                        </td>
                     </tr>
                     <tr>
                         <td><strong>标题: </strong></td>

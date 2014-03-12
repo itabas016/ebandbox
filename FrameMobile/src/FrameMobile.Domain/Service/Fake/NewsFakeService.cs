@@ -121,7 +121,7 @@ namespace FrameMobile.Domain.Service
         }
 
         [ServiceCache(ClientType=RedisClientManagerType.NewsCache)]
-        public IList<NewsExtraAppView> GetExtraAppViewList(MobileParam mobileParams, int cver, out int sver)
+        public IList<NewsExtraAppView> GetExtraAppViewList(MobileParam mobileParams, int cver, out int sver, out int ratio)
         {
             #region instance
 
@@ -152,6 +152,7 @@ namespace FrameMobile.Domain.Service
 
             var modelist = new List<NewsExtraApp>() { mode1, mode2 };
             sver = 1;
+            ratio = 0;
             var result = modelist.To<IList<NewsExtraAppView>>();
 
             return result;
@@ -160,7 +161,8 @@ namespace FrameMobile.Domain.Service
         [ServiceCache(ClientType = RedisClientManagerType.NewsCache)]
         public IList<OlderNewsExtraAppView> GetOlderExtraAppViewList(MobileParam mobileParams, int cver, out int sver)
         {
-            var extraappviewlist = GetExtraAppViewList(mobileParams, cver, out sver);
+            var ratio = 0;
+            var extraappviewlist = GetExtraAppViewList(mobileParams, cver, out sver, out ratio);
             return extraappviewlist.To<IList<OlderNewsExtraAppView>>();
         }
 
@@ -409,7 +411,7 @@ namespace FrameMobile.Domain.Service
             return GetTouTiaoContentViewList(mobileParams, categoryIds, stamp, action, startnum, num, out totalCount);
         }
 
-        public NewsCollectionView GetNewsCollectionView(MobileParam mobileParams, long stamp, int extracver, bool action, string categoryIds, int startnum, int num,out int extrasver, out int totalCount)
+        public NewsCollectionView GetNewsCollectionView(MobileParam mobileParams, long stamp, int extracver, bool action, string categoryIds, int startnum, int num,out int extrasver, out int ratio, out int totalCount)
         {
             throw new NotImplementedException();
         }
@@ -506,5 +508,11 @@ namespace FrameMobile.Domain.Service
         }
 
         #endregion
+
+
+        public IList<NewsContentView> GetContentViewList(MobileParam mobileParams, List<int> categoryIds, long stamp, bool action)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

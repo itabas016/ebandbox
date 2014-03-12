@@ -15,7 +15,7 @@ namespace FrameMobile.Model.Account
         /// 用户组
         /// </summary>
         [Display(Name = "用户组")]
-        [Required(ErrorMessage = "×")]
+        [SubSonicNullString]
         public string UserGroupIds { get; set; }
 
         /// <summary>
