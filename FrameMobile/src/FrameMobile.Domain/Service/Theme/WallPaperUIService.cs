@@ -71,11 +71,6 @@ namespace FrameMobile.Domain.Service
             return configlist.To<IList<ThemeConfigView>>();
         }
 
-        public MobileProperty GetMobileProperty(MobileParam mobileParams)
-        {
-            throw new NotImplementedException();
-        }
-
         public IList<WallPaperRelateCategory> GetWallRelateCategoryList(int wallpaperId)
         {
             var relatecategorylist = dbContextService.Find<WallPaperRelateCategory>(x => x.WallPaperId == wallpaperId && x.Status == 1).ToList();

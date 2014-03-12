@@ -7,8 +7,8 @@ using FrameMobile.Model.Mobile;
 
 namespace FrameMobile.Domain.Service
 {
-    public interface IThemeServiceBase
+    public interface ICommonServiceHelper
     {
-        IList<ThemeConfigView> GetConfigViewList(MobileParam mobileParams, int type);
+        MobileProperty GetMobileProperty(MobileParam mobileParams);
     }
 }

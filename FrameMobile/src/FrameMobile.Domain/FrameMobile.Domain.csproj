@@ -138,6 +138,10 @@
     <Compile Include="Service\Fake\NewsFakeService.cs" />
     <Compile Include="Service\Fake\WallPaperFakeService.cs" />
     <Compile Include="Service\Interface\Helper\NewsServiceHelper.cs" />
+    <Compile Include="Service\Helper\CommonServiceHelper.cs" />
+    <Compile Include="Service\Helper\ICommonServiceHelper.cs" />
+    <Compile Include="Service\Helper\IWallPaperServiceHelper.cs" />
+    <Compile Include="Service\Helper\WallPaperServiceHelper.cs" />
     <Compile Include="Service\Interface\ICacheService.cs" />
     <Compile Include="Service\Interface\ICommonDbContextService.cs" />
     <Compile Include="Service\Interface\IMobileUIService.cs" />

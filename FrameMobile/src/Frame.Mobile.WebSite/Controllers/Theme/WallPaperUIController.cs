@@ -349,7 +349,6 @@ namespace Frame.Mobile.WebSite.Controllers
             var wallpaper = dbContextService.Single<WallPaper>(model.Id);
 
             wallpaper.Title = model.Title;
-            wallpaper.WallPaperNo = model.WallPaperNo;
             wallpaper.Status = model.Status;
             wallpaper.PublishTime = model.PublishTime;
             wallpaper.ModifiedTime = DateTime.Now;
@@ -388,11 +387,10 @@ namespace Frame.Mobile.WebSite.Controllers
             var searchKey = Request.QueryString["textfield"];
 
             var wallpaperResult = (from p in dbContextService.All<WallPaper>()
-                                   where (p.WallPaperNo == searchKey || p.Title.Contains(searchKey))
+                                   where p.Title.Contains(searchKey)
                                    select new WallPaper
                                    {
                                        Id = p.Id,
-                                       WallPaperNo = p.WallPaperNo,
                                        Title = p.Title,
                                        DownloadNumber = p.DownloadNumber,
                                        PublishTime = p.PublishTime,
