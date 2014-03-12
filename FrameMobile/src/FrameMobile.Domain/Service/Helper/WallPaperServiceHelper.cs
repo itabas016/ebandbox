@@ -33,7 +33,7 @@ namespace FrameMobile.Domain.Service
         public IList<WallPaperView> GetLatestWallPaperViewList(MobileParam mobileParams, MobileProperty property, int screenType, int categoryId, int topicId, int subcategoryId, out int totalCount)
         {
             totalCount = 0;
-            if (categoryId == 0 && topicId != 0)
+            if (topicId != 0)
             {
                 var latestwallpaperlistbytopic = from p in dbContextService.Find<WallPaper>(x => x.Status == 1 && x.ScreenType == screenType)
                                                  join pt in WallPaperService.GetWallPaperRelateTopicList(topicId) on p.Id equals pt.TopicId
@@ -51,7 +51,7 @@ namespace FrameMobile.Domain.Service
                 totalCount = latestwallpaperlistbytopic.Count();
                 return latestwallpaperlistbytopic.ToList();
             }
-            if (categoryId != 0)
+            else
             {
                 var latestwallpaperlistbycategory = from p in dbContextService.Find<WallPaper>(x => x.Status == 1 && x.ScreenType == screenType)
                                                     join pc in WallPaperService.GetWallPaperRelateCategoryList(categoryId) on p.Id equals pc.WallPaperId
@@ -69,14 +69,13 @@ namespace FrameMobile.Domain.Service
                 totalCount = latestwallpaperlistbycategory.Count();
                 return latestwallpaperlistbycategory.ToList();
             }
-            return new List<WallPaperView>();
         }
 
         [ServiceCache(ClientType = RedisClientManagerType.ThemeCache)]
         public IList<WallPaperView> GetHottestWallPaperViewList(MobileParam mobileParams, MobileProperty property, int screenType, int categoryId, int topicId, int subcategoryId, out int totalCount)
         {
             totalCount = 0;
-            if (categoryId == 0 && topicId != 0)
+            if (topicId != 0)
             {
                 var hottestwallpaperlistbytopic = from p in dbContextService.Find<WallPaper>(x => x.Status == 1 && x.ScreenType == screenType)
                                                   join pt in WallPaperService.GetWallPaperRelateTopicList(topicId) on p.Id equals pt.TopicId
@@ -94,7 +93,7 @@ namespace FrameMobile.Domain.Service
                 totalCount = hottestwallpaperlistbytopic.Count();
                 return hottestwallpaperlistbytopic.ToList();
             }
-            if (categoryId != 0)
+            else
             {
                 var hottestwallpaperlistbycategory = from p in dbContextService.Find<WallPaper>(x => x.Status == 1 && x.ScreenType == screenType)
                                                      join pc in WallPaperService.GetWallPaperRelateCategoryList(categoryId) on p.Id equals pc.WallPaperId
@@ -112,7 +111,6 @@ namespace FrameMobile.Domain.Service
                 totalCount = hottestwallpaperlistbycategory.Count();
                 return hottestwallpaperlistbycategory.ToList();
             }
-            return new List<WallPaperView>();
         }
     }
 }
