@@ -121,7 +121,7 @@
                 {
                     <strong>适配的缩略图文件: </strong>
                     <br />
-                    @foreach (var s in Model.ThumbnailNames)
+                    foreach (var s in Model.ThumbnailNames)
                     {
 <div>
                         <a href="@string.Format("{0}{1}", thumbnailImagePrefix, s)" target="_blank" style="padding-left: 20px" >@s</a>
@@ -133,7 +133,7 @@
                 {
                     <strong>适配的原图文件: </strong>
                     <br />
-                    @foreach (var s in Model.OriginalNames)
+                    foreach (var s in Model.OriginalNames)
                     {
 <div>
                         <a href="@string.Format("{0}{1}", originalImagePrefix, s)" target="_blank" style="padding-left: 20px" >@s</a>
