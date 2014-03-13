@@ -34,8 +34,8 @@ namespace FrameMobile.Domain.Service
         {
             totalCount = 0;
 
-            var wallpaperlist = WallPaperService.GetWallPaperListByScreenType(screenType).AsQueryable<WallPaper>();
-            var wallpaperRelateMobileProperty = WallPaperService.GetWallPaperRelateMobilePropertyList(property.Id).AsQueryable<WallPaperRelateMobileProperty>();
+            var wallpaperlist = WallPaperService.GetWallPaperListByScreenType(screenType);
+            var wallpaperRelateMobileProperty = WallPaperService.GetWallPaperRelateMobilePropertyList(property.Id);
 
             if (categoryId == 0 && topicId == 0)
             {
@@ -45,7 +45,7 @@ namespace FrameMobile.Domain.Service
 
             if (categoryId == 0 && topicId != 0)
             {
-                var wallpaperRelateTopiclist = WallPaperService.GetWallPaperRelateTopicList(topicId).AsQueryable<WallPaperRelateTopic>();
+                var wallpaperRelateTopiclist = WallPaperService.GetWallPaperRelateTopicList(topicId);
 
                 var latestwallpaperlistbytopic = from p in wallpaperlist
                                                  join pt in wallpaperRelateTopiclist on p.Id equals pt.WallPaperId
@@ -65,7 +65,7 @@ namespace FrameMobile.Domain.Service
             }
             if (categoryId != 0)
             {
-                var wallpaperRelateCategorylist = WallPaperService.GetWallPaperRelateCategoryList(categoryId).AsQueryable<WallPaperRelateCategory>();
+                var wallpaperRelateCategorylist = WallPaperService.GetWallPaperRelateCategoryList(categoryId);
 
                 var latestwallpaperlistbycategory = from p in wallpaperlist
                                                     join pc in wallpaperRelateCategorylist on p.Id equals pc.WallPaperId
@@ -91,8 +91,8 @@ namespace FrameMobile.Domain.Service
         {
             totalCount = 0;
 
-            var wallpaperlist = WallPaperService.GetWallPaperListByScreenType(screenType).AsQueryable<WallPaper>();
-            var wallpaperRelateMobileProperty = WallPaperService.GetWallPaperRelateMobilePropertyList(property.Id).AsQueryable<WallPaperRelateMobileProperty>();
+            var wallpaperlist = WallPaperService.GetWallPaperListByScreenType(screenType);
+            var wallpaperRelateMobileProperty = WallPaperService.GetWallPaperRelateMobilePropertyList(property.Id);
 
             if (categoryId == 0 && topicId == 0)
             {
@@ -102,7 +102,7 @@ namespace FrameMobile.Domain.Service
 
             if (categoryId == 0 && topicId != 0)
             {
-                var wallpaperRelateTopiclist = WallPaperService.GetWallPaperRelateTopicList(topicId).AsQueryable<WallPaperRelateTopic>();
+                var wallpaperRelateTopiclist = WallPaperService.GetWallPaperRelateTopicList(topicId);
 
                 var hottestwallpaperlistbytopic = from p in wallpaperlist
                                                   join pt in wallpaperRelateTopiclist on p.Id equals pt.WallPaperId
@@ -122,7 +122,7 @@ namespace FrameMobile.Domain.Service
             }
             if (categoryId != 0)
             {
-                var wallpaperRelateCategorylist = WallPaperService.GetWallPaperRelateCategoryList(categoryId).AsQueryable<WallPaperRelateCategory>();
+                var wallpaperRelateCategorylist = WallPaperService.GetWallPaperRelateCategoryList(categoryId);
 
                 var hottestwallpaperlistbycategory = from p in wallpaperlist
                                                      join pc in wallpaperRelateCategorylist on p.Id equals pc.WallPaperId
