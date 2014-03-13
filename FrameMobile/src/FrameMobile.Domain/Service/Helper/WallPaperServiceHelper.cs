@@ -37,12 +37,18 @@ namespace FrameMobile.Domain.Service
             var wallpaperlist = WallPaperService.GetWallPaperListByScreenType(screenType).AsQueryable<WallPaper>();
             var wallpaperRelateMobileProperty = WallPaperService.GetWallPaperRelateMobilePropertyList(property.Id).AsQueryable<WallPaperRelateMobileProperty>();
 
-            if (topicId != 0)
+            if (categoryId == 0 && topicId == 0)
+            {
+                totalCount = wallpaperlist.Count();
+                return wallpaperlist.To<IList<WallPaperView>>().OrderByDescending(x => x.PublishTime).ToList();
+            }
+
+            if (categoryId == 0 && topicId != 0)
             {
                 var wallpaperRelateTopiclist = WallPaperService.GetWallPaperRelateTopicList(topicId).AsQueryable<WallPaperRelateTopic>();
 
                 var latestwallpaperlistbytopic = from p in wallpaperlist
-                                                 join pt in wallpaperRelateTopiclist on p.Id equals pt.TopicId
+                                                 join pt in wallpaperRelateTopiclist on p.Id equals pt.WallPaperId
                                                  join pm in wallpaperRelateMobileProperty on p.Id equals pm.WallPaperId
                                                  orderby p.PublishTime descending
                                                  select new WallPaperView
@@ -57,7 +63,7 @@ namespace FrameMobile.Domain.Service
                 totalCount = latestwallpaperlistbytopic.Count();
                 return latestwallpaperlistbytopic.ToList();
             }
-            else
+            if (categoryId != 0)
             {
                 var wallpaperRelateCategorylist = WallPaperService.GetWallPaperRelateCategoryList(categoryId).AsQueryable<WallPaperRelateCategory>();
 
@@ -77,6 +83,7 @@ namespace FrameMobile.Domain.Service
                 totalCount = latestwallpaperlistbycategory.Count();
                 return latestwallpaperlistbycategory.ToList();
             }
+            return new List<WallPaperView>();
         }
 
         [ServiceCache(ClientType = RedisClientManagerType.ThemeCache)]
@@ -87,12 +94,18 @@ namespace FrameMobile.Domain.Service
             var wallpaperlist = WallPaperService.GetWallPaperListByScreenType(screenType).AsQueryable<WallPaper>();
             var wallpaperRelateMobileProperty = WallPaperService.GetWallPaperRelateMobilePropertyList(property.Id).AsQueryable<WallPaperRelateMobileProperty>();
 
-            if (topicId != 0)
+            if (categoryId == 0 && topicId == 0)
+            {
+                totalCount = wallpaperlist.Count();
+                return wallpaperlist.To<IList<WallPaperView>>().OrderByDescending(x => x.DownloadNumber).ToList();
+            }
+
+            if (categoryId == 0 && topicId != 0)
             {
                 var wallpaperRelateTopiclist = WallPaperService.GetWallPaperRelateTopicList(topicId).AsQueryable<WallPaperRelateTopic>();
 
                 var hottestwallpaperlistbytopic = from p in wallpaperlist
-                                                  join pt in wallpaperRelateTopiclist on p.Id equals pt.TopicId
+                                                  join pt in wallpaperRelateTopiclist on p.Id equals pt.WallPaperId
                                                   join pm in wallpaperRelateMobileProperty on p.Id equals pm.WallPaperId
                                                   orderby p.DownloadNumber descending
                                                   select new WallPaperView
@@ -107,7 +120,7 @@ namespace FrameMobile.Domain.Service
                 totalCount = hottestwallpaperlistbytopic.Count();
                 return hottestwallpaperlistbytopic.ToList();
             }
-            else
+            if (categoryId != 0)
             {
                 var wallpaperRelateCategorylist = WallPaperService.GetWallPaperRelateCategoryList(categoryId).AsQueryable<WallPaperRelateCategory>();
 
@@ -127,6 +140,7 @@ namespace FrameMobile.Domain.Service
                 totalCount = hottestwallpaperlistbycategory.Count();
                 return hottestwallpaperlistbycategory.ToList();
             }
+            return new List<WallPaperView>();
         }
     }
 }
