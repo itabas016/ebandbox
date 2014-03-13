@@ -69,6 +69,7 @@
   <ItemGroup>
     <Compile Include="Account\InvitationCode.cs" />
     <Compile Include="Account\UserGroup.cs" />
+    <Compile Include="AppStore\AppDetail.cs" />
     <Compile Include="Common\Mobile\MobileBrand.cs" />
     <Compile Include="Common\Mobile\MobileChannel.cs" />
     <Compile Include="Common\Mobile\MobileHardware.cs" />

@@ -109,6 +109,7 @@
   <ItemGroup>
     <Compile Include="Job\CleanJob.cs" />
     <Compile Include="Job\NewsJobBase.cs" />
+    <Compile Include="Job\UpdateNewsExtraAppJob.cs" />
     <Compile Include="Job\UpdateNewsJob.cs" />
     <Compile Include="Job\TouTiaoJob.cs" />
     <Compile Include="TYDNewsService.cs">

@@ -48,6 +48,27 @@
   </job>
   <job>
     <job-detail>
+      <name>UpdateNewsExtraAppJob</name>
+      <group>UpdateNewsExtraApp</group>
+      <description></description>
+      <job-type>TYDNewsService.UpdateNewsExtraAppJob,TYDNewsService</job-type>
+      <volatile>false</volatile>
+      <durable>true</durable>
+      <recover>false</recover>
+    </job-detail>
+    <trigger>
+      <cron>
+        <name>every1week</name>
+        <group>UpdateNewsExtraApp</group>
+        <job-name>UpdateNewsExtraAppJob</job-name>
+        <job-group>UpdateNewsExtraApp</job-group>
+        <start-time>1900-01-01T00:00:00.0Z</start-time>
+        <cron-expression>0 30 6 ? * Mon</cron-expression>
+      </cron>
+    </trigger>
+  </job>
+  <job>
+    <job-detail>
       <name>CleanJob</name>
       <group>Clean</group>
       <description></description>

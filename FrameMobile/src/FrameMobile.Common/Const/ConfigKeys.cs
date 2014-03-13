@@ -115,6 +115,8 @@ namespace FrameMobile.Common
 
         public const string UPDATE_NEWS_START_PUBLISH_TIME_HOUR = "Update_News_Start_PublishTime_Hour";
 
+        public const string NEW_MARKET_APPDETAIL_REQUEST_URL = "New_Market_AppDetail_Request_URL";
+
         #endregion
     }
 }
