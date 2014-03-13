@@ -39,8 +39,19 @@ namespace FrameMobile.Domain.Service
 
             if (categoryId == 0 && topicId == 0)
             {
-                totalCount = wallpaperlist.Count();
-                return wallpaperlist.To<IList<WallPaperView>>().OrderByDescending(x => x.PublishTime).ToList();
+                var wallpaperviewlist = from p in wallpaperlist
+                                        orderby p.PublishTime descending
+                                        select new WallPaperView
+                                        {
+                                            Id = p.Id,
+                                            Title = p.Title,
+                                            ThumbnailUrl = p.ThumbnailName.GetCompleteThumbnailUrl(mobileParams),
+                                            OriginalUrl = p.OriginalName.GetCompleteOriginalUrl(mobileParams),
+                                            DownloadNumber = p.DownloadNumber,
+                                            PublishTime = p.PublishTime
+                                        };
+                totalCount = wallpaperviewlist.Count();
+                return wallpaperviewlist.ToList();
             }
 
             if (categoryId == 0 && topicId != 0)
@@ -96,8 +107,19 @@ namespace FrameMobile.Domain.Service
 
             if (categoryId == 0 && topicId == 0)
             {
-                totalCount = wallpaperlist.Count();
-                return wallpaperlist.To<IList<WallPaperView>>().OrderByDescending(x => x.DownloadNumber).ToList();
+                var wallpaperviewlist = from p in wallpaperlist
+                                        orderby p.DownloadNumber descending
+                                        select new WallPaperView
+                                        {
+                                            Id = p.Id,
+                                            Title = p.Title,
+                                            ThumbnailUrl = p.ThumbnailName.GetCompleteThumbnailUrl(mobileParams),
+                                            OriginalUrl = p.OriginalName.GetCompleteOriginalUrl(mobileParams),
+                                            DownloadNumber = p.DownloadNumber,
+                                            PublishTime = p.PublishTime
+                                        };
+                totalCount = wallpaperviewlist.Count();
+                return wallpaperviewlist.ToList();
             }
 
             if (categoryId == 0 && topicId != 0)
