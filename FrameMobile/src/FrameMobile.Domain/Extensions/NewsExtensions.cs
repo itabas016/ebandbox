@@ -44,5 +44,15 @@ namespace FrameMobile.Domain
             }
             return result;
         }
+
+        public static DateTime NewsStartDefaultTime(this DateTime time)
+        {
+            var idealTime = DateTime.Now.AddDays(-3);
+            if (time < idealTime)
+            {
+                return idealTime;
+            }
+            return time;
+        }
     }
 }

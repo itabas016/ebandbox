@@ -126,6 +126,7 @@ namespace FrameMobile.Domain.Service
         [ServiceCache(ClientType = RedisClientManagerType.NewsCache)]
         public IEnumerable<NewsContentView> GetLatestNewsContentView(List<int> categoryIds, List<NewsExtraApp> extraAppList, int imageType, DateTime stampTime)
         {
+            stampTime = stampTime.NewsStartDefaultTime();
             var categorycontentlist = (from l in
                                            dbContextService.Find<NewsContent>(x => x.Status == 1 && x.PublishTime >= stampTime)
                                        where categoryIds.Contains(l.CategoryId)
