@@ -19,6 +19,7 @@ namespace FrameMobile.Model.Theme
         public int Version { get; set; }
 
         [SubSonicStringLength(256)]
+        [SubSonicNullString]
         public string Comment { get; set; }
     }
 }
