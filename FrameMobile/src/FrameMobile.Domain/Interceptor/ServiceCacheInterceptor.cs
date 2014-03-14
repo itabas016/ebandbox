@@ -187,6 +187,7 @@ namespace FrameMobile.Domain
                     if (mobileParam != null)
                     {
                         var brand = mobileParam.Manufacturer.DefaultValue().ToLower();
+                        brand = brand == Const.BRAND_KOOBEE ? Const.BRAND_KOOBEE : Const.BRAND_PCBA;
                         var resolution = mobileParam.Resolution.DefaultValue().ToLower();
                         paramSb.AppendFormat("{0}[{1}]", MobileParam.Key_Manufacturer, brand);
                         paramSb.AppendFormat("{0}[{1}]", MobileParam.Key_Resolution, resolution);
