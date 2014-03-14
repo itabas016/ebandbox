@@ -40,6 +40,7 @@ namespace FrameMobile.Domain.Service
             if (categoryId == 0 && topicId == 0)
             {
                 var wallpaperviewlist = from p in wallpaperlist
+                                        join pm in wallpaperRelateMobileProperty on p.Id equals pm.WallPaperId
                                         orderby p.PublishTime descending
                                         select new WallPaperView
                                         {
@@ -108,6 +109,7 @@ namespace FrameMobile.Domain.Service
             if (categoryId == 0 && topicId == 0)
             {
                 var wallpaperviewlist = from p in wallpaperlist
+                                        join pm in wallpaperRelateMobileProperty on p.Id equals pm.WallPaperId
                                         orderby p.DownloadNumber descending
                                         select new WallPaperView
                                         {
