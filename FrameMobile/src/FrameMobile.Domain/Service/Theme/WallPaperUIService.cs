@@ -29,6 +29,12 @@ namespace FrameMobile.Domain.Service
         }
         private IMobileUIService _mobileUIService;
 
+        public IList<WallPaper> GetWallPaperList(string searchKey)
+        {
+            var wallpaperlist = dbContextService.Find<WallPaper>(x=>x.Title.Contains(searchKey)).ToList();
+            return wallpaperlist;
+        }
+
         public IList<WallPaperCategory> GetWallPaperCategoryList()
         {
             var categorylist = dbContextService.All<WallPaperCategory>().ToList();

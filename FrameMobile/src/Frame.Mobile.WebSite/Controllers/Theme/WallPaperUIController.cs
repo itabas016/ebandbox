@@ -386,8 +386,7 @@ namespace Frame.Mobile.WebSite.Controllers
             int pageNum = page.HasValue ? page.Value : 1;
             var searchKey = Request.QueryString["textfield"];
 
-            var wallpaperResult = (from p in dbContextService.All<WallPaper>()
-                                   where p.Title.Contains(searchKey)
+            var wallpaperResult = (from p in WallPaperUIService.GetWallPaperList(searchKey)
                                    select new WallPaper
                                    {
                                        Id = p.Id,
@@ -395,7 +394,7 @@ namespace Frame.Mobile.WebSite.Controllers
                                        DownloadNumber = p.DownloadNumber,
                                        PublishTime = p.PublishTime,
                                        Status = p.Status
-                                   }).AsQueryable();
+                                   }).AsQueryable<WallPaper>();
             var wallpaperlist = wallpaperResult.ToPagedList<WallPaper>(pageNum, pageSize);
 
             ViewData["WallPaperlist"] = wallpaperlist;
