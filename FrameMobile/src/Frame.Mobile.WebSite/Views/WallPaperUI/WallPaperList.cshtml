@@ -12,6 +12,8 @@
 
     var totalCount = ViewData["TotalCount"] as int?;
     totalCount = totalCount != null ? totalCount : 0;
+
+    var screenTypeInfo = string.Empty;
 }
 
 <div class="contentHeader">
@@ -19,7 +21,7 @@
         <button class="btn btn-large btn-blue addapp" onclick="window.open('WallPaperAdd','_self');">
             壁纸添加</button>
         <label>
-            <input name="textfield" type="text" class="textbox_style" id="textfield" placeholder="请输入壁纸No或壁纸标题...""  value="@Request.QueryString["textfield"]" size="30"/>
+            <input name="textfield" type="text" class="textbox_style" id="textfield" placeholder="请输入壁纸标题...""  value="@Request.QueryString["textfield"]" size="30"/>
             <button class="btn btn-large btn-quaternary" onclick="var formPara = encodeURIComponent( $('#textfield').val().trim()) ;window.open('WallPaperSearchResult?textfield='+formPara ,'_self');">搜索壁纸</button>
         </label>
     </div>
@@ -39,7 +41,7 @@
             <tr>
                 <th>序号</th>
                 <th>名称</th>
-                <th>是否宽屏</th>
+                <th>类型</th>
                 <th>下载数</th>
                 <th>发布时间</th>
                 <th>状态</th>
@@ -49,10 +51,23 @@
         <tbody class="prolist">
             @foreach (var item in wallpaperlist)
             {
+                var screenType = item.ScreenType;
+                switch (screenType)
+                {
+                    case 0:
+                        screenTypeInfo = "窄屏";
+                        break;
+                    case 1:
+                        screenTypeInfo = "宽屏";
+                        break;
+                    case 2:
+                        screenTypeInfo = "锁屏";
+                        break;
+                }
                 <tr class="odd gradeX">
                     <td><strong>@item.Id</strong></td>
                     <td><strong>@item.Title</strong></td>
-                    <td>@item.ScreenType</td>
+                    <td>@screenTypeInfo</td>
                     <td>@item.DownloadNumber</td>
                     <td>@item.PublishTime</td>
                     <td>@item.Status</td>

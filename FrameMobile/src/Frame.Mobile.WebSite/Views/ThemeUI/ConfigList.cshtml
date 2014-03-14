@@ -8,6 +8,8 @@
     configlist = configlist != null ? configlist : new List<ThemeConfig>();
     var totalCount = ViewData["TotalCount"] as int?;
     totalCount = totalCount != null ? totalCount : 0;
+
+    var configTypeInfo = string.Empty;
 }
 
 <div class="contentHeader">
@@ -41,11 +43,20 @@
         <tbody class="prolist">
             @foreach (var item in configlist)
             {
+                switch (item.Type)
+                {
+                    case 0:
+                        configTypeInfo = "铃声";
+                        break;
+                    case 1:
+                        configTypeInfo = "壁纸";
+                        break;
+                }
                 <tr class="odd gradeX">
                     <td><strong>@item.Id</strong></td>
                     <td><strong>@item.Name</strong></td>
                     <td>@item.NameLowCase</td>
-                    <td>@item.Type</td>
+                    <td>@configTypeInfo</td>
                     <td>@item.Version</td>
                     <td>@item.Status</td>
                     <td class="center">

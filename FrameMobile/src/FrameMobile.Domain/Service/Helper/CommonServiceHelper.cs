@@ -14,6 +14,7 @@ namespace FrameMobile.Domain.Service
         public MobileProperty GetMobileProperty(MobileParam mobileParams)
         {
             var brand = mobileParams.Manufacturer.ToLower();
+            brand = brand == Const.BRAND_KOOBEE ? Const.BRAND_KOOBEE : Const.BRAND_PCBA;
             var resolution = mobileParams.Resolution.ToLower();
 
             var mobileproperty = from p in dbContextService.All<MobileProperty>()

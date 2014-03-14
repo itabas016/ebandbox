@@ -10,6 +10,7 @@ namespace FrameMobile.Domain.Service
 {
     public interface IWallPaperUIService : IThemeServiceBase
     {
+        IList<WallPaper> GetWallPaperList(string searchKey);
         IList<WallPaperCategory> GetWallPaperCategoryList();
         IList<WallPaperSubCategory> GetWallPaperSubCategoryList();
         IList<WallPaperTopic> GetWallPaperTopicList();

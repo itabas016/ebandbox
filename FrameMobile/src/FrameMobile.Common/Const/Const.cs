@@ -39,6 +39,10 @@ namespace FrameMobile.Common
 
         public const string THEME_ORIGINALS_FOLDER_NAME = "Originals";
 
+        public const string BRAND_KOOBEE = "koobee";
+
+        public const string BRAND_PCBA = "pcba";
+
         #endregion
 
         #region Sort Field
