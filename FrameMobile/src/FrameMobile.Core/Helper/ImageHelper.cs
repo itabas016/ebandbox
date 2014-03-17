@@ -116,6 +116,32 @@ namespace FrameMobile.Core
             return string.Empty;
         }
 
+        public static string Resized(HttpPostedFileBase imageFile, string destFilePath, string destFileName, int width, int height)
+        {
+            var bitmap = new Bitmap(imageFile.InputStream);
+            if (bitmap.Width > width)
+            {
+                var resizedHeight = (width * bitmap.Height) / bitmap.Width;
+                var size = new Size(width, resizedHeight);
+
+                if (bitmap != null)
+                {
+                    var destBitMap = ResizeImage(bitmap, size);
+                    if (destBitMap != null)
+                    {
+                        if (string.IsNullOrEmpty(destFileName))
+                        {
+                            destFileName = string.Format("{0}_{1}", Guid.NewGuid().ToString(), Path.GetExtension(imageFile.FileName));
+                        }
+                        var destFullFileName = string.Format("{0}{1}", destFilePath, destFileName);
+                        destBitMap.Save(destFullFileName);
+                        return destFullFileName;
+                    }
+                }
+            }
+            return string.Empty;
+        }
+
         #endregion
 
         #region Helper

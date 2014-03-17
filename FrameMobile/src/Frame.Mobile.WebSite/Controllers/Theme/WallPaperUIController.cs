@@ -308,25 +308,23 @@ namespace Frame.Mobile.WebSite.Controllers
         [HttpPost]
         public ActionResult WallPaperAdd(WallPaper model)
         {
-            var exist = dbContextService.Exists<WallPaper>(x => x.Title == model.Title);
-            if (exist)
-            {
-                TempData["errorMsg"] = "该分类已经存在！";
-                return View();
-            }
+            var originalFile = Request.Files[Request.Files.Keys[0]];
 
-            var thumbnailFile = Request.Files[Request.Files.Keys[0]];
-            var thumbnailFilePath = GetThemeThumbnailFilePath(model, thumbnailFile);
-            if (!string.IsNullOrEmpty(thumbnailFilePath))
-            {
-                model.ThumbnailName = string.IsNullOrEmpty(thumbnailFilePath) ? string.Empty : Path.GetFileName(thumbnailFilePath);
-            }
+            var imagePixel = originalFile.GetFilePixel();
+            var thumbnailPixel = imagePixel.GetThumbnailPixelByOriginal();
+            var thumbnailPixelWidth = thumbnailPixel.GetResolutionWidth();
+            var thumbnailPixelHeight = thumbnailPixel.GetResolutionHeight();
 
-            var originalFile = Request.Files[Request.Files.Keys[1]];
             var originalFilePath = GetThemeOriginalFilePath(model, originalFile);
             if (!string.IsNullOrEmpty(originalFilePath))
             {
                 model.OriginalName = string.IsNullOrEmpty(originalFilePath) ? string.Empty : Path.GetFileName(originalFilePath);
+            }
+
+            var thumbnailFilePath = ImageHelper.Resized(originalFile, string.Format("{0}{1}\\", GetResourcePathThemeBase(), Const.THEME_THUMBNAILS_FOLDER_NAME), string.Empty, thumbnailPixelWidth, thumbnailPixelHeight);
+            if (!string.IsNullOrEmpty(thumbnailFilePath))
+            {
+                model.ThumbnailName = string.IsNullOrEmpty(thumbnailFilePath) ? string.Empty : Path.GetFileName(thumbnailFilePath);
             }
 
             var ret = dbContextService.Add<WallPaper>(model);

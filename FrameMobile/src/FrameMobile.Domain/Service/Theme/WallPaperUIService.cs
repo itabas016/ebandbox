@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Web;
 using FrameMobile.Common;
 using FrameMobile.Core;
 using FrameMobile.Model;
@@ -433,7 +434,7 @@ namespace FrameMobile.Domain.Service
                 var imagePixel = string.Format("{0}x{1}", width, height);
                 if (!isOrignal)
                 {
-                    var thumbnailPixel = GetThumbnailPixelByOriginal(imagePixel);
+                    var thumbnailPixel = imagePixel.GetThumbnailPixelByOriginal();
                     width = thumbnailPixel.GetResolutionWidth();
                     height = thumbnailPixel.GetResolutionHeight();
 
@@ -445,54 +446,6 @@ namespace FrameMobile.Domain.Service
                 }
             }
             return destFile;
-        }
-
-        private string GetThumbnailPixelByOriginal(string imagePixel)
-        {
-            var prefix = string.Empty;
-            if (!string.IsNullOrEmpty(imagePixel))
-            {
-                var width = imagePixel.GetResolutionWidth();
-                var thumbnailPixel = string.Empty;
-                switch (imagePixel)
-                {
-                    case "1080x1920":
-                        thumbnailPixel = "360x640";
-                        break;
-                    case "2160x1920":
-                        thumbnailPixel = "540x480";
-                        break;
-                    case "720x1280":
-                        thumbnailPixel = "240x427";
-                        break;
-                    case "1440x1280":
-                        thumbnailPixel = "360x320";
-                        break;
-                    case "540x960":
-                        thumbnailPixel = "160x284";
-                        break;
-                    case "1080x960":
-                        thumbnailPixel = "240x270";
-                        break;
-                    case "480x854":
-                        thumbnailPixel = "142x253";
-                        break;
-                    case "960x854":
-                        thumbnailPixel = "213x190";
-                        break;
-                    case "480x800":
-                        thumbnailPixel = "142x237";
-                        break;
-                    case "960x800":
-                        thumbnailPixel = "213x178";
-                        break;
-                    default:
-                        thumbnailPixel = imagePixel;
-                        break;
-                }
-                prefix = thumbnailPixel;
-            }
-            return prefix;
         }
     }
 }
