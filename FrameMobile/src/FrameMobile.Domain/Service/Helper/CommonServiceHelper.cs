@@ -30,7 +30,7 @@ namespace FrameMobile.Domain.Service
                                      HardwareId = p.HardwareId,
                                      Status = p.Status
                                  };
-            return mobileproperty.SingleOrDefault<MobileProperty>();
+            return (MobileProperty)mobileproperty.SingleOrDefault<MobileProperty>().MakeSureNotNull();
         }
     }
 }

@@ -84,9 +84,6 @@ namespace FrameMobile.Domain.Service
             var result = new List<WallPaperView>();
             totalCount = 0;
 
-            var field = sort == 0 ? Const.SORT_DOWNLOADNUMBER : Const.SORT_PUBLISHTIME;
-            var sortParam = typeof(WallPaper).GetProperty(field);
-
             switch (sort)
             {
                 case 1:
