@@ -409,16 +409,24 @@ namespace Frame.Mobile.WebSite.Controllers
         public ActionResult WallPaperConfig(int wallpaperId)
         {
             var resourceFilePath = GetResourcePathThemeBase();
-
             var wallpaper = dbContextService.Single<WallPaper>(wallpaperId);
+            ViewData["WallPaper"] = wallpaper;
+
+            var config = new WallPaperConfigView();
+            config.WallPaper = wallpaper;
+            var similarRatio = WallPaperUIService.GetImageSimilarRatio(resourceFilePath, wallpaper);
 
             var originalWidth = WallPaperUIService.GetOriginalImagePixel(resourceFilePath, wallpaper).GetWidth();
-            var similarRatio = WallPaperUIService.GetImageSimilarRatio(resourceFilePath, wallpaper);
 
             var categorylist = WallPaperUIService.GetWallPaperCategoryList();
             var subcategorylist = WallPaperUIService.GetWallPaperSubCategoryList();
             var topiclist = WallPaperUIService.GetWallPaperTopicList();
             var propertylist = MobileUIService.GetSimilarMobilePropertyList(originalWidth, similarRatio);
+
+            ViewData["Categorylist"] = categorylist.GetSelectList();
+            ViewData["SubCategorylist"] = subcategorylist.GetSelectList();
+            ViewData["Topiclist"] = topiclist.GetSelectList();
+            ViewData["Propertylist"] = propertylist.GetSelectList();
 
             var relatecategoryIds = WallPaperUIService.GetRelateCategoryIds(wallpaperId).ToList();
             var relatesubcategoryIds = WallPaperUIService.GetRelateSubCategoryIds(wallpaperId).ToList();
@@ -428,12 +436,6 @@ namespace Frame.Mobile.WebSite.Controllers
             var thumbnailNamelist = WallPaperUIService.GetImageNameListByMobileProperty(Const.WALLPAPER_THUMBNAIL, wallpaper, relatepropertyIds).ToList();
             var originalNamelist = WallPaperUIService.GetImageNameListByMobileProperty(Const.WALLPAPER_ORIGINAL, wallpaper, relatepropertyIds).ToList();
 
-            ViewData["Categorylist"] = categorylist.GetSelectList();
-            ViewData["SubCategorylist"] = subcategorylist.GetSelectList();
-            ViewData["Topiclist"] = topiclist.GetSelectList();
-            ViewData["Propertylist"] = propertylist.GetSelectList();
-            ViewData["WallPaper"] = wallpaper;
-
             ViewData["ThumbnailNames"] = thumbnailNamelist;
             ViewData["OriginalNames"] = originalNamelist;
 
@@ -442,16 +444,12 @@ namespace Frame.Mobile.WebSite.Controllers
             ViewData["RelateTopicIds"] = relatetopicIds;
             ViewData["RelatePropertyIds"] = relatepropertyIds;
 
-            var config = new WallPaperConfigView()
-            {
-                WallPaper = wallpaper,
-                RelateCategoryIds = relatecategoryIds,
-                RelateSubCategoryIds = relatesubcategoryIds,
-                RelateTopicIds = relatetopicIds,
-                RelateMobilePropertyIds = relatepropertyIds,
-                ThumbnailNames = thumbnailNamelist,
-                OriginalNames = originalNamelist
-            };
+            config.RelateCategoryIds = relatecategoryIds;
+            config.RelateSubCategoryIds = relatesubcategoryIds;
+            config.RelateTopicIds = relatetopicIds;
+            config.RelateMobilePropertyIds = relatepropertyIds;
+            config.ThumbnailNames = thumbnailNamelist;
+            config.OriginalNames = originalNamelist;
 
             return View(config);
         }

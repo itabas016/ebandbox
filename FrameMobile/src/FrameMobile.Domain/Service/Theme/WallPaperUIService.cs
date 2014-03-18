@@ -233,10 +233,14 @@ namespace FrameMobile.Domain.Service
         public decimal GetImageSimilarRatio(string resourceFilePath, WallPaper wallpaper)
         {
             var imagePixel = GetOriginalImagePixel(resourceFilePath, wallpaper);
-            var width = imagePixel.GetResolutionWidth();
-            var height = imagePixel.GetResolutionHeight();
+            if (!string.IsNullOrEmpty(imagePixel))
+            {
+                var width = imagePixel.GetResolutionWidth();
+                var height = imagePixel.GetResolutionHeight();
 
-            return Math.Round((decimal)width / height, 8);
+                return Math.Round((decimal)width / height, 8);
+            }
+            return 0;
         }
 
         #region Helper
