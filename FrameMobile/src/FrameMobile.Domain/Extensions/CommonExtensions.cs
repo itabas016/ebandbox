@@ -70,6 +70,20 @@ namespace FrameMobile.Domain
             return pixel;
         }
 
+        public static string GetFilePixel(this string fileName)
+        {
+            var pixel = string.Empty;
+
+            var image = Image.FromFile(fileName);
+            if (image != null)
+            {
+                var width = image.Width;
+                var height = image.Height;
+                pixel = string.Format("{0}x{1}", width, height);
+            }
+            return pixel;
+        }
+
         public static IQueryable<T> ConvertIQueryable<T>(this IEnumerable<T> source) where T : MySQLModelBase
         {
             if (source is IQueryable<T>)

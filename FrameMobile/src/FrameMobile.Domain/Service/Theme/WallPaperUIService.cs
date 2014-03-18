@@ -9,6 +9,7 @@ using FrameMobile.Model;
 using FrameMobile.Model.Mobile;
 using FrameMobile.Model.Theme;
 using StructureMap;
+using NCore;
 
 namespace FrameMobile.Domain.Service
 {
@@ -219,6 +220,24 @@ namespace FrameMobile.Domain.Service
             {
                 LogHelper.Error(ex.Message);
             }
+        }
+
+        public string GetOriginalImagePixel(string resourceFilePath, WallPaper wallpaper)
+        {
+            var originalfilePathPrefix = string.Format("{0}{1}\\", resourceFilePath, Const.THEME_ORIGINALS_FOLDER_NAME);
+            var originalFilePath = string.Format("{0}{1}", originalfilePathPrefix, wallpaper.OriginalName);
+
+            var imageFileName = string.Format("{0}{1}", originalFilePath, wallpaper.OriginalName);
+            var imagePixel = imageFileName.GetFilePixel();
+            return imagePixel;
+        }
+        public decimal GetImageSimilarRatio(string resourceFilePath, WallPaper wallpaper)
+        {
+            var imagePixel = GetOriginalImagePixel(resourceFilePath, wallpaper);
+            var width = imagePixel.GetResolutionWidth();
+            var height = imagePixel.GetResolutionHeight();
+
+            return width / height;
         }
 
         #region Helper

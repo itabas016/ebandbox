@@ -312,8 +312,8 @@ namespace Frame.Mobile.WebSite.Controllers
 
             var imagePixel = originalFile.GetFilePixel();
             var thumbnailPixel = imagePixel.GetThumbnailPixelByOriginal();
-            var thumbnailPixelWidth = thumbnailPixel.GetResolutionWidth();
-            var thumbnailPixelHeight = thumbnailPixel.GetResolutionHeight();
+            var thumbnailPixelWidth = thumbnailPixel.GetWidth();
+            var thumbnailPixelHeight = thumbnailPixel.GetHeight();
 
             var originalFilePath = GetThemeOriginalFilePath(model, originalFile);
             if (!string.IsNullOrEmpty(originalFilePath))
@@ -408,11 +408,18 @@ namespace Frame.Mobile.WebSite.Controllers
         [HttpGet]
         public ActionResult WallPaperConfig(int wallpaperId)
         {
+            var resourceFilePath = GetResourcePathThemeBase();
+
+            var wallpaper = dbContextService.Single<WallPaper>(wallpaperId);
+
+            var originalWidth = WallPaperUIService.GetOriginalImagePixel(resourceFilePath, wallpaper).GetWidth();
+            var similarRatio = WallPaperUIService.GetImageSimilarRatio(resourceFilePath, wallpaper);
+
             var categorylist = WallPaperUIService.GetWallPaperCategoryList();
             var subcategorylist = WallPaperUIService.GetWallPaperSubCategoryList();
             var topiclist = WallPaperUIService.GetWallPaperTopicList();
             var propertylist = MobileUIService.GetMobilePropertyList();
-            var wallpaper = dbContextService.Single<WallPaper>(wallpaperId);
+            propertylist = MobileUIService.GetSimilarMobilePropertyList(originalWidth, similarRatio);
 
             var relatecategoryIds = WallPaperUIService.GetRelateCategoryIds(wallpaperId).ToList();
             var relatesubcategoryIds = WallPaperUIService.GetRelateSubCategoryIds(wallpaperId).ToList();
