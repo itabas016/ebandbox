@@ -418,8 +418,7 @@ namespace Frame.Mobile.WebSite.Controllers
             var categorylist = WallPaperUIService.GetWallPaperCategoryList();
             var subcategorylist = WallPaperUIService.GetWallPaperSubCategoryList();
             var topiclist = WallPaperUIService.GetWallPaperTopicList();
-            var propertylist = MobileUIService.GetMobilePropertyList();
-            propertylist = MobileUIService.GetSimilarMobilePropertyList(originalWidth, similarRatio);
+            var propertylist = MobileUIService.GetSimilarMobilePropertyList(originalWidth, similarRatio);
 
             var relatecategoryIds = WallPaperUIService.GetRelateCategoryIds(wallpaperId).ToList();
             var relatesubcategoryIds = WallPaperUIService.GetRelateSubCategoryIds(wallpaperId).ToList();
