@@ -11,6 +11,7 @@ namespace FrameMobile.Model.Mobile
     [SubSonicTableNameOverride("mobileresolution")]
     public class MobileResolution : MobilePropertyBase
     {
+        [SubSonicNumericPrecision(10, 8)]
         public decimal SimilarRatio
         {
             get
