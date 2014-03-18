@@ -225,9 +225,8 @@ namespace FrameMobile.Domain.Service
         public string GetOriginalImagePixel(string resourceFilePath, WallPaper wallpaper)
         {
             var originalfilePathPrefix = string.Format("{0}{1}\\", resourceFilePath, Const.THEME_ORIGINALS_FOLDER_NAME);
-            var originalFilePath = string.Format("{0}{1}", originalfilePathPrefix, wallpaper.OriginalName);
 
-            var imageFileName = string.Format("{0}{1}", originalFilePath, wallpaper.OriginalName);
+            var imageFileName = string.Format("{0}{1}", originalfilePathPrefix, wallpaper.OriginalName);
             var imagePixel = imageFileName.GetFilePixel();
             return imagePixel;
         }
