@@ -80,34 +80,50 @@
                         <td><strong>状态: </strong></td>
                         <td>@Html.RadioButtonFor(m => m.Status, 1) 有效 @Html.RadioButtonFor(m => m.Status, 0) 无效</td>
                         <td><strong>图片属性: </strong></td>
-                        <td>@Html.RadioButtonFor(m => m.ScreenType, 1) 宽屏 @Html.RadioButtonFor(m => m.ScreenType, 0) 窄屏 @Html.RadioButtonFor(m => m.ScreenType, 2) 锁屏</td>
+                        <td>@Html.RadioButtonFor(m => m.ScreenType, 1) 宽屏 @Html.RadioButtonFor(m => m.ScreenType, 0) 窄屏</td>
                     </tr>
                 </table>
-
-                <div>
-                    <strong>缩略图地址: </strong>
-                    <input type="file" name="thumbnailFile" accept="bmp|gif|jpg|jpeg|png|tiff|abm" />
-                    <br />
-                    <label>@thumbnailName</label>
-                    <br />
-                    @if (@thumbnailName != string.Empty)
-                    {
-                        <img src="@string.Format("{0}{1}", thumbnailImagePrefix, thumbnailName)" />
+                @if (isUpdateMode)
+                {
+                    <div>
+                        <strong>缩略图文件: </strong>
                         <br />
-                    }
-                </div>
-                <div>
-                    <strong>原图地址: </strong>
-                    <input type="file" name="originalFile" accept="bmp|gif|jpg|jpeg|png|tiff|abm" />
-                    <br />
-                    <label>@originalName</label>
-                    <br />
-                    @if (@originalName != string.Empty)
-                    {
-                        <img src="@string.Format("{0}{1}", originalImagePrefix, originalName)" />
+                        <label>@thumbnailName</label>
                         <br />
-                    }
-                </div>
+                        @if (@thumbnailName != string.Empty)
+                        {
+                            <img src="@string.Format("{0}{1}", thumbnailImagePrefix, thumbnailName)" />
+                            <br />
+                        }
+                    </div>
+                    <div>
+                        <strong>原图文件: </strong>
+                        <input type="file" name="originalFile" accept="bmp|gif|jpg|jpeg|png|tiff|abm" />
+                        <br />
+                        <label>@originalName</label>
+                        <br />
+                        @if (@originalName != string.Empty)
+                        {
+                            <img src="@string.Format("{0}{1}", originalImagePrefix, originalName)" />
+                            <br />
+                        }
+                    </div>
+                }
+                else
+                {
+                    <div>
+                        <strong>原图文件: </strong>
+                        <input type="file" name="originalFile" accept="bmp|gif|jpg|jpeg|png|tiff|abm" />
+                        <br />
+                        <label>@originalName</label>
+                        <br />
+                        @if (@originalName != string.Empty)
+                        {
+                            <img src="@string.Format("{0}{1}", originalImagePrefix, originalName)" />
+                            <br />
+                        }
+                    </div>
+                }
                 <div>
                     <strong>备注: </strong>
                     <br />

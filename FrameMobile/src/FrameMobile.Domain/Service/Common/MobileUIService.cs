@@ -53,6 +53,21 @@ namespace FrameMobile.Domain.Service
             return lcds.ToList();
         }
 
+        public IList<MobileProperty> GetSimilarMobilePropertyList(int currentWidth, decimal similarRatio)
+        {
+            var propertylist = from p in dbContextService.Find<MobileProperty>(x => x.Status == 1)
+                               join r in dbContextService.Find<MobileResolution>(x => x.SimilarRatio == similarRatio && x.Status == 1) on p.ResolutionId equals r.Id
+                               where r.Value.GetResolutionWidth() <= currentWidth
+                               select new MobileProperty()
+                               {
+                                   Id = p.Id,
+                                   Name = p.Name,
+                                   BrandId = p.BrandId,
+                                   ResolutionId = p.ResolutionId
+                               };
+            return propertylist.ToList();
+        }
+
         public MobileChannel GetMobileChannel(int channelId)
         {
             var channel = dbContextService.Single<MobileChannel>(x => x.Id == channelId && x.Status == 1);
@@ -61,7 +76,7 @@ namespace FrameMobile.Domain.Service
 
         public MobileChannel GetMobileChannel(string channelName)
         {
-            var channel = dbContextService.Single<MobileChannel>(x =>x.Value == channelName.ToLower() && x.Status == 1);
+            var channel = dbContextService.Single<MobileChannel>(x => x.Value == channelName.ToLower() && x.Status == 1);
             return channel;
         }
     }

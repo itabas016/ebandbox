@@ -25,5 +25,7 @@ namespace FrameMobile.Domain.Service
         IList<int> GetRelateMobilePropertyIds(int wallpaperId);
         IList<string> GetImageNameListByMobileProperty(string imageType, WallPaper wallpaper, List<int> mobilepropertyIds);
         void WallPaperConfig(WallPaperConfigView model, List<int> categoryIds, List<int> subcategoryIds, List<int> topicIds, List<int> propertyIds, string resourceFilePath);
+        string GetOriginalImagePixel(string resourceFilePath, WallPaper wallpaper);
+        decimal GetImageSimilarRatio(string resourceFilePath, WallPaper wallpaper);
     }
 }

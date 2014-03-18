@@ -61,25 +61,38 @@
                     @Html.HiddenFor(m => m.WallPaper.Id)
                     @Html.HiddenFor(m => m.WallPaper.ThumbnailName)
                     @Html.HiddenFor(m => m.WallPaper.OriginalName)
-                    @foreach (var c in Model.RelateCategoryIds)
+                    @if (Model.RelateCategoryIds != null && Model.RelateCategoryIds.Count > 0)
                     {
+
+                        foreach (var c in Model.RelateCategoryIds)
+                        {
                         @Html.HiddenFor(m => m.RelateCategoryIds[i])
-                        ++i;
+                            ++i;
+                        }
                     }
-                    @foreach (var c in Model.RelateSubCategoryIds)
+                    @if (Model.RelateSubCategoryIds != null && Model.RelateSubCategoryIds.Count > 0)
                     {
+                        foreach (var c in Model.RelateSubCategoryIds)
+                        {
                         @Html.HiddenFor(m => m.RelateSubCategoryIds[j])
-                        ++j;
+                            ++j;
+                        }
                     }
-                    @foreach (var c in Model.RelateTopicIds)
+                    @if (Model.RelateTopicIds != null && Model.RelateTopicIds.Count > 0)
                     {
+                        foreach (var c in Model.RelateTopicIds)
+                        {
                         @Html.HiddenFor(m => m.RelateTopicIds[k])
-                        ++k;
+                            ++k;
+                        }
                     }
-                    @foreach (var c in Model.RelateMobilePropertyIds)
+                    @if (Model.RelateMobilePropertyIds != null && Model.RelateMobilePropertyIds.Count > 0)
                     {
+                        foreach (var c in Model.RelateMobilePropertyIds)
+                        {
                         @Html.HiddenFor(m => m.RelateMobilePropertyIds[l])
-                        ++l;
+                            ++l;
+                        }
                     }
                 </div>
                 @if (wallpaper.ThumbnailName != string.Empty)
@@ -87,13 +100,16 @@
                     <img src="@string.Format("{0}{1}", thumbnailImagePrefix, wallpaper.ThumbnailName)" />
                 }
                 <br />
-                <strong>所属类别: </strong>
-                @foreach (var category in categorylist)
+                @if (categorylist != null && categorylist.Count() > 0)
                 {
-                    var ischecked = categoryIds.Contains(category.Value.ToInt32()) ? "checked='checked'" : string.Empty;
+                    <strong>所属类别: </strong>
+                    foreach (var category in categorylist)
+                    {
+                        var ischecked = categoryIds.Contains(category.Value.ToInt32()) ? "checked='checked'" : string.Empty;
                     <input type="checkbox" name="category" value="@category.Value" @ischecked />@category.Text
+                    }
+                    <br />
                 }
-                <br />
                 <div hidden="hidden">
                     <strong>所属子分类: </strong>
                     @foreach (var subcategory in subcategorylist)
@@ -103,27 +119,33 @@
                     }
                     <br />
                 </div>
-                <strong>所属专题: </strong>
-                @foreach (var topic in topiclist)
+                @if (topiclist != null && topiclist.Count() > 0)
                 {
-                    var ischecked = topicIds.Contains(topic.Value.ToInt32()) ? "checked='checked'" : string.Empty;
+                    <strong>所属专题: </strong>
+                    foreach (var topic in topiclist)
+                    {
+                        var ischecked = topicIds.Contains(topic.Value.ToInt32()) ? "checked='checked'" : string.Empty;
                     <input type="checkbox" name="topic" value="@topic.Value" @ischecked />@topic.Text
+                    }
+                    <br />
                 }
-                <br />
-                <strong>适配手机属性: </strong>
-                @foreach (var property in propertylist)
+                @if (propertylist != null && propertylist.Count() > 0)
                 {
-                    var ischecked = propertyIds.Contains(property.Value.ToInt32()) ? "checked='checked'" : string.Empty;
+                    <strong>适配手机属性: </strong>
+                    foreach (var property in propertylist)
+                    {
+                        var ischecked = propertyIds.Contains(property.Value.ToInt32()) ? "checked='checked'" : string.Empty;
                     <input type="checkbox" name="property" value="@property.Value" @ischecked />@property.Text
+                    }
+                    <br />
                 }
-                <br />
                 @if (Model.ThumbnailNames.Count > 0)
                 {
                     <strong>适配的缩略图文件: </strong>
                     <br />
                     foreach (var s in Model.ThumbnailNames)
                     {
-<div>
+                    <div>
                         <a href="@string.Format("{0}{1}", thumbnailImagePrefix, s)" target="_blank" style="padding-left: 20px" >@s</a>
                         <br />
                     </div>
@@ -135,7 +157,7 @@
                     <br />
                     foreach (var s in Model.OriginalNames)
                     {
-<div>
+                    <div>
                         <a href="@string.Format("{0}{1}", originalImagePrefix, s)" target="_blank" style="padding-left: 20px" >@s</a>
                         <br />
                     </div>

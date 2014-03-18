@@ -14,6 +14,7 @@ namespace FrameMobile.Domain.Service
         IList<MobileChannel> GetMobileChannelList();
         IList<MobileProperty> GetMobilePropertyList();
         IList<MobileResolution> GetMobileResolutionList(List<int> mobilePropertyIds);
+        IList<MobileProperty> GetSimilarMobilePropertyList(int currentWidth, decimal similarRatio);
         MobileChannel GetMobileChannel(int channelId);
         MobileChannel GetMobileChannel(string channelName);
     }
