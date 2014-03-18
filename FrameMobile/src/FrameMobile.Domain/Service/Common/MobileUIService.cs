@@ -56,7 +56,8 @@ namespace FrameMobile.Domain.Service
         public IList<MobileProperty> GetSimilarMobilePropertyList(int currentWidth, decimal similarRatio)
         {
             var propertylist = from p in dbContextService.Find<MobileProperty>(x => x.Status == 1)
-                               join r in dbContextService.Find<MobileResolution>(x => x.SimilarRatio == similarRatio && x.Value.GetResolutionWidth() <= currentWidth && x.Status == 1) on p.ResolutionId equals r.Id
+                               join r in dbContextService.Find<MobileResolution>(x => x.SimilarRatio == similarRatio && x.Status == 1) on p.ResolutionId equals r.Id
+                               where r.Value.GetResolutionWidth() <= currentWidth
                                select new MobileProperty()
                                {
                                    Id = p.Id,

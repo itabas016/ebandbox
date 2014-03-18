@@ -33,7 +33,7 @@ namespace FrameMobile.Domain.Service
 
         public IList<WallPaper> GetWallPaperList(string searchKey)
         {
-            var wallpaperlist = dbContextService.Find<WallPaper>(x=>x.Title.Contains(searchKey)).ToList();
+            var wallpaperlist = dbContextService.Find<WallPaper>(x => x.Title.Contains(searchKey)).ToList();
             return wallpaperlist;
         }
 
@@ -236,7 +236,7 @@ namespace FrameMobile.Domain.Service
             var width = imagePixel.GetResolutionWidth();
             var height = imagePixel.GetResolutionHeight();
 
-            return width / height;
+            return Math.Round((decimal)width / height, 8);
         }
 
         #region Helper
