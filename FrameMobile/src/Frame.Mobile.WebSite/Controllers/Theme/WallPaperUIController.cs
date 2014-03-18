@@ -312,6 +312,11 @@ namespace Frame.Mobile.WebSite.Controllers
 
             var imagePixel = originalFile.GetFilePixel();
             var thumbnailPixel = imagePixel.GetThumbnailPixelByOriginal();
+            if (imagePixel == thumbnailPixel)
+            {
+                TempData["errorMsg"] = "请上传指定像素的图片！";
+                return View();
+            }
             var thumbnailPixelWidth = thumbnailPixel.GetWidth();
             var thumbnailPixelHeight = thumbnailPixel.GetHeight();
 
