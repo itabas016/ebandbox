@@ -17,8 +17,14 @@ namespace FrameMobile.Model.Mobile
             {
                 var width = StringHelper.GetWidth(this.Value);
                 var height = StringHelper.GetHeight(this.Value);
-                return width / height;
+                _similarRatio = Math.Round((decimal)width / height, 8);
+                return _similarRatio;
+            }
+            set
+            {
+                _similarRatio = value;
             }
         }
+        private decimal _similarRatio;
     }
 }
