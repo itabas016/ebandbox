@@ -57,6 +57,8 @@
     <Compile Include="Const\EncodingNames.cs" />
     <Compile Include="Const\HeaderKeys.cs" />
     <Compile Include="Const\Site.cs" />
+    <Compile Include="Const\OriginalSize.cs" />
+    <Compile Include="Const\ThumbnailSize.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RedisClientManagerType.cs" />
   </ItemGroup>
