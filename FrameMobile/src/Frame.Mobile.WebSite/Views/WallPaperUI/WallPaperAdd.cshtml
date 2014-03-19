@@ -80,7 +80,7 @@
                         <td><strong>状态: </strong></td>
                         <td>@Html.RadioButtonFor(m => m.Status, 1) 有效 @Html.RadioButtonFor(m => m.Status, 0) 无效</td>
                         <td><strong>图片属性: </strong></td>
-                        <td>@Html.RadioButtonFor(m => m.ScreenType, 1) 宽屏 @Html.RadioButtonFor(m => m.ScreenType, 0) 窄屏</td>
+                        <td>@Html.RadioButtonFor(m => m.ScreenType, 0) 窄屏 @Html.RadioButtonFor(m => m.ScreenType, 1) 宽屏</td>
                     </tr>
                 </table>
                 @if (isUpdateMode)
