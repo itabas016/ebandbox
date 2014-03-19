@@ -252,9 +252,9 @@ namespace FrameMobile.Core
             x = (newSize.Width - thumbSize.Width) / 2;
             y = (newSize.Height - thumbSize.Height);
             System.Drawing.Graphics g = Graphics.FromImage(bp);
-            g.SmoothingMode = SmoothingMode.HighSpeed;
-            g.InterpolationMode = InterpolationMode.Low;
-            g.PixelOffsetMode = PixelOffsetMode.HighSpeed;
+            g.SmoothingMode = SmoothingMode.HighQuality;
+            g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+            g.PixelOffsetMode = PixelOffsetMode.HighQuality;
             Rectangle rect = new Rectangle(x, y, thumbSize.Width, thumbSize.Height);
             g.DrawImage(mg, rect, 0, 0, mg.Width, mg.Height, GraphicsUnit.Pixel);
 
