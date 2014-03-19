@@ -21,8 +21,6 @@ namespace FrameMobile.Domain
             {
                 EntityMapping.Config();
 
-                DBModelstrapper.Initialize();
-
                 ConfigueInjection();
 
                 _hasBeenIntialized = true;
