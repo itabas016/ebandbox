@@ -44,7 +44,7 @@ namespace FrameMobile.Domain
             }
             else
             {
-                CheckCacheKeyRead(invocation, redisCacheService, parameters, svcCacheAttribute, cacheKey);
+                CheckCacheKeyLock(invocation, redisCacheService, parameters, svcCacheAttribute, cacheKey);
             }
         }
 
@@ -262,7 +262,7 @@ namespace FrameMobile.Domain
             }
         }
 
-        private void CheckCacheKeyRead(IInvocation invocation, IRedisCacheService redisCacheService, ParameterInfo[] parameters, ServiceCacheAttribute svcCacheAttribute, string cacheKey)
+        private void CheckCacheKeyLock(IInvocation invocation, IRedisCacheService redisCacheService, ParameterInfo[] parameters, ServiceCacheAttribute svcCacheAttribute, string cacheKey)
         {
             var cacheKeyLocked = string.Format("{0}_locked", cacheKey);
             if (!redisCacheService.Contains(cacheKeyLocked))
