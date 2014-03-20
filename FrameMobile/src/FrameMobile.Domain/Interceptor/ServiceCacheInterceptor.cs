@@ -38,13 +38,12 @@ namespace FrameMobile.Domain
 
             var redisCacheService = RedisCacheServiceFactory(svcCacheAttribute);
 
-            if (redisCacheService.Contains(cacheKey))
+            var flag = CheckCacheKey(invocation, redisCacheService, parameters, svcCacheAttribute, cacheKey);
+
+            while (flag)
             {
-                GetDataByCacheKey(invocation, redisCacheService, parameters, cacheKey);
-            }
-            else
-            {
-                CheckCacheKeyLock(invocation, redisCacheService, parameters, svcCacheAttribute, cacheKey);
+                Thread.Sleep(500);
+                flag = CheckCacheKey(invocation, redisCacheService, parameters, svcCacheAttribute, cacheKey);
             }
         }
 
@@ -262,6 +261,20 @@ namespace FrameMobile.Domain
             }
         }
 
+        private bool CheckCacheKey(IInvocation invocation, IRedisCacheService redisCacheService, ParameterInfo[] parameters, ServiceCacheAttribute svcCacheAttribute, string cacheKey)
+        {
+            if (redisCacheService.Contains(cacheKey))
+            {
+                GetDataByCacheKey(invocation, redisCacheService, parameters, cacheKey);
+                return false;
+            }
+            else
+            {
+                CheckCacheKeyLock(invocation, redisCacheService, parameters, svcCacheAttribute, cacheKey);
+                return true;
+            }
+        }
+
         private void CheckCacheKeyLock(IInvocation invocation, IRedisCacheService redisCacheService, ParameterInfo[] parameters, ServiceCacheAttribute svcCacheAttribute, string cacheKey)
         {
             var cacheKeyLocked = string.Format("{0}:LOCK", cacheKey);
@@ -270,11 +283,6 @@ namespace FrameMobile.Domain
                 AddCacheKey(invocation, redisCacheService, parameters, svcCacheAttribute, cacheKey);
 
                 redisCacheService.Remove(cacheKeyLocked);
-            }
-            else
-            {
-                Thread.Sleep(500);
-                GetDataByCacheKey(invocation, redisCacheService, parameters, cacheKey);
             }
         }
     }
