@@ -80,6 +80,7 @@
     <Compile Include="Domain\Mappers\ContentMapperTest.cs" />
     <Compile Include="Domain\Service\CommonServiceTest.cs" />
     <Compile Include="Domain\Service\DbContextServiceTest.cs" />
+    <Compile Include="Domain\Service\RedisCacheTest.cs" />
     <Compile Include="Domain\Service\TouTiaoServiceTest.cs" />
     <Compile Include="Domain\Service\NewsServiceTest.cs" />
     <Compile Include="Domain\Service\TencentServiceTest.cs" />
@@ -98,6 +99,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\src\FrameMobile.Cache\FrameMobile.Cache.csproj">
+      <Project>{f304baa0-b2f6-415f-b7a2-6af1bde76e83}</Project>
+      <Name>FrameMobile.Cache</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\src\FrameMobile.Common\FrameMobile.Common.csproj">
       <Project>{4eab6159-e307-4c31-8241-0cb556778111}</Project>
       <Name>FrameMobile.Common</Name>

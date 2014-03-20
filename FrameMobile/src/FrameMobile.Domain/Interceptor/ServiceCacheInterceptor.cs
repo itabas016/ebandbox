@@ -264,8 +264,8 @@ namespace FrameMobile.Domain
 
         private void CheckCacheKeyLock(IInvocation invocation, IRedisCacheService redisCacheService, ParameterInfo[] parameters, ServiceCacheAttribute svcCacheAttribute, string cacheKey)
         {
-            var cacheKeyLocked = string.Format("{0}_locked", cacheKey);
-            if (!redisCacheService.Contains(cacheKeyLocked))
+            var cacheKeyLocked = string.Format("{0}:LOCK", cacheKey);
+            if (redisCacheService.SetNX(cacheKeyLocked))
             {
                 AddCacheKey(invocation, redisCacheService, parameters, svcCacheAttribute, cacheKey);
 

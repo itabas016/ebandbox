@@ -21,5 +21,6 @@ namespace FrameMobile.Cache
         T GetData<T>(string key);
         object GetData(string key, Type dataType);
         object GetNullableData(string key, Type dataType);
+        bool SetNX(string key);
     }
 }

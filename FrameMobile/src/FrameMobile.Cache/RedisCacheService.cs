@@ -189,6 +189,24 @@ namespace FrameMobile.Cache
             }
         }
 
+        public bool SetNX(string key)
+        {
+            try
+            {
+                using (var Redis = RedisClientManager.GetReadOnlyClient())
+                {
+                    var ret = Redis.SetEntryIfNotExists(key, key);
+                    Redis.IncrementValue(COUNT);
+                    return ret;
+                }
+            }
+            catch (RedisException ex)
+            {
+                LogManager.GetLogger("ErrorLogger").Error(string.Format("{0}\r\n{1}", ex.Message, ex.StackTrace));
+                return false;
+            }
+        }
+
         public int Count
         {
             get
