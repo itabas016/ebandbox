@@ -11,6 +11,7 @@ using Snap;
 using StructureMap;
 using NCore;
 using FrameMobile.Domain.Service;
+using System.Threading;
 
 namespace FrameMobile.Domain
 {
@@ -43,7 +44,7 @@ namespace FrameMobile.Domain
             }
             else
             {
-                AddCacheKey(invocation, redisCacheService, parameters, svcCacheAttribute, cacheKey);
+                CheckCacheKeyRead(invocation, redisCacheService, parameters, svcCacheAttribute, cacheKey);
             }
         }
 
@@ -258,6 +259,22 @@ namespace FrameMobile.Domain
                     object argVal = redisCacheService.GetData(cacheKey + parameters[i].Name, parameters[i].ParameterType.GetElementType());
                     invocation.SetArgumentValue(i, argVal);
                 }
+            }
+        }
+
+        private void CheckCacheKeyRead(IInvocation invocation, IRedisCacheService redisCacheService, ParameterInfo[] parameters, ServiceCacheAttribute svcCacheAttribute, string cacheKey)
+        {
+            var cacheKeyLocked = string.Format("{0}_locked", cacheKey);
+            if (!redisCacheService.Contains(cacheKeyLocked))
+            {
+                AddCacheKey(invocation, redisCacheService, parameters, svcCacheAttribute, cacheKey);
+
+                redisCacheService.Remove(cacheKeyLocked);
+            }
+            else
+            {
+                Thread.Sleep(500);
+                GetDataByCacheKey(invocation, redisCacheService, parameters, cacheKey);
             }
         }
     }
