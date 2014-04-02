@@ -1,0 +1,151 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C6FC474E-D854-4C89-9FBB-80CA36C839F4}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TencentAppStoreCap</RootNamespace>
+    <AssemblyName>TencentAppStoreCap</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="NCore">
+      <HintPath>..\..\..\..\lib\NCore\NCore.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\lib\Newtonsoft.Json.4.5.8\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog">
+      <HintPath>..\..\..\..\lib\NLog.2.0.0.2000\lib\net40\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="RedisMapper">
+      <HintPath>..\..\..\..\lib\RedisMapper\RedisMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp">
+      <HintPath>..\..\..\..\lib\Restsharp\RestSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Common">
+      <HintPath>..\..\..\..\lib\ServiceStack\ServiceStack.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Interfaces">
+      <HintPath>..\..\..\..\lib\ServiceStack\ServiceStack.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Redis">
+      <HintPath>..\..\..\..\lib\ServiceStack\ServiceStack.Redis.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Text">
+      <HintPath>..\..\..\..\lib\ServiceStack\ServiceStack.Text.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="TYD.Mobile.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6020c3765b5e7921, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\lib\infra\TYD.Mobile.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="TYD.Mobile.Infrastructure.AppStore.Models, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6020c3765b5e7921, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\lib\infra\TYD.Mobile.Infrastructure.AppStore.Models.dll</HintPath>
+    </Reference>
+    <Reference Include="TYD.Mobile.Infrastructure.Common, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6020c3765b5e7921, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\lib\infra\TYD.Mobile.Infrastructure.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="TYD.Mobile.Infrastructure.Domain">
+      <HintPath>..\..\..\..\lib\infra\TYD.Mobile.Infrastructure.Domain.dll</HintPath>
+    </Reference>
+    <Reference Include="TYD.Mobile.Infrastructure.Models, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6020c3765b5e7921, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\lib\infra\TYD.Mobile.Infrastructure.Models.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AppInfoCollector.cs" />
+    <Compile Include="Connectable\AppDetail.cs" />
+    <Compile Include="Connectable\Category.cs" />
+    <Compile Include="Connectable\CategoryList.cs" />
+    <Compile Include="Connectable\CMSAdv.cs" />
+    <Compile Include="Connectable\GetComment.cs" />
+    <Compile Include="Connectable\Grading.cs" />
+    <Compile Include="Connectable\Necessary.cs" />
+    <Compile Include="Connectable\PostComment.cs" />
+    <Compile Include="Connectable\QQSoft.cs" />
+    <Compile Include="Connectable\Relation.cs" />
+    <Compile Include="Connectable\Search.cs" />
+    <Compile Include="Connectable\Selection.cs" />
+    <Compile Include="Connectable\ConnectableBase.cs" />
+    <Compile Include="Connectable\TargetApp.cs" />
+    <Compile Include="Connectable\TodayNew.cs" />
+    <Compile Include="Connectable\TopicDetail.cs" />
+    <Compile Include="Connectable\TopicList.cs" />
+    <Compile Include="Connectable\Update.cs" />
+    <Compile Include="Const\AppConfigKey.cs" />
+    <Compile Include="FakeApp.cs" />
+    <Compile Include="LogHelper.cs" />
+    <Compile Include="Service\DESDecryptor.cs" />
+    <Compile Include="Service\IMD5Service.cs" />
+    <Compile Include="Service\MD5Service.cs" />
+    <Compile Include="Service\ServiceProxy.cs" />
+    <Compile Include="UrlRequest.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TencentAppStoreModel\TencentAppStoreModel.csproj">
+      <Project>{6ea59df1-0361-4218-866f-5eefb5f6c313}</Project>
+      <Name>TencentAppStoreModel</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <UsingTask TaskName="TransformXml" AssemblyFile="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\Web\Microsoft.Web.Publishing.Tasks.dll" />
+  <Target Name="AfterCompile" Condition="Exists('App.$(Configuration).config')">
+    <!--Generate transformed app config in the intermediate directory-->
+    <TransformXml Source="App.config" Destination="$(IntermediateOutputPath)$(TargetFileName).config" Transform="App.$(Configuration).config" />
+    <!--Force build process to use the transformed configuration file from now on.-->
+    <ItemGroup>
+      <AppConfigWithTargetPath Remove="App.config" />
+      <AppConfigWithTargetPath Include="$(IntermediateOutputPath)$(TargetFileName).config">
+        <TargetPath>$(TargetFileName).config</TargetPath>
+      </AppConfigWithTargetPath>
+    </ItemGroup>
+  </Target>
+</Project>

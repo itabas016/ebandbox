@@ -5,10 +5,13 @@ using System.Text;
 
 namespace TencentAppStoreCap.Runner
 {
-    class Program
+    public class Program
     {
         static void Main(string[] args)
         {
+            AppInfoCollector appInfoCollector = new AppInfoCollector();
+
+            appInfoCollector.PerformFullAppCollect();
         }
     }
 }
