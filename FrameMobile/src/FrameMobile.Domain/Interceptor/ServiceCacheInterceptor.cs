@@ -12,6 +12,7 @@ using StructureMap;
 using NCore;
 using FrameMobile.Domain.Service;
 using System.Threading;
+using FrameMobile.Core;
 
 namespace FrameMobile.Domain
 {
@@ -38,13 +39,7 @@ namespace FrameMobile.Domain
 
             var redisCacheService = RedisCacheServiceFactory(svcCacheAttribute);
 
-            var flag = CheckCacheKey(invocation, redisCacheService, parameters, svcCacheAttribute, cacheKey);
-
-            while (flag)
-            {
-                Thread.Sleep(500);
-                flag = CheckCacheKey(invocation, redisCacheService, parameters, svcCacheAttribute, cacheKey);
-            }
+            GetDataByCacheKey(invocation, redisCacheService, parameters, svcCacheAttribute, cacheKey);
         }
 
         public IRedisCacheService RedisCacheServiceFactory(ServiceCacheAttribute svcCacheAttribute)
@@ -275,15 +270,53 @@ namespace FrameMobile.Domain
             }
         }
 
-        private void CheckCacheKeyLock(IInvocation invocation, IRedisCacheService redisCacheService, ParameterInfo[] parameters, ServiceCacheAttribute svcCacheAttribute, string cacheKey)
+        private void GetDataByCacheKey(IInvocation invocation, IRedisCacheService redisCacheService, ParameterInfo[] parameters, ServiceCacheAttribute svcCacheAttribute, string cacheKey)
+        {
+            int retryTimes = 0;
+            if (redisCacheService.Contains(cacheKey))
+            {
+                GetDataByCacheKey(invocation, redisCacheService, parameters, cacheKey);
+                retryTimes = 0;
+            }
+            else
+            {
+            Label_RETRY:
+                var isLock = CheckCacheKeyLock(invocation, redisCacheService, parameters, svcCacheAttribute, cacheKey);
+                if (isLock)
+                {
+                    while (retryTimes <= 3)
+                    {
+                        Thread.Sleep(500);
+                        retryTimes++;
+                        goto Label_RETRY;
+                    }
+                    var cacheKeyLocked = string.Format("{0}:LOCK", cacheKey);
+                    redisCacheService.Remove(cacheKeyLocked);
+                }
+            }
+        }
+
+        private bool CheckCacheKeyLock(IInvocation invocation, IRedisCacheService redisCacheService, ParameterInfo[] parameters, ServiceCacheAttribute svcCacheAttribute, string cacheKey)
         {
             var cacheKeyLocked = string.Format("{0}:LOCK", cacheKey);
             if (redisCacheService.SetNX(cacheKeyLocked))
             {
-                AddCacheKey(invocation, redisCacheService, parameters, svcCacheAttribute, cacheKey);
+                try
+                {
+                    AddCacheKey(invocation, redisCacheService, parameters, svcCacheAttribute, cacheKey);
+                }
+                catch (Exception ex)
+                {
+                    LogHelper.Error(string.Format("{0}\r\n{1}", ex.Message, ex.StackTrace.ToString()));
+                }
+                finally
+                {
+                    redisCacheService.Remove(cacheKeyLocked);
+                }
 
-                redisCacheService.Remove(cacheKeyLocked);
+                return false;
             }
+            return true;
         }
     }
 }
