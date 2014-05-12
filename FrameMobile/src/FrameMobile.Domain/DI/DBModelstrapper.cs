@@ -17,13 +17,16 @@ namespace FrameMobile.Domain
 
         public static string THEMECONNECTSTRING = ConnectionStrings.THEME_MYSQL_CONNECTSTRING;
 
+        public static string SECURITYCONNECTSTRING = ConnectionStrings.SECURITY_MYSQL_CONNECTSTRING;
+
         public static void Initialize()
         {
-            UserInitialize();
-            NewsInitialize();
-            RadarInitialize();
-            MobileInitialize();
-            ThemeInitialize();
+            //UserInitialize();
+            //NewsInitialize();
+            //RadarInitialize();
+            //MobileInitialize();
+            //ThemeInitialize();
+            SerurityInitialize();
         }
 
         public static void UserInitialize()
@@ -54,6 +57,12 @@ namespace FrameMobile.Domain
         {
             var themeModelSpace = string.Format("{0}.{1}", Const.FRAME_MODEL_MASTER, "Theme");
             Initialize(THEMECONNECTSTRING, themeModelSpace);
+        }
+
+        public static void SerurityInitialize()
+        {
+            var securityModelSpace = string.Format("{0}.{1}", Const.FRAME_MODEL_MASTER, "Security");
+            Initialize(SECURITYCONNECTSTRING, securityModelSpace);
         }
 
         #region Helper

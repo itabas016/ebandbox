@@ -156,6 +156,36 @@ namespace FrameMobile.Web
             }
         }
 
+        protected virtual SecurityAcitonResult BuildResult<T>(Func<T> viewModelActions)
+            where T : ISecurityViewModel
+        {
+            var actionResult = new SecurityAcitonResult();
+
+            try
+            {
+                var configdata = viewModelActions();
+                if (configdata != null)
+                {
+                    var config = new SecurityConfigData
+                    {
+                        Data = configdata.JsonResult,
+                        Version = configdata.Version
+                    };
+                    actionResult.Result = 0;
+                    actionResult.ConfigData = config;
+                }
+                else
+                {
+                    actionResult.Result = -2;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return actionResult;
+        }
+
         #endregion
 
         #region Param Helper

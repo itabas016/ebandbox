@@ -12,5 +12,7 @@ namespace FrameMobile.Common
         public const string NEWS_MYSQL_CONNECTSTRING = "News_MySQL_ConnectString";
 
         public const string THEME_MYSQL_CONNECTSTRING = "Theme_MySQL_ConnectString";
+
+        public const string SECURITY_MYSQL_CONNECTSTRING = "Security_MySQL_ConnectString";
     }
 }

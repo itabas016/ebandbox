@@ -69,6 +69,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -79,6 +80,7 @@
   <ItemGroup>
     <Compile Include="Algorithm\Decrypt.cs" />
     <Compile Include="Algorithm\DicSortALG.cs" />
+    <Compile Include="Algorithm\EncodeExtension.cs" />
     <Compile Include="Algorithm\Encrypt.cs" />
     <Compile Include="Attribute\ViewFieldAttribute.cs" />
     <Compile Include="Helper\AuthHelper.cs" />
@@ -86,6 +88,7 @@
     <Compile Include="Helper\EnumHelper.cs" />
     <Compile Include="Helper\HttpHelper.cs" />
     <Compile Include="Helper\ImageHelper.cs" />
+    <Compile Include="Helper\JsonHelper.cs" />
     <Compile Include="Helper\LogHelper.cs" />
     <Compile Include="Helper\NLogHelper.cs" />
     <Compile Include="Helper\StringHelper.cs" />

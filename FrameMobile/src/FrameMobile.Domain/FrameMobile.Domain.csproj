@@ -148,6 +148,8 @@
     <Compile Include="Service\Interface\INewsRedisCacheService.cs" />
     <Compile Include="Service\Helper\INewsServiceHelper.cs" />
     <Compile Include="Service\Interface\IRadarService.cs" />
+    <Compile Include="Service\Interface\ISecurityDbContextService.cs" />
+    <Compile Include="Service\Interface\ISecurityService.cs" />
     <Compile Include="Service\Interface\IThemeRedisCacheService.cs" />
     <Compile Include="Service\Interface\IThemeServiceBase.cs" />
     <Compile Include="Service\Interface\IThemeDbContextService.cs" />
@@ -155,7 +157,9 @@
     <Compile Include="Service\Interface\IWallPaperUIService.cs" />
     <Compile Include="Service\News\NewsRedisCacheService.cs" />
     <Compile Include="Service\Radar\RadarService.cs" />
+    <Compile Include="Service\Security\SecurityService.cs" />
     <Compile Include="Service\ServiceBase\CommonDbContextService.cs" />
+    <Compile Include="Service\ServiceBase\SecurityDbContextService.cs" />
     <Compile Include="Service\ServiceBase\ThemeDbContextService.cs" />
     <Compile Include="Service\Theme\ThemeRedisCacheService.cs" />
     <Compile Include="Service\Theme\WallPaperService.cs" />

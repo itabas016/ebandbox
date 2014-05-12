@@ -193,6 +193,8 @@
     <Compile Include="Controllers\News\NewsBaseController.cs" />
     <Compile Include="Controllers\News\NewsController.cs" />
     <Compile Include="Controllers\News\NewsUIController.cs" />
+    <Compile Include="Controllers\Security\SecurityController.cs" />
+    <Compile Include="Controllers\Security\SecurityUIController.cs" />
     <Compile Include="Controllers\Theme\ThemeBaseController.cs" />
     <Compile Include="Controllers\Theme\ThemeUIController.cs" />
     <Compile Include="Controllers\Theme\WallPaperController.cs" />
@@ -417,6 +419,11 @@
     <Content Include="Views\Mobile\ChannelList.cshtml" />
     <Content Include="Views\NewsUI\ExtraRatioAdd.cshtml" />
     <Content Include="Views\NewsUI\ExtraRatioList.cshtml" />
+    <Content Include="Views\SecurityUI\ConfigAdd.cshtml" />
+    <Content Include="Views\SecurityUI\ConfigList.cshtml" />
+    <Content Include="Views\SecurityUI\FloatingAdd.cshtml" />
+    <Content Include="Views\SecurityUI\FloatingList.cshtml" />
+    <Content Include="Views\Shared\_SecurityLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

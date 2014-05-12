@@ -1,0 +1,58 @@
+﻿@using FrameMobile.Model.Security;
+@model List<FloatingModel>
+@{
+    ViewBag.Title = "悬浮窗配置列表";
+    Layout = "~/Views/Shared/_SecurityLayout.cshtml";
+
+    List<FloatingModel> floatinglist = ViewData["Floatinglist"] as List<FloatingModel>;
+    floatinglist = floatinglist != null ? floatinglist : new List<FloatingModel>();
+
+    var totalCount = ViewData["TotalCount"] as int?;
+    totalCount = totalCount != null ? totalCount : 0;
+}
+
+<div class="contentHeader">
+    <div class="contentHeaderInfo">
+        <button class="btn btn-large btn-blue addapp" onclick="window.open('FloatingAdd','_self');">
+            悬浮窗配置添加</button>
+    </div>
+    <div class="apphead">
+        <div class="title">
+            <b>@ViewBag.Title (总数:@totalCount)</b>
+        </div>
+        <div>
+            <button class="btn btn-quaternary btn-large" onclick="history.back();">
+                返 回</button>
+        </div>
+    </div>
+</div>
+<div class="content">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>序号</th>
+                <th>结果</th>
+                <th>版本</th>
+                <th>&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody class="prolist">
+            @foreach (var item in floatinglist)
+            {
+                <tr class="odd gradeX">
+                    <td><strong>@item.Id</strong></td>
+                    <td>@item.JsonResult</td>
+                    <td>@item.Version</td>
+                    <td class="center">
+                        <button type="button" class="btn btn-large btn-gray"  onclick="window.open('FloatingEdit?floatingId=@item.Id','_self');">修 改</button>
+                    </td>
+                    <td class="center">
+                        <button type="button" class="btn btn-large btn-gray"  onclick="var c=confirm('确定要删除?'); if(c==true){window.open('FloatingDelete?floatingId=@item.Id','_self');}">
+                            删 除</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

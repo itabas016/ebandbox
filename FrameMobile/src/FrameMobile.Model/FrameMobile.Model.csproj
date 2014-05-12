@@ -88,11 +88,15 @@
     <Compile Include="Account\User.cs" />
     <Compile Include="Radar\RadarElement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Security\FloatingModel.cs" />
+    <Compile Include="Security\SecurityConfig.cs" />
     <Compile Include="Support\IMySQLModelBase.cs" />
     <Compile Include="Support\IMySQLModel.cs" />
+    <Compile Include="Support\ISecurityModelBase.cs" />
     <Compile Include="Support\MySQLModel.cs" />
     <Compile Include="Support\MySQLModelBase.cs" />
     <Compile Include="Support\RedisModelBase.cs" />
+    <Compile Include="Support\SecurityModelBase.cs" />
     <Compile Include="Theme\ThemeConfig.cs" />
     <Compile Include="Theme\WallPaper\WallPaperRelateSubCategory.cs" />
     <Compile Include="Theme\WallPaper\WallPaperRelateCategory.cs" />
@@ -133,6 +137,11 @@
     <Compile Include="ViewModels\Radar\RadarCategoryView.cs" />
     <Compile Include="ViewModels\Radar\RadarElementView.cs" />
     <Compile Include="ViewModels\ResultBuilder.cs" />
+    <Compile Include="ViewModels\Security\FloatingView.cs" />
+    <Compile Include="ViewModels\Security\ISecurityViewModel.cs" />
+    <Compile Include="ViewModels\Security\SecurityAcitonResult.cs" />
+    <Compile Include="ViewModels\Security\SecurityAppData2.cs" />
+    <Compile Include="ViewModels\Security\SecurityConfigData.cs" />
     <Compile Include="ViewModels\Theme\ThemeConfigView.cs" />
     <Compile Include="ViewModels\Theme\WallPaper\WallPaperCategoryView.cs" />
     <Compile Include="ViewModels\Theme\WallPaper\WallPaperConfigView.cs" />
