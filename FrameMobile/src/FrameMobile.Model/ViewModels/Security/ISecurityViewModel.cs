@@ -9,5 +9,6 @@ namespace FrameMobile.Model
     {
         string JsonResult { get; set; }
         int Version { get; set; }
+        int Rate { get; set; }
     }
 }

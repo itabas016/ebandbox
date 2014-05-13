@@ -34,6 +34,7 @@
                 <th>配置表名称</th>
                 <th>配置表类型</th>
                 <th>最新版本</th>
+                <th>更新频率</th>
                 <th>&nbsp;</th>
             </tr>
         </thead>
@@ -45,6 +46,7 @@
                     <td>@item.Name</td>
                     <td>@item.Type</td>
                     <td>@item.LatestVersion</td>
+                    <td>@item.Rate</td>
                     <td class="center">
                         <button type="button" class="btn btn-large btn-gray"  onclick="window.open('ConfigEdit?configId=@item.Id','_self');">修 改</button>
                     </td>

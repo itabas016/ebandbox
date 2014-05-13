@@ -11,5 +11,7 @@ namespace FrameMobile.Model
         public string JsonResult { get; set; }
 
         public int Version { get; set; }
+
+        public int Rate { get; set; }
     }
 }

@@ -41,6 +41,14 @@
                         <td><strong>类型: </strong></td>
                         <td>@Html.TextBoxFor(m => m.Type)</td>
                     </tr>
+                    <tr hidden>
+                        <td><strong>最新版本: </strong></td>
+                        <td>@Html.TextBoxFor(m => m.LatestVersion)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>更新频率: </strong></td>
+                        <td>@Html.TextBoxFor(m => m.Rate)</td>
+                    </tr>
                     <tr>
                         <td><strong>状态: </strong></td>
                         <td>@Html.RadioButtonFor(m => m.Status, 1, new { @checked = "checked" }) 有效 @Html.RadioButtonFor(m => m.Status, 0) 无效</td>

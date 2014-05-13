@@ -134,6 +134,7 @@ namespace Frame.Mobile.WebSite.Controllers
             config.Name = model.Name;
             config.Type = model.Type;
             config.LatestVersion = model.LatestVersion;
+            config.Rate = model.Rate;
             config.Status = model.Status;
             config.CreateDateTime = DateTime.Now;
 
@@ -146,5 +147,13 @@ namespace Frame.Mobile.WebSite.Controllers
             var ret = dbContextService.Delete<SecurityConfig>(configId);
             return RedirectToAction("ConfigList");
         }
+
+        #region Helper
+
+        public void UpdateSecurityConfigVersion()
+        {
+        }
+
+        #endregion
     }
 }

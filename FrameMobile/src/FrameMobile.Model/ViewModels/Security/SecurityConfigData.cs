@@ -12,6 +12,9 @@ namespace FrameMobile.Model
         [JsonProperty(PropertyName = "version")]
         public int Version { get; set; }
 
+        [JsonProperty(PropertyName = "rate")]
+        public int Rate { get; set; }
+
         [JsonProperty(PropertyName = "apps")]
         public string Data { get; set; }
 

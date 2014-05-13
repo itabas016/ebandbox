@@ -169,7 +169,8 @@ namespace FrameMobile.Web
                     var config = new SecurityConfigData
                     {
                         Data = configdata.JsonResult,
-                        Version = configdata.Version
+                        Version = configdata.Version,
+                        Rate=configdata.Rate
                     };
                     actionResult.Result = 0;
                     actionResult.ConfigData = config;

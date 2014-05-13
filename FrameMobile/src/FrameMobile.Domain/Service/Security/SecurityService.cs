@@ -29,7 +29,8 @@ namespace FrameMobile.Domain.Service
                     var floatingView = new FloatingView()
                     {
                         JsonResult = floatingconfig.JsonResult,
-                        Version = config.LatestVersion
+                        Version = config.LatestVersion,
+                        Rate = config.Rate
                     };
                     return floatingView;
                 }

@@ -28,15 +28,18 @@
                         @ViewBag.Title</h1>
                 </div>
             </p>
-
+            <div class="securityinput">
+                @Html.ValidationSummary(true)
+                @Html.HiddenFor(m => m.Id)
+                <strong>结果值: </strong>
+                @Html.TextAreaFor(m => m.JsonResult)
+            </div>
             <div style="clear: both">
                 <table>
-                    <tr>
-                        @Html.ValidationSummary(true)
-                        @Html.HiddenFor(m => m.Id)
+                    @*<tr>
                         <td><strong>结果值: </strong></td>
-                        <td>@Html.TextBoxFor(m => m.JsonResult)</td>
-                    </tr>
+                        <td class="securityinput">@Html.TextAreaFor(m => m.JsonResult)</td>
+                    </tr>*@
                     <tr>
                         <td><strong>版本: </strong></td>
                         <td>@Html.TextBoxFor(m => m.Version)</td>
