@@ -182,7 +182,7 @@ namespace FrameMobile.Web
             }
             catch (Exception ex)
             {
-                throw;
+                LogHelper.Error(ex.Message);
             }
             return actionResult;
         }

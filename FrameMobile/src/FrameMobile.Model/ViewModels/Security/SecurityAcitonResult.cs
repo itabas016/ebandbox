@@ -17,14 +17,14 @@ namespace FrameMobile.Model
 
         public override string ToString()
         {
-            if (this.ConfigData.Data == null)
+            if (this.ConfigData == null)
             {
                 this.Result = -2;
                 return "{\"result\":-2}";
             }
             var ret = JsonConvert.SerializeObject(this, Formatting.None);
 
-            ret = ret.Replace("\"[", "[").Replace("]\"", "]");
+            ret = ret.Replace("\"[", "[").Replace("]\"", "]").Replace("\\r\\n", "").Replace("\\", "");
             return ret;
         }
     }

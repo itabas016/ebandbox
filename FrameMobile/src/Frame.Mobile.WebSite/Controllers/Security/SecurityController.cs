@@ -37,7 +37,7 @@ namespace Frame.Mobile.WebSite.Controllers
 
             var actionResult = BuildResult<FloatingView>(getfloatingconfig);
 
-            var result = enc ? (actionResult.ToString()).Base64Encode() : actionResult.ToString();
+            var result = enc ? EncryptionHelper.EncryptUrl((actionResult.ToString()).Base64Encode()) : actionResult.ToString();
             return Content(result);
         }
     }

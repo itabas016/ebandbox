@@ -83,8 +83,10 @@
     <Compile Include="Algorithm\EncodeExtension.cs" />
     <Compile Include="Algorithm\Encrypt.cs" />
     <Compile Include="Attribute\ViewFieldAttribute.cs" />
+    <Compile Include="EncryptionSettings.cs" />
     <Compile Include="Helper\AuthHelper.cs" />
     <Compile Include="Helper\CacheHelper.cs" />
+    <Compile Include="Helper\EncryptionHelper.cs" />
     <Compile Include="Helper\EnumHelper.cs" />
     <Compile Include="Helper\HttpHelper.cs" />
     <Compile Include="Helper\ImageHelper.cs" />

@@ -74,6 +74,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\EncryptHelperTest.cs" />
     <Compile Include="Core\ImageHelperTest.cs" />
     <Compile Include="Domain\Extension\NewsExtensionTest.cs" />
     <Compile Include="Domain\Extension\StringExtensionTest.cs" />
