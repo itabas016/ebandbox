@@ -21,11 +21,11 @@ namespace FrameMobile.Domain
 
         public static void Initialize()
         {
-            //UserInitialize();
-            //NewsInitialize();
-            //RadarInitialize();
-            //MobileInitialize();
-            //ThemeInitialize();
+            UserInitialize();
+            NewsInitialize();
+            RadarInitialize();
+            MobileInitialize();
+            ThemeInitialize();
             SerurityInitialize();
         }
 
