@@ -33,13 +33,8 @@ This README would normally document whatever steps are necessary to get your app
 * Dependencies
 
 > `ServiceStack Redis`
-
 > `SubSonic`
-
 > `Structure Map`
-
 > `AutoMapper`
-
 > `NLog`
-
 > `Newtonsoft Json`

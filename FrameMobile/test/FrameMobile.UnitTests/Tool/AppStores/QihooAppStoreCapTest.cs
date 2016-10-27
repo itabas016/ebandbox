@@ -24,7 +24,7 @@ namespace FrameMobile.UnitTests.Tool.AppStores
             _newcap = new NewAppItemCap();
         }
 
-        [Fact]
+        [Fact(Skip = "HttpRequest")]
         public void RequestTest()
         {
             var app = new GetApps();
@@ -33,7 +33,7 @@ namespace FrameMobile.UnitTests.Tool.AppStores
             Console.WriteLine(data);
         }
 
-        [Fact]
+        [Fact(Skip = "HttpRequest")]
         public void RequestCompleteTest()
         {
             var app = new GetApp();
@@ -43,7 +43,7 @@ namespace FrameMobile.UnitTests.Tool.AppStores
             Console.WriteLine(data);
         }
 
-        [Fact]
+        [Fact(Skip = "HttpRequest")]
         public void CategoryTest()
         {
             var repo = new CategoryRepository();
