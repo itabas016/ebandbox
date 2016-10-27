@@ -1,0 +1,8 @@
+language: csharp
+solution: ./FrameMobile/src/FrameMobile.sln
+install: 
+  - nuget restore ./FrameMobile/src/FrameMobile.sln
+  - nuget install xunit.runners -Version 1.9.2 -OutputDirectory testrunner
+script: 
+  - xbuild /p:Configuration=Release ./FrameMobile/src/FrameMobile.sln
+  - mono ./testrunner/xunit.runners.1.9.2/tools/xunit.console.clr4.exe ./FrameMobile/test/FrameMobile.Test/bin/Release/FrameMobile.UnitTests.dll

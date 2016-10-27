@@ -1,5 +1,7 @@
 # README #
 
+[![Build Status](https://travis-ci.org/itabas016/ebandbox.svg?branch=master)](https://travis-ci.org/itabas016/ebandbox) [![Build status](https://ci.appveyor.com/api/projects/status/f6va79y6s9bjrjkl?svg=true)](https://ci.appveyor.com/project/itabas016/ebandbox)
+
 This README would normally document whatever steps are necessary to get your application up and running.
 
 ### What is this repository for? ###
@@ -29,4 +31,4 @@ Newtonsoft Json
 ### Who do I talk to? ###
 
 * Feedback
-arthor.cui@gmail.com
+itabas016@gmail.com
