@@ -30,7 +30,7 @@ namespace FrameMobile.UnitTests.Domain.Service
         {
         }
 
-        [Fact]
+        [Fact(Skip = "MySQLInsert")]
         public void AllMethodTest()
         {
             var imagemodel = new NewsImageInfo()
@@ -67,7 +67,7 @@ namespace FrameMobile.UnitTests.Domain.Service
 
         }
 
-        [Fact]
+        [Fact(Skip = "MySQLInsert")]
         public void TouTiaoContentUpdate()
         {
             var contentList = dbContextService.Find<NewsContent>(x => x.SubCategoryId == 0);
@@ -124,7 +124,7 @@ namespace FrameMobile.UnitTests.Domain.Service
             }
         }
 
-        [Fact]
+        [Fact(Skip = "MySQLInsert")]
         public void IntinaizedNewsConfigTable()
         {
             var config = new NewsConfig()
@@ -156,7 +156,7 @@ namespace FrameMobile.UnitTests.Domain.Service
             dbContextService.Add<NewsConfig>(configlist);
         }
 
-        [Fact]
+        [Fact(Skip = "MySQLInsert")]
         public void BatchInsertNewsContentTable()
         {
             var random = new Random(Guid.NewGuid().GetHashCode());

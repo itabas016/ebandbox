@@ -10,7 +10,7 @@ namespace FrameMobile.UnitTests.Domain.Service
 {
     public class CommonServiceTest : TestBase
     {
-        [Fact]
+        [Fact(Skip = "MySqlUpdate")]
         public void ReplaceNewsContent()
         {
             var startTime = new DateTime(2013, 10, 28, 0, 0, 0);

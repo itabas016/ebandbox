@@ -35,7 +35,7 @@ namespace FrameMobile.UnitTests.Domain
             dataService = new TouTiaoService(_dbContextService);
         }
 
-        [Fact]
+        [Fact(Skip = "TouTiaoSecret")]
         public void GenerateParameterTest()
         {
             var result = dataService.GenerateParam();
@@ -49,7 +49,7 @@ namespace FrameMobile.UnitTests.Domain
             Console.WriteLine(result.Signature);
         }
 
-        [Fact]
+        [Fact(Skip = "TouTiaoRequest")]
         public void RequestTest()
         {
             var categoryList = Enum.GetNames(typeof(TouTiaoCategory));
@@ -147,7 +147,7 @@ namespace FrameMobile.UnitTests.Domain
             Assert.Equal(true, expect_cur.ContentList.Any(x => x.NewsId == instance[0].NewsId));
         }
 
-        [Fact]
+        [Fact(Skip = "TouTiaoRequest")]
         public void AnlynazeNoRepeatTest()
         {
             long cursor = 1379851192;
@@ -171,7 +171,7 @@ namespace FrameMobile.UnitTests.Domain
             var response = "\"msg\":REGDRET,\"ret\":1";
         }
 
-        [Fact]
+        [Fact(Skip = "MySQLInsert")]
         public void SingleCaptureTest()
         {
             var categoryName = "news_tech";
@@ -179,13 +179,13 @@ namespace FrameMobile.UnitTests.Domain
             dataService.SingleCapture(categoryName);
         }
 
-        [Fact]
+        [Fact(Skip = "MySQLInsert")]
         public void CaptureTest()
         {
             dataService.Capture();
         }
 
-        [Fact]
+        [Fact(Skip = "MySQLInsert")]
         public void SingleImageSave()
         {
             long newsId = 32434321;

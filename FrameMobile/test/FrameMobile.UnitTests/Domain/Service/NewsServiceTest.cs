@@ -34,7 +34,7 @@ namespace FrameMobile.UnitTests.Domain.Service
             _requestRepoMock = new Mock<IRequestRepository>();
             requestRepo = _requestRepoMock.Object;
         }
-        [Fact]
+        [Fact(Skip = "MySqlSelect")]
         public void NewsListTest()
         {
             var namevalues = new NameValueCollection();

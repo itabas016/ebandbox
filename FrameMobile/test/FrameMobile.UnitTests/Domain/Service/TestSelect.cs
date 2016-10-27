@@ -14,7 +14,7 @@ namespace FrameMobile.UnitTests.Domain.Service
 {
     public class TestSelect
     {
-        [Fact]
+        [Fact(Skip = "MySQLInsert")]
         public void a()
         {
             var conn = System.Configuration.ConfigurationManager.ConnectionStrings[ConnectionStrings.NEWS_MYSQL_CONNECTSTRING].ConnectionString;

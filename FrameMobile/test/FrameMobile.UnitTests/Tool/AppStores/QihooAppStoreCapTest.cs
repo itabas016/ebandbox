@@ -48,12 +48,16 @@ namespace FrameMobile.UnitTests.Tool.AppStores
         {
             var repo = new CategoryRepository();
             var ret = repo.GetAllCategory();
+            Assert.Equal(true, ret.Count > 0);
+
+            /*
             ret.ForEach(x => Console.WriteLine(x.CategoryName));
             ret.ForEach(x => Console.WriteLine(x.CategoryPId));
             ret.ForEach(x => Console.WriteLine(x.CategoryId));
             ret.ForEach(x => Console.WriteLine(x.CategoryBrief));
             ret.ForEach(x => Console.WriteLine(x.CategoryBanner1));
             ret.ForEach(x => Console.WriteLine(x.CategoryBanner2));
+            */
         }
 
         [Fact]
@@ -71,7 +75,7 @@ namespace FrameMobile.UnitTests.Tool.AppStores
             }
         }
 
-        [Fact]
+        [Fact(Skip = "RedisInsert")]
         public void FakeDataInsert()
         {
             var content = MockResponse();
@@ -89,7 +93,7 @@ namespace FrameMobile.UnitTests.Tool.AppStores
             Console.WriteLine(reformApp.DupVersionCount);
         }
 
-        [Fact]
+        [Fact(Skip = "RedisInsert")]
         public void FakeDataInsert2()
         {
             var content = MockResponseComplete();

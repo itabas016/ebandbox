@@ -10,7 +10,7 @@ namespace FrameMobile.UnitTests.Domain.Extension
 {
     public class NewsExtensionTest : TestBase
     {
-        [Fact]
+        [Fact(Skip = "MySqlSelect")]
         public void CheckVersionTest()
         {
             var ret = NewsExtensions.GetNewsConfsver(new NewsSource());

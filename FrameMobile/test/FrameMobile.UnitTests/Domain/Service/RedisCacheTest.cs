@@ -22,7 +22,7 @@ namespace FrameMobile.UnitTests.Domain.Service
             }
         }private IRedisCacheService _redisCacheService;
 
-        [Fact]
+        [Fact(Skip = "RedisCache")]
         public void SetNXTest()
         {
             var key = "key:a:LOCK";
