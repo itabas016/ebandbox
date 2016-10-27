@@ -9,7 +9,7 @@ namespace FrameMobile.UnitTests.Core
 {
     public class ImageHelperTest
     {
-        [Fact]
+        [Fact(Skip = "ResourceDependcy")]
         public void ResizedTest()
         {
             var destFilePath = @"D:\NewsResources\Image\\";
@@ -23,7 +23,7 @@ namespace FrameMobile.UnitTests.Core
             Console.WriteLine(outputbig2);
         }
 
-        [Fact]
+        [Fact(Skip = "ResourceDependcy")]
         public void ResizedHDTest()
         {
             long newsId = 43243123;
