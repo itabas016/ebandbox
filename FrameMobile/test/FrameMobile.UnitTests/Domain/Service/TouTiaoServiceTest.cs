@@ -206,7 +206,7 @@ namespace FrameMobile.UnitTests.Domain
         private string GetMockResponse()
         {
             var response = string.Empty;
-            using (var sr = new StreamReader("Files\\TouTiaoResponse.txt"))
+            using (var sr = new StreamReader("Files//TouTiaoResponse.txt"))
             {
                 response = sr.ReadToEnd();
             }

@@ -114,7 +114,7 @@ namespace FrameMobile.UnitTests.Tool.AppStores
         private string MockResponse()
         {
             var response = string.Empty;
-            using (var sr = new StreamReader("Files\\QihoogetAppResponse.txt"))
+            using (var sr = new StreamReader("Files//QihoogetAppResponse.txt"))
             {
                 response = sr.ReadToEnd();
             }
@@ -124,7 +124,7 @@ namespace FrameMobile.UnitTests.Tool.AppStores
         private string MockResponseComplete()
         {
             var response = string.Empty;
-            using (var sr = new StreamReader("Files\\QihooGetCompleteAppResponse.txt"))
+            using (var sr = new StreamReader("Files//QihooGetCompleteAppResponse.txt"))
             {
                 response = sr.ReadToEnd();
             }

@@ -45,7 +45,7 @@ namespace FrameMobile.UnitTests.Domain.Service
         private string GetMockResponse()
         {
             var response = string.Empty;
-            using (var sr = new StreamReader("Files\\TencentNewsResponse.txt"))
+            using (var sr = new StreamReader("Files//TencentNewsResponse.txt"))
             {
                 response = sr.ReadToEnd();
             }

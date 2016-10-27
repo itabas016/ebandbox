@@ -88,19 +88,19 @@ namespace FrameMobile.UnitTests.Tool.AppStores
 
         private string MockAppDetailResponse()
         {
-            var response = MockResponseBase("Files\\BaiduAppDetailResponse.txt");
+            var response = MockResponseBase("Files//BaiduAppDetailResponse.txt");
             return response;
         }
 
         private string MockAppResponse()
         {
-            var response = MockResponseBase("Files\\BaiduAppResponse.txt");
+            var response = MockResponseBase("Files//BaiduAppResponse.txt");
             return response;
         }
 
         private string MockBoardListResponse()
         {
-            var response = MockResponseBase("Files\\BaiduBoardListResponse.txt");
+            var response = MockResponseBase("Files//BaiduBoardListResponse.txt");
             return response;
         }
 
