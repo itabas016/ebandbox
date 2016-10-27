@@ -8,45 +8,38 @@ This README would normally document whatever steps are necessary to get your app
 
 * Quick summary
 
-Develop a new structure frame for CMS, contains background management part and web API request part.
+> Develop a new structure frame for CMS, contains background management part and web API request part.
 
-Mainly two APs Free Me and Theme OnLine.
+> Mainly two APs Free Me and Theme OnLine.
 
-You can manage you source, such as news, images and show on you pc and mobile client.
+> You can manage you source, such as news, images and show on you pc and mobile client.
 
-btw, I support the API doc and capture source tools by Tenecent, Qihoo and Baidu company.
+> btw, I support the API doc and capture source tools by Tenecent, Qihoo and Baidu company.
 
 * CI
 
-Change to travis-ci and appveyor 
-
-Not use TC
+> Change to travis-ci and appveyor, Not use TC
 
 ### How do I get set up? ###
 
 * Summary of set up
 
-Deploy web site, web cache, DB server.
+> Deploy web site, web cache, DB server.
 
 * Configuration
 
-`.Net Framework 4.0` or higher version, `IIS7`, `Redis server 2.8.3` or higher version, `MySQL 5.6` or higher version
+> `.Net Framework 4.0` or higher version, `IIS7`, `Redis server 2.8.3` or higher version, `MySQL 5.6` or higher version
 
 * Dependencies
 
-`ServiceStack Redis`
+> `ServiceStack Redis`
 
-`SubSonic`
+> `SubSonic`
 
-`Structure Map`
+> `Structure Map`
 
-`AutoMapper`
+> `AutoMapper`
 
-`NLog`
+> `NLog`
 
-`Newtonsoft Json`
-
-### Who do I talk to? ###
-
-* Feedback
-itabas016@gmail.com
+> `Newtonsoft Json`
